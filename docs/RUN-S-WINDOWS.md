@@ -37,3 +37,7 @@ Keep your original ChatGPT export ZIP, S source ZIP, model weights and S databas
 ## Project limitations
 
 S is a local application running on Windows, not yet a separately bootable S operating system. The voice button explains the missing offline speech model; it doesn't fake listening. External web search opens a browser only after confirmation and does not automatically import search results. Basic text attachments are supported; binary/image/PDF parsing isn't yet integrated. The old Axiom/Continuum foundation and the original byte-token model are bundled for continued development.
+
+## Publish the verified local package into the S GitHub repository
+
+Double-click `PUBLISH-S-GITHUB.cmd` after installing Git for Windows and signing into GitHub when prompted. It clones the existing S feature branch, copies **only the public source files**, checks the diff and pushes a commit. The command does not force-push or include your private SQLite database, ChatGPT export or downloaded model weights. The GitHub push must be verified separately on your own machine.
