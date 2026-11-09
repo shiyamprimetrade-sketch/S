@@ -8,10 +8,11 @@ from pathlib import Path
 from urllib.request import Request,urlopen
 
 OLLAMA_URL='http://127.0.0.1:11434'
-DEFAULT_MODEL=os.environ.get('AXIOM_MODEL','qwen2.5:1.5b')
+DEFAULT_MODEL=os.environ.get('S_MODEL',os.environ.get('AXIOM_MODEL','s-research:local'))
 TEACHER_MODEL='teacherlab:local'
 CHAR_MODEL='charllm:local'
-SYSTEM="""You are the local AxiomFlow Continuum research partner.
+S_RESEARCH_MODEL='s-research:local'
+SYSTEM="""You are S, the independently developed local Human Computer research partner.
 Your role is to co-design inventions with the human researcher.
 Preserve the distinction between facts, hypotheses, simulations, implementation and test evidence.
 Do not claim emotional experience, independent awareness, automatic self-training or access to tools you lack.
@@ -25,12 +26,16 @@ The project notes below are user-provided history and research hypotheses; don't
 
 class LocalModelError(RuntimeError): pass
 
+def is_cloud_model(name):
+    """Prevent Ollama cloud model identifiers from leaving this PC."""
+    return isinstance(name, str) and (name.lower().endswith(':cloud') or name.lower().endswith('-cloud'))
+
 def ollama_models(timeout=3):
     try:
         req=Request(OLLAMA_URL+'/api/tags')
         with urlopen(req,timeout=timeout) as r:
             data=json.load(r)
-        return [m['name'] for m in data.get('models',[]) if isinstance(m,dict) and 'name' in m]
+        return [m['name'] for m in data.get('models',[]) if isinstance(m,dict) and isinstance(m.get('name'),str) and not is_cloud_model(m['name'])]
     except (OSError,ValueError,KeyError):return []
 
 def chat(store,sid,user_input,model=DEFAULT_MODEL,timeout=180):
@@ -38,7 +43,17 @@ def chat(store,sid,user_input,model=DEFAULT_MODEL,timeout=180):
     pid=session['project_id']
     if not isinstance(model,str) or len(model)>120 or '://' in model or model.startswith('/') or not all(c.isalnum() or c in '._:-/' for c in model):
         raise ValueError('Invalid local model name')
+    if is_cloud_model(model):
+        raise LocalModelError('Cloud models are blocked: S never sends chat content to an external inference service.')
     store.add_message(sid,'user',user_input)
+    if model==S_RESEARCH_MODEL:
+        from .s_reasoning import respond
+        begin=time.monotonic()
+        response=respond(store,pid,user_input)
+        elapsed=int((time.monotonic()-begin)*1000)
+        item=store.add_message(sid,'assistant',response,model=model,elapsed_ms=elapsed)
+        store.log(pid,'chat',f'model={model} elapsed_ms={elapsed} verified_inference=rule_based')
+        return item
     if model==CHAR_MODEL:
         from .charllm import complete,DEFAULT_CKPT
         if not DEFAULT_CKPT.exists():raise LocalModelError('Character LLM checkpoint not trained; run python -m continuum.charllm train')

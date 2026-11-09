@@ -1,4 +1,4 @@
-name: AxiomFlow Continuum tests
+name: S Independent Computer — Tests
 
 on:
   push:
@@ -10,7 +10,7 @@ permissions:
   contents: read
 
 jobs:
-  offline-teacherlab:
+  s-independent:
     name: ${{ matrix.os }} / Python ${{ matrix.python-version }}
     runs-on: ${{ matrix.os }}
     strategy:

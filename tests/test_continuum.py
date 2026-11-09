@@ -89,7 +89,7 @@ class StoreTest(unittest.TestCase):
         self.assertTrue(len(s.list_notes(s.list_projects()[0]['id']))>=5)
     def test_no_secret_leak_in_error(self):
         with patch('continuum.engine.urlopen',side_effect=URLError('no local server')):
-            with self.assertRaises(LocalModelError):chat(self.s,self.sa['id'],'Research ABCA',timeout=1)
+            with self.assertRaises(LocalModelError):chat(self.s,self.sa['id'],'Research ABCA',model='unavailable-local-model:1',timeout=1)
         self.assertEqual(len(self.s.list_messages(self.sa['id'])),1)
     def test_mock_local_inference(self):
         class Response:
@@ -122,7 +122,7 @@ class HTTPTest(unittest.TestCase):
             status,data=self.get('/api/health')
         self.assertEqual(status,200)
         self.assertIn('teacherlab:local',json.loads(data)['models'])
-        self.assertIn(b'AxiomFlow',self.get('/')[1])
+        self.assertIn(b'<title>S',self.get('/')[1])
     def test_api_chat_project_flow(self):
         p=json.loads(self.get('/api/projects')[1])[0]
         _,s=self.post('/api/sessions',{'project_id':p['id'],'title':'Working session'})

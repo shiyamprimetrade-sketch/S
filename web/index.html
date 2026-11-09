@@ -1,22 +1,125 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><title>AxiomFlow Continuum</title><link rel="stylesheet" href="/style.css"></head>
-<body><div class="shell">
-<aside class="sidebar">
-  <div class="logo"><span class="logo-mark">A</span><div><b>AxiomFlow</b><small>CONTINUUM · LOCAL</small></div></div>
-  <div class="label">WORKSPACE</div><div class="inline"><select id="project" aria-label="Select project"></select><button id="new-project" title="Create project">+</button></div>
-  <div class="inline space"><span class="label">CONVERSATIONS</span><button id="new-chat" class="small">New +</button></div><nav id="sessions" aria-label="Conversations"></nav>
-  <div class="sidebottom"><span class="dot" id="model-dot"></span><span id="model-status">Checking local engine…</span><button id="refresh" title="Refresh">↻</button></div>
-</aside>
-<main>
-  <header><div><h1 id="session-title">Your independent research companion</h1><p>Locally hosted · Portable memory · No subscription API required</p></div>
-   <div class="toolbar"><button id="import-chatgpt" title="Private ChatGPT history import">Import ChatGPT</button><input id="chatgpt-file" type="file" accept=".json,application/json" hidden><button id="export">Export project</button><button id="handoff">Handoff</button><button id="notes-tab">Knowledge</button><button id="search-tab">Archive search</button><button id="chat-tab" class="selected">Chat</button></div>
-  </header>
-  <section id="chat-panel" class="panel">
-    <div id="messages" class="messages" role="log" aria-live="polite"></div>
-    <form id="composer" class="compose"><textarea id="prompt" maxlength="50000" rows="3" placeholder="Teach, question, design, test, or continue your invention…" aria-label="Message"></textarea><div class="inline wrap"><span>Model</span><input id="model" list="models" title="Local Ollama or experimental Axiom model" value="qwen2.5:1.5b"/><datalist id="models"></datalist><span class="hint">Enter to send · Shift+Enter for newline</span><button type="submit" id="send">Send</button></div></form>
-  </section>
-  <section id="search-panel" class="panel hidden"><div class="knowledge-head"><div><h2>Conversation archive</h2><p>Search your locally imported ChatGPT history. Archive text stays on this computer.</p></div></div><div class="lookup"><label for="search-query">Search text</label><div class="inline"><input id="search-query" placeholder="e.g. keyboard memory terminal"/><button id="search-run">Search</button></div><div id="search-results"></div></div></section>
-  <section id="knowledge-panel" class="panel hidden"><div class="knowledge-head"><div><h2>Project knowledge</h2><p>Lessons, hypotheses, experimental evidence and decisions stay separate.</p></div><button id="add-note">Add a note</button></div><div class="knowledge-cols"><div><div id="notes"></div></div><div class="lookup"><h3>Word relationships</h3><p>Explore structural relationships observed in your messages. These are not proof of semantic intelligence.</p><div class="inline"><input id="word" placeholder="e.g. ABCA"/><button id="relate">Explore</button></div><div id="relations"></div></div></div></section>
-</main></div>
-<div id="modal" class="modal hidden"><div class="modal-content"><h2 id="modal-title"></h2><div id="modal-inputs"></div><div class="inline right"><button id="cancel-modal">Cancel</button><button id="save-modal" class="primary">Save</button></div></div></div>
-<div id="toast" class="toast hidden"></div><script src="/app.js"></script></body></html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#212121">
+  <title>S · Local Human Computer</title>
+  <meta name="description" content="S, an independent local-first invention computer and learning assistant.">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <div id="mobile-overlay" class="overlay hidden" aria-hidden="true"></div>
+  <div class="app-shell">
+    <aside id="sidebar" class="sidebar" aria-label="S sidebar">
+      <div class="sidebar-head">
+        <button id="new-chat" class="new-chat"><span class="s-logo small-logo">S</span><span>New chat</span></button>
+        <button id="sidebar-close" class="icon-btn" title="Hide sidebar" aria-label="Hide sidebar">☰</button>
+      </div>
+      <div class="project-bar"><label for="project">PROJECT</label><div class="project-controls"><select id="project" aria-label="Active project"></select><button id="new-project" title="Create a separate project" aria-label="New project">＋</button></div></div>
+      <div class="history-scroll">
+        <div class="history-label">Today</div>
+        <nav id="history-today" class="history-items" aria-label="Today's conversations"></nav>
+        <div class="history-label history-past-label">Previous conversations</div>
+        <nav id="history-past" class="history-items" aria-label="Earlier conversations"></nav>
+      </div>
+      <div class="sidebar-foot">
+        <button id="profile-btn" class="profile-btn"><span class="profile-avatar">S</span><span class="profile-lines"><strong>S Researcher</strong><small>Local · No subscription</small></span><span class="quiet">⋯</span></button>
+        <div id="profile-menu" class="profile-menu hidden">
+          <button id="theme-toggle">◐ &nbsp; Toggle theme</button>
+          <button id="import-chatgpt">↥ &nbsp; Import conversation JSON</button>
+          <button id="settings-open">⚙ &nbsp; Settings &amp; continuity</button>
+        </div>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="main-header">
+        <div class="header-left">
+          <button id="sidebar-open" class="icon-btn" title="Show sidebar" aria-label="Show sidebar">☰</button>
+          <div class="model-control">
+            <button id="model-button" class="model-button" aria-haspopup="true" aria-expanded="false"><span id="model-title">S <span class="model-suffix">Research</span></span><span class="chevron">⌄</span></button>
+            <div id="model-menu" class="model-menu hidden" role="menu" aria-label="Select installed local model"></div>
+          </div>
+        </div>
+        <div class="header-actions">
+          <span id="status-label" class="status-label"><span class="status-dot"></span> Local engine</span>
+          <button id="archive-open" class="icon-btn" title="Search saved conversations" aria-label="Search history">⌕</button>
+          <button id="knowledge-open" class="icon-btn" title="Knowledge & learning" aria-label="Knowledge">◇</button>
+          <button id="export" class="icon-btn" title="Export this project" aria-label="Export project">⇧</button>
+        </div>
+      </header>
+
+      <section id="chat-panel" class="panel chat-panel">
+        <div class="messages-scroller" id="messages-scroller">
+          <div id="welcome-screen" class="welcome">
+            <div class="s-logo hero-logo">S</div>
+            <h1>What shall we invent?</h1>
+            <p class="welcome-note">A local computer for invention, continuity and experiments.</p>
+            <div class="suggestions">
+              <button data-prompt="Investigate a new computing method. Start with assumptions, propose an experiment, and define proof."><strong>Invent a computing method</strong><small>Start from first principles</small></button>
+              <button data-prompt="Compare our S Human Computer milestones with the last verified checkpoint."><strong>Continue our invention</strong><small>Check progress and evidence</small></button>
+              <button data-prompt="Analyze how words acquire meaning through interactions and propose a test."><strong>Explore language and meaning</strong><small>Research symbol relationships</small></button>
+              <button data-prompt="How can we preserve local memory, training data and project history without subscriptions?"><strong>Protect our continuity</strong><small>Keep the project independent</small></button>
+            </div>
+          </div>
+          <div id="messages-list" class="messages-list hidden" role="log" aria-label="Conversation" aria-live="polite"></div>
+        </div>
+        <div class="composer-area">
+          <div class="search-pill hidden" id="search-pill">External search opens a browser — it is not model context. <button id="search-pill-close" title="Close">×</button></div>
+          <div id="attachment-info" class="attachment-info hidden"></div>
+          <form id="composer" class="composer">
+            <textarea id="chat-input" rows="1" maxlength="50000" placeholder="Message S..." aria-label="Message S" spellcheck="true"></textarea>
+            <div class="composer-toolbar">
+              <div class="toolbar-left">
+                <button id="attach-btn" type="button" class="icon-btn round" aria-label="Attach text file" title="Attach text file">＋</button>
+                <input type="file" id="file-input" hidden accept=".txt,.md,.json,.csv,.py,.js,.html,.css,.log,.xml,.yaml,.yml,.toml,.ps1">
+                <button id="web-search" type="button" class="icon-btn round" title="Open external web search after confirmation" aria-label="Web search">◎</button>
+                <button id="archive-search" type="button" class="archive-chip" title="Search local saved history">⌕ <span>Archive</span></button>
+              </div>
+              <div class="toolbar-right">
+                <button id="voice-btn" type="button" class="icon-btn round" title="Voice input information" aria-label="Voice input">♬</button>
+                <button id="send-btn" type="submit" class="send-btn" title="Send message" disabled aria-label="Send message">↑</button>
+                <button id="stop-btn" type="button" class="send-btn hidden" title="Stop waiting for reply" aria-label="Stop waiting">■</button>
+              </div>
+            </div>
+          </form>
+          <div class="disclaimer">S can make mistakes. Verify important information. Chat data stays on this PC unless you choose to export or search externally.</div>
+        </div>
+      </section>
+
+      <section id="archive-panel" class="panel utility-panel hidden" aria-label="Conversation archive">
+        <div class="utility-head"><div><h2>Conversation archive</h2><p>Find old lessons and imported messages stored locally.</p></div><button class="back-chat" type="button">Back to chat</button></div>
+        <div class="search-controls"><input id="search-query" placeholder="Search for a word or idea, e.g. keyboard language..." aria-label="Search history"><button id="search-run" class="primary-button">Search</button></div>
+        <div id="search-results" class="search-results"></div>
+      </section>
+
+      <section id="knowledge-panel" class="panel utility-panel hidden" aria-label="Project knowledge">
+        <div class="utility-head"><div><h2>S Knowledge</h2><p>Lessons, hypotheses, evidence, decisions and corrections.</p></div><div class="head-tools"><button id="add-note" class="primary-button">Add a lesson</button><button class="back-chat" type="button">Back to chat</button></div></div>
+        <div class="two-cols"><div id="notes" class="notes"></div><div class="relation-box"><h3>Explore word relationships</h3><p>Structural matches are experimental; they are not proof of semantic understanding.</p><div class="search-controls"><input id="word" placeholder="e.g. ABCA" aria-label="Explore word"><button id="relate" class="primary-button">Explore</button></div><div id="relations"></div></div></div>
+      </section>
+
+      <section id="settings-panel" class="panel utility-panel hidden" aria-label="Settings and continuity">
+        <div class="utility-head"><div><h2>Settings &amp; continuity</h2><p>Independent by default — without paid API calls.</p></div><button class="back-chat" type="button">Back to chat</button></div>
+        <div class="settings-grid">
+          <article class="setting-card"><h3>Model status</h3><p id="model-details">Checking...</p><button id="refresh-models" class="secondary-button">Refresh models</button></article>
+          <article class="setting-card"><h3>Import our teaching history</h3><p>Choose a downloaded ChatGPT <code>conversations.json</code> export. For a large ZIP, import through the terminal.</p><button id="import-settings" class="secondary-button">Import JSON</button><input id="chatgpt-file" type="file" hidden accept=".json,application/json"></article>
+          <article class="setting-card"><h3>Project continuity</h3><p>Save portable JSON, an editable handoff file, or a validated SQLite snapshot using the CLI.</p><button id="export-settings" class="secondary-button">Export JSON</button><button id="handoff" class="secondary-button">Download handoff</button></article>
+          <article class="setting-card api-key-card"><h3>S API keys</h3>
+            <p>Generate a unique key to let another program use your local S API. Keys are shown once, stored only as hashes, and can be revoked at any time.</p>
+            <button id="create-api-key" class="primary-button">Generate API key</button>
+            <button id="refresh-api-keys" class="secondary-button">Refresh keys</button>
+            <div id="new-api-key-wrap" class="hidden api-key-new"><label for="new-api-key">Copy this key now — it will not be shown again</label><textarea id="new-api-key" readonly spellcheck="false" rows="3" aria-label="New S API key"></textarea><button id="copy-api-key" class="secondary-button">Copy key</button><button id="hide-api-key" class="secondary-button">Hide key</button></div>
+            <div id="api-key-list" class="api-key-list" aria-live="polite">No API keys loaded.</div>
+            <p class="api-note">API address: <code>http://127.0.0.1:8765/v1</code>. The key only grants access to this computer's S API; it does not unlock external AI services.</p>
+          </article>
+          <article class="setting-card"><h3>Original S language model</h3><p>The from-scratch byte-token Transformer is experimental. For generation, PyTorch and a trained local checkpoint are required.</p><code>py -3 -m continuum.charllm train --steps 250</code></article>
+        </div>
+      </section>
+    </main>
+  </div>
+  <div id="dialog-backdrop" class="dialog-backdrop hidden"><div class="dialog" role="dialog" aria-modal="true" aria-labelledby="dialog-title"><h2 id="dialog-title"></h2><div id="dialog-fields"></div><div class="dialog-actions"><button id="dialog-cancel" class="secondary-button">Cancel</button><button id="dialog-save" class="primary-button">Save</button></div></div></div>
+  <div id="toast" role="status" aria-live="polite" class="toast hidden"></div>
+  <script src="/app.js" defer></script>
+</body>
+</html>

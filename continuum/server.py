@@ -6,15 +6,16 @@ import threading
 from http.server import BaseHTTPRequestHandler,ThreadingHTTPServer
 from pathlib import Path
 from urllib.parse import urlparse,parse_qs
-from .engine import chat,ollama_models,DEFAULT_MODEL,LocalModelError,TEACHER_MODEL,CHAR_MODEL
+from .engine import chat,ollama_models,DEFAULT_MODEL,LocalModelError,TEACHER_MODEL,CHAR_MODEL,S_RESEARCH_MODEL
 from .relations import related
 from .storage import Store
+from .api_keys import create_key,list_keys,revoke_key,authenticate_key
 
 ROOT=Path(__file__).resolve().parent.parent
 WEB=ROOT/'web'
 
 class API(BaseHTTPRequestHandler):
-    server_version='AxiomFlow/0.1'
+    server_version='S-Local/0.4'
     def log_message(self,fmt,*args):
         # Avoid recording private message contents in server logs.
         if os.environ.get('AXIOM_HTTP_LOG')=='1':super().log_message(fmt,*args)
@@ -52,16 +53,21 @@ class API(BaseHTTPRequestHandler):
         path=urlparse(self.path).path
         s=self.server.store
         if verb=='GET':
+            if path=='/api/keys':return list_keys(s)
             if path=='/api/health':
                 from .teacherlab import MODEL
-                models=ollama_models()
-                if MODEL.exists():models=[TEACHER_MODEL]+models
+                models=[S_RESEARCH_MODEL]
+                if MODEL.exists():models.append(TEACHER_MODEL)
                 from .charllm import DEFAULT_CKPT
-                if DEFAULT_CKPT.exists():models=[CHAR_MODEL]+models
-                return {'ok':True,'models':models,'default_model':TEACHER_MODEL if MODEL.exists() else DEFAULT_MODEL,'data_file':str(s.path)}
+                from importlib.util import find_spec
+                if DEFAULT_CKPT.exists() and find_spec('torch') is not None:models.append(CHAR_MODEL)
+                models.extend(ollama_models())
+                return {'ok':True,'app':'S','models':models,'default_model':S_RESEARCH_MODEL,
+                        'data_file':str(s.path),'inference':'local only','cloud_api':False}
             if path=='/api/projects':return s.list_projects()
             if path=='/api/sessions':return s.list_sessions(self._param('project_id'))
             if path=='/api/messages':return s.list_messages(self._param('session_id'))
+            if path=='/api/feedback':return s.list_feedback(self._param('project_id'))
             if path=='/api/notes':return s.list_notes(self._param('project_id'))
             if path=='/api/search':return s.search_history(self._param('project_id'),self._param('q'))
             if path=='/api/relations':return related(s,self._param('project_id'),self._param('word'))
@@ -72,14 +78,42 @@ class API(BaseHTTPRequestHandler):
                 return json.loads(REPORT.read_text(encoding='utf8')) if REPORT.exists() else {'trained':False}
         else:
             b=self._body()
+            if path=='/api/keys':return create_key(s,b.get('name',''),b.get('scopes',['read','chat']))
+            if path=='/api/revoke-key':return revoke_key(s,b.get('id',''))
             if path=='/api/projects':return s.create_project(b.get('name',''))
             if path=='/api/sessions':return s.create_session(b.get('project_id',''),b.get('title','New conversation'))
             if path=='/api/notes':return s.add_note(b.get('project_id',''),b.get('title',''),b.get('body',''),b.get('kind','lesson'),b.get('evidence',''))
-            if path=='/api/chat':return chat(s,b.get('session_id',''),b.get('text',''),b.get('model',DEFAULT_MODEL))
+            if path=='/api/chat':return chat(s,b.get('session_id',''),b.get('text',''),b.get('model',S_RESEARCH_MODEL))
+            if path=='/api/delete-session':return s.delete_session(b.get('session_id',''))
+            if path=='/api/feedback':return s.set_feedback(b.get('message_id',''),b.get('rating'),b.get('note',''))
             if path=='/api/import-chatgpt':
                 if not isinstance(b.get('document'),(list,dict)):raise ValueError('Invalid ChatGPT export')
                 return s.import_chatgpt(b['document'],b.get('title_contains',''),bool(b.get('redact',True)))
         raise ValueError('Unknown route')
+    def _v1(self,verb):
+        """Credential-protected local interface for third-party programs."""
+        path=urlparse(self.path).path
+        scope='read' if verb=='GET' else 'chat'
+        header=self.headers.get('Authorization','')
+        if not header.startswith('Bearer '):
+            return self._json(401,{'error':'Missing or invalid S API key'})
+        if not authenticate_key(self.server.store,header[7:],scope):
+            return self._json(401,{'error':'Missing, revoked or insufficient S API key'})
+        if verb=='GET' and path=='/v1/models':
+            from .teacherlab import MODEL
+            from .charllm import DEFAULT_CKPT
+            from importlib.util import find_spec
+            models=[S_RESEARCH_MODEL]
+            if MODEL.exists():models.append(TEACHER_MODEL)
+            if DEFAULT_CKPT.exists() and find_spec('torch') is not None:models.append(CHAR_MODEL)
+            models.extend(ollama_models())
+            return self._json(200,{'object':'list','data':[{'id':m,'object':'model'} for m in models]})
+        if verb=='POST' and path=='/v1/chat':
+            b=self._body()
+            if not isinstance(b,dict) or not isinstance(b.get('session_id'),str) or not isinstance(b.get('text'),str):
+                raise ValueError('session_id and text are required')
+            return self._json(200,chat(self.server.store,b['session_id'],b['text'],b.get('model',S_RESEARCH_MODEL)))
+        return self._json(404,{'error':'Unknown S API route'})
     def _guard(self):
         # Only local origins may POST, blocking cross-origin browser attempts.
         host=self.headers.get('Host','')
@@ -90,6 +124,8 @@ class API(BaseHTTPRequestHandler):
     def do_GET(self):
         try:
             self._guard()
+            if urlparse(self.path).path.startswith('/v1/'):
+                return self._v1('GET')
             if urlparse(self.path).path.startswith('/api/'):
                 return self._json(200,self._api('GET'))
             return self._static(urlparse(self.path).path)
@@ -99,6 +135,8 @@ class API(BaseHTTPRequestHandler):
     def do_POST(self):
         try:
             self._guard()
+            if urlparse(self.path).path.startswith('/v1/'):
+                return self._v1('POST')
             return self._json(200,self._api('POST'))
         except PermissionError as e:self._json(403,{'error':str(e)})
         except (ValueError,json.JSONDecodeError) as e:self._json(400,{'error':str(e)})
@@ -116,6 +154,6 @@ class AppServer(ThreadingHTTPServer):
 
 def serve(db_path,port=8765):
     with AppServer('127.0.0.1',port,db_path) as app:
-        print(f'AxiomFlow Continuum: http://127.0.0.1:{port}',flush=True)
+        print(f'S Local Human Computer: http://127.0.0.1:{port}',flush=True)
         print(f'Data: {app.store.path}',flush=True)
         app.serve_forever()

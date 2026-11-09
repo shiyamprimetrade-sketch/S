@@ -9,15 +9,23 @@ from .storage import Store
 from .engine import ollama_models,DEFAULT_MODEL
 
 ROOT=Path(__file__).resolve().parent.parent
-DB=Path(os.environ.get('AXIOM_DB',str(ROOT/'data'/'continuum.sqlite3')))
+DB=Path(os.environ.get('S_DB',os.environ.get('AXIOM_DB',str(Path.home()/'.s-computer'/'s.sqlite3'))))
 
 def main(argv=None):
-    p=argparse.ArgumentParser(prog='axiomflow',description='Offline, model-independent chat and research memory')
+    p=argparse.ArgumentParser(prog='S',description='S — Offline local invention computer, memory and learning')
     p.add_argument('--db',default=str(DB),help='SQLite database path')
     sub=p.add_subparsers(dest='cmd',required=True)
     server=sub.add_parser('serve',help='Start local browser app')
     server.add_argument('--port',type=int,default=8765)
     sub.add_parser('doctor',help='Report model and database status')
+    keys=sub.add_parser('api-key',help='Manage S-issued local API keys')
+    key_sub=keys.add_subparsers(dest='key_cmd',required=True)
+    key_create=key_sub.add_parser('create',help='Generate a key (secret printed once)')
+    key_create.add_argument('--name',required=True,help='Name of the client program')
+    key_create.add_argument('--scopes',default='read,chat',help='Comma-separated read,chat permissions')
+    key_sub.add_parser('list',help='List non-secret API key metadata')
+    key_revoke=key_sub.add_parser('revoke',help='Revoke a key by its ID')
+    key_revoke.add_argument('id',help='16-character key identifier')
     sub.add_parser('init',help='Initialize with teaching notes')
     backup=sub.add_parser('backup',help='Checkpoint database to a safe copy')
     backup.add_argument('--output')
@@ -50,7 +58,19 @@ def main(argv=None):
         return
     s=Store(args.db)
     s.seed_if_empty()
-    if args.cmd=='serve':
+    if args.cmd=='api-key':
+        from .api_keys import create_key,list_keys,revoke_key
+        try:
+            if args.key_cmd=='create':
+                result=create_key(s,args.name,args.scopes)
+                print('S API key (shown once; store privately):',result.pop('key'))
+                print(json.dumps(result,indent=2))
+            elif args.key_cmd=='list':
+                print(json.dumps(list_keys(s),indent=2))
+            elif args.key_cmd=='revoke':
+                print(json.dumps(revoke_key(s,args.id),indent=2))
+        except ValueError as error:p.error(str(error))
+    elif args.cmd=='serve':
         from .server import serve
         serve(args.db,port=args.port)
     elif args.cmd=='init':print('Initialized',args.db)
