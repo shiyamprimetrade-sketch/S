@@ -77,18 +77,38 @@ See `docs/S-CONTINUITY.md`, `docs/S-MIGRATION.md`, `docs/HUMAN-COMPUTER-CHARTER.
 
 **Verified scope:** The local browser/API/SQLite code and 52 preexisting tests were tested in this build; S-specific integration tests are included. Windows graphical startup and real PC hardware remain to be checked on the user's device.
 
-## Optional one-time installation
+## S-issued API keys
 
-After extracting the Windows ZIP, run PowerShell in the extracted directory:
+S can generate its **own** cryptographically random API keys for authorized local clients. The **Settings → S API keys** panel supports generating, copying once, listing and revoking keys. Only SHA-256 hashes are saved in SQLite; private key material is never returned in a list or stored in GitHub. All API traffic is loopback-only. No third-party API key is generated.
+
+CLI alternative (Windows PowerShell in `C:\S`):
 
 ```powershell
-powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\Install-S.ps1
+py -3 -m continuum.cli api-key create --name "My app" --scopes read,chat
+py -3 -m continuum.cli api-key list
+py -3 -m continuum.cli api-key revoke YOUR_KEY_ID
 ```
 
-This copies program files into `%LOCALAPPDATA%\S-Computer` and creates a desktop shortcut. It requires Python 3.11+ and **does not require admin rights**. The private chat database lives separately under `%USERPROFILE%\.s-computer` and is not overwritten. To start without installing, double-click `Start-S.cmd`.
+Call the authenticated local models endpoint (replace the placeholder with your privately saved API key):
 
-## Generate S API keys for local applications
+```powershell
+$SKey = Read-Host "Paste your S API key"
+Invoke-RestMethod -Uri http://127.0.0.1:8765/v1/models -Headers @{ Authorization = "Bearer $SKey" }
+```
 
-Open **Settings → S API keys** to create, copy once, list or revoke cryptographically random keys. S stores only SHA-256 digests. They authorize requests to `GET /v1/models` (read scope) and `POST /v1/chat` (chat scope).
+Call the local chat API by providing an **existing** `session_id` from the S desktop:
 
-PowerShell: `py -3 -m continuum.cli api-key create --name "My app" --scopes read,chat`. See `docs/S-API-KEYS.md`. Local S API keys are not credentials for any other provider. Keep the loopback server private and never expose port 8765 to the internet.
+```powershell
+$payload = @{session_id="YOUR_SESSION_ID";text="Describe our next invention test";model="s-research:local"} | ConvertTo-Json
+Invoke-RestMethod -Uri http://127.0.0.1:8765/v1/chat -Method Post -ContentType application/json -Headers @{ Authorization="Bearer $SKey" } -Body $payload
+```
+
+The key protects `/v1/*` endpoints. Existing `/api/*` browser routes intentionally remain available to programs already running on the same computer to support the local S UI. This is **not an Internet-exposed multi-user authentication service**. Do not forward port 8765 through a router or tunnel. On a shared/untrusted Windows user account, local processes may access the browser API and the database; operating-system account separation is still required for stronger isolation.
+
+## S v0.5 — Invention Lab (teacher → experiment)
+
+Use the **⚗ Invention Lab** button in the S top bar to teach symbolic transformation examples, infer a candidate instruction, run independent held-out tests, and correct mistakes. Previous failures and later results remain in the project-local evidence ledger.
+
+The lab runs only a fixed, inspected instruction vocabulary and optional two-operation compositions. **It is not yet a general autonomous coding agent.** See `docs/S-INVENTION-LAB.md` for proof criteria and the next development gates.
+
+To update an already installed Windows v0.4 instance: stop S, extract this release, and run `powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\Upgrade-S-v0.5.ps1`. This tests the extracted source, backs up the private SQLite database, and then copies application files into the existing installation. The S database stays under your Windows user profile and is not committed publicly.
