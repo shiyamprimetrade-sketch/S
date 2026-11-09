@@ -42,6 +42,11 @@ CREATE TABLE IF NOT EXISTS archive_extras(
  id TEXT PRIMARY KEY, session_id TEXT NOT NULL REFERENCES sessions(id) ON DELETE CASCADE,
  role TEXT NOT NULL, content TEXT NOT NULL, created_at TEXT NOT NULL, source_id TEXT, imported_at TEXT NOT NULL
 );
+CREATE TABLE IF NOT EXISTS feedback(
+ message_id TEXT PRIMARY KEY REFERENCES messages(id) ON DELETE CASCADE,
+ rating INTEGER NOT NULL CHECK(rating IN (-1,1)),
+ note TEXT NOT NULL DEFAULT '', updated_at TEXT NOT NULL
+);
 CREATE TABLE IF NOT EXISTS events(
  id INTEGER PRIMARY KEY AUTOINCREMENT, project_id TEXT NOT NULL,
  action TEXT NOT NULL, detail TEXT NOT NULL, created_at TEXT NOT NULL
@@ -141,6 +146,33 @@ class Store:
             rows=db.execute('SELECT role,content FROM messages WHERE session_id=? ORDER BY rowid DESC LIMIT ?',(sid,limit))
             return [dict(x) for x in reversed(list(rows))]
 
+    def delete_session(self,sid):
+        self.get_session(sid)
+        with self.connect() as db:
+            db.execute('DELETE FROM sessions WHERE id=?',(sid,))
+        return {'deleted':True,'session_id':sid}
+
+    def set_feedback(self,message_id,rating,note=''):
+        if rating not in (-1,1) or not isinstance(message_id,str):
+            raise ValueError('Invalid feedback')
+        note=str(note).strip()
+        if len(note)>1000:raise ValueError('Feedback note too long')
+        with self.connect() as db:
+            msg=db.execute('SELECT role FROM messages WHERE id=?',(message_id,)).fetchone()
+            if not msg or msg['role']!='assistant':raise ValueError('Unknown assistant message')
+            db.execute('INSERT INTO feedback(message_id,rating,note,updated_at) VALUES(?,?,?,?) '
+                       'ON CONFLICT(message_id) DO UPDATE SET rating=excluded.rating,note=excluded.note,updated_at=excluded.updated_at',
+                       (message_id,rating,note,now()))
+        return {'message_id':message_id,'rating':rating,'saved':True}
+
+    def list_feedback(self,project_id):
+        self.get_project(project_id)
+        with self.connect() as db:
+            rows=db.execute('SELECT f.message_id,f.rating,f.note,f.updated_at FROM feedback f '
+                            'JOIN messages m ON m.id=f.message_id JOIN sessions s ON s.id=m.session_id '
+                            'WHERE s.project_id=? ORDER BY f.updated_at DESC',(project_id,))
+            return [dict(r) for r in rows]
+
     def add_note(self,pid,title,body,kind='lesson',evidence=''):
         self.get_project(pid)
         if kind not in KINDS: raise ValueError('Unknown note type')
@@ -166,9 +198,16 @@ class Store:
     def export_project(self,pid):
         p=self.get_project(pid)
         sessions=self.list_sessions(pid)
+        data=[]
+        with self.connect() as db:
+            for session in sessions:
+                extras=[dict(r) for r in db.execute(
+                    'SELECT id,role,content,created_at,source_id,imported_at FROM archive_extras WHERE session_id=? ORDER BY rowid',(session['id'],))]
+                data.append({'session':session,'messages':self.list_messages(session['id'],1000000),
+                             'archive_extras':extras})
         return {'format':'axiomflow-continuum-project','version':1,'exported_at':now(),
-                'project':p,'sessions':[{'session':s,'messages':self.list_messages(s['id'],1000000)} for s in sessions],
-                'notes':self.list_notes(pid,1000000)}
+                'project':p,'sessions':data,'notes':self.list_notes(pid,1000000),
+                'feedback':self.list_feedback(pid)}
 
     def import_project(self,document):
         if document.get('format')!='axiomflow-continuum-project' or document.get('version')!=1:
@@ -179,14 +218,27 @@ class Store:
         with self.connect() as db:
             for section in document['sessions']:
                 s=section['session']
-                sid=new_id();old_to_new[s['id']]=sid
-                db.execute('INSERT INTO sessions VALUES(?,?,?,?)',(sid,new['id'],s['title'],now()))
+                sid=new_id()
+                db.execute('INSERT INTO sessions VALUES(?,?,?,?)',(sid,new['id'],s['title'],s.get('created_at') or now()))
                 for m in section['messages']:
                     if m['role'] not in ('user','assistant'):raise ValueError('Bad role in import')
-                    db.execute('INSERT INTO messages VALUES(?,?,?,?,?,?,?)',(new_id(),sid,m['role'],m['content'],now(),m.get('model'),m.get('elapsed_ms')))
+                    mid=new_id()
+                    old_to_new[m['id']]=mid
+                    db.execute('INSERT INTO messages VALUES(?,?,?,?,?,?,?)',
+                               (mid,sid,m['role'],m['content'],m.get('created_at') or now(),m.get('model'),m.get('elapsed_ms')))
+                for m in section.get('archive_extras',[]):
+                    db.execute('INSERT INTO archive_extras VALUES(?,?,?,?,?,?,?)',
+                               (new_id(),sid,m['role'],m['content'],m.get('created_at') or now(),
+                                m.get('source_id'),m.get('imported_at') or now()))
             for n in document['notes']:
                 if n['kind'] not in KINDS:raise ValueError('Bad note type in import')
-                db.execute('INSERT INTO notes VALUES(?,?,?,?,?,?,?)',(new_id(),new['id'],n['title'],n['body'],n['kind'],n.get('evidence',''),now()))
+                db.execute('INSERT INTO notes VALUES(?,?,?,?,?,?,?)',
+                           (new_id(),new['id'],n['title'],n['body'],n['kind'],n.get('evidence',''),n.get('created_at') or now()))
+            for f in document.get('feedback',[]):
+                mid=old_to_new.get(f.get('message_id'))
+                if mid is None or f.get('rating') not in (-1,1):continue
+                db.execute('INSERT INTO feedback(message_id,rating,note,updated_at) VALUES(?,?,?,?)',
+                           (mid,f['rating'],f.get('note',''),f.get('updated_at') or now()))
         return new
 
     def handoff(self,pid):
@@ -194,7 +246,7 @@ class Store:
         p=self.get_project(pid)
         notes=self.list_notes(pid,30)
         sessions=self.list_sessions(pid)
-        out=[f"# AxiomFlow Continuum — {p['name']}",
+        out=[f"# S — {p['name']}",
              "", "This is portable project context, not model weights or autonomous memory.",
              "Respect project boundaries. Separate claims, hypotheses, evidence and verified results.",
              "## Lessons and checkpoints"]
@@ -223,7 +275,7 @@ class Store:
 
     def seed_if_empty(self):
         if self.list_projects():return False
-        p=self.create_project('Independent Computing & KEY26')
+        p=self.create_project('S — Human Computer')
         lessons=[
           ('lesson','Keyboard as an invention interface','Letters and symbols can be combined into words and instructions. Existing language syntax is a design choice, not a law of nature.',''),
           ('lesson','Words, numbers and relationships','ABCA and CABA each contain four letters. Four can be written FOUR; APPLE → FIVE → FOUR → FOUR is a deterministic word-length chain.',''),

@@ -6,7 +6,7 @@ import threading
 from http.server import BaseHTTPRequestHandler,ThreadingHTTPServer
 from pathlib import Path
 from urllib.parse import urlparse,parse_qs
-from .engine import chat,ollama_models,DEFAULT_MODEL,LocalModelError,TEACHER_MODEL,CHAR_MODEL
+from .engine import chat,ollama_models,DEFAULT_MODEL,LocalModelError,TEACHER_MODEL,CHAR_MODEL,S_RESEARCH_MODEL
 from .relations import related
 from .storage import Store
 
@@ -14,7 +14,7 @@ ROOT=Path(__file__).resolve().parent.parent
 WEB=ROOT/'web'
 
 class API(BaseHTTPRequestHandler):
-    server_version='AxiomFlow/0.1'
+    server_version='S-Local/0.3'
     def log_message(self,fmt,*args):
         # Avoid recording private message contents in server logs.
         if os.environ.get('AXIOM_HTTP_LOG')=='1':super().log_message(fmt,*args)
@@ -54,14 +54,18 @@ class API(BaseHTTPRequestHandler):
         if verb=='GET':
             if path=='/api/health':
                 from .teacherlab import MODEL
-                models=ollama_models()
-                if MODEL.exists():models=[TEACHER_MODEL]+models
+                models=[S_RESEARCH_MODEL]
+                if MODEL.exists():models.append(TEACHER_MODEL)
                 from .charllm import DEFAULT_CKPT
-                if DEFAULT_CKPT.exists():models=[CHAR_MODEL]+models
-                return {'ok':True,'models':models,'default_model':TEACHER_MODEL if MODEL.exists() else DEFAULT_MODEL,'data_file':str(s.path)}
+                from importlib.util import find_spec
+                if DEFAULT_CKPT.exists() and find_spec('torch') is not None:models.append(CHAR_MODEL)
+                models.extend(ollama_models())
+                return {'ok':True,'app':'S','models':models,'default_model':S_RESEARCH_MODEL,
+                        'data_file':str(s.path),'inference':'local only','cloud_api':False}
             if path=='/api/projects':return s.list_projects()
             if path=='/api/sessions':return s.list_sessions(self._param('project_id'))
             if path=='/api/messages':return s.list_messages(self._param('session_id'))
+            if path=='/api/feedback':return s.list_feedback(self._param('project_id'))
             if path=='/api/notes':return s.list_notes(self._param('project_id'))
             if path=='/api/search':return s.search_history(self._param('project_id'),self._param('q'))
             if path=='/api/relations':return related(s,self._param('project_id'),self._param('word'))
@@ -75,7 +79,9 @@ class API(BaseHTTPRequestHandler):
             if path=='/api/projects':return s.create_project(b.get('name',''))
             if path=='/api/sessions':return s.create_session(b.get('project_id',''),b.get('title','New conversation'))
             if path=='/api/notes':return s.add_note(b.get('project_id',''),b.get('title',''),b.get('body',''),b.get('kind','lesson'),b.get('evidence',''))
-            if path=='/api/chat':return chat(s,b.get('session_id',''),b.get('text',''),b.get('model',DEFAULT_MODEL))
+            if path=='/api/chat':return chat(s,b.get('session_id',''),b.get('text',''),b.get('model',S_RESEARCH_MODEL))
+            if path=='/api/delete-session':return s.delete_session(b.get('session_id',''))
+            if path=='/api/feedback':return s.set_feedback(b.get('message_id',''),b.get('rating'),b.get('note',''))
             if path=='/api/import-chatgpt':
                 if not isinstance(b.get('document'),(list,dict)):raise ValueError('Invalid ChatGPT export')
                 return s.import_chatgpt(b['document'],b.get('title_contains',''),bool(b.get('redact',True)))
@@ -116,6 +122,6 @@ class AppServer(ThreadingHTTPServer):
 
 def serve(db_path,port=8765):
     with AppServer('127.0.0.1',port,db_path) as app:
-        print(f'AxiomFlow Continuum: http://127.0.0.1:{port}',flush=True)
+        print(f'S Local Human Computer: http://127.0.0.1:{port}',flush=True)
         print(f'Data: {app.store.path}',flush=True)
         app.serve_forever()
