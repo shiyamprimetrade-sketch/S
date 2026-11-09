@@ -86,3 +86,9 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\Install-S.ps1
 ```
 
 This copies program files into `%LOCALAPPDATA%\S-Computer` and creates a desktop shortcut. It requires Python 3.11+ and **does not require admin rights**. The private chat database lives separately under `%USERPROFILE%\.s-computer` and is not overwritten. To start without installing, double-click `Start-S.cmd`.
+
+## Generate S API keys for local applications
+
+Open **Settings → S API keys** to create, copy once, list or revoke cryptographically random keys. S stores only SHA-256 digests. They authorize requests to `GET /v1/models` (read scope) and `POST /v1/chat` (chat scope).
+
+PowerShell: `py -3 -m continuum.cli api-key create --name "My app" --scopes read,chat`. See `docs/S-API-KEYS.md`. Local S API keys are not credentials for any other provider. Keep the loopback server private and never expose port 8765 to the internet.
