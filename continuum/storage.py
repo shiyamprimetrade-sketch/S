@@ -47,6 +47,11 @@ CREATE TABLE IF NOT EXISTS feedback(
  rating INTEGER NOT NULL CHECK(rating IN (-1,1)),
  note TEXT NOT NULL DEFAULT '', updated_at TEXT NOT NULL
 );
+CREATE TABLE IF NOT EXISTS api_keys(
+ id TEXT PRIMARY KEY, name TEXT NOT NULL, key_hash TEXT NOT NULL UNIQUE,
+ scopes TEXT NOT NULL, created_at TEXT NOT NULL,
+ last_used_at TEXT, revoked_at TEXT
+);
 CREATE TABLE IF NOT EXISTS events(
  id INTEGER PRIMARY KEY AUTOINCREMENT, project_id TEXT NOT NULL,
  action TEXT NOT NULL, detail TEXT NOT NULL, created_at TEXT NOT NULL
