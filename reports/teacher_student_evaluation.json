@@ -1,0 +1,49 @@
+{
+  "format": "axiomflow-evaluation",
+  "heldout": {
+    "accuracy": 0.7171,
+    "confusion": {
+      "collaboration": {
+        "collaboration": 41,
+        "redefine": 9
+      },
+      "continuity": {
+        "continuity": 45,
+        "redefine": 5
+      },
+      "redefine": {
+        "redefine": 20,
+        "unknown": 4,
+        "verification": 26
+      },
+      "rules": {
+        "rules": 50
+      },
+      "symbols": {
+        "symbols": 50
+      },
+      "terminal": {
+        "continuity": 17,
+        "terminal": 33
+      },
+      "verification": {
+        "redefine": 21,
+        "terminal": 13,
+        "unknown": 4,
+        "verification": 12
+      }
+    },
+    "correct": 251,
+    "count": 350,
+    "evaluation": "synthetic-heldout-templates-not-human-generalization"
+  },
+  "human_derived_paraphrase_count": 15,
+  "limits": [
+    "Template-generated text is not independent human dialogue.",
+    "This is classification/retrieval, not training a general language model.",
+    "No unseen real-human conversation quality has been verified.",
+    "No ChatGPT weights, proprietary training corpus, or private chat export is included."
+  ],
+  "synthetic_train_count": 4000,
+  "version": 1
+}
