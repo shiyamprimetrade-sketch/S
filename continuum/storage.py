@@ -210,9 +210,14 @@ class Store:
                     'SELECT id,role,content,created_at,source_id,imported_at FROM archive_extras WHERE session_id=? ORDER BY rowid',(session['id'],))]
                 data.append({'session':session,'messages':self.list_messages(session['id'],1000000),
                              'archive_extras':extras})
+        # Export all teacher-student experiments, not just chat. SQLite backups
+        # remain the authoritative binary snapshot; JSON is the portable format.
+        from .invention import InventionLab
+        lab = InventionLab(self)
+        inventions = [lab.detail(pid, x['id']) for x in lab.list(pid)]
         return {'format':'axiomflow-continuum-project','version':1,'exported_at':now(),
                 'project':p,'sessions':data,'notes':self.list_notes(pid,1000000),
-                'feedback':self.list_feedback(pid)}
+                'feedback':self.list_feedback(pid),'inventions':inventions}
 
     def import_project(self,document):
         if document.get('format')!='axiomflow-continuum-project' or document.get('version')!=1:
@@ -220,6 +225,8 @@ class Store:
         project=document['project']
         new=self.create_project(project['name']+' (imported)')
         old_to_new={}
+        from .invention import InventionLab
+        InventionLab(self)
         with self.connect() as db:
             for section in document['sessions']:
                 s=section['session']
@@ -244,6 +251,29 @@ class Store:
                 if mid is None or f.get('rating') not in (-1,1):continue
                 db.execute('INSERT INTO feedback(message_id,rating,note,updated_at) VALUES(?,?,?,?)',
                            (mid,f['rating'],f.get('note',''),f.get('updated_at') or now()))
+            # Backward-compatible: older exports do not have inventions.
+            for goal in document.get('inventions', []):
+                if not isinstance(goal, dict):raise ValueError('Invalid invention in export')
+                iid=new_id()
+                candidate=goal.get('candidate')
+                if candidate is not None:
+                    from .invention import execute
+                    execute(candidate, '')  # validate against the closed instruction set
+                db.execute('INSERT INTO inventions VALUES(?,?,?,?,?,?,?,?,?)',
+                           (iid,new['id'],str(goal['objective'])[:1000],str(goal['success_criteria'])[:1000],
+                            goal.get('status','awaiting_examples'),json.dumps(candidate) if candidate else None,
+                            int(goal.get('version',0)),now(),now()))
+                for example in goal.get('examples',[]):
+                    if example.get('role') not in ('teach','test'):raise ValueError('Invalid role in invention')
+                    db.execute('INSERT INTO invention_examples VALUES(?,?,?,?,?,?,?,?)',
+                               (new_id(),iid,example['input'],example['expected'],example['role'],
+                                example.get('teacher_note','')[:1000],int(example.get('revision',0)),now()))
+                # Original experiment evidence may reference old example IDs;
+                # preserve its content as historical evidence, not retest it.
+                for run in goal.get('runs',[]):
+                    db.execute('INSERT INTO invention_runs VALUES(?,?,?,?,?,?,?,?)',
+                               (new_id(),iid,int(run['version']),str(run['candidate']),int(run['passed']),
+                                json.dumps(run['results']),str(run['evidence_sha256']),now()))
         return new
 
     def handoff(self,pid):
@@ -258,6 +288,17 @@ class Store:
         for n in reversed(notes):
             out.extend([f"### [{n['kind'].upper()}] {n['title']}",n['body']])
             if n['evidence']:out.append('Evidence: '+n['evidence'])
+        from .invention import InventionLab
+        lab=InventionLab(self)
+        out.append('## Invention experiments (measured, not general intelligence)')
+        for goal in lab.list(pid)[:10]:
+            full=lab.detail(pid,goal['id'])
+            out.extend([f"### {full['objective']}",
+                        f"Status: {full['status']}; candidate: {full['candidate']}",
+                        f"Success criteria: {full['success_criteria']}"])
+            for run in full['runs'][:1]:
+                out.append(f"Latest experiment: {('PASS' if run['passed'] else 'FAIL')} "
+                           f"evidence_sha256={run['evidence_sha256']}")
         out.append('## Recent conversation excerpts')
         for ses in sessions[:3]:
             out.append('### Conversation: '+ses['title'])
