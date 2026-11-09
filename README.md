@@ -1,6 +1,6 @@
 # AxiomFlow Continuum — independent invention workspace
 
-**Status:** A runnable local-first chat prototype, persistent project memory and backup/export system. Uses a **separately installed local open-weight AI model** via Ollama. Does **not** contain a trained model or recreate GPT-6. No cloud subscriptions or API keys required *after* Python, Ollama and a model have been downloaded. No automatic tool execution or full self-modification is claimed.
+**Status:** A runnable local-first chat prototype, persistent project memory and backup/export system. Uses a **separately installed local open-weight AI model** via Ollama. V2 bundles a tiny 138,240-parameter byte-token checkpoint trained on synthetic templates; it does **not** recreate GPT-6 or provide comparable reasoning. No cloud subscriptions or API keys required *after* Python, Ollama and a model have been downloaded. No automatic tool execution or full self-modification is claimed.
 
 ## Quick start — Windows 11
 
@@ -18,7 +18,7 @@ powershell -ExecutionPolicy Bypass -File .\scripts\Start-Continuum.ps1
 
 ## If no local model is installed
 
-- The web UI, project notes, conversation history, word relations, export and backup will work, but chat inference will return an explicit error until Ollama + a model are available.
+- The web UI, project notes, conversation history, word relations, export and backup work. `teacherlab:local` offers a limited prebuilt teaching-response classifier; `charllm:local` offers experimental from-scratch character generation. Fluently following broad questions requires a separately installed open-weight Ollama model.
 - Check `ollama list`, `ollama serve` (if the service is not running), and `py -3 -m continuum.cli doctor`.
 - Default model is `qwen2.5:1.5b`; set `$env:AXIOM_MODEL='your-model-id'` or edit the UI model field to use a model already installed locally.
 

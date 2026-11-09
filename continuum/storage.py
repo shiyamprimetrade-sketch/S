@@ -38,6 +38,10 @@ CREATE TABLE IF NOT EXISTS word_links(
  a TEXT NOT NULL, b TEXT NOT NULL, count INTEGER NOT NULL,
  PRIMARY KEY(project_id,a,b)
 );
+CREATE TABLE IF NOT EXISTS archive_extras(
+ id TEXT PRIMARY KEY, session_id TEXT NOT NULL REFERENCES sessions(id) ON DELETE CASCADE,
+ role TEXT NOT NULL, content TEXT NOT NULL, created_at TEXT NOT NULL, source_id TEXT, imported_at TEXT NOT NULL
+);
 CREATE TABLE IF NOT EXISTS events(
  id INTEGER PRIMARY KEY AUTOINCREMENT, project_id TEXT NOT NULL,
  action TEXT NOT NULL, detail TEXT NOT NULL, created_at TEXT NOT NULL
@@ -231,3 +235,56 @@ class Store:
         for kind,title,body,evid in lessons:self.add_note(p['id'],title,body,kind,evid)
         self.create_session(p['id'],'Session 03 — Continue the invention')
         return True
+
+# The importer is deliberately a separate transaction; it must not call
+# add_message() for every historic message (that would wrongly train word
+# relations and make a large import unnecessarily slow).
+def _import_chatgpt(self, document, title_contains='', redact=True):
+    from .transcript import parse_export
+    convs=parse_export(document,title_contains,redact)
+    project=self.create_project('ChatGPT Archive'+(' — '+title_contains[:65] if title_contains else ''))
+    imported=0;other=0
+    with self.connect() as db:
+        for c in convs:
+            sid=new_id()
+            db.execute('INSERT INTO sessions VALUES(?,?,?,?)',(sid,project['id'],c['title'],now()))
+            for m in c['messages']:
+                if m['role'] in ('user','assistant'):
+                    # Preserve source timestamps and full text, even for long messages.
+                    db.execute('INSERT INTO messages VALUES(?,?,?,?,?,?,?)',
+                               (new_id(),sid,m['role'],m['content'],m['created_at'],m.get('model'),None))
+                    imported+=1
+                else:
+                    db.execute('INSERT INTO archive_extras VALUES(?,?,?,?,?,?,?)',
+                               (new_id(),sid,m['role'],m['content'],m['created_at'],m.get('source_id',''),now()))
+                    other+=1
+    return {'project_id':project['id'],'project_name':project['name'],
+            'conversations':len(convs),'chat_messages':imported,'other_messages':other,
+            'redacted':redact,'media':'metadata placeholders only'}
+
+def _search_history(self,pid,query,limit=20):
+    """Bounded, relevance-ranked keyword recall within one project only."""
+    import re
+    self.get_project(pid)
+    query=str(query).strip()
+    if not 2<=len(query)<=500:raise ValueError('Search needs 2–500 characters')
+    stop={'what','when','where','why','which','with','this','that','have','from',
+          'about','your','mine','does','said','tell','please','could','would','should',
+          'the','and','for','are','was','were','did','how','can','you','me','my','our'}
+    words=[]
+    for w in re.findall(r'[^\W_]{3,}',query.casefold()):
+        if w not in stop and w not in words:words.append(w)
+    words=words[:7]
+    if not words:raise ValueError('Search needs a meaningful word')
+    pats=['%'+w.replace('\\','\\\\').replace('%','\\%').replace('_','\\_')+'%' for w in words]
+    rank=' + '.join('CASE WHEN m.content LIKE ? ESCAPE \'\\\' THEN 1 ELSE 0 END' for _ in words)
+    match=' OR '.join('m.content LIKE ? ESCAPE \'\\\'' for _ in words)
+    sql=('SELECT m.id,m.role,m.content,m.created_at,s.id AS session_id,s.title, ('+rank+') AS relevance '
+         'FROM messages m JOIN sessions s ON m.session_id=s.id '
+         'WHERE s.project_id=? AND ('+match+') ORDER BY relevance DESC, m.rowid DESC LIMIT ?')
+    params=pats+[pid]+pats+[min(100,max(1,int(limit)))]
+    with self.connect() as db:
+        return [{**dict(r),'content':r['content'][:1300]} for r in db.execute(sql,params)]
+
+Store.import_chatgpt=_import_chatgpt
+Store.search_history=_search_history

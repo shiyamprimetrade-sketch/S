@@ -11,3 +11,9 @@ __pycache__/
 
 # Generated plaintext training data (compressed corpus is committed)
 /models/*.json
+
+# Keep user transcripts and model training private
+/data/private/
+/data/*chatgpt*
+/models/*.pt
+*.zip
