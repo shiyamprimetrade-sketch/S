@@ -1,8 +1,8 @@
-# Axiom Human Computer — foundation for a complete human-like computer
+# S Human Computer — foundation for a complete human-like computer
 
 This repo addition starts the **whole-computer** project: hardware, firmware, kernel, OS, desktop, cognition, memory, symbol-based learning and verified action. It deliberately **does not claim that the entire computer has already been built**.
 
-The first runnable component is an independent Windows desktop/control plane that can accept goals without requiring "deep thinking", preserve feedback and memories, observe workspace files, synthesize new symbolic instructions from examples, validate outputs, and show real machine information. If integrated with AxiomFlow Continuum v2, it can also invoke the project's **own tiny byte-token model** for experimental unverified text generation. No subscription or cloud inference is necessary.
+The first runnable component is an independent Windows desktop/control plane that can accept goals without requiring "deep thinking", preserve feedback and memories, observe workspace files, synthesize new symbolic instructions from examples, validate outputs, and show real machine information. If integrated with S v2, it can also invoke the project's **own tiny byte-token model** for experimental unverified text generation. No subscription or cloud inference is necessary.
 
 ## Windows 11
 
@@ -17,7 +17,7 @@ py -3 -m human_computer.cli desktop
 
 Or open `scripts/Start-Axiom-Human-PC.ps1` from a PowerShell terminal.
 
-Optional original Axiom byte-model generation requires AxiomFlow v2 files, its saved model checkpoint and `py -3 -m pip install torch`. It will be labeled **UNVERIFIED_GENERATION**, not a verified intelligent action.
+Optional original Axiom byte-model generation requires S v2 (formerly AxiomFlow) files, its saved model checkpoint and `py -3 -m pip install torch`. It will be labeled **UNVERIFIED_GENERATION**, not a verified intelligent action.
 
 ## Commands in the desktop or terminal
 

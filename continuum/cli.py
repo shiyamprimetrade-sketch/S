@@ -9,10 +9,10 @@ from .storage import Store
 from .engine import ollama_models,DEFAULT_MODEL
 
 ROOT=Path(__file__).resolve().parent.parent
-DB=Path(os.environ.get('AXIOM_DB',str(ROOT/'data'/'continuum.sqlite3')))
+DB=Path(os.environ.get('S_DB',os.environ.get('AXIOM_DB',str(Path.home()/'.s-computer'/'s.sqlite3'))))
 
 def main(argv=None):
-    p=argparse.ArgumentParser(prog='axiomflow',description='Offline, model-independent chat and research memory')
+    p=argparse.ArgumentParser(prog='S',description='S — Offline local invention computer, memory and learning')
     p.add_argument('--db',default=str(DB),help='SQLite database path')
     sub=p.add_subparsers(dest='cmd',required=True)
     server=sub.add_parser('serve',help='Start local browser app')

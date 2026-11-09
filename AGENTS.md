@@ -1,27 +1,25 @@
-# Codex / Engineering agent directive — AxiomFlow Continuum
+# S — Autonomous engineering continuation protocol
 
-Read `README.md`, `docs/INVENTION-PROTOCOL.md`, and `docs/TEACHER-STUDENT-ML.md`
-first. The purpose is an **independent local research assistant**, preserving the
-teacher's instruction method and project boundaries. Work from verified checkpoints;
-implement experiments, run tests, report actual results, and do not claim invented
-capacities. Preserve existing human data and separate it from synthetic simulations.
+This is the canonical repository for **S**, an independent local human-like computer research project. Previously called Axiom Human Computer / AxiomFlow Continuum. Do not restart it or transfer work back to the old repository.
 
-## Priorities
+## Permanent operating rules
 
-1. Run tests and verify Windows 11 startup; keep the server strictly bound to loopback.
-2. Preserve notes, lessons, sessions, backup, export/import and handoff continuity.
-3. Record the source and label of every training example. Never treat synthetic text
-   as verified human statements. Do not publish exact private conversations.
-4. Train and evaluate TeacherLab before changing the conversation model; report
-   heldout results, gaps and your precise test commands.
-5. Use locally downloaded models via Ollama when available; use `teacherlab:local`
-   transparently as a simple offline non-LLM fallback. Never quietly call cloud APIs.
-6. Do not give this agent unsupervised shell or network powers. Significant actions
-   require explicit authorization. Test generated commands before real deployment.
-7. Do not alter SLICKK Mail, SLICKK-OS or other independent repositories.
-8. Never commit passwords, tokens, private transcripts or user-specific secrets.
-9. Do not claim that prompts or 4,000 simulations create the actual assistant's
-   weights, inner experiences, ongoing background work, or identical capabilities.
+- Build the whole project across intelligence, symbolic meaning, training, memory, OS, hardware and user interaction; keep experiments separate from unverified claims.
+- Understand the objective before applying keyword triggers; reasoning, verification and learning are default behaviors, not special commands activated by phrases such as "deep thinking".
+- User is the teacher; preserve actual human messages separately from synthetic simulations and model-generated text. Never misattribute synthetic output to the user.
+- Code and test real changes; log test evidence and known blockers. No fake success, simulated web searches or fake high-end model labels.
+- Use **GitHub `shiyamprimetrade-sketch/S`** as the only canonical target for new work. The Axiom repository is read-only historical evidence.
+- Preserve SQLite backups and model checkpoints locally; do not commit private transcripts, tokens, secrets or exported chat histories to a public repository.
+- The local UI must work without CDN assets or paid AI APIs. Original S byte-model training uses PyTorch (installed locally), and optional third-party models must be clearly identified.
+- Machine modifications (disk format, firmware flash, boot loader, kernel install, drivers) require independent emulation tests and explicit user approval; don't damage the existing Windows PC.
+- Keep unrelated projects (Slickk Mail, Slickk-OS, Slickk Pay, Prime International, PixelForge) isolated.
 
-Completion criteria: reproducible source, passing tests, runnable Windows commands,
-local SQLite continuity, accurate evidence report and no fabricated AI claims.
+## Engineering checkpoints
+
+1. Run `py -3 -m unittest discover -s tests -v`.
+2. Run `py -3 -m continuum.cli doctor` and `py -3 -m continuum.cli serve` on Windows; inspect the browser at localhost.
+3. Import a small synthetic ChatGPT export, confirm conversation counts, search and feedback persistence.
+4. Evaluate the local original byte model on held-out examples, separately from the rule scaffold.
+5. Build the first S kernel in QEMU; verify boot and reproducibility before any hardware work.
+
+Status is never "complete" without evidence. The final invention is not yet complete.

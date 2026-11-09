@@ -1,88 +1,88 @@
-# AxiomFlow Continuum — independent invention workspace
+# S — Independent Human Computer & Local AI
 
-**Status:** A runnable local-first chat prototype, persistent project memory and backup/export system. Uses a **separately installed local open-weight AI model** via Ollama. V2 bundles a tiny 138,240-parameter byte-token checkpoint trained on synthetic templates; it does **not** recreate GPT-6 or provide comparable reasoning. No cloud subscriptions or API keys required *after* Python, Ollama and a model have been downloaded. No automatic tool execution or full self-modification is claimed.
+**Canonical repository:** https://github.com/shiyamprimetrade-sketch/S
 
-## Quick start — Windows 11
+**Owner / teacher:** Shiyam Talukder. **Purpose:** Invent an independent, human-like computer system with its own learning, symbolic language, memory, execution mechanisms, and eventually original OS/hardware. The project is never considered complete by changing a label or simulating an output. Progress requires execution and verification.
 
-1. Extract the ZIP to e.g. `C:\AxiomFlow-Continuum` on a drive with adequate free space. Do not use the 16 GB Ubuntu live USB for the model files.
-2. In Windows PowerShell, check Python: `py -3 --version`. Requires Python 3.11+; if missing, use `winget install -e --id Python.Python.3.12` and reopen PowerShell.
-3. Install Ollama for Windows (via `winget install -e --id Ollama.Ollama` if available), start Ollama, and download a small open-weight model: `ollama pull qwen2.5:1.5b`. This is a suggested model ID, not an assertion that it is already installed. Models must be downloaded while online, but inference can run without the internet.
-4. Open PowerShell in the extracted project directory and run:
+The local chat is named **S**. The supplied S chat design has been recreated as a fully offline-capable static interface served by our local Python application. It is not a hosted ChatGPT clone. It stores local messages in SQLite and responds through **genuine installed engines**, not mock replies.
 
-```powershell
-powershell -ExecutionPolicy Bypass -File .\scripts\Test-Continuum.ps1
-powershell -ExecutionPolicy Bypass -File .\scripts\Start-Continuum.ps1
-```
+## Quick start on Windows 11
 
-5. Open `http://127.0.0.1:8765`. Create independent projects, start sessions, record lessons and hypotheses, and chat with the local model.
-
-## If no local model is installed
-
-- The web UI, project notes, conversation history, word relations, export and backup work. `teacherlab:local` offers a limited prebuilt teaching-response classifier; `charllm:local` offers experimental from-scratch character generation. Fluently following broad questions requires a separately installed open-weight Ollama model.
-- Check `ollama list`, `ollama serve` (if the service is not running), and `py -3 -m continuum.cli doctor`.
-- Default model is `qwen2.5:1.5b`; set `$env:AXIOM_MODEL='your-model-id'` or edit the UI model field to use a model already installed locally.
-
-## Backup and migrate between computers or model providers
+Install Python 3.11 or newer, selecting **Add Python to PATH** if using the installer. Download this repository or extract the S Windows ZIP; open PowerShell in its folder:
 
 ```powershell
-# Stop the UI with Ctrl+C before restoring; backup may run while the app is serving.
-py -3 -m continuum.cli backup
-py -3 -m continuum.cli doctor
-# Export one project: get its ID from the UI API or the exported JSON.
-# The UI has an Export Project button; copy the JSON to another computer.
-py -3 -m continuum.cli import .\your-project.json
-# Restore a whole SQLite snapshot ONLY with server stopped:
-py -3 -m continuum.cli restore .\backups\continuum-YYYYMMDD-HHMMSS.sqlite3 --confirm
-```
-
-All messages and user-approved knowledge notes are held in `data/continuum.sqlite3`. Backups go to `backups/`; keep at least one **encrypted copy on another device**. The **Handoff** button creates a Markdown recap of recent conversations, project lessons, hypotheses and evidence for any other chat model. It does not export model weights. Exported JSON is *plaintext*: keep it private. Backup/restore and data migration use standard SQLite/JSON, not a proprietary cloud format.
-
-## Project boundaries
-
-The app creates a separate workspace named `Independent Computing & KEY26`. It includes **user-taught lessons** (symbols, word counting, rule generation, error analysis) and explicitly labelled **hypotheses**, rather than claiming any memory miracle or autonomous consciousness. Other projects can be created separately.
-
-## What is not yet built
-
-- A local model with GPT-6-level reasoning (not promised).
-- Automatic web browsing, arbitrary shell execution, full IDE integration, model fine-tuning, or autonomous self-training.
-- Encrypted-at-rest SQLite; protect the Windows account and device, and encrypt portable backups.
-- Exposure to the public internet. The web server is deliberately bound to `127.0.0.1`.
-- Always-on execution when Windows is off. The OS, machine, model and electricity must be available.
-
-## Technical construction
-
-- `continuum/server.py`: Python standard-library HTTP server, loopback-only, host and Origin checks.
-- `continuum/storage.py`: SQLite WAL-compatible portable project/session/message/notes storage, backup/restore and import/export.
-- `continuum/engine.py`: local Ollama `/api/chat` bridge with real error reporting, time measurement and context notes.
-- `continuum/relations.py`: deterministic word-length/anagram/co-occurrence discoveries. These are statistical/structural associations, **not** proof of general intelligence.
-- `web/`: responsive local chat UI, project/notes/relationship explorer.
-- `docs/INVENTION-PROTOCOL.md`: preserved teaching checkpoints.
-- `tests/`: automated local tests.
-
-## Threat model
-
-Localhost-only is not complete authentication against a malicious program already running on the same PC. The application does not include a public-user login system. Do not bind it to `0.0.0.0`, forward it through Cloudflare Tunnel, or expose it to the LAN without adding authentication, CSRF protection, TLS and access controls. Do not paste secrets into project notes. Model output can be wrong; test all code before execution.
-
-## Teacher–Student ML invention lab (new)
-
-This repository also includes `continuum/teacherlab.py`, a deterministic offline
-simulation generator and a trained **intent-classification** model. There are 4,000
-synthetic teacher/student exchanges and 15 teacher-lesson paraphrases in separate
-provenance-marked JSONL files. A 350-example heldout-template report is committed.
-This does not train a general conversational AI from scratch or reproduce GPT-6.
-
-```powershell
-py -3 -m continuum.lab_cli build --simulations 4000
-py -3 -m continuum.lab_cli evaluate
-py -3 -m continuum.lab_cli ask "Why should errors trigger experiments?"
 py -3 -m unittest discover -s tests -v
+py -3 -m continuum.cli doctor
 py -3 -m continuum.cli serve
 ```
 
-In the browser, select `teacherlab:local` to try the classifier without Ollama.
-For a more fluent local dialogue, install an open-weight model in Ollama; its system
-context will include bounded TeacherLab teaching examples and stored project notes.
-See `docs/TEACHER-STUDENT-ML.md`. The original private chat is **not** included in
-this public repository; only curated technical paraphrases were used.
+Open **http://127.0.0.1:8765**. Only localhost is supported by default. No internet or subscription is needed for **S Research**. No third-party Python modules are required for S Research, stored chat, private import, lesson notes or export.
 
-**Reproducibility:** The complete 4,000-row synthetic dataset is committed compressed as `data/simulations/teacher_student_4000.jsonl.gz`; `lab_cli build` recreates the working plaintext JSONL.
+Run the separate whole-computer experiment (Tkinter) using:
+
+```powershell
+py -3 -m human_computer.cli desktop
+```
+
+This does **not** replace Windows or flash firmware. The original S kernel/physical hardware are separate experimental milestones.
+
+## Installed model choices — no fake intelligence
+
+| UI | Engine | Works without cloud? | What it really does |
+|---|---|---|---|
+| S Research (default) | `s-research:local` | Yes, Python stdlib | Retrieves project notes and produces a bounded, testable research scaffold. **Not a generative LLM.** |
+| S Mini | `teacherlab:local` | Yes, with bundled checkpoint | 4,000-simulation-trained topic classifier plus templates. **Not a conversational LLM.** |
+| S Original | `charllm:local` | Yes, Python + PyTorch | Locally trained, original tiny byte-token Transformer (138,240 parameters). Generates text but **not yet a capable chat model**. |
+| Other local model | Ollama, optional | Yes after its download | Third-party open weights; **not S-original** and never used silently. |
+
+The user-supplied design listed names resembling other providers' models. The interface intentionally displays real engine identity and capabilities instead of claiming an untrained model is high-end.
+
+**S Original**: The source package includes an experimental checkpoint where distributed with the downloadable S ZIP. If absent after cloning GitHub, create your own checkpoint with:
+
+```powershell
+py -3 -m pip install torch
+py -3 -m continuum.charllm train --steps 250
+py -3 -m continuum.cli serve
+```
+
+Training reads **synthetic template data** unless explicitly provided the private corpus project. Generated text will be fragmentary with this tiny model. To deliberately train on imported private conversations, follow `docs/S-CONTINUITY.md`.
+
+## Bring our full conversation into S
+
+A chat window in this answer cannot guarantee access to every full historical message and binary attachment. We **do not put private transcripts or passwords in a public GitHub repository**. The built-in importer accepts `conversations.json` from a ChatGPT data export; in Settings select **Import conversation JSON**. Large exports and ZIPs:
+
+```powershell
+py -3 -m continuum.cli import-chatgpt "C:\path\to\chatgpt-export.zip" --title "distinctive conversation title"
+```
+
+The import creates a separate local project and preserves message order and original text where available. It redacts recognized credentials by default. Imported images/audio appear as metadata placeholders, not recovered binaries. After import, select the archive project in the sidebar, search lessons and add correction notes. **Import is retrieval/memory, not automatic training.**
+
+## Continuity and backups
+
+The database is at `%USERPROFILE%\.s-computer\s.sqlite3` on Windows (override with `S_DB`). Nothing is uploaded automatically. Save a verified snapshot and export the project before switching machines or subscriptions:
+
+```powershell
+py -3 -m continuum.cli backup --output .\S-backup.sqlite3
+py -3 -m continuum.cli export --project YOUR_PROJECT_ID --output .\S-project.json
+py -3 -m continuum.cli handoff --project YOUR_PROJECT_ID --output .\S-handoff.md
+```
+
+**Caution:** S-backup files contain your private messages and belong outside the public Git repository. The web interface can export project JSON and handoff Markdown. Python restoration explicitly requires `--confirm` and creates a pre-restore backup.
+
+## What we are inventing
+
+S is a full-system project, not merely a chatbot: language/meaning, perception, goal planning, symbolic rule synthesis, machine operations, verification, memory, kernel, OS, firmware, and ultimately dedicated computer hardware. The installed UI is one subsystem.
+
+See `docs/S-CONTINUITY.md`, `docs/S-MIGRATION.md`, `docs/HUMAN-COMPUTER-CHARTER.md`, and `docs/HUMAN-COMPUTER-MILESTONES.md`.
+
+**Verified scope:** The local browser/API/SQLite code and 52 preexisting tests were tested in this build; S-specific integration tests are included. Windows graphical startup and real PC hardware remain to be checked on the user's device.
+
+## Optional one-time installation
+
+After extracting the Windows ZIP, run PowerShell in the extracted directory:
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\Install-S.ps1
+```
+
+This copies program files into `%LOCALAPPDATA%\S-Computer` and creates a desktop shortcut. It requires Python 3.11+ and **does not require admin rights**. The private chat database lives separately under `%USERPROFILE%\.s-computer` and is not overwritten. To start without installing, double-click `Start-S.cmd`.
