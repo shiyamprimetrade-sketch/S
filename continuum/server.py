@@ -11,12 +11,13 @@ from .relations import related
 from .storage import Store
 from .api_keys import create_key,list_keys,revoke_key,authenticate_key
 from .invention import InventionLab
+from .meaning import TeacherMemory
 
 ROOT=Path(__file__).resolve().parent.parent
 WEB=ROOT/'web'
 
 class API(BaseHTTPRequestHandler):
-    server_version='S-Local/0.5'
+    server_version='S-Local/0.6'
     def log_message(self,fmt,*args):
         # Avoid recording private message contents in server logs.
         if os.environ.get('AXIOM_HTTP_LOG')=='1':super().log_message(fmt,*args)
@@ -54,6 +55,9 @@ class API(BaseHTTPRequestHandler):
         path=urlparse(self.path).path
         s=self.server.store
         if verb=='GET':
+            if path=='/api/memory/lessons':return self.server.memory.lessons(self._param('project_id'))
+            if path=='/api/memory/concepts':return self.server.memory.concepts(self._param('project_id'))
+            if path=='/api/memory/recall':return self.server.memory.recall(self._param('project_id'),self._param('q'))
             if path=='/api/inventions':return self.server.lab.list(self._param('project_id'))
             if path=='/api/invention':return self.server.lab.detail(self._param('project_id'),self._param('goal_id'))
             if path=='/api/keys':return list_keys(s)
@@ -82,6 +86,19 @@ class API(BaseHTTPRequestHandler):
         else:
             b=self._body()
             lab=self.server.lab
+            if path=='/api/memory/teach':return self.server.memory.teach(
+                b.get('project_id'),b.get('title',''),b.get('principle',''),b.get('cues',[]))
+            if path=='/api/memory/concept':return self.server.memory.define_concept(
+                b.get('project_id'),b.get('label',''),b.get('variants',[]))
+            if path=='/api/memory/review':return self.server.memory.review(
+                b.get('project_id'),b.get('lesson_id'),b.get('decision'))
+            if path=='/api/memory/revise':return self.server.memory.revise(
+                b.get('project_id'),b.get('lesson_id'),b.get('principle',''),b.get('cues',[]))
+            if path=='/api/memory/transfer':return self.server.memory.transfer(
+                b.get('source_project_id'),b.get('destination_project_id'),
+                b.get('lesson_id'),bool(b.get('include_concepts',False)))
+            if path=='/api/memory/archive-candidates':return self.server.memory.suggest_archive_corrections(
+                b.get('project_id'),b.get('limit',30))
             if path=='/api/inventions':return lab.create(b.get('project_id'),b.get('objective',''),b.get('success_criteria',''))
             if path=='/api/invention/example':return lab.add_example(b.get('project_id'),b.get('goal_id'),b.get('input'),b.get('expected'),b.get('role','teach'))
             if path=='/api/invention/correct':return lab.correct(b.get('project_id'),b.get('goal_id'),b.get('example_id'),b.get('expected'),b.get('teacher_note',''))
@@ -95,7 +112,20 @@ class API(BaseHTTPRequestHandler):
             if path=='/api/notes':return s.add_note(b.get('project_id',''),b.get('title',''),b.get('body',''),b.get('kind','lesson'),b.get('evidence',''))
             if path=='/api/chat':return chat(s,b.get('session_id',''),b.get('text',''),b.get('model',S_RESEARCH_MODEL))
             if path=='/api/delete-session':return s.delete_session(b.get('session_id',''))
-            if path=='/api/feedback':return s.set_feedback(b.get('message_id',''),b.get('rating'),b.get('note',''))
+            if path=='/api/feedback':
+                outcome = s.set_feedback(b.get('message_id',''),b.get('rating'),b.get('note',''))
+                if b.get('rating') == -1 and str(b.get('note','')).strip():
+                    msg = b.get('message_id','')
+                    with s.connect() as db:
+                        row = db.execute('SELECT se.project_id FROM messages m JOIN sessions se '
+                                         'ON se.id=m.session_id WHERE m.id=?',(msg,)).fetchone()
+                    if row:
+                        try:
+                            candidate = self.server.memory.propose_feedback(row['project_id'],msg,b['note'])
+                        except __import__('sqlite3').IntegrityError:
+                            candidate = None  # Already proposed on earlier feedback
+                        outcome['memory_candidate_id'] = candidate['id'] if candidate else None
+                return outcome
             if path=='/api/import-chatgpt':
                 if not isinstance(b.get('document'),(list,dict)):raise ValueError('Invalid ChatGPT export')
                 return s.import_chatgpt(b['document'],b.get('title_contains',''),bool(b.get('redact',True)))
@@ -166,6 +196,7 @@ class AppServer(ThreadingHTTPServer):
         self.store=Store(db_path)
         self.store.seed_if_empty()
         self.lab=InventionLab(self.store)
+        self.memory=TeacherMemory(self.store)
 
 def serve(db_path,port=8765):
     with AppServer('127.0.0.1',port,db_path) as app:

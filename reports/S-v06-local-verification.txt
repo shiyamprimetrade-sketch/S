@@ -1,0 +1,18 @@
+S v0.6 local evidence — 2026-11-09
+
+Python 3.13.5 / Linux container
+----------------------------------------------------------------------
+Ran 116 tests in 16.953s
+
+OK
+
+Actual Chromium DOM via Playwright proxy to local HTTP handlers:
+Teacher UI saved: PASS
+Recall UI: PASS
+Phrase concept UI: PASS
+Chat consumes teacher memory: PASS
+Browser JS errors: []
+
+Hand-authored retrieval benchmark: keyword baseline 5/9, teacher-defined meaning 9/9
+NOT a general language-understanding or neural-training benchmark.
+User Windows installation not tested here.

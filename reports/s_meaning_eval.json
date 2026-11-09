@@ -1,0 +1,63 @@
+{
+  "scope": "Hand-authored 9-query demonstration, not general language understanding",
+  "size": 9,
+  "baseline_correct": 5,
+  "teacher_memory_correct": 9,
+  "records": [
+    {
+      "query": "Can obstacles block our invention?",
+      "expected": "constraints",
+      "keyword_baseline": "reasoning",
+      "teacher_memory": "constraints"
+    },
+    {
+      "query": "Do barriers require other designs?",
+      "expected": "constraints",
+      "keyword_baseline": null,
+      "teacher_memory": "constraints"
+    },
+    {
+      "query": "Apply careful investigation now",
+      "expected": "reasoning",
+      "keyword_baseline": null,
+      "teacher_memory": "reasoning"
+    },
+    {
+      "query": "Should we try deep thinking here?",
+      "expected": "reasoning",
+      "keyword_baseline": null,
+      "teacher_memory": "reasoning"
+    },
+    {
+      "query": "Is this result correct?",
+      "expected": "accuracy",
+      "keyword_baseline": "accuracy",
+      "teacher_memory": "accuracy"
+    },
+    {
+      "query": "Does a right result need evidence?",
+      "expected": "accuracy",
+      "keyword_baseline": "accuracy",
+      "teacher_memory": "accuracy"
+    },
+    {
+      "query": "Bake chocolate cookies",
+      "expected": null,
+      "keyword_baseline": null,
+      "teacher_memory": null
+    },
+    {
+      "query": "Where is the nearest garden?",
+      "expected": null,
+      "keyword_baseline": null,
+      "teacher_memory": null
+    },
+    {
+      "query": "Organize music playlists",
+      "expected": null,
+      "keyword_baseline": null,
+      "teacher_memory": null
+    }
+  ],
+  "limitations": "Aliases and teaching examples supplied by the evaluator; no independent corpus or neural training"
+}

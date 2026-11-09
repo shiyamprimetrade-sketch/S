@@ -112,3 +112,17 @@ Use the **⚗ Invention Lab** button in the S top bar to teach symbolic transfor
 The lab runs only a fixed, inspected instruction vocabulary and optional two-operation compositions. **It is not yet a general autonomous coding agent.** See `docs/S-INVENTION-LAB.md` for proof criteria and the next development gates.
 
 To update an already installed Windows v0.4 instance: stop S, extract this release, and run `powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\Upgrade-S-v0.5.ps1`. This tests the extracted source, backs up the private SQLite database, and then copies application files into the existing installation. The S database stays under your Windows user profile and is not committed publicly.
+
+## S v0.6 — Meaning and Teacher Memory
+
+S now provides **◇ Knowledge → Teacher Memory** for explicitly teaching principles, naming equivalent single/multiword expressions, recalling lessons in new questions, reviewing suggested corrections from your own imported conversations, revising mistakes without deleting history, and intentionally transferring a reviewed lesson between projects. Unreviewed suggestions and negative feedback never silently become trusted lessons. The app stays localhost-only and does not require an AI subscription.
+
+**Important:** This is a transparent local memory and retrieval capability, *not* neural-network fine-tuning or human-level semantic comprehension. Full private conversation data cannot be reconstructed without your ChatGPT export, which must remain on your own PC. S Research and explicitly selected local Ollama models receive the reviewed teaching relevant to the active project only.
+
+To upgrade an installed Windows S v0.5, stop S, extract v0.6, then run:
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\Upgrade-S-v0.6.ps1
+```
+
+This runs tests, checks whether the local app is still running, backs up the default local SQLite database if present, preserves a copy of installed program files, and installs the update. It does not delete chats or API keys. If your installation directory is nonstandard, supply `-Destination "C:\Your\S\Path"`. See `docs/S-MEANING-MEMORY.md` and run `py -3 -m examples.evaluate_meaning` for the 9-case illustrative test.
