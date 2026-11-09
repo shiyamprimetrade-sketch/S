@@ -6,7 +6,7 @@ import threading
 from http.server import BaseHTTPRequestHandler,ThreadingHTTPServer
 from pathlib import Path
 from urllib.parse import urlparse,parse_qs
-from .engine import chat,ollama_models,DEFAULT_MODEL,LocalModelError,TEACHER_MODEL
+from .engine import chat,ollama_models,DEFAULT_MODEL,LocalModelError,TEACHER_MODEL,CHAR_MODEL
 from .relations import related
 from .storage import Store
 
@@ -29,7 +29,8 @@ class API(BaseHTTPRequestHandler):
         self.end_headers();self.wfile.write(body)
     def _body(self):
         n=int(self.headers.get('Content-Length','0'))
-        if n<2 or n>100000:raise ValueError('Invalid request size')
+        max_bytes=45*1024*1024 if urlparse(self.path).path=='/api/import-chatgpt' else 100000
+        if n<2 or n>max_bytes:raise ValueError('Invalid request size')
         return json.loads(self.rfile.read(n))
     def _query(self):
         return parse_qs(urlparse(self.path).query)
@@ -55,11 +56,14 @@ class API(BaseHTTPRequestHandler):
                 from .teacherlab import MODEL
                 models=ollama_models()
                 if MODEL.exists():models=[TEACHER_MODEL]+models
+                from .charllm import DEFAULT_CKPT
+                if DEFAULT_CKPT.exists():models=[CHAR_MODEL]+models
                 return {'ok':True,'models':models,'default_model':TEACHER_MODEL if MODEL.exists() else DEFAULT_MODEL,'data_file':str(s.path)}
             if path=='/api/projects':return s.list_projects()
             if path=='/api/sessions':return s.list_sessions(self._param('project_id'))
             if path=='/api/messages':return s.list_messages(self._param('session_id'))
             if path=='/api/notes':return s.list_notes(self._param('project_id'))
+            if path=='/api/search':return s.search_history(self._param('project_id'),self._param('q'))
             if path=='/api/relations':return related(s,self._param('project_id'),self._param('word'))
             if path=='/api/export':return s.export_project(self._param('project_id'))
             if path=='/api/handoff':return {'markdown':s.handoff(self._param('project_id'))}
@@ -72,6 +76,9 @@ class API(BaseHTTPRequestHandler):
             if path=='/api/sessions':return s.create_session(b.get('project_id',''),b.get('title','New conversation'))
             if path=='/api/notes':return s.add_note(b.get('project_id',''),b.get('title',''),b.get('body',''),b.get('kind','lesson'),b.get('evidence',''))
             if path=='/api/chat':return chat(s,b.get('session_id',''),b.get('text',''),b.get('model',DEFAULT_MODEL))
+            if path=='/api/import-chatgpt':
+                if not isinstance(b.get('document'),(list,dict)):raise ValueError('Invalid ChatGPT export')
+                return s.import_chatgpt(b['document'],b.get('title_contains',''),bool(b.get('redact',True)))
         raise ValueError('Unknown route')
     def _guard(self):
         # Only local origins may POST, blocking cross-origin browser attempts.
