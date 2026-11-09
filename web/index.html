@@ -105,6 +105,14 @@
           <article class="setting-card"><h3>Model status</h3><p id="model-details">Checking...</p><button id="refresh-models" class="secondary-button">Refresh models</button></article>
           <article class="setting-card"><h3>Import our teaching history</h3><p>Choose a downloaded ChatGPT <code>conversations.json</code> export. For a large ZIP, import through the terminal.</p><button id="import-settings" class="secondary-button">Import JSON</button><input id="chatgpt-file" type="file" hidden accept=".json,application/json"></article>
           <article class="setting-card"><h3>Project continuity</h3><p>Save portable JSON, an editable handoff file, or a validated SQLite snapshot using the CLI.</p><button id="export-settings" class="secondary-button">Export JSON</button><button id="handoff" class="secondary-button">Download handoff</button></article>
+          <article class="setting-card api-key-card"><h3>S API keys</h3>
+            <p>Generate a unique key to let another program use your local S API. Keys are shown once, stored only as hashes, and can be revoked at any time.</p>
+            <button id="create-api-key" class="primary-button">Generate API key</button>
+            <button id="refresh-api-keys" class="secondary-button">Refresh keys</button>
+            <div id="new-api-key-wrap" class="hidden api-key-new"><label for="new-api-key">Copy this key now — it will not be shown again</label><textarea id="new-api-key" readonly spellcheck="false" rows="3" aria-label="New S API key"></textarea><button id="copy-api-key" class="secondary-button">Copy key</button><button id="hide-api-key" class="secondary-button">Hide key</button></div>
+            <div id="api-key-list" class="api-key-list" aria-live="polite">No API keys loaded.</div>
+            <p class="api-note">API address: <code>http://127.0.0.1:8765/v1</code>. The key only grants access to this computer's S API; it does not unlock external AI services.</p>
+          </article>
           <article class="setting-card"><h3>Original S language model</h3><p>The from-scratch byte-token Transformer is experimental. For generation, PyTorch and a trained local checkpoint are required.</p><code>py -3 -m continuum.charllm train --steps 250</code></article>
         </div>
       </section>
