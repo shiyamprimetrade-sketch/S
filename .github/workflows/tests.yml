@@ -29,3 +29,6 @@ jobs:
         run: python -m unittest discover -s tests -v
       - name: Report held-out evaluation
         run: python -m continuum.lab_cli evaluate
+
+      - name: Teacher memory illustrative held-out evaluation
+        run: python -m examples.evaluate_meaning

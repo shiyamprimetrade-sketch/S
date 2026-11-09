@@ -11,3 +11,11 @@ html.dark{color-scheme:dark;--bg:#212121;--text:#ececec;--muted:#a0a0a0;--side:#
 .invention-list{display:grid;gap:8px}.invention-choice{text-align:left;background:var(--surface);border:1px solid var(--border);padding:11px;border-radius:9px;overflow-wrap:anywhere}.invention-choice.chosen{border-color:var(--accent)}
 .invention-detail{background:var(--surface);border-radius:14px;padding:18px;min-height:200px;overflow-wrap:anywhere}.invention-detail h3{margin-top:0}.lab-controls{display:flex;flex-wrap:wrap;gap:7px;margin:13px 0}.lab-example{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:9px 0;border-top:1px solid var(--border)}.lab-example span{overflow-wrap:anywhere}.lab-run{border-top:1px solid var(--border);padding:10px 0}.lab-run pre{white-space:pre-wrap;font-size:12px;overflow-wrap:anywhere}
 @media(max-width:860px){.invention-grid{grid-template-columns:1fr}}
+
+/* S v0.6 — Teacher Memory with explicit human review */
+.memory-header{margin:10px 0 20px;padding:18px;border:1px solid var(--border);border-radius:14px;background:var(--surface)}
+.memory-header h3{margin:0 0 8px}.memory-header p{color:var(--muted);font-size:13px;line-height:1.5}
+.memory-toolbar{display:flex;flex-wrap:wrap;gap:7px;margin:13px 0}.memory-toolbar button{white-space:normal}
+.memory-lessons,.memory-hits{display:grid;gap:9px}.memory-card,.memory-match{border:1px solid var(--border);padding:13px;border-radius:12px;background:var(--bg);overflow-wrap:anywhere}
+.memory-card h4{margin:0 0 6px}.memory-card small{display:block;color:var(--muted);font-size:11px;margin-top:4px}
+.memory-card p{font-size:13px;white-space:pre-wrap}.memory-hits{margin-bottom:14px}

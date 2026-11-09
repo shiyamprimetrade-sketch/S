@@ -215,9 +215,11 @@ class Store:
         from .invention import InventionLab
         lab = InventionLab(self)
         inventions = [lab.detail(pid, x['id']) for x in lab.list(pid)]
+        from .meaning import TeacherMemory
+        teacher_memory = TeacherMemory(self).export(pid)
         return {'format':'axiomflow-continuum-project','version':1,'exported_at':now(),
                 'project':p,'sessions':data,'notes':self.list_notes(pid,1000000),
-                'feedback':self.list_feedback(pid),'inventions':inventions}
+                'feedback':self.list_feedback(pid),'inventions':inventions, 'teacher_memory':teacher_memory}
 
     def import_project(self,document):
         if document.get('format')!='axiomflow-continuum-project' or document.get('version')!=1:
@@ -274,6 +276,9 @@ class Store:
                     db.execute('INSERT INTO invention_runs VALUES(?,?,?,?,?,?,?,?)',
                                (new_id(),iid,int(run['version']),str(run['candidate']),int(run['passed']),
                                 json.dumps(run['results']),str(run['evidence_sha256']),now()))
+        if document.get('teacher_memory'):
+            from .meaning import TeacherMemory
+            TeacherMemory(self).restore(new['id'], document['teacher_memory'], old_to_new)
         return new
 
     def handoff(self,pid):
@@ -299,6 +304,14 @@ class Store:
             for run in full['runs'][:1]:
                 out.append(f"Latest experiment: {('PASS' if run['passed'] else 'FAIL')} "
                            f"evidence_sha256={run['evidence_sha256']}")
+        from .meaning import TeacherMemory
+        memory = TeacherMemory(self)
+        out.append('## Teacher-approved meaning (reviewed, not proven scientific facts)')
+        for lesson in memory.lessons(pid,'approved',limit=30):
+            out.append(f"### Lesson {lesson['id']} v{lesson['version']}: {lesson['title']}")
+            out.append('Principle: '+lesson['principle'])
+            out.append('Trigger examples: '+' | '.join(lesson['cues'][:4]))
+            out.append(f"Source: {lesson['origin']} {lesson.get('source_id') or ''}")
         out.append('## Recent conversation excerpts')
         for ses in sessions[:3]:
             out.append('### Conversation: '+ses['title'])

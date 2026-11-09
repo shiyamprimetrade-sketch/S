@@ -38,6 +38,9 @@ def respond(store,project_id,prompt):
         if score:scored.append((score,note))
     scored.sort(key=lambda x:(-x[0],x[1]['title']))
     matches=[n for _,n in scored[:3]]
+    # The teacher-approved memory is kept separate from hypotheses and raw archive.
+    from .meaning import TeacherMemory
+    teachings = TeacherMemory(store).recall(project_id, prompt)
     # Ask a meaningful, content-specific question; avoid copying a generic answer.
     output=["S RESEARCH · Local, rule-based analysis (not an LLM)",
             "",f"Objective received: {prompt[:1000]}",
@@ -48,6 +51,13 @@ def respond(store,project_id,prompt):
             output.append(f"• [{n['kind'].upper()}] {n['title']}: {n['body'][:350]}")
     else:
         output.append('• No matching verified project note. I will not invent prior evidence.')
+    output.extend(['','Teacher memory (explicitly approved, not independent proof):'])
+    if teachings:
+        for t in teachings:
+            output.append(f"• [TEACHER LESSON {t['id'][:10]} v{t['version']}] {t['title']}: {t['principle'][:650]}")
+            output.append('  Retrieved by: '+', '.join(t['matched_terms'])+'; source='+t['origin'])
+    else:
+        output.append('• No relevant approved teaching found in this project. Archive suggestions need review.')
     output.extend(['','Proposed next operation:'])
     if intent=='invention':
         output.append('1. State the observable result this invention must produce.\n2. Build the smallest end-to-end implementation that demonstrates it.\n3. Compare it against the existing method and save the test evidence.')
