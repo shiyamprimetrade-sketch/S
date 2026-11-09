@@ -1,7 +1,7 @@
 'use strict';
 /* S local-first interface. No CDN, cloud API, fake search or mock assistant. */
 const $=id=>document.getElementById(id);
-const state={projects:[],projectId:null,sessions:[],sessionId:null,models:[],model:'s-research:local',feedback:{},busy:false,controller:null,panel:'chat',attachment:'',toastTimer:null};
+const state={projects:[],projectId:null,sessions:[],sessionId:null,models:[],model:'s-research:local',feedback:{},busy:false,controller:null,panel:'chat',attachment:'',toastTimer:null,inventionId:null};
 const modelCatalog={
  's-research:local':{name:'S Research',description:'Independent rule-based research · always offline',symbol:'S'},
  'teacherlab:local':{name:'S Mini',description:'Original small teaching-pattern classifier · offline',symbol:'◈'},
@@ -14,7 +14,7 @@ function modelInfo(name){return modelCatalog[name]||{name:`Local model · ${name
 function download(content,name,type){const url=URL.createObjectURL(new Blob([content],{type}));const a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),3500)}
 function dateToday(iso){return (new Date(iso)).toDateString()===(new Date()).toDateString()}
 function setTheme(dark){document.documentElement.classList.toggle('dark',dark);localStorage.setItem('s-theme',dark?'dark':'light')}
-function switchPanel(name){if(name!=='settings'&&state.panel==='settings')clearDisplayedApiKey();state.panel=name;for(const id of ['chat','archive','knowledge','settings'])$(id+'-panel').classList.toggle('hidden',id!==name);if(name==='archive')$('search-query').focus()}
+function switchPanel(name){if(name!=='settings'&&state.panel==='settings')clearDisplayedApiKey();state.panel=name;for(const id of ['chat','archive','knowledge','invention','settings'])$(id+'-panel').classList.toggle('hidden',id!==name);if(name==='archive')$('search-query').focus()}
 function sidebar(open){const aside=$('sidebar');aside.classList.toggle('open',open);$('mobile-overlay').classList.toggle('hidden',!open)}
 function popup(id,visible){$(id).classList.toggle('hidden',!visible)}
 function renderModels(){const menu=$('model-menu');menu.replaceChildren();for(const model of state.models){const item=document.createElement('button');item.className='model-option'+(state.model===model?' selected':'');item.type='button';item.setAttribute('role','menuitemradio');item.setAttribute('aria-checked',String(state.model===model));const marker=document.createElement('span');marker.className='model-symbol';marker.textContent=modelInfo(model).symbol;const labels=document.createElement('span');labels.className='model-info';const title=document.createElement('strong');title.textContent=modelInfo(model).name;const sub=document.createElement('small');sub.textContent=modelInfo(model).description;labels.append(title,sub);item.append(marker,labels);item.addEventListener('click',()=>{state.model=model;refreshModelTitle();popup('model-menu',false);$('model-button').setAttribute('aria-expanded','false');renderModels()});menu.append(item)}if(!state.models.includes('charllm:local')){const item=document.createElement('button');item.className='model-option';item.disabled=true;item.textContent='S Original · Train checkpoint and install PyTorch to enable';menu.append(item)}}
@@ -82,10 +82,90 @@ function createApiKeyDialog(){
     notify('Key generated. Copy it now; S will not show it again.');
   });
 }
+// S Invention Lab: verified symbolic execution is separate from generated chat text.
+async function openInventionLab(){switchPanel('invention');await refreshInventions()}
+async function refreshInventions(preferred){
+ const goals=await api('/api/inventions?'+q({project_id:state.projectId}));
+ state.inventionId=(preferred&&goals.some(g=>g.id===preferred))?preferred:
+    (goals.some(g=>g.id===state.inventionId)?state.inventionId:(goals[0]?.id||null));
+ const list=$('invention-list');list.replaceChildren();
+ for(const goal of goals){
+   const btn=document.createElement('button');btn.type='button';btn.className='invention-choice';
+   btn.textContent=`${goal.objective} — ${goal.status}`;
+   if(goal.id===state.inventionId)btn.classList.add('chosen');
+   btn.onclick=async()=>{state.inventionId=goal.id;await refreshInventions(goal.id)};
+   list.append(btn);
+ }
+ if(!goals.length){list.textContent='No goals in this project.';$('invention-detail').textContent='Create a goal with observable success criteria.';return}
+ await showInventionDetail();
+}
+async function showInventionDetail(){
+ if(!state.inventionId)return;
+ const goal=await api('/api/invention?'+q({project_id:state.projectId,goal_id:state.inventionId}));
+ const area=$('invention-detail');area.replaceChildren();
+ const heading=document.createElement('h3');heading.textContent=goal.objective;
+ const criteria=document.createElement('p');criteria.textContent=`Success criteria: ${goal.success_criteria}`;
+ const status=document.createElement('p');status.textContent=`Status: ${goal.status}; version: ${goal.version}; candidate: ${goal.candidate?.join(' → ')||'none'}`;
+ area.append(heading,criteria,status);
+ const buttons=document.createElement('div');buttons.className='lab-controls';
+ const addBtn=(name,callback)=>{const b=document.createElement('button');b.type='button';b.className='secondary-button';b.textContent=name;b.onclick=callback;buttons.append(b)};
+ addBtn('Teach example',()=>inventionExampleDialog('teach'));
+ addBtn('Held-out test',()=>inventionExampleDialog('test'));
+ addBtn('Discover rule',()=>runInvention('synthesize'));
+ addBtn('Run tests',()=>runInvention('evaluate'));
+ addBtn('Predict new input',()=>openDialog('Try learned instruction',[
+   {id:'input',label:'New input'}],async v=>{
+   const result=await api('/api/invention/predict',{project_id:state.projectId,goal_id:state.inventionId,input:v.input});
+   notify(`S predicts: ${result.output} (${result.status})`)
+ }));
+ area.append(buttons);
+ const cases=document.createElement('h4');cases.textContent='Teacher examples and independent tests';area.append(cases);
+ for(const ex of goal.examples){
+   const row=document.createElement('div');row.className='lab-example';
+   const txt=document.createElement('span');txt.textContent=`[${ex.role}] ${ex.input} → ${ex.expected} ${ex.revision?'· corrected '+ex.revision+' time(s)':''}`;
+   const edit=document.createElement('button');edit.type='button';edit.className='secondary-button';edit.textContent='Correct';
+   edit.onclick=()=>openDialog('Correct the expected result',[
+      {id:'expected',label:'Correct result',initial:ex.expected},
+      {id:'teacher_note',label:'Why this correction matters',long:true}],async v=>{
+      await api('/api/invention/correct',{project_id:state.projectId,goal_id:state.inventionId,
+          example_id:ex.id,expected:v.expected,teacher_note:v.teacher_note});
+      await refreshInventions(state.inventionId);notify('Correction saved and hypothesis reevaluated')
+   });row.append(txt,edit);area.append(row)
+ }
+ const runs=document.createElement('h4');runs.textContent='Recorded experiments';area.append(runs);
+ for(const run of goal.runs){
+   const p=document.createElement('div');p.className='lab-run';
+   const info=document.createElement('strong');info.textContent=`${run.passed?'PASS':'FAIL'} · version ${run.version} · ${run.evidence_sha256.slice(0,16)}…`;
+   const pre=document.createElement('pre');pre.textContent=run.results.map(r=>`${r.input} → ${r.actual===null?'ERROR':r.actual} (expected ${r.expected}) ${r.passed?'PASS':'FAIL'}`).join('\n');
+   p.append(info,pre);area.append(p)
+ }
+}
+function inventionExampleDialog(role){
+ openDialog(role==='teach'?'Teach S a transformation':'Create a held-out test',[
+  {id:'input',label:'Input (e.g. CAT)'},{id:'expected',label:'Expected result (e.g. CATS)'}],async v=>{
+    await api('/api/invention/example',{project_id:state.projectId,goal_id:state.inventionId,
+       role,input:v.input,expected:v.expected});
+    await refreshInventions(state.inventionId)
+ });
+}
+async function runInvention(action){
+ try{
+  const result=await api(`/api/invention/${action}`,{project_id:state.projectId,goal_id:state.inventionId});
+  await refreshInventions(state.inventionId);
+  notify(`${result.status}: ${action==='evaluate'?`${result.results.length} held-out case(s) tested`:`${result.consistent_candidates} consistent program(s)`}`)
+ }catch(e){notify(e.message)}
+}
+function newInventionDialog(){
+ openDialog('Teach S a new invention',[
+   {id:'objective',label:'Goal (observable behavior)',initial:'Learn what adding S does to a symbol'},
+   {id:'success_criteria',label:'How should S prove it?',long:true,initial:'Infer a rule from two examples and pass at least one unseen example'}],
+ async v=>{const goal=await api('/api/inventions',{project_id:state.projectId,objective:v.objective,success_criteria:v.success_criteria});await refreshInventions(goal.id)})
+}
+
 function wire(){setTheme(localStorage.getItem('s-theme')!=='light');$('sidebar-open').onclick=()=>sidebar(!$('sidebar').classList.contains('open'));$('sidebar-close').onclick=()=>sidebar(false);$('mobile-overlay').onclick=()=>sidebar(false);$('model-button').onclick=()=>{const show=$('model-menu').classList.contains('hidden');popup('model-menu',show);$('model-button').setAttribute('aria-expanded',String(show))};document.addEventListener('click',e=>{if(!e.target.closest('.model-control'))popup('model-menu',false);if(!e.target.closest('.sidebar-foot'))popup('profile-menu',false)});$('new-chat').onclick=()=>{showWelcome();switchPanel('chat');sidebar(false);$('chat-input').focus()};$('profile-btn').onclick=()=>popup('profile-menu',$('profile-menu').classList.contains('hidden'));$('theme-toggle').onclick=()=>setTheme(!document.documentElement.classList.contains('dark'));
  $('project').onchange=async e=>{state.projectId=e.target.value;state.sessionId=null;await refreshSessions()};$('new-project').onclick=()=>openDialog('Create a separate S project',[{id:'name',label:'Project name'}],async v=>{const p=await api('/api/projects',{name:v.name});state.sessionId=null;await refreshProjects(p.id)});
  $('composer').onsubmit=e=>{e.preventDefault();send()};$('chat-input').oninput=resizeInput;$('chat-input').onkeydown=e=>{if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();send()}};$('stop-btn').onclick=()=>{state.controller?.abort();notify('Stopped waiting for local response. An operation already started may finish.')};
- for(const item of document.querySelectorAll('[data-prompt]'))item.onclick=()=>{$('chat-input').value=item.dataset.prompt;resizeInput();$('chat-input').focus()};$('archive-open').onclick=openArchive;$('archive-search').onclick=openArchive;$('knowledge-open').onclick=showKnowledge;$('settings-open').onclick=()=>{switchPanel('settings');popup('profile-menu',false);sidebar(false);refreshApiKeys()};for(const btn of document.querySelectorAll('.back-chat'))btn.onclick=()=>switchPanel('chat');$('search-run').onclick=performSearch;$('search-query').onkeydown=e=>{if(e.key==='Enter')performSearch()};$('add-note').onclick=()=>openDialog('Preserve a teaching checkpoint',[{id:'kind',label:'Evidence category',options:['lesson','hypothesis','experiment','evidence','decision','question']},{id:'title',label:'Title'},{id:'body',label:'Content',long:true},{id:'evidence',label:'Evidence reference (required for evidence notes)'}],async v=>{await api('/api/notes',{project_id:state.projectId,...v});await refreshNotes()});$('relate').onclick=exploreRelation;
+ for(const item of document.querySelectorAll('[data-prompt]'))item.onclick=()=>{$('chat-input').value=item.dataset.prompt;resizeInput();$('chat-input').focus()};$('archive-open').onclick=openArchive;$('archive-search').onclick=openArchive;$('knowledge-open').onclick=showKnowledge;$('invention-open').onclick=()=>openInventionLab().catch(e=>notify(e.message));$('new-invention').onclick=newInventionDialog;$('settings-open').onclick=()=>{switchPanel('settings');popup('profile-menu',false);sidebar(false);refreshApiKeys()};for(const btn of document.querySelectorAll('.back-chat'))btn.onclick=()=>switchPanel('chat');$('search-run').onclick=performSearch;$('search-query').onkeydown=e=>{if(e.key==='Enter')performSearch()};$('add-note').onclick=()=>openDialog('Preserve a teaching checkpoint',[{id:'kind',label:'Evidence category',options:['lesson','hypothesis','experiment','evidence','decision','question']},{id:'title',label:'Title'},{id:'body',label:'Content',long:true},{id:'evidence',label:'Evidence reference (required for evidence notes)'}],async v=>{await api('/api/notes',{project_id:state.projectId,...v});await refreshNotes()});$('relate').onclick=exploreRelation;
  $('create-api-key').onclick=createApiKeyDialog;$('refresh-api-keys').onclick=refreshApiKeys;$('copy-api-key').onclick=()=>navigator.clipboard.writeText($('new-api-key').value).then(()=>notify('API key copied')).catch(()=>notify('Clipboard unavailable'));$('hide-api-key').onclick=clearDisplayedApiKey;
  $('export').onclick=exportProject;$('export-settings').onclick=exportProject;$('handoff').onclick=handoff;$('refresh-models').onclick=health;$('import-chatgpt').onclick=()=>$('chatgpt-file').click();$('import-settings').onclick=()=>$('chatgpt-file').click();$('chatgpt-file').onchange=async e=>{await importChatgpt(e.target.files[0]);e.target.value=''};
  $('attach-btn').onclick=()=>$('file-input').click();$('file-input').onchange=async e=>{const f=e.target.files[0];if(!f)return;try{if(f.size>100*1024)throw Error('Text attachment exceeds 100 KiB; paste a relevant excerpt instead');const contents=await f.text();if(contents.includes('\0'))throw Error('Binary attachment is not supported');const suffix=`\n\n[Attached text file: ${f.name}]\n\n${contents.slice(0,25000)}`;$('chat-input').value=($('chat-input').value+suffix).slice(0,49000);$('attachment-info').textContent=`Included ${f.name} as text within the message (${Math.min(contents.length,25000)} characters).`;$('attachment-info').classList.remove('hidden');resizeInput()}catch(e){notify(e.message)}finally{e.target.value=''}};

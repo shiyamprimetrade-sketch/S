@@ -46,6 +46,7 @@
           <span id="status-label" class="status-label"><span class="status-dot"></span> Local engine</span>
           <button id="archive-open" class="icon-btn" title="Search saved conversations" aria-label="Search history">⌕</button>
           <button id="knowledge-open" class="icon-btn" title="Knowledge & learning" aria-label="Knowledge">◇</button>
+          <button id="invention-open" class="icon-btn" title="S Invention Lab" aria-label="Invention Lab">⚗</button>
           <button id="export" class="icon-btn" title="Export this project" aria-label="Export project">⇧</button>
         </div>
       </header>
@@ -97,6 +98,15 @@
       <section id="knowledge-panel" class="panel utility-panel hidden" aria-label="Project knowledge">
         <div class="utility-head"><div><h2>S Knowledge</h2><p>Lessons, hypotheses, evidence, decisions and corrections.</p></div><div class="head-tools"><button id="add-note" class="primary-button">Add a lesson</button><button class="back-chat" type="button">Back to chat</button></div></div>
         <div class="two-cols"><div id="notes" class="notes"></div><div class="relation-box"><h3>Explore word relationships</h3><p>Structural matches are experimental; they are not proof of semantic understanding.</p><div class="search-controls"><input id="word" placeholder="e.g. ABCA" aria-label="Explore word"><button id="relate" class="primary-button">Explore</button></div><div id="relations"></div></div></div>
+      </section>
+
+      <section id="invention-panel" class="panel utility-panel hidden" aria-label="S Invention Lab">
+        <div class="utility-head"><div><h2>S Invention Lab</h2><p>Teacher → hypothesis → held-out experiment → correction → revised instruction.</p></div><div class="head-tools"><button id="new-invention" class="primary-button" type="button">New invention</button><button class="back-chat" type="button">Back to chat</button></div></div>
+        <p class="notice">Current scope: offline symbolic instruction synthesis from examples. This is not unrestricted autonomous coding. Tests are real, and untested claims remain hypotheses.</p>
+        <div class="invention-grid">
+          <div><h3>Goals in this project</h3><div id="invention-list" class="invention-list"></div></div>
+          <div id="invention-detail" class="invention-detail"><p class="notice">Choose or create a goal to begin teaching.</p></div>
+        </div>
       </section>
 
       <section id="settings-panel" class="panel utility-panel hidden" aria-label="Settings and continuity">

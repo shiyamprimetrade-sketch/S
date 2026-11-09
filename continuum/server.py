@@ -10,12 +10,13 @@ from .engine import chat,ollama_models,DEFAULT_MODEL,LocalModelError,TEACHER_MOD
 from .relations import related
 from .storage import Store
 from .api_keys import create_key,list_keys,revoke_key,authenticate_key
+from .invention import InventionLab
 
 ROOT=Path(__file__).resolve().parent.parent
 WEB=ROOT/'web'
 
 class API(BaseHTTPRequestHandler):
-    server_version='S-Local/0.4'
+    server_version='S-Local/0.5'
     def log_message(self,fmt,*args):
         # Avoid recording private message contents in server logs.
         if os.environ.get('AXIOM_HTTP_LOG')=='1':super().log_message(fmt,*args)
@@ -53,6 +54,8 @@ class API(BaseHTTPRequestHandler):
         path=urlparse(self.path).path
         s=self.server.store
         if verb=='GET':
+            if path=='/api/inventions':return self.server.lab.list(self._param('project_id'))
+            if path=='/api/invention':return self.server.lab.detail(self._param('project_id'),self._param('goal_id'))
             if path=='/api/keys':return list_keys(s)
             if path=='/api/health':
                 from .teacherlab import MODEL
@@ -78,6 +81,13 @@ class API(BaseHTTPRequestHandler):
                 return json.loads(REPORT.read_text(encoding='utf8')) if REPORT.exists() else {'trained':False}
         else:
             b=self._body()
+            lab=self.server.lab
+            if path=='/api/inventions':return lab.create(b.get('project_id'),b.get('objective',''),b.get('success_criteria',''))
+            if path=='/api/invention/example':return lab.add_example(b.get('project_id'),b.get('goal_id'),b.get('input'),b.get('expected'),b.get('role','teach'))
+            if path=='/api/invention/correct':return lab.correct(b.get('project_id'),b.get('goal_id'),b.get('example_id'),b.get('expected'),b.get('teacher_note',''))
+            if path=='/api/invention/synthesize':return lab.synthesize(b.get('project_id'),b.get('goal_id'))
+            if path=='/api/invention/evaluate':return lab.evaluate(b.get('project_id'),b.get('goal_id'))
+            if path=='/api/invention/predict':return lab.predict(b.get('project_id'),b.get('goal_id'),b.get('input'))
             if path=='/api/keys':return create_key(s,b.get('name',''),b.get('scopes',['read','chat']))
             if path=='/api/revoke-key':return revoke_key(s,b.get('id',''))
             if path=='/api/projects':return s.create_project(b.get('name',''))
@@ -91,7 +101,11 @@ class API(BaseHTTPRequestHandler):
                 return s.import_chatgpt(b['document'],b.get('title_contains',''),bool(b.get('redact',True)))
         raise ValueError('Unknown route')
     def _v1(self,verb):
-        """Credential-protected local interface for third-party programs."""
+        """Credential-protected loopback API for third-party local clients.
+
+        Existing /api routes remain the trusted local browser UI; /v1 explicitly
+        requires a scoped Bearer key. No external-network listener is enabled.
+        """
         path=urlparse(self.path).path
         scope='read' if verb=='GET' else 'chat'
         header=self.headers.get('Authorization','')
@@ -151,6 +165,7 @@ class AppServer(ThreadingHTTPServer):
         super().__init__((host,port),API)
         self.store=Store(db_path)
         self.store.seed_if_empty()
+        self.lab=InventionLab(self.store)
 
 def serve(db_path,port=8765):
     with AppServer('127.0.0.1',port,db_path) as app:
