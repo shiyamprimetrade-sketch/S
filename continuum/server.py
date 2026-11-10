@@ -55,6 +55,8 @@ class API(BaseHTTPRequestHandler):
                 from .teacherlab import MODEL
                 models=ollama_models()
                 if MODEL.exists():models=[TEACHER_MODEL]+models
+                from .s_brain_bridge import enabled as brain_enabled, available as brain_available, MODEL as BRAIN_MODEL
+                if brain_enabled() and brain_available():models=[BRAIN_MODEL]+models
                 return {'ok':True,'models':models,'default_model':TEACHER_MODEL if MODEL.exists() else DEFAULT_MODEL,'data_file':str(s.path)}
             if path=='/api/projects':return s.list_projects()
             if path=='/api/sessions':return s.list_sessions(self._param('project_id'))
