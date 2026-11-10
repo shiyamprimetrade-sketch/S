@@ -59,6 +59,25 @@ class ToolAnswerCase:
 
 
 @dataclasses.dataclass(frozen=True)
+class ToolQuestion:
+    identifier:str
+    question:str
+    scope:str
+    tool_name:str
+    arguments:dict
+    category:str
+
+
+def public_tool_question(case:ToolAnswerCase)->ToolQuestion:
+    """Project-only input. Never expose gold answers or expected tool outputs."""
+    return ToolQuestion(
+        identifier=case.identifier,question=case.question,scope=case.scope,
+        tool_name=case.tool_name,arguments=dict(case.arguments),
+        category=case.category,
+    )
+
+
+@dataclasses.dataclass(frozen=True)
 class ToolAnswerPolicy:
     max_cases:int=100
     min_cases:int=1
@@ -171,7 +190,7 @@ def score_tool_answer(
 def evaluate_tool_answers(
     cases:list[ToolAnswerCase],
     *,
-    answerer:Callable[[ToolAnswerCase,ExecutedTool|None],str],
+    answerer:Callable[[ToolQuestion,ExecutedTool|None],str],
     policy:ToolAnswerPolicy|None=None,
     authorize:bool=True,
 )->dict:
@@ -186,11 +205,9 @@ def evaluate_tool_answers(
     for case in cases:
         case.validate()
         trace,execution=execute_case(case,authorize=authorize)
-        # Only the computed tool output, never expected_answer/output,
-        # should be passed to the answerer. The fixture API provides the
-        # metadata case for simple use; callers must independently ensure
-        # generated answers do not read reference answers.
-        response=answerer(case,execution)
+        # Only question-side fields and computed outputs may reach generation.
+        # Gold expected_output and expected_answer remain scoring-only.
+        response=answerer(public_tool_question(case),execution)
         results.append(score_tool_answer(case,execution,response))
         traces.append(redact_trace(trace))
     aggregate=aggregate_tool_answers(results,policy)
