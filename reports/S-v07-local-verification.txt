@@ -1,0 +1,9 @@
+S v0.7 — Apprenticeship evaluation foundation
+Environment: Linux container, Python 3.13.5, Chromium headless, Node.js 24
+Python unittest discover: 127 tests PASSED (including 11 new apprenticeship tests)
+Node.js syntax: web/app.js PASS
+Real browser DOM + local HTTP: PASS (teacher lesson, recall, concept, held-out test creation, benchmark run, chat consumption)
+Source corpus: hand-authored test fixtures only. No original private ChatGPT export supplied.
+Illustrative 2-question benchmark: baseline 1/2, teacher-defined phrase recall 2/2.
+These scores measure retrieval on toy designer-created questions, NOT human-like intelligence.
+Actual user Windows installation: not tested from this environment.

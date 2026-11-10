@@ -217,9 +217,12 @@ class Store:
         inventions = [lab.detail(pid, x['id']) for x in lab.list(pid)]
         from .meaning import TeacherMemory
         teacher_memory = TeacherMemory(self).export(pid)
+        from .apprenticeship import Apprenticeship
+        apprenticeship = Apprenticeship(self).export(pid)
         return {'format':'axiomflow-continuum-project','version':1,'exported_at':now(),
                 'project':p,'sessions':data,'notes':self.list_notes(pid,1000000),
-                'feedback':self.list_feedback(pid),'inventions':inventions, 'teacher_memory':teacher_memory}
+                'feedback':self.list_feedback(pid),'inventions':inventions,
+                'teacher_memory':teacher_memory, 'apprenticeship':apprenticeship}
 
     def import_project(self,document):
         if document.get('format')!='axiomflow-continuum-project' or document.get('version')!=1:
@@ -276,9 +279,14 @@ class Store:
                     db.execute('INSERT INTO invention_runs VALUES(?,?,?,?,?,?,?,?)',
                                (new_id(),iid,int(run['version']),str(run['candidate']),int(run['passed']),
                                 json.dumps(run['results']),str(run['evidence_sha256']),now()))
+        mapping = {}
         if document.get('teacher_memory'):
             from .meaning import TeacherMemory
-            TeacherMemory(self).restore(new['id'], document['teacher_memory'], old_to_new)
+            restored = TeacherMemory(self).restore(new['id'], document['teacher_memory'], old_to_new)
+            mapping = restored['lesson_id_map']
+        if document.get('apprenticeship'):
+            from .apprenticeship import Apprenticeship
+            Apprenticeship(self).restore(new['id'],document['apprenticeship'],mapping)
         return new
 
     def handoff(self,pid):
@@ -312,6 +320,20 @@ class Store:
             out.append('Principle: '+lesson['principle'])
             out.append('Trigger examples: '+' | '.join(lesson['cues'][:4]))
             out.append(f"Source: {lesson['origin']} {lesson.get('source_id') or ''}")
+        from .apprenticeship import Apprenticeship
+        bench=Apprenticeship(self)
+        runs=bench.runs(pid,limit=1)
+        out.append('## Teacher apprenticeship evaluation (retrieval only)')
+        out.append(f'Held-out questions: {len(bench.cases(pid))}')
+        if runs:
+            result=runs[0]
+            m=result['metrics']
+            out.append(f"Latest run: {result['id']} baseline={m['baseline_correct']}/{m['evaluated']} "
+                       f"taught={m['taught_meaning_correct']}/{m['evaluated']} "
+                       f"stale_excluded={m['stale_excluded']} "
+                       f"dataset_sha256={result['dataset_sha256']}")
+        else:
+            out.append('No held-out evaluation recorded. Do not claim accuracy.')
         out.append('## Recent conversation excerpts')
         for ses in sessions[:3]:
             out.append('### Conversation: '+ses['title'])

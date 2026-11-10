@@ -19,3 +19,10 @@ html.dark{color-scheme:dark;--bg:#212121;--text:#ececec;--muted:#a0a0a0;--side:#
 .memory-lessons,.memory-hits{display:grid;gap:9px}.memory-card,.memory-match{border:1px solid var(--border);padding:13px;border-radius:12px;background:var(--bg);overflow-wrap:anywhere}
 .memory-card h4{margin:0 0 6px}.memory-card small{display:block;color:var(--muted);font-size:11px;margin-top:4px}
 .memory-card p{font-size:13px;white-space:pre-wrap}.memory-hits{margin-bottom:14px}
+
+/* v0.7: transparent apprenticeship evidence, no mock progress indicators */
+.apprentice-section {margin:22px 0;padding:18px;border:1px solid var(--border,rgba(127,127,127,.25));border-radius:16px}
+.apprentice-section h3 {margin:0 0 7px}.apprentice-section p {line-height:1.5}
+.apprentice-cases,.apprentice-results {display:grid;gap:8px;margin-top:12px}
+.apprentice-row {display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px;border-radius:9px;background:var(--surface,rgba(128,128,128,.07));font-size:.88rem;overflow-wrap:anywhere}
+.apprentice-score {font-weight:600;padding:12px;border-left:3px solid #10a37f;background:rgba(16,163,127,.07);overflow-wrap:anywhere}

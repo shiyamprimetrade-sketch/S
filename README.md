@@ -1,5 +1,7 @@
 # S — Independent Human Computer & Local AI
 
+**v0.7 Apprenticeship checkpoint:** Added private teaching-history evaluation, held-out question controls, baseline vs teacher-defined meaning retrieval, snapshot evidence, and project-bound evaluation backups. See `docs/S-APPRENTICESHIP-EVALUATION.md`. The actual private ChatGPT archive has not been supplied to this build; we have **not** verified its import or trained a conversational model on it.
+
 **Canonical repository:** https://github.com/shiyamprimetrade-sketch/S
 
 **Owner / teacher:** Shiyam Talukder. **Purpose:** Invent an independent, human-like computer system with its own learning, symbolic language, memory, execution mechanisms, and eventually original OS/hardware. The project is never considered complete by changing a label or simulating an output. Progress requires execution and verification.

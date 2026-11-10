@@ -101,6 +101,18 @@
           <div class="memory-toolbar"><button id="memory-teach" class="primary-button" type="button">Teach a principle</button><button id="memory-concept" class="secondary-button" type="button">Define equivalent words</button><button id="memory-suggest" class="secondary-button" type="button">Find corrections in this project's chats</button></div>
           <div class="search-controls"><input id="memory-query" placeholder="Ask something in different words..." aria-label="Recall a teacher lesson"><button id="memory-recall" class="secondary-button" type="button">Test recall</button></div>
           <div id="memory-hits" class="memory-hits" aria-live="polite"></div><div id="memory-lessons" class="memory-lessons" aria-label="Teacher lessons"></div></div>
+        <section class="apprentice-section" aria-label="S Apprenticeship benchmark">
+          <h3>S Apprenticeship · Unseen Question Tests</h3>
+          <p>Measure whether reviewed teaching transfers to new questions. Tests are never used as lesson cues or model training. Scores measure retrieval, not independent intelligence.</p>
+          <div class="memory-toolbar">
+            <button id="apprentice-add" class="primary-button" type="button">Add unseen question</button>
+            <button id="apprentice-run" class="secondary-button" type="button">Compare retrieval methods</button>
+            <button id="apprentice-refresh" class="secondary-button" type="button">Refresh evidence</button>
+          </div>
+          <div id="apprentice-readiness" class="notice" aria-live="polite">Loading teaching status...</div>
+          <div id="apprentice-results" class="apprentice-results" aria-live="polite"></div>
+          <div id="apprentice-cases" class="apprentice-cases"></div>
+        </section>
         <div class="two-cols"><div id="notes" class="notes"></div><div class="relation-box"><h3>Explore word relationships</h3><p>Structural matches are experimental; they are not proof of semantic understanding.</p><div class="search-controls"><input id="word" placeholder="e.g. ABCA" aria-label="Explore word"><button id="relate" class="primary-button">Explore</button></div><div id="relations"></div></div></div>
       </section>
 
