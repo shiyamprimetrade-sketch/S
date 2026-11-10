@@ -325,7 +325,9 @@ class AssistedRuntimeTests(unittest.TestCase):
         result=self.engine.respond(request)
         self.assertEqual(result["audit"]["tools_executed"],1)
         self.assertEqual(result["audit"]["tools_denied"],0)
-        self.assertNotIn("42",str(result["tool_trace"]))
+        self.assertTrue(result["tool_trace"]["raw_results_excluded"])
+        self.assertNotIn("result",result["tool_trace"]["execution_audits"][0])
+        self.assertNotIn("output",result["tool_trace"]["execution_audits"][0])
 
     def test_shell_tool_denied_without_execution(self):
         request=self.request(memory=False,tool_intents=({
