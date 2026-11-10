@@ -1,0 +1,11 @@
+S/
+├── existing S files...
+└── s_brain/
+    ├── model.py
+    ├── prepare.py
+    ├── train.py
+    ├── server.py
+    ├── requirements.txt
+    ├── data/
+    │   └── corpus.txt
+    └── checkpoints/
