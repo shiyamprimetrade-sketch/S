@@ -186,6 +186,7 @@ class Runtime:
     model: object
     limits: ServerLimits
     model_source: str = ""
+    assistant: object | None = None
     admitted: AdmissionControl = field(init=False)
     started: float = field(default_factory=time.monotonic)
 
@@ -292,6 +293,8 @@ def make_handler(runtime: Runtime):
                 return self.send_json(403,{"error":"Local host/origin required"})
             if urlsplit(self.path).path=="/health":
                 return self.send_json(200,runtime.health())
+            if urlsplit(self.path).path=="/v1/assist/capabilities":
+                return self.send_json(200,runtime.assistant.health() if runtime.assistant is not None else {"assistant_enabled":False})
             if urlsplit(self.path).path=="/v1/models":
                 return self.send_json(200,{
                     "models":[{"id":MODEL_NAME,"type":"byte-transformer"}]
@@ -302,6 +305,8 @@ def make_handler(runtime: Runtime):
             if not self.authorized_local_request():
                 return self.send_json(403,{"error":"Local host/origin required"})
             path = urlsplit(self.path).path
+            if path=="/v1/assist":
+                return self.execute_assistant()
             if path not in ("/generate","/generate/stream","/generate/ndjson"):
                 return self.send_json(404,{"error":"Not found"})
             if path != "/generate" and not limits.allow_streaming:
@@ -323,6 +328,31 @@ def make_handler(runtime: Runtime):
                 LOG.warning("Generation refused: %s",type(exc).__name__)
                 if path=="/generate":
                     return self.send_json(400,{"error":str(exc)})
+            finally:
+                runtime.admitted.release()
+
+        def execute_assistant(self):
+            """Optional localhost-only route; no memory or tools by default."""
+            from .assist_runtime import AssistRequest,AssistantDisabled
+            engine=runtime.assistant
+            if engine is None or not engine.configuration.enabled:
+                return self.send_json(403,{"error":"Assistant feature is disabled"})
+            try:
+                req=AssistRequest.parse(self.read_json(),engine.configuration.limits)
+            except (ValueError,TypeError) as exc:
+                return self.send_json(400,{"error":str(exc)})
+            try:
+                runtime.admitted.acquire()
+            except BusyError:
+                return self.send_json(429,{"error":"Model busy","retryable":True})
+            try:
+                payload=engine.respond(req)
+                return self.send_json(200,payload)
+            except (AssistantDisabled,PermissionError) as exc:
+                return self.send_json(403,{"error":str(exc)})
+            except (ValueError,RuntimeError) as exc:
+                LOG.warning("Assistant rejected: %s",type(exc).__name__)
+                return self.send_json(400,{"error":str(exc)})
             finally:
                 runtime.admitted.release()
 
@@ -370,12 +400,38 @@ def main(argv=None):
     parser.add_argument("--port",type=int,default=8766)
     parser.add_argument("--max-concurrent",type=int,default=1)
     parser.add_argument("--max-new-tokens",type=int,default=512)
+    parser.add_argument("--enable-assistant",action="store_true",help="Explicitly enable experimental /v1/assist")
+    parser.add_argument("--enable-memory",action="store_true",help="Allow scoped local memory retrieval (requires assistant and --memory-db)")
+    parser.add_argument("--memory-db",type=Path,help="Local SQLite path; never enable writes over HTTP")
+    parser.add_argument("--enable-tools",action="store_true",help="Allow read-only calculator/text/JSON tools only")
     args = parser.parse_args(argv)
     limits = ServerLimits(
         port=args.port,max_concurrent=args.max_concurrent,
         max_new_tokens=args.max_new_tokens
     )
-    serve(load_runtime(args.checkpoint,limits))
+    if (args.enable_memory or args.enable_tools) and not args.enable_assistant:
+        parser.error("Memory/tools require --enable-assistant")
+    if args.enable_memory and args.memory_db is None:
+        parser.error("--enable-memory requires --memory-db")
+    if args.memory_db and not args.enable_memory:
+        parser.error("--memory-db requires --enable-memory")
+    runtime=load_runtime(args.checkpoint,limits)
+    from .assist_runtime import AssistConfiguration,AssistantEngine
+    from .memory_store import MemoryStore
+    memory=MemoryStore(args.memory_db) if args.enable_memory else None
+    runtime.assistant=AssistantEngine(
+        runtime.model,
+        configuration=AssistConfiguration(
+            enabled=args.enable_assistant,
+            memory_enabled=args.enable_memory,
+            tools_enabled=args.enable_tools,
+        ),memory=memory,
+    )
+    try:
+        serve(runtime)
+    finally:
+        if memory is not None:
+            memory.close()
 
 
 if __name__=="__main__":
