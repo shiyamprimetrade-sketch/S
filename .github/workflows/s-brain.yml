@@ -25,7 +25,9 @@ jobs:
         with:
           python-version: "3.12"
       - name: Install CPU PyTorch
-        run: python -m pip install --index-url https://download.pytorch.org/whl/cpu torch
+        run: |
+          python -m pip install --index-url https://download.pytorch.org/whl/cpu torch
+          python -m pip install safetensors
       - name: Compile Python files
         run: python -m compileall -q s_brain
       - name: Unit tests
