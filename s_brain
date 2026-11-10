@@ -1,0 +1,667 @@
+S/
+├── existing S files...
+└── s_brain/
+    ├── model.py
+    ├── prepare.py
+    ├── train.py
+    ├── server.py
+    ├── requirements.txt
+    ├── data/
+    │   └── corpus.txt
+    └── checkpoints/
+
+# s_brain/model.py
+
+import math
+from dataclasses import dataclass, asdict
+
+import torch
+import torch.nn as nn
+import torch.nn.functional as F
+
+
+@dataclass
+class BrainConfig:
+    vocab_size: int = 16000
+    dim: int = 512
+    layers: int = 8
+    heads: int = 8
+    kv_heads: int = 2
+    max_context: int = 512
+    dropout: float = 0.0
+    norm_eps: float = 1e-5
+
+
+class RMSNorm(nn.Module):
+    def __init__(self, dim, eps=1e-5):
+        super().__init__()
+        self.weight = nn.Parameter(torch.ones(dim))
+        self.eps = eps
+
+    def forward(self, x):
+        scale = torch.rsqrt(
+            x.pow(2).mean(-1, keepdim=True) + self.eps
+        )
+        return x * scale * self.weight
+
+
+def rotary_embeddings(x, positions):
+    # x: batch, heads, sequence, head_dim
+    head_dim = x.shape[-1]
+    freq = 1.0 / (
+        10000 ** (
+            torch.arange(
+                0, head_dim, 2,
+                device=x.device,
+                dtype=torch.float32
+            ) / head_dim
+        )
+    )
+
+    angles = torch.outer(
+        positions.float(), freq
+    )
+
+    cos = angles.cos()[None, None, :, :]
+    sin = angles.sin()[None, None, :, :]
+
+    even = x[..., 0::2].float()
+    odd = x[..., 1::2].float()
+
+    rotated = torch.stack(
+        (
+            even * cos - odd * sin,
+            even * sin + odd * cos
+        ),
+        dim=-1
+    ).flatten(-2)
+
+    return rotated.to(x.dtype)
+
+
+class GroupedQueryAttention(nn.Module):
+    def __init__(self, config):
+        super().__init__()
+
+        assert config.dim % config.heads == 0
+        assert config.heads % config.kv_heads == 0
+
+        self.heads = config.heads
+        self.kv_heads = config.kv_heads
+        self.head_dim = config.dim // config.heads
+
+        assert self.head_dim % 2 == 0
+
+        self.q_proj = nn.Linear(
+            config.dim, config.heads * self.head_dim,
+            bias=False
+        )
+        self.k_proj = nn.Linear(
+            config.dim, config.kv_heads * self.head_dim,
+            bias=False
+        )
+        self.v_proj = nn.Linear(
+            config.dim, config.kv_heads * self.head_dim,
+            bias=False
+        )
+        self.o_proj = nn.Linear(
+            config.dim, config.dim, bias=False
+        )
+
+        self.dropout = config.dropout
+
+    def forward(self, x):
+        batch, seq, dim = x.shape
+
+        q = self.q_proj(x).view(
+            batch, seq, self.heads, self.head_dim
+        ).transpose(1, 2)
+
+        k = self.k_proj(x).view(
+            batch, seq, self.kv_heads, self.head_dim
+        ).transpose(1, 2)
+
+        v = self.v_proj(x).view(
+            batch, seq, self.kv_heads, self.head_dim
+        ).transpose(1, 2)
+
+        positions = torch.arange(
+            seq, device=x.device
+        )
+
+        q = rotary_embeddings(q, positions)
+        k = rotary_embeddings(k, positions)
+
+        repeat = self.heads // self.kv_heads
+
+        k = k.repeat_interleave(repeat, dim=1)
+        v = v.repeat_interleave(repeat, dim=1)
+
+        attention = F.scaled_dot_product_attention(
+            q, k, v,
+            is_causal=True,
+            dropout_p=self.dropout if self.training else 0.0
+        )
+
+        attention = attention.transpose(
+            1, 2
+        ).contiguous().view(batch, seq, dim)
+
+        return self.o_proj(attention)
+
+
+class SwiGLU(nn.Module):
+    def __init__(self, dim):
+        super().__init__()
+
+        hidden = int(8 * dim / 3)
+        hidden = 64 * math.ceil(hidden / 64)
+
+        self.gate = nn.Linear(dim, hidden, bias=False)
+        self.up = nn.Linear(dim, hidden, bias=False)
+        self.down = nn.Linear(hidden, dim, bias=False)
+
+    def forward(self, x):
+        return self.down(
+            F.silu(self.gate(x)) * self.up(x)
+        )
+
+
+class TransformerBlock(nn.Module):
+    def __init__(self, config):
+        super().__init__()
+
+        self.attn_norm = RMSNorm(
+            config.dim, config.norm_eps
+        )
+        self.attn = GroupedQueryAttention(config)
+
+        self.ffn_norm = RMSNorm(
+            config.dim, config.norm_eps
+        )
+        self.ffn = SwiGLU(config.dim)
+
+    def forward(self, x):
+        x = x + self.attn(self.attn_norm(x))
+        x = x + self.ffn(self.ffn_norm(x))
+        return x
+
+
+class SBrain(nn.Module):
+    def __init__(self, config: BrainConfig):
+        super().__init__()
+
+        self.config = config
+
+        self.embedding = nn.Embedding(
+            config.vocab_size, config.dim
+        )
+
+        self.blocks = nn.ModuleList([
+            TransformerBlock(config)
+            for _ in range(config.layers)
+        ])
+
+        self.norm = RMSNorm(
+            config.dim, config.norm_eps
+        )
+
+        self.output = nn.Linear(
+            config.dim,
+            config.vocab_size,
+            bias=False
+        )
+
+        # Shared token embedding and output weights
+        self.output.weight = self.embedding.weight
+
+        self.apply(self._initialize)
+
+    def _initialize(self, module):
+        if isinstance(module, (nn.Linear, nn.Embedding)):
+            nn.init.normal_(
+                module.weight,
+                mean=0.0,
+                std=0.02
+            )
+
+    def forward(self, tokens, targets=None):
+        if tokens.ndim != 2:
+            raise ValueError("Expected [batch, sequence] tokens")
+
+        if tokens.shape[1] > self.config.max_context:
+            raise ValueError("Context limit exceeded")
+
+        x = self.embedding(tokens)
+
+        for block in self.blocks:
+            x = block(x)
+
+        x = self.norm(x)
+        logits = self.output(x)
+
+        loss = None
+
+        if targets is not None:
+            loss = F.cross_entropy(
+                logits.reshape(-1, logits.shape[-1]).float(),
+                targets.reshape(-1)
+            )
+
+        return logits, loss
+
+    @torch.inference_mode()
+    def generate(
+        self,
+        tokens,
+        max_new_tokens=100,
+        temperature=0.8,
+        top_k=50,
+        eos_id=None
+    ):
+        self.eval()
+
+        if tokens.ndim != 2 or tokens.shape[0] != 1:
+            raise ValueError("Generation expects batch size 1")
+
+        if tokens.shape[1] == 0:
+            raise ValueError("At least one input token required")
+
+        if temperature <= 0:
+            raise ValueError("Temperature must be positive")
+
+        for _ in range(max_new_tokens):
+            context = tokens[:, -self.config.max_context:]
+
+            logits, _ = self(context)
+            logits = logits[:, -1, :].float()
+            logits /= temperature
+
+            if top_k is not None and top_k > 0:
+                values, _ = torch.topk(
+                    logits,
+                    min(top_k, logits.shape[-1])
+                )
+                cutoff = values[:, -1, None]
+                logits = logits.masked_fill(
+                    logits < cutoff,
+                    float("-inf")
+                )
+
+            probabilities = F.softmax(logits, dim=-1)
+
+            next_token = torch.multinomial(
+                probabilities, num_samples=1
+            )
+
+            tokens = torch.cat(
+                [tokens, next_token], dim=1
+            )
+
+            if (
+                eos_id is not None
+                and next_token.item() == eos_id
+            ):
+                break
+
+        return tokens
+
+# s_brain/prepare.py
+
+from pathlib import Path
+
+from tokenizers import Tokenizer, models, trainers
+from tokenizers import pre_tokenizers, decoders
+
+
+ROOT = Path(__file__).resolve().parent
+DATA = ROOT / "data" / "corpus.txt"
+OUTPUT = ROOT / "tokenizer.json"
+
+if not DATA.exists():
+    raise SystemExit(
+        "Create data/corpus.txt with training text first."
+    )
+
+tokenizer = Tokenizer(
+    models.BPE(unk_token="[UNK]")
+)
+
+tokenizer.pre_tokenizer = pre_tokenizers.ByteLevel(
+    add_prefix_space=False
+)
+tokenizer.decoder = decoders.ByteLevel()
+
+trainer = trainers.BpeTrainer(
+    vocab_size=16000,
+    min_frequency=2,
+    initial_alphabet=pre_tokenizers.ByteLevel.alphabet(),
+    special_tokens=[
+        "[PAD]",
+        "[UNK]",
+        "[BOS]",
+        "[EOS]"
+    ]
+)
+
+tokenizer.train(
+    [str(DATA)],
+    trainer=trainer
+)
+
+tokenizer.save(str(OUTPUT))
+
+print("Tokenizer saved:", OUTPUT)
+print("Vocabulary size:", tokenizer.get_vocab_size())
+
+# s_brain/train.py
+
+import json
+import random
+from pathlib import Path
+from contextlib import nullcontext
+
+import torch
+from tokenizers import Tokenizer
+from safetensors.torch import save_model
+
+from model import SBrain, BrainConfig
+
+
+ROOT = Path(__file__).resolve().parent
+DATA = ROOT / "data" / "corpus.txt"
+CHECKPOINTS = ROOT / "checkpoints"
+CHECKPOINTS.mkdir(parents=True, exist_ok=True)
+
+torch.manual_seed(42)
+random.seed(42)
+
+device = (
+    "cuda" if torch.cuda.is_available() else "cpu"
+)
+
+tokenizer = Tokenizer.from_file(
+    str(ROOT / "tokenizer.json")
+)
+
+config = BrainConfig(
+    vocab_size=tokenizer.get_vocab_size(),
+    dim=512,
+    layers=8,
+    heads=8,
+    kv_heads=2,
+    max_context=512
+)
+
+model = SBrain(config).to(device)
+
+print("Device:", device)
+print(
+    "Parameters:",
+    sum(p.numel() for p in model.parameters())
+)
+
+text = DATA.read_text(encoding="utf-8")
+token_ids = tokenizer.encode(text).ids
+
+if len(token_ids) < 2000:
+    raise ValueError(
+        "Training corpus too small. Add more text."
+    )
+
+# Hold out the final 10% for validation.
+split = int(len(token_ids) * 0.9)
+
+train_ids = torch.tensor(
+    token_ids[:split], dtype=torch.long
+)
+val_ids = torch.tensor(
+    token_ids[split:], dtype=torch.long
+)
+
+sequence_length = 256
+batch_size = 8
+total_steps = 2000
+learning_rate = 3e-4
+
+
+def get_batch(source):
+    if len(source) <= sequence_length + 1:
+        raise ValueError(
+            "Not enough tokens for the sequence length."
+        )
+
+    starts = torch.randint(
+        0,
+        len(source) - sequence_length,
+        (batch_size,)
+    )
+
+    offsets = torch.arange(sequence_length)
+
+    x = source[starts[:, None] + offsets]
+    y = source[starts[:, None] + offsets + 1]
+
+    return x.to(device), y.to(device)
+
+
+optimizer = torch.optim.AdamW(
+    model.parameters(),
+    lr=learning_rate,
+    weight_decay=0.1
+)
+
+
+def precision_context():
+    if (
+        device == "cuda"
+        and torch.cuda.is_bf16_supported()
+    ):
+        return torch.autocast(
+            device_type="cuda",
+            dtype=torch.bfloat16
+        )
+    return nullcontext()
+
+
+@torch.no_grad()
+def evaluate():
+    model.eval()
+    losses = []
+
+    for _ in range(10):
+        x, y = get_batch(val_ids)
+
+        with precision_context():
+            _, loss = model(x, y)
+
+        losses.append(loss.item())
+
+    model.train()
+    return sum(losses) / len(losses)
+
+
+def save_checkpoint(step):
+    save_model(
+        model,
+        str(CHECKPOINTS / "brain.safetensors")
+    )
+
+    (CHECKPOINTS / "config.json").write_text(
+        json.dumps(
+            config.__dict__,
+            indent=2
+        ),
+        encoding="utf-8"
+    )
+
+    (CHECKPOINTS / "metadata.json").write_text(
+        json.dumps(
+            {"step": step, "device": device},
+            indent=2
+        ),
+        encoding="utf-8"
+    )
+
+    print("Checkpoint saved at step", step)
+
+
+model.train()
+
+for step in range(1, total_steps + 1):
+    x, y = get_batch(train_ids)
+
+    optimizer.zero_grad(set_to_none=True)
+
+    with precision_context():
+        logits, loss = model(x, y)
+
+    loss.backward()
+
+    torch.nn.utils.clip_grad_norm_(
+        model.parameters(), 1.0
+    )
+
+    optimizer.step()
+
+    if step % 100 == 0:
+        validation_loss = evaluate()
+
+        print(
+            f"Step {step}/{total_steps} | "
+            f"Train loss: {loss.item():.4f} | "
+            f"Validation loss: {validation_loss:.4f}"
+        )
+
+    if step % 500 == 0:
+        save_checkpoint(step)
+
+save_checkpoint(total_steps)
+
+print("S-Brain training completed.")
+
+# s_brain/server.py
+
+import json
+from pathlib import Path
+
+import torch
+from fastapi import FastAPI, HTTPException
+from pydantic import BaseModel, Field
+from tokenizers import Tokenizer
+from safetensors.torch import load_model
+
+from model import SBrain, BrainConfig
+
+
+ROOT = Path(__file__).resolve().parent
+CHECKPOINTS = ROOT / "checkpoints"
+
+app = FastAPI(
+    title="S-Brain Independent Intelligence API",
+    version="0.1.0"
+)
+
+device = (
+    "cuda" if torch.cuda.is_available() else "cpu"
+)
+
+tokenizer = Tokenizer.from_file(
+    str(ROOT / "tokenizer.json")
+)
+
+config_data = json.loads(
+    (CHECKPOINTS / "config.json").read_text()
+)
+
+config = BrainConfig(**config_data)
+
+if config.vocab_size != tokenizer.get_vocab_size():
+    raise RuntimeError(
+        "Checkpoint tokenizer vocabulary mismatch"
+    )
+
+model = SBrain(config).to(device)
+
+load_model(
+    model,
+    str(CHECKPOINTS / "brain.safetensors"),
+    strict=True
+)
+
+model.eval()
+
+eos_id = tokenizer.token_to_id("[EOS]")
+bos_id = tokenizer.token_to_id("[BOS]")
+
+
+class GenerateRequest(BaseModel):
+    prompt: str = Field(min_length=1, max_length=20000)
+    max_new_tokens: int = Field(default=128, ge=1, le=2048)
+    temperature: float = Field(default=0.8, gt=0, le=2)
+    top_k: int = Field(default=50, ge=0)
+
+
+@app.get("/health")
+def health():
+    return {
+        "status": "ready",
+        "engine": "S-Brain",
+        "device": device,
+        "independent": True,
+        "parameters": sum(
+            p.numel() for p in model.parameters()
+        )
+    }
+
+
+@app.post("/generate")
+def generate(request: GenerateRequest):
+    try:
+        encoded = tokenizer.encode(request.prompt)
+
+        ids = encoded.ids
+
+        if not ids:
+            if bos_id is None:
+                raise ValueError("No valid input tokens")
+            ids = [bos_id]
+
+        # Generation uses the most recent context.
+        ids = ids[-config.max_context:]
+
+        inputs = torch.tensor(
+            [ids],
+            dtype=torch.long,
+            device=device
+        )
+
+        with torch.inference_mode():
+            output = model.generate(
+                inputs,
+                max_new_tokens=request.max_new_tokens,
+                temperature=request.temperature,
+                top_k=request.top_k,
+                eos_id=eos_id
+            )
+
+        generated_ids = output[0].tolist()[len(ids):]
+
+        response = tokenizer.decode(
+            generated_ids,
+            skip_special_tokens=True
+        )
+
+        return {
+            "model": "s-brain",
+            "response": response,
+            "tokens_generated": len(generated_ids),
+            "device": device
+        }
+
+    except (ValueError, RuntimeError) as error:
+        raise HTTPException(
+            status_code=400,
+            detail=str(error)
+        )
+

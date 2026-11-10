@@ -1,0 +1,8 @@
+
+torch
+tokenizers
+safetensors
+fastapi
+uvicorn
+pydantic
+pytest

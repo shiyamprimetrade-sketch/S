@@ -11,3 +11,7 @@ __pycache__/
 
 # Generated plaintext training data (compressed corpus is committed)
 /models/*.json
+
+# Native research checkpoints and machine-local artifacts
+/artifacts/
+*.pt

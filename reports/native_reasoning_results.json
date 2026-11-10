@@ -1,0 +1,208 @@
+{
+  "checkpoint": "steps-80-seed-20261110.pt",
+  "checkpoint_sha256": "5d7aef363070ff75f36cc81c1c62ab986a59675f331310931c3e357d8355c4fc",
+  "dataset_sha256": "cc642df7a0afa788de49462c322ec87328aabe523ab082b6c18de2ad677ef3cd",
+  "provenance": "Synthetic diagnostic authored after checkpoints were frozen, before scoring. Short prompts fit the 32-character context including Answer suffix. No private data. Copy and unknown-answer cases are controls, not reasoning demonstrations.",
+  "cases": [
+    {
+      "category": "copy_control",
+      "prompt": "Copy: blue",
+      "expected": "blue",
+      "output": "n porved t oam ranca a.\nThnedenchcre * sed led niirenibes catl s g panevi sorl s",
+      "correct": false
+    },
+    {
+      "category": "copy_control",
+      "prompt": "Copy: RED",
+      "expected": "red",
+      "output": "n am bed t cam ranca a.\nTanedenchcre * sed led niirenibes catl s g panevi sorl s",
+      "correct": false
+    },
+    {
+      "category": "copy_control",
+      "prompt": "Copy: 17",
+      "expected": "17",
+      "output": "n poevhort wim ranca a.\nThneden scre * sed lhidniirenibes catl s g panevi sorl s",
+      "correct": false
+    },
+    {
+      "category": "copy_control",
+      "prompt": "Copy: cat",
+      "expected": "cat",
+      "output": "n porvhort cam ranca a.\nThnedenchcre * sed led niirenibes catl s g panevi sorl s",
+      "correct": false
+    },
+    {
+      "category": "arithmetic",
+      "prompt": "2 + 2 =",
+      "expected": "4",
+      "output": "nuleevhord, am ranca a.\nThneden scre * sed lhidniirenibes catl s g panevi sorl s",
+      "correct": false
+    },
+    {
+      "category": "arithmetic",
+      "prompt": "7 - 3 =",
+      "expected": "4",
+      "output": "nuleevhord, am ranca a.\nThneden scre * sed lhidniirenibes catl s g panevi sorl s",
+      "correct": false
+    },
+    {
+      "category": "arithmetic",
+      "prompt": "3 * 2 =",
+      "expected": "6",
+      "output": "nuleevhord, am ranca a.\nThneden scre * sed lhidniirenibes catl s g panevi sorl s",
+      "correct": false
+    },
+    {
+      "category": "arithmetic",
+      "prompt": "8 / 2 =",
+      "expected": "4",
+      "output": "nuleevhord, am ranca a.\nThneden scre * sed lhidniirenibes catl s g panevi sorl s",
+      "correct": false
+    },
+    {
+      "category": "counting",
+      "prompt": "Count letters: cat",
+      "expected": "3",
+      "output": "n teevhord, am ranca a.\nThneden scre * sed lhidniirenibes catl s g panevi sorl s",
+      "correct": false
+    },
+    {
+      "category": "counting",
+      "prompt": "Count letters: apple",
+      "expected": "5",
+      "output": "n am bed t, a s anca a.\nTaneden scre * se.\nThidniirenibes catl s g panevi sorl s",
+      "correct": false
+    },
+    {
+      "category": "counting",
+      "prompt": "Count letters: moon",
+      "expected": "4",
+      "output": "n am bhord cam ranlogr.\nThnedenchcre * sed led n irenibes catl s g panevi sorl s",
+      "correct": false
+    },
+    {
+      "category": "counting",
+      "prompt": "Count letters: a",
+      "expected": "1",
+      "output": "n poevhord, a s anlogr.\nTaneden scre * se.\nThidniirenibes catl s g panevi sorl s",
+      "correct": false
+    },
+    {
+      "category": "ordering",
+      "prompt": "Sort: 3,1,2",
+      "expected": "1,2,3",
+      "output": "nA wevhort o, aranca a.\nTanedenchcre * porimpa ndirenches catl s g panevi corl s",
+      "correct": false
+    },
+    {
+      "category": "ordering",
+      "prompt": "Larger: 2 or 9?",
+      "expected": "9",
+      "output": "n teevhord, a s anca a.\nTaneden scre * se.\nThidniirenibes catl s g panevi sorl s",
+      "correct": false
+    },
+    {
+      "category": "ordering",
+      "prompt": "Smaller: 8 or 3?",
+      "expected": "3",
+      "output": "n teevhord, a s anca a.\nTaneden scre * se.\nThidniirenibes catl s g panevi sorl s",
+      "correct": false
+    },
+    {
+      "category": "ordering",
+      "prompt": "Next: 2,4,6,",
+      "expected": "8",
+      "output": "n avevhort, am ranca a.\nThnedenchcre * sed led niirenibes catl s g panevi sorl s",
+      "correct": false
+    },
+    {
+      "category": "logic",
+      "prompt": "A>B. B>C. A>C?",
+      "expected": "yes",
+      "output": "n porvhord, am ranca a.\nThnedenchcre * sed led niirenibes catl s g panevi sorl s",
+      "correct": false
+    },
+    {
+      "category": "logic",
+      "prompt": "A=B. B=C. A=C?",
+      "expected": "yes",
+      "output": "n ocevhord, am ranca a.\nThnedenchcre * sed led niirenibes catl s g panevi sorl s",
+      "correct": false
+    },
+    {
+      "category": "logic",
+      "prompt": "A>B. B>C. C>A?",
+      "expected": "no",
+      "output": "n porvhord, am ranca a.\nThnedenchcre * sed led niirenibes catl s g panevi sorl s",
+      "correct": false
+    },
+    {
+      "category": "logic",
+      "prompt": "A=B. B=C. A!=C?",
+      "expected": "no",
+      "output": "n teevhord, a s anca a.\nTaneden scre * se.\nThidniirenibes catl s g panevi sorl s",
+      "correct": false
+    },
+    {
+      "category": "insufficient_information",
+      "prompt": "Unknown x. x = ?",
+      "expected": "unknown",
+      "output": "n amevhord, am ranca a.\nThnedenchcre * sed led niirenibes catl s g panevi sorl s",
+      "correct": false
+    },
+    {
+      "category": "insufficient_information",
+      "prompt": "No data. Box color?",
+      "expected": "unknown",
+      "output": "nulorvhord ore ranca a.\nTeneden scre * se.\nThidniirenibes catl s g panevi sorl s",
+      "correct": false
+    },
+    {
+      "category": "insufficient_information",
+      "prompt": "No data. Rain now?",
+      "expected": "unknown",
+      "output": "n teevhord, am ranca a.\nThneden scre * sed lhidniirenibes catl s g panevi sorl s",
+      "correct": false
+    },
+    {
+      "category": "insufficient_information",
+      "prompt": "No data. My age?",
+      "expected": "unknown",
+      "output": "n teevhord, a s ncare caneneden scre * se.\nThidniirenibes catl s g panevi sorl s",
+      "correct": false
+    }
+  ],
+  "categories": {
+    "copy_control": {
+      "correct": 0,
+      "total": 4
+    },
+    "arithmetic": {
+      "correct": 0,
+      "total": 4
+    },
+    "counting": {
+      "correct": 0,
+      "total": 4
+    },
+    "ordering": {
+      "correct": 0,
+      "total": 4
+    },
+    "logic": {
+      "correct": 0,
+      "total": 4
+    },
+    "insufficient_information": {
+      "correct": 0,
+      "total": 4
+    }
+  },
+  "correct": 0,
+  "total": 24,
+  "scoring": "Whole answer exact match after case, whitespace and final-period normalization; no substring credit",
+  "network": "socket.connect denied",
+  "generation_seed": 20261110,
+  "limitation": "Small synthetic diagnostic. End-to-end answer failure does not isolate reasoning from language, instruction following or context limits. No training or tuning used these cases."
+}

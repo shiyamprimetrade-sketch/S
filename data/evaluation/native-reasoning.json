@@ -1,0 +1,125 @@
+{
+  "provenance": "Synthetic diagnostic authored after checkpoints were frozen, before scoring. Short prompts fit the 32-character context including Answer suffix. No private data. Copy and unknown-answer cases are controls, not reasoning demonstrations.",
+  "cases": [
+    {
+      "category": "copy_control",
+      "prompt": "Copy: blue",
+      "expected": "blue"
+    },
+    {
+      "category": "copy_control",
+      "prompt": "Copy: RED",
+      "expected": "red"
+    },
+    {
+      "category": "copy_control",
+      "prompt": "Copy: 17",
+      "expected": "17"
+    },
+    {
+      "category": "copy_control",
+      "prompt": "Copy: cat",
+      "expected": "cat"
+    },
+    {
+      "category": "arithmetic",
+      "prompt": "2 + 2 =",
+      "expected": "4"
+    },
+    {
+      "category": "arithmetic",
+      "prompt": "7 - 3 =",
+      "expected": "4"
+    },
+    {
+      "category": "arithmetic",
+      "prompt": "3 * 2 =",
+      "expected": "6"
+    },
+    {
+      "category": "arithmetic",
+      "prompt": "8 / 2 =",
+      "expected": "4"
+    },
+    {
+      "category": "counting",
+      "prompt": "Count letters: cat",
+      "expected": "3"
+    },
+    {
+      "category": "counting",
+      "prompt": "Count letters: apple",
+      "expected": "5"
+    },
+    {
+      "category": "counting",
+      "prompt": "Count letters: moon",
+      "expected": "4"
+    },
+    {
+      "category": "counting",
+      "prompt": "Count letters: a",
+      "expected": "1"
+    },
+    {
+      "category": "ordering",
+      "prompt": "Sort: 3,1,2",
+      "expected": "1,2,3"
+    },
+    {
+      "category": "ordering",
+      "prompt": "Larger: 2 or 9?",
+      "expected": "9"
+    },
+    {
+      "category": "ordering",
+      "prompt": "Smaller: 8 or 3?",
+      "expected": "3"
+    },
+    {
+      "category": "ordering",
+      "prompt": "Next: 2,4,6,",
+      "expected": "8"
+    },
+    {
+      "category": "logic",
+      "prompt": "A>B. B>C. A>C?",
+      "expected": "yes"
+    },
+    {
+      "category": "logic",
+      "prompt": "A=B. B=C. A=C?",
+      "expected": "yes"
+    },
+    {
+      "category": "logic",
+      "prompt": "A>B. B>C. C>A?",
+      "expected": "no"
+    },
+    {
+      "category": "logic",
+      "prompt": "A=B. B=C. A!=C?",
+      "expected": "no"
+    },
+    {
+      "category": "insufficient_information",
+      "prompt": "Unknown x. x = ?",
+      "expected": "unknown"
+    },
+    {
+      "category": "insufficient_information",
+      "prompt": "No data. Box color?",
+      "expected": "unknown"
+    },
+    {
+      "category": "insufficient_information",
+      "prompt": "No data. Rain now?",
+      "expected": "unknown"
+    },
+    {
+      "category": "insufficient_information",
+      "prompt": "No data. My age?",
+      "expected": "unknown"
+    }
+  ]
+}
