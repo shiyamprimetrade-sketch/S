@@ -46,7 +46,7 @@ class MemoryPolicy:
     def validate(self):
         if min(self.maximum_items,self.maximum_content_bytes,
                self.maximum_query_bytes,self.maximum_results,
-               self.minimum_ttl_seconds)>0 is False:
+               self.minimum_ttl_seconds) <= 0:
             raise ValueError("Memory bounds must be positive")
         if self.maximum_ttl_seconds < self.minimum_ttl_seconds:
             raise ValueError("Memory TTL bounds inverted")
