@@ -134,8 +134,8 @@ class AdversarialPolicyTests(unittest.TestCase):
             },),
         )
         output=self.engine.respond(req)
-        self.assertEqual(output["audit"]["tools_denied"],0)
-        # Schema depth may fail as a controlled unsuccessful tool call.
+        self.assertEqual(output["audit"]["tools_denied"],1)
+        # Excess nesting is explicitly denied by the schema depth quota.
         self.assertFalse(output["live_memory_write_allowed"])
 
     def test_malformed_tool_arguments_fail_without_raw_log(self):
