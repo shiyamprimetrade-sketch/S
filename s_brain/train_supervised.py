@@ -261,7 +261,7 @@ def run_supervised_training(
     beginning=time.perf_counter()
     save_checkpoint(
         output/"baseline",model,model.cfg,
-        step=0,train_tokens=0,train_loss=float("nan") if False else baseline["cross_entropy"],
+        step=0,train_tokens=0,train_loss=baseline["cross_entropy"],
         validation_loss=baseline["cross_entropy"],
         seed=config.seed,dataset_fingerprint=dataset_hash,
         extras={"phase":"baseline","objective":"answer-only cross-entropy"},
