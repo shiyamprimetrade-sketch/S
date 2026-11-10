@@ -268,10 +268,15 @@ def append_tool_evidence(prompt:str,tool_results:list[str],context:int)->str:
     if not tool_results:
         return prompt
     body="\nBEGIN UNTRUSTED TOOL OUTPUT\n"+"\n".join(tool_results)+"\nEND UNTRUSTED TOOL OUTPUT\n"
-    # Append only to a prompt that has room for the additional bytes.
-    if len((prompt+body).encode("utf-8"))>context:
+    from .rag_inference import ANSWER_HEADING
+    # Tool results are untrusted context, and must precede the answer cue.
+    # The last prompt byte should still tell S to produce an answer.
+    if not prompt.endswith(ANSWER_HEADING):
+        raise ValueError("Unknown answer prompt structure")
+    updated=prompt[:-len(ANSWER_HEADING)]+body+ANSWER_HEADING
+    if len(updated.encode("utf-8"))>context:
         raise ValueError("Tool output would truncate model context")
-    return prompt+body
+    return updated
 
 
 def response_envelope(
