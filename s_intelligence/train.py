@@ -5,6 +5,8 @@ import json
 import os
 from pathlib import Path
 import time
+import string
+from collections import Counter
 
 import torch
 from .model import CharTokenizer, SModel
@@ -43,7 +45,30 @@ def peak_memory_bytes():
         return None
 
 
-def run(steps=80, output='artifacts/s-native.pt', seed=20261110, threads=2):
+def load_dataset(path):
+    document = json.loads(Path(path).read_text(encoding='utf-8-sig'))
+    if not isinstance(document.get('provenance'), str) or not document['provenance'].strip():
+        raise ValueError('Dataset provenance is required')
+    splits = []
+    for name in ('train', 'validation'):
+        records = document.get(name)
+        if not isinstance(records, list) or not records or any(
+                not isinstance(t, str) or not t.strip() for t in records):
+            raise ValueError('Each split needs nonempty text records')
+        if any(c not in string.printable for t in records for c in t):
+            raise ValueError('This experiment supports printable ASCII only')
+        normalized = [' '.join(t.split()).casefold() for t in records]
+        if len(set(normalized)) != len(normalized):
+            raise ValueError('Duplicate records within a split')
+        splits.append(set(normalized))
+    if splits[0] & splits[1]:
+        raise ValueError('Training and validation records overlap')
+    if any(len('\n'.join(document[k])) <= 32 for k in ('train', 'validation')):
+        raise ValueError('Each split must exceed the model context')
+    return document
+
+
+def run(steps=80, output='artifacts/s-native.pt', seed=20261110, threads=2, data=None):
     if not isinstance(steps, int) or steps < 1:
         raise ValueError('Training steps must be a positive integer')
     if not isinstance(seed, int) or not 0 <= seed < 2**32:
@@ -57,10 +82,31 @@ def run(steps=80, output='artifacts/s-native.pt', seed=20261110, threads=2):
     torch.set_num_threads(threads)
     torch.manual_seed(seed)
     torch.use_deterministic_algorithms(True)
-    tok = CharTokenizer(CORPUS)
-    ids = torch.tensor(tok.encode(CORPUS), dtype=torch.long)
-    cut = int(len(ids) * .9)
-    train, validation = ids[:cut], ids[cut:]
+    metadata = {}
+    corpus = CORPUS
+    if data is None:
+        tok = CharTokenizer(corpus)
+        ids = torch.tensor(tok.encode(corpus), dtype=torch.long)
+        cut = int(len(ids) * .9)
+        train, validation = ids[:cut], ids[cut:]
+    else:
+        document = load_dataset(data)
+        corpus = '\n'.join(document['train']) + '\n'
+        validation_text = '\n'.join(document['validation']) + '\n'
+        tok = CharTokenizer(string.printable)
+        train = torch.tensor(tok.encode(corpus), dtype=torch.long)
+        validation = torch.tensor(tok.encode(validation_text), dtype=torch.long)
+        metadata = {
+            'provenance': document['provenance'],
+            'dataset_sha256': hashlib.sha256(Path(data).read_bytes()).hexdigest(),
+            'validation_sha256': hashlib.sha256(validation_text.encode()).hexdigest(),
+            'training_counts': dict(Counter(corpus)),
+            'training_record_hashes': [hashlib.sha256(' '.join(t.split()).casefold().encode()).hexdigest()
+                                       for t in document['train']],
+            'training_records': len(document['train']),
+            'validation_records': len(document['validation']),
+            'tokenizer': 'fixed_printable_ascii_100',
+        }
     model = SModel(len(tok.chars))
     optimizer = torch.optim.AdamW(model.parameters(), lr=.003)
 
@@ -96,7 +142,7 @@ def run(steps=80, output='artifacts/s-native.pt', seed=20261110, threads=2):
     torch.save({'weights': model.state_dict(), 'vocabulary': tok.chars,
                 'context': model.context, 'width': 64, 'seed': seed,
                 'steps': steps, 'initialization': 'random_from_scratch',
-                'corpus_sha256': hashlib.sha256(CORPUS.encode()).hexdigest()}, path)
+                'corpus_sha256': hashlib.sha256(corpus.encode()).hexdigest(), **metadata}, path)
     result = {
         'steps': steps, 'seed': seed, 'threads': threads,
         'initial_training_loss': initial_train, 'final_training_loss': final_train,
@@ -108,12 +154,15 @@ def run(steps=80, output='artifacts/s-native.pt', seed=20261110, threads=2):
         'peak_process_resident_bytes': peak_memory_bytes(),
         'checkpoint': str(path), 'checkpoint_bytes': path.stat().st_size,
         'checkpoint_sha256': hashlib.sha256(path.read_bytes()).hexdigest(),
-        'corpus_sha256': hashlib.sha256(CORPUS.encode()).hexdigest(),
+        'corpus_sha256': hashlib.sha256(corpus.encode()).hexdigest(),
         'vocabulary': tok.chars, 'torch': torch.__version__,
         'device': 'cpu', 'initialization': 'random_from_scratch',
         'evaluation': 'Same frozen train and validation batches before and after training',
         'limitation': 'Repeated synthetic text; validation shares training patterns, not independent generalization',
+        **metadata,
     }
+    if data is not None:
+        result['limitation'] = 'Synthetic template-disjoint splits; ASCII only; no evidence of real-world reasoning'
     metrics_path.write_text(json.dumps(result, indent=2) + '\n', encoding='utf8')
     print(json.dumps(result, indent=2))
     return result
@@ -125,5 +174,6 @@ if __name__ == '__main__':
     parser.add_argument('--output', default='artifacts/s-native.pt')
     parser.add_argument('--seed', type=int, default=20261110)
     parser.add_argument('--threads', type=int, default=2)
+    parser.add_argument('--data', help='JSON with provenance, train and validation text lists')
     args = parser.parse_args()
-    run(args.steps, args.output, args.seed, args.threads)
+    run(args.steps, args.output, args.seed, args.threads, args.data)

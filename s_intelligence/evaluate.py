@@ -30,7 +30,12 @@ def evaluate(checkpoint, data=DEFAULT_DATA):
     untrained = SModel(len(vocabulary), state['width'], state['context']).eval()
     trained = SModel(len(vocabulary), state['width'], state['context']).eval()
     trained.load_state_dict(state['weights'])
-    counts = Counter(CORPUS)
+    counts = Counter(state.get('training_counts', Counter(CORPUS)))
+    record_hashes = set(state.get('training_record_hashes', []))
+    if any(hashlib.sha256(' '.join(t.split()).casefold().encode()).hexdigest() in record_hashes for t in texts):
+        raise ValueError('Evaluation records overlap checkpoint training data')
+    smoothing = 1 if 'training_counts' in state else 0
+    total = sum(counts.values()) + smoothing * len(vocabulary)
     rows = []
     token_count = 0
     initial_sum = final_sum = unigram_sum = 0.0
@@ -55,7 +60,7 @@ def evaluate(checkpoint, data=DEFAULT_DATA):
                     else:
                         after += loss
         size = len(ids) - 1
-        unigram = -sum(math.log(counts[c] / len(CORPUS)) for c in text[1:])
+        unigram = -sum(math.log((counts[c] + smoothing) / total) for c in text[1:])
         token_count += size
         initial_sum += before
         final_sum += after
@@ -79,6 +84,7 @@ def evaluate(checkpoint, data=DEFAULT_DATA):
         'trained_cross_entropy': final_sum / token_count,
         'training_unigram_cross_entropy': unigram_sum / token_count,
         'uniform_cross_entropy': math.log(len(vocabulary)),
+        'unigram_additive_smoothing': smoothing,
         'generated_output': generated,
         'inference_seconds_including_checkpoint_load': time.perf_counter() - start,
         'inference_prompt': 'S ', 'generation_seed': 20261110, 'generated_characters': 80,
