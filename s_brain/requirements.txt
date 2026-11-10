@@ -1,0 +1,2 @@
+# Separate optional environment; S itself uses the standard library.
+torch>=2.4
