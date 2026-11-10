@@ -1,2 +1,4 @@
 # Separate optional environment; S itself uses the standard library.
 torch>=2.4
+safetensors>=0.4
+numpy>=1.26
