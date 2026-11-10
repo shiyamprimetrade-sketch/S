@@ -274,7 +274,7 @@ class RetrievalInferenceTests(unittest.TestCase):
     def test_real_neural_generation_without_ollama(self):
         torch.manual_seed(90)
         model=SBrain(Config(
-            dim=32,layers=1,heads=4,kv_heads=2,context=64,
+            dim=32,layers=1,heads=4,kv_heads=2,context=512,
         ))
         result=generate_with_memory(
             model,"Hello S",options=RetrievalOptions(enabled=False),
