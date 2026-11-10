@@ -12,12 +12,13 @@ from .storage import Store
 from .api_keys import create_key,list_keys,revoke_key,authenticate_key
 from .invention import InventionLab
 from .meaning import TeacherMemory
+from .apprenticeship import Apprenticeship
 
 ROOT=Path(__file__).resolve().parent.parent
 WEB=ROOT/'web'
 
 class API(BaseHTTPRequestHandler):
-    server_version='S-Local/0.6'
+    server_version='S-Local/0.7'
     def log_message(self,fmt,*args):
         # Avoid recording private message contents in server logs.
         if os.environ.get('AXIOM_HTTP_LOG')=='1':super().log_message(fmt,*args)
@@ -55,6 +56,9 @@ class API(BaseHTTPRequestHandler):
         path=urlparse(self.path).path
         s=self.server.store
         if verb=='GET':
+            if path=='/api/apprenticeship/readiness':return self.server.apprentice.readiness(self._param('project_id'))
+            if path=='/api/apprenticeship/cases':return self.server.apprentice.cases(self._param('project_id'))
+            if path=='/api/apprenticeship/runs':return self.server.apprentice.runs(self._param('project_id'))
             if path=='/api/memory/lessons':return self.server.memory.lessons(self._param('project_id'))
             if path=='/api/memory/concepts':return self.server.memory.concepts(self._param('project_id'))
             if path=='/api/memory/recall':return self.server.memory.recall(self._param('project_id'),self._param('q'))
@@ -86,6 +90,11 @@ class API(BaseHTTPRequestHandler):
         else:
             b=self._body()
             lab=self.server.lab
+            if path=='/api/apprenticeship/cases':return self.server.apprentice.add_case(
+                b.get('project_id'),b.get('question'),b.get('expected_lesson_id'))
+            if path=='/api/apprenticeship/delete':return self.server.apprentice.delete_case(
+                b.get('project_id'),b.get('case_id'))
+            if path=='/api/apprenticeship/run':return self.server.apprentice.run(b.get('project_id'))
             if path=='/api/memory/teach':return self.server.memory.teach(
                 b.get('project_id'),b.get('title',''),b.get('principle',''),b.get('cues',[]))
             if path=='/api/memory/concept':return self.server.memory.define_concept(
@@ -197,6 +206,7 @@ class AppServer(ThreadingHTTPServer):
         self.store.seed_if_empty()
         self.lab=InventionLab(self.store)
         self.memory=TeacherMemory(self.store)
+        self.apprentice=Apprenticeship(self.store)
 
 def serve(db_path,port=8765):
     with AppServer('127.0.0.1',port,db_path) as app:

@@ -32,3 +32,6 @@ jobs:
 
       - name: Teacher memory illustrative held-out evaluation
         run: python -m examples.evaluate_meaning
+
+      - name: Check teacher apprenticeship held-out comparison
+        run: python -m examples.evaluate_apprenticeship

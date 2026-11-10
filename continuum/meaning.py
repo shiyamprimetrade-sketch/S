@@ -259,11 +259,11 @@ class TeacherMemory:
         return self.teach(project_id,'Feedback — correction suggested',correction,[cue],
                           status='candidate',origin='feedback',source_id=message_id)
 
-    def recall(self, project_id, question, limit=3):
+    def recall(self, project_id, question, limit=3, *, use_concepts=True):
         """Traceable retrieval with teacher-defined synonym equivalence; no hallucinated matches."""
         self.store.get_project(project_id)
         question = _text(question, 50000, 'Query')
-        concepts = self.concepts(project_id)
+        concepts = self.concepts(project_id) if use_concepts else []
         aliases = {}
         for concept in concepts:
             for variant in concept['variants']:
@@ -374,5 +374,5 @@ class TeacherMemory:
                            'WHERE id=?', (lesson['status'],int(lesson.get('version',1)),
                            old_new.get(lesson.get('supersedes_id')),
                            lesson.get('created_at') or now(),lesson.get('updated_at') or now(),item['id']))
-        return {'imported_lessons':len(old_new),'imported_concepts':len(concepts),
+        return {'lesson_id_map':old_new,'imported_lessons':len(old_new),'imported_concepts':len(concepts),
                 'notice':'Same-project source messages were re-linked when present; otherwise provenance is marked as imported'}
