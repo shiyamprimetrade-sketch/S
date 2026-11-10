@@ -214,7 +214,7 @@ def run_read_only_tools(
     configuration:AssistConfiguration,
 )->tuple[list[str],dict]:
     if not request.tool_intents:
-        return [],{"requested":[],"executed":[],"denied":[]}
+        return [],{"scope":configuration.allowed_scope,"requested_ids":[],"execution_audits":[],"denied":[],"raw_results_excluded":True}
     if not configuration.tools_enabled:
         raise AssistantDisabled("Assistant tools disabled by server policy")
     controller=make_tool_controller(configuration)
