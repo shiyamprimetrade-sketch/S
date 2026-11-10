@@ -1,0 +1,734 @@
+{
+  "date": "2026-11-10",
+  "platform": "Windows 11 Home x64",
+  "cpu": "AMD Ryzen 5 5600G, 6 cores, 12 logical processors",
+  "usable_ram_bytes": 7936512000,
+  "python": "3.12.10",
+  "torch": "2.15.0+cpu",
+  "cuda": false,
+  "new_dependencies_installed": [],
+  "source_branch": "research/s-int-001-native-model",
+  "source_base_commit": "1e2c979f9565956dfa3bb0dc930bf62ce6f1da2f",
+  "tests": {
+    "compatible_repository": {
+      "run": 38,
+      "passed": 38,
+      "failed": 0,
+      "skipped": 0
+    },
+    "native": {
+      "run": 6,
+      "passed": 6
+    }
+  },
+  "experiments": {
+    "runs": [
+      {
+        "steps": 80,
+        "seed": 20261110,
+        "threads": 2,
+        "initial_training_loss": 2.978543281555176,
+        "final_training_loss": 0.3971768021583557,
+        "initial_validation_loss": 2.970507860183716,
+        "final_validation_loss": 0.43225833773612976,
+        "parameters": 21138,
+        "training_seconds": 0.2577208000002429,
+        "training_cpu_seconds": 0.484375,
+        "cpu_core_equivalents": 1.8794563729413516,
+        "cpu_percent_of_machine": 15.66213644117793,
+        "peak_process_resident_bytes": 280399872,
+        "checkpoint": "artifacts/s-int-001/smoke-seed-20261110.pt",
+        "checkpoint_bytes": 89285,
+        "checkpoint_sha256": "1f34091844a976086e36ad5d2f658b58455f8df7f81e229d22e386e81bdef6a8",
+        "corpus_sha256": "7493d217bbfc593e0d708553501e525d315c4170e1f234decbd8dbc3beca2ae2",
+        "vocabulary": [
+          "\n",
+          " ",
+          ".",
+          "S",
+          "a",
+          "b",
+          "c",
+          "d",
+          "e",
+          "h",
+          "i",
+          "n",
+          "o",
+          "p",
+          "r",
+          "s",
+          "t",
+          "v"
+        ],
+        "torch": "2.15.0+cpu",
+        "device": "cpu",
+        "initialization": "random_from_scratch",
+        "evaluation": "Same frozen train and validation batches before and after training",
+        "limitation": "Repeated synthetic text; validation shares training patterns, not independent generalization",
+        "experiment": "smoke"
+      },
+      {
+        "steps": 240,
+        "seed": 20261110,
+        "threads": 2,
+        "initial_training_loss": 2.978543281555176,
+        "final_training_loss": 0.07142321020364761,
+        "initial_validation_loss": 2.970507860183716,
+        "final_validation_loss": 0.09230341762304306,
+        "parameters": 21138,
+        "training_seconds": 0.8535736000048928,
+        "training_cpu_seconds": 1.6875,
+        "cpu_core_equivalents": 1.9769824183764904,
+        "cpu_percent_of_machine": 16.474853486470753,
+        "peak_process_resident_bytes": 280870912,
+        "checkpoint": "artifacts/s-int-001/controlled-seed-20261110.pt",
+        "checkpoint_bytes": 89429,
+        "checkpoint_sha256": "79941c94ac0238fe4c109c055a7035cab0e414a9477cf01b10766d28f777f90f",
+        "corpus_sha256": "7493d217bbfc593e0d708553501e525d315c4170e1f234decbd8dbc3beca2ae2",
+        "vocabulary": [
+          "\n",
+          " ",
+          ".",
+          "S",
+          "a",
+          "b",
+          "c",
+          "d",
+          "e",
+          "h",
+          "i",
+          "n",
+          "o",
+          "p",
+          "r",
+          "s",
+          "t",
+          "v"
+        ],
+        "torch": "2.15.0+cpu",
+        "device": "cpu",
+        "initialization": "random_from_scratch",
+        "evaluation": "Same frozen train and validation batches before and after training",
+        "limitation": "Repeated synthetic text; validation shares training patterns, not independent generalization",
+        "experiment": "controlled"
+      },
+      {
+        "steps": 240,
+        "seed": 20261111,
+        "threads": 2,
+        "initial_training_loss": 3.091189384460449,
+        "final_training_loss": 0.07467371970415115,
+        "initial_validation_loss": 3.070396661758423,
+        "final_validation_loss": 0.07360417395830154,
+        "parameters": 21138,
+        "training_seconds": 0.7944497999997111,
+        "training_cpu_seconds": 1.59375,
+        "cpu_core_equivalents": 2.006105357444334,
+        "cpu_percent_of_machine": 16.717544645369447,
+        "peak_process_resident_bytes": 280948736,
+        "checkpoint": "artifacts/s-int-001/controlled-seed-20261111.pt",
+        "checkpoint_bytes": 89429,
+        "checkpoint_sha256": "ef09e355cbf501079498eac55a34ac7f79952b231f6bd566e2affc8fb5a5d4b7",
+        "corpus_sha256": "7493d217bbfc593e0d708553501e525d315c4170e1f234decbd8dbc3beca2ae2",
+        "vocabulary": [
+          "\n",
+          " ",
+          ".",
+          "S",
+          "a",
+          "b",
+          "c",
+          "d",
+          "e",
+          "h",
+          "i",
+          "n",
+          "o",
+          "p",
+          "r",
+          "s",
+          "t",
+          "v"
+        ],
+        "torch": "2.15.0+cpu",
+        "device": "cpu",
+        "initialization": "random_from_scratch",
+        "evaluation": "Same frozen train and validation batches before and after training",
+        "limitation": "Repeated synthetic text; validation shares training patterns, not independent generalization",
+        "experiment": "controlled"
+      },
+      {
+        "steps": 240,
+        "seed": 20261112,
+        "threads": 2,
+        "initial_training_loss": 3.050989866256714,
+        "final_training_loss": 0.09277509897947311,
+        "initial_validation_loss": 3.100266695022583,
+        "final_validation_loss": 0.07549116760492325,
+        "parameters": 21138,
+        "training_seconds": 0.7791864000027999,
+        "training_cpu_seconds": 1.5625,
+        "cpu_core_equivalents": 2.005296807021254,
+        "cpu_percent_of_machine": 16.71080672517711,
+        "peak_process_resident_bytes": 280961024,
+        "checkpoint": "artifacts/s-int-001/controlled-seed-20261112.pt",
+        "checkpoint_bytes": 89429,
+        "checkpoint_sha256": "026f71d26fa156f26503d6caa180251d3b57b1df8152bffc7901c5803dd82014",
+        "corpus_sha256": "7493d217bbfc593e0d708553501e525d315c4170e1f234decbd8dbc3beca2ae2",
+        "vocabulary": [
+          "\n",
+          " ",
+          ".",
+          "S",
+          "a",
+          "b",
+          "c",
+          "d",
+          "e",
+          "h",
+          "i",
+          "n",
+          "o",
+          "p",
+          "r",
+          "s",
+          "t",
+          "v"
+        ],
+        "torch": "2.15.0+cpu",
+        "device": "cpu",
+        "initialization": "random_from_scratch",
+        "evaluation": "Same frozen train and validation batches before and after training",
+        "limitation": "Repeated synthetic text; validation shares training patterns, not independent generalization",
+        "experiment": "controlled"
+      },
+      {
+        "steps": 80,
+        "seed": 20261110,
+        "threads": 2,
+        "initial_training_loss": 2.978543281555176,
+        "final_training_loss": 0.3971768021583557,
+        "initial_validation_loss": 2.970507860183716,
+        "final_validation_loss": 0.43225833773612976,
+        "parameters": 21138,
+        "training_seconds": 0.2553241999994498,
+        "training_cpu_seconds": 0.5,
+        "cpu_core_equivalents": 1.9582945917428802,
+        "cpu_percent_of_machine": 16.319121597857336,
+        "peak_process_resident_bytes": 280961024,
+        "checkpoint": "artifacts/s-int-001/reproducibility-seed-20261110.pt",
+        "checkpoint_bytes": 89509,
+        "checkpoint_sha256": "985f651181da9370820df4d1cc1782c291c5c81f493aed615cea574be99e5991",
+        "corpus_sha256": "7493d217bbfc593e0d708553501e525d315c4170e1f234decbd8dbc3beca2ae2",
+        "vocabulary": [
+          "\n",
+          " ",
+          ".",
+          "S",
+          "a",
+          "b",
+          "c",
+          "d",
+          "e",
+          "h",
+          "i",
+          "n",
+          "o",
+          "p",
+          "r",
+          "s",
+          "t",
+          "v"
+        ],
+        "torch": "2.15.0+cpu",
+        "device": "cpu",
+        "initialization": "random_from_scratch",
+        "evaluation": "Same frozen train and validation batches before and after training",
+        "limitation": "Repeated synthetic text; validation shares training patterns, not independent generalization",
+        "experiment": "reproducibility"
+      }
+    ],
+    "reproducibility_exact_weights": true,
+    "network": "All socket.connect calls denied for training, checkpoint reload, evaluation, and generation",
+    "evaluated_experiments": 4
+  },
+  "independent_evaluation": {
+    "experiments": [
+      {
+        "checkpoint": "artifacts/s-int-001/smoke-seed-20261110.pt",
+        "seed": 20261110,
+        "steps": 80,
+        "evaluation_sha256": "63f93ab8c3f6e9f510f4b2f824a03f319125fa66caf0ad6236ae3d83f3f1def5",
+        "provenance": "Independently authored synthetic evaluation fixtures for S-INT-001, 2026-11-10. No user conversations or training quotations.",
+        "records": [
+          {
+            "text": "S can see a river.",
+            "status": "evaluated",
+            "target_characters": 17,
+            "untrained_loss": 2.9945851494284237,
+            "trained_loss": 5.579027961282169,
+            "training_unigram_loss": 2.593261786291953
+          },
+          {
+            "text": "S reads a note.",
+            "status": "evaluated",
+            "target_characters": 14,
+            "untrained_loss": 3.0448548453194753,
+            "trained_loss": 3.15810911996024,
+            "training_unigram_loss": 2.5569399589386648
+          },
+          {
+            "text": "S sorts a set.",
+            "status": "evaluated",
+            "target_characters": 13,
+            "untrained_loss": 2.9109746492826023,
+            "trained_loss": 4.677272796630859,
+            "training_unigram_loss": 2.429416651530526
+          },
+          {
+            "text": "S notices a red star.",
+            "status": "evaluated",
+            "target_characters": 20,
+            "untrained_loss": 3.047430992126465,
+            "trained_loss": 4.724243927001953,
+            "training_unigram_loss": 2.6317977660790377
+          },
+          {
+            "text": "A river is not a test.",
+            "status": "unsupported_vocabulary",
+            "missing_characters": [
+              "A"
+            ]
+          },
+          {
+            "text": "S sees three red stones.",
+            "status": "evaluated",
+            "target_characters": 23,
+            "untrained_loss": 3.1444503120754077,
+            "trained_loss": 4.404417618461277,
+            "training_unigram_loss": 2.3755130800447035
+          },
+          {
+            "text": "The note records no evidence.",
+            "status": "unsupported_vocabulary",
+            "missing_characters": [
+              "T"
+            ]
+          },
+          {
+            "text": "S creates a test case.",
+            "status": "evaluated",
+            "target_characters": 21,
+            "untrained_loss": 2.979649861653646,
+            "trained_loss": 3.7369061424618675,
+            "training_unigram_loss": 2.412312525440718
+          },
+          {
+            "text": "Evidence is not a pattern.",
+            "status": "unsupported_vocabulary",
+            "missing_characters": [
+              "E"
+            ]
+          },
+          {
+            "text": "S tests a rare event.",
+            "status": "evaluated",
+            "target_characters": 20,
+            "untrained_loss": 3.050935173034668,
+            "trained_loss": 2.8500160217285155,
+            "training_unigram_loss": 2.357350879771203
+          },
+          {
+            "text": "S tests a new hypothesis.",
+            "status": "unsupported_vocabulary",
+            "missing_characters": [
+              "w",
+              "y"
+            ]
+          },
+          {
+            "text": "S builds a useful invention.",
+            "status": "unsupported_vocabulary",
+            "missing_characters": [
+              "f",
+              "l",
+              "u"
+            ]
+          }
+        ],
+        "evaluated_texts": 7,
+        "unsupported_texts": 5,
+        "target_characters": 128,
+        "untrained_cross_entropy": 3.0331321358680725,
+        "trained_cross_entropy": 4.149401426315308,
+        "training_unigram_cross_entropy": 2.4729950238616363,
+        "uniform_cross_entropy": 2.8903717578961645,
+        "generated_output": "S rdeves p patern. S tere tecevevesthe paterden.\nbs atterverdeves then. S ern. ide",
+        "inference_seconds_including_checkpoint_load": 0.031546199999866076,
+        "inference_prompt": "S ",
+        "generation_seed": 20261110,
+        "generated_characters": 80,
+        "network": "socket.connect denied throughout evaluation and inference",
+        "limitation": "Character likelihood on a small synthetic set; not evidence of reasoning or conversational competence"
+      },
+      {
+        "checkpoint": "artifacts/s-int-001/controlled-seed-20261110.pt",
+        "seed": 20261110,
+        "steps": 240,
+        "evaluation_sha256": "63f93ab8c3f6e9f510f4b2f824a03f319125fa66caf0ad6236ae3d83f3f1def5",
+        "provenance": "Independently authored synthetic evaluation fixtures for S-INT-001, 2026-11-10. No user conversations or training quotations.",
+        "records": [
+          {
+            "text": "S can see a river.",
+            "status": "evaluated",
+            "target_characters": 17,
+            "untrained_loss": 2.9945851494284237,
+            "trained_loss": 7.980184218462775,
+            "training_unigram_loss": 2.593261786291953
+          },
+          {
+            "text": "S reads a note.",
+            "status": "evaluated",
+            "target_characters": 14,
+            "untrained_loss": 3.0448548453194753,
+            "trained_loss": 4.498488289969308,
+            "training_unigram_loss": 2.5569399589386648
+          },
+          {
+            "text": "S sorts a set.",
+            "status": "evaluated",
+            "target_characters": 13,
+            "untrained_loss": 2.9109746492826023,
+            "trained_loss": 7.48375232403095,
+            "training_unigram_loss": 2.429416651530526
+          },
+          {
+            "text": "S notices a red star.",
+            "status": "evaluated",
+            "target_characters": 20,
+            "untrained_loss": 3.047430992126465,
+            "trained_loss": 6.644720458984375,
+            "training_unigram_loss": 2.6317977660790377
+          },
+          {
+            "text": "A river is not a test.",
+            "status": "unsupported_vocabulary",
+            "missing_characters": [
+              "A"
+            ]
+          },
+          {
+            "text": "S sees three red stones.",
+            "status": "evaluated",
+            "target_characters": 23,
+            "untrained_loss": 3.1444503120754077,
+            "trained_loss": 5.957670128863791,
+            "training_unigram_loss": 2.3755130800447035
+          },
+          {
+            "text": "The note records no evidence.",
+            "status": "unsupported_vocabulary",
+            "missing_characters": [
+              "T"
+            ]
+          },
+          {
+            "text": "S creates a test case.",
+            "status": "evaluated",
+            "target_characters": 21,
+            "untrained_loss": 2.979649861653646,
+            "trained_loss": 5.1690430414109,
+            "training_unigram_loss": 2.412312525440718
+          },
+          {
+            "text": "Evidence is not a pattern.",
+            "status": "unsupported_vocabulary",
+            "missing_characters": [
+              "E"
+            ]
+          },
+          {
+            "text": "S tests a rare event.",
+            "status": "evaluated",
+            "target_characters": 20,
+            "untrained_loss": 3.050935173034668,
+            "trained_loss": 3.874607467651367,
+            "training_unigram_loss": 2.357350879771203
+          },
+          {
+            "text": "S tests a new hypothesis.",
+            "status": "unsupported_vocabulary",
+            "missing_characters": [
+              "w",
+              "y"
+            ]
+          },
+          {
+            "text": "S builds a useful invention.",
+            "status": "unsupported_vocabulary",
+            "missing_characters": [
+              "f",
+              "l",
+              "u"
+            ]
+          }
+        ],
+        "evaluated_texts": 7,
+        "unsupported_texts": 5,
+        "target_characters": 128,
+        "untrained_cross_entropy": 3.0331321358680725,
+        "trained_cross_entropy": 5.874168932437897,
+        "training_unigram_cross_entropy": 2.4729950238616363,
+        "uniform_cross_entropy": 2.8903717578961645,
+        "generated_output": "S records the evidence.\nS observes a pattern. S tests the pattern. re ecords the e",
+        "inference_seconds_including_checkpoint_load": 0.03124539999407716,
+        "inference_prompt": "S ",
+        "generation_seed": 20261110,
+        "generated_characters": 80,
+        "network": "socket.connect denied throughout evaluation and inference",
+        "limitation": "Character likelihood on a small synthetic set; not evidence of reasoning or conversational competence"
+      },
+      {
+        "checkpoint": "artifacts/s-int-001/controlled-seed-20261111.pt",
+        "seed": 20261111,
+        "steps": 240,
+        "evaluation_sha256": "63f93ab8c3f6e9f510f4b2f824a03f319125fa66caf0ad6236ae3d83f3f1def5",
+        "provenance": "Independently authored synthetic evaluation fixtures for S-INT-001, 2026-11-10. No user conversations or training quotations.",
+        "records": [
+          {
+            "text": "S can see a river.",
+            "status": "evaluated",
+            "target_characters": 17,
+            "untrained_loss": 2.9210472106933594,
+            "trained_loss": 8.235624425551471,
+            "training_unigram_loss": 2.593261786291953
+          },
+          {
+            "text": "S reads a note.",
+            "status": "evaluated",
+            "target_characters": 14,
+            "untrained_loss": 2.916071210588728,
+            "trained_loss": 5.629603794642857,
+            "training_unigram_loss": 2.5569399589386648
+          },
+          {
+            "text": "S sorts a set.",
+            "status": "evaluated",
+            "target_characters": 13,
+            "untrained_loss": 2.855511005108173,
+            "trained_loss": 5.837213956392729,
+            "training_unigram_loss": 2.429416651530526
+          },
+          {
+            "text": "S notices a red star.",
+            "status": "evaluated",
+            "target_characters": 20,
+            "untrained_loss": 3.092846488952637,
+            "trained_loss": 7.074532318115234,
+            "training_unigram_loss": 2.6317977660790377
+          },
+          {
+            "text": "A river is not a test.",
+            "status": "unsupported_vocabulary",
+            "missing_characters": [
+              "A"
+            ]
+          },
+          {
+            "text": "S sees three red stones.",
+            "status": "evaluated",
+            "target_characters": 23,
+            "untrained_loss": 3.06211985712466,
+            "trained_loss": 7.446525905443274,
+            "training_unigram_loss": 2.3755130800447035
+          },
+          {
+            "text": "The note records no evidence.",
+            "status": "unsupported_vocabulary",
+            "missing_characters": [
+              "T"
+            ]
+          },
+          {
+            "text": "S creates a test case.",
+            "status": "evaluated",
+            "target_characters": 21,
+            "untrained_loss": 3.0509193057105657,
+            "trained_loss": 5.929585774739583,
+            "training_unigram_loss": 2.412312525440718
+          },
+          {
+            "text": "Evidence is not a pattern.",
+            "status": "unsupported_vocabulary",
+            "missing_characters": [
+              "E"
+            ]
+          },
+          {
+            "text": "S tests a rare event.",
+            "status": "evaluated",
+            "target_characters": 20,
+            "untrained_loss": 3.126703071594238,
+            "trained_loss": 3.785126495361328,
+            "training_unigram_loss": 2.357350879771203
+          },
+          {
+            "text": "S tests a new hypothesis.",
+            "status": "unsupported_vocabulary",
+            "missing_characters": [
+              "w",
+              "y"
+            ]
+          },
+          {
+            "text": "S builds a useful invention.",
+            "status": "unsupported_vocabulary",
+            "missing_characters": [
+              "f",
+              "l",
+              "u"
+            ]
+          }
+        ],
+        "evaluated_texts": 7,
+        "unsupported_texts": 5,
+        "target_characters": 128,
+        "untrained_cross_entropy": 3.019480437040329,
+        "trained_cross_entropy": 6.310065805912018,
+        "training_unigram_cross_entropy": 2.4729950238616363,
+        "uniform_cross_entropy": 2.8903717578961645,
+        "generated_output": "S res a pattern. S tests tte pattern. S tecords the evidence.\nS obsernces observes",
+        "inference_seconds_including_checkpoint_load": 0.030829700001049787,
+        "inference_prompt": "S ",
+        "generation_seed": 20261110,
+        "generated_characters": 80,
+        "network": "socket.connect denied throughout evaluation and inference",
+        "limitation": "Character likelihood on a small synthetic set; not evidence of reasoning or conversational competence"
+      },
+      {
+        "checkpoint": "artifacts/s-int-001/controlled-seed-20261112.pt",
+        "seed": 20261112,
+        "steps": 240,
+        "evaluation_sha256": "63f93ab8c3f6e9f510f4b2f824a03f319125fa66caf0ad6236ae3d83f3f1def5",
+        "provenance": "Independently authored synthetic evaluation fixtures for S-INT-001, 2026-11-10. No user conversations or training quotations.",
+        "records": [
+          {
+            "text": "S can see a river.",
+            "status": "evaluated",
+            "target_characters": 17,
+            "untrained_loss": 3.1355460671817554,
+            "trained_loss": 7.961601706112132,
+            "training_unigram_loss": 2.593261786291953
+          },
+          {
+            "text": "S reads a note.",
+            "status": "evaluated",
+            "target_characters": 14,
+            "untrained_loss": 3.0512161254882812,
+            "trained_loss": 4.40844862801688,
+            "training_unigram_loss": 2.5569399589386648
+          },
+          {
+            "text": "S sorts a set.",
+            "status": "evaluated",
+            "target_characters": 13,
+            "untrained_loss": 2.978642390324519,
+            "trained_loss": 6.788284888634315,
+            "training_unigram_loss": 2.429416651530526
+          },
+          {
+            "text": "S notices a red star.",
+            "status": "evaluated",
+            "target_characters": 20,
+            "untrained_loss": 3.0319496154785157,
+            "trained_loss": 7.188820648193359,
+            "training_unigram_loss": 2.6317977660790377
+          },
+          {
+            "text": "A river is not a test.",
+            "status": "unsupported_vocabulary",
+            "missing_characters": [
+              "A"
+            ]
+          },
+          {
+            "text": "S sees three red stones.",
+            "status": "evaluated",
+            "target_characters": 23,
+            "untrained_loss": 3.0285707556683086,
+            "trained_loss": 6.246158765709919,
+            "training_unigram_loss": 2.3755130800447035
+          },
+          {
+            "text": "The note records no evidence.",
+            "status": "unsupported_vocabulary",
+            "missing_characters": [
+              "T"
+            ]
+          },
+          {
+            "text": "S creates a test case.",
+            "status": "evaluated",
+            "target_characters": 21,
+            "untrained_loss": 2.9698802403041293,
+            "trained_loss": 6.610809326171875,
+            "training_unigram_loss": 2.412312525440718
+          },
+          {
+            "text": "Evidence is not a pattern.",
+            "status": "unsupported_vocabulary",
+            "missing_characters": [
+              "E"
+            ]
+          },
+          {
+            "text": "S tests a rare event.",
+            "status": "evaluated",
+            "target_characters": 20,
+            "untrained_loss": 3.061391830444336,
+            "trained_loss": 4.174336624145508,
+            "training_unigram_loss": 2.357350879771203
+          },
+          {
+            "text": "S tests a new hypothesis.",
+            "status": "unsupported_vocabulary",
+            "missing_characters": [
+              "w",
+              "y"
+            ]
+          },
+          {
+            "text": "S builds a useful invention.",
+            "status": "unsupported_vocabulary",
+            "missing_characters": [
+              "f",
+              "l",
+              "u"
+            ]
+          }
+        ],
+        "evaluated_texts": 7,
+        "unsupported_texts": 5,
+        "target_characters": 128,
+        "untrained_cross_entropy": 3.0362117290496826,
+        "trained_cross_entropy": 6.211445361375809,
+        "training_unigram_cross_entropy": 2.4729950238616363,
+        "uniform_cross_entropy": 2.8903717578961645,
+        "generated_output": "S rests the e pattern. S records the evidence.\nS observes a pattern. S tern. S rec",
+        "inference_seconds_including_checkpoint_load": 0.03311420000682119,
+        "inference_prompt": "S ",
+        "generation_seed": 20261110,
+        "generated_characters": 80,
+        "network": "socket.connect denied throughout evaluation and inference",
+        "limitation": "Character likelihood on a small synthetic set; not evidence of reasoning or conversational competence"
+      }
+    ],
+    "metric": "next-character natural-log cross-entropy",
+    "scope": "New synthetic text, matched random-initialization and unigram baselines; unsupported records disclosed"
+  },
+  "controlled_generalization_loss_mean": 6.131893366575241,
+  "controlled_generalization_loss_sample_stdev": 0.22857801946751274,
+  "ollama_listener_present_during_verification": false,
+  "conclusion": "From-scratch training, checkpoint reload and independent inference verified. Repeated-corpus fitting does not generalize to the independent synthetic texts; reasoning capability was not measured."
+}

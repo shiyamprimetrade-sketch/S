@@ -1,0 +1,19 @@
+{
+  "provenance": "Independently authored synthetic evaluation fixtures for S-INT-001, 2026-11-10. No user conversations or training quotations.",
+  "freeze_policy": "Fixed before experimental training; never consumed by the trainer.",
+  "texts": [
+    "S can see a river.",
+    "S reads a note.",
+    "S sorts a set.",
+    "S notices a red star.",
+    "A river is not a test.",
+    "S sees three red stones.",
+    "The note records no evidence.",
+    "S creates a test case.",
+    "Evidence is not a pattern.",
+    "S tests a rare event.",
+    "S tests a new hypothesis.",
+    "S builds a useful invention."
+  ],
+  "interpretation": "Character cross-entropy and vocabulary coverage only. Some examples intentionally contain unsupported characters. No reasoning score or conversational accuracy is inferred."
+}
