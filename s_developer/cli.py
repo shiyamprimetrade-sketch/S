@@ -53,10 +53,19 @@ def main(argv=None):
     parser.add_argument('--backend',choices=('torch','stdlib'),default='stdlib')
     parser.add_argument('--prompt',default='Request: Hello\n')
     parser.add_argument('--tokens',type=int,default=16)
+    parser.add_argument('--execute-tests',action='store_true',help='Run independent coding cases in prepared containers')
     args = parser.parse_args(argv)
     from .models import load_config,save_config,install_demo,install_native,train_demo
     config=load_config(args.db)
     config['execution_enabled']=args.enable_builds
+    if args.command==['evaluate','coding']:
+        from .capability import CapabilityEvaluator
+        if args.output and args.output.exists():parser.error('Evaluation output exists; preserve it and select a new output path')
+        result=CapabilityEvaluator(config).evaluate(args.provider,args.consent,args.execute_tests,args.max_repairs)
+        if args.output:
+            args.output.parent.mkdir(parents=True,exist_ok=True)
+            args.output.write_text(json.dumps(result,indent=2),encoding='utf-8')
+        print(json.dumps(result,indent=2));return 0 if result['suite_passed'] else 1
     if args.command==['model','configure-runtime']:
         from .models import configure_runtime
         print(json.dumps(configure_runtime(args.db,args.backend),indent=2));return 0

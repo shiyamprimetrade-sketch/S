@@ -65,3 +65,11 @@ test('runtime probe is consented and remains a runtime-only result',async()=>{
   call.reply({inference_completed:true,coding_capability:'unverified',runtime:'python-stdlib-f32'});await job;
   assert.match(f.el('code-output').textContent,/python-stdlib-f32/);assert.match(f.messages.pop(),/coding ability is still unverified/);
 });
+
+test('capability evaluation distinguishes independent results from generic promotion',async()=>{
+  const f=fixture();f.el('evaluation-execute').checked=false;
+  const job=f.el('evaluate-coding').onclick();const call=f.pending.shift();
+  assert.equal(call.route,'evaluate-coding');assert.equal(call.body.execute,false);assert.equal(call.body.max_repairs,0);
+  call.reply({task_count:3,final_tasks_correct:0,promotion_eligible:false});await job;
+  assert.match(f.messages.pop(),/General capability is not established/);assert.equal(f.el('code-consent').checked,false);
+});

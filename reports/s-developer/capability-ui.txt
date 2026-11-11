@@ -1,0 +1,33 @@
+✔ late memory response cannot populate a different project (10.631992ms)
+✔ latest search wins when responses arrive backwards (5.950788ms)
+✔ double send cannot create duplicate sessions (4.491519ms)
+✔ changing project during session creation cancels submission and stale session reuse (7.396104ms)
+✔ late answer cannot appear after switching projects, even when switching back (3.703632ms)
+✔ memory editing preserves source and expiry instead of offering ignored changes (3.189601ms)
+✔ status refresh cannot re-enable Send while a request is pending (6.844079ms)
+✔ duplicate memory save is suppressed and old completion preserves new project editor (3.120382ms)
+✔ memory edit submits only supported fields (2.720343ms)
+✔ generation requires approved saved requirements and explicit consent (7.730783ms)
+✔ source generation carries scoped revision and no runtime permissions (4.605953ms)
+✔ project change clears source, consent and diagnostics (4.059391ms)
+✔ cross-project source responses cannot populate the editor (2.987203ms)
+✔ unsaved source cannot run and repair budget cannot expand (7.298544ms)
+✔ bounded build submission is confirmed and reports actual result (6.044865ms)
+✔ runtime probe is consented and remains a runtime-only result (5.32534ms)
+✔ capability evaluation distinguishes independent results from generic promotion (2.919867ms)
+✔ save sends structured answers and no execution permissions (12.058105ms)
+✔ duplicate save and project changes are blocked during request (5.441026ms)
+✔ approval requires explicit confirmation and persists approval flag (8.114725ms)
+✔ reopen populates answers and preserves checkpoint revision on next save (11.691258ms)
+✔ malicious markup renders as text and never becomes HTML (7.126942ms)
+✔ rollback is confirmed, revision checked, and old approval is not resent (7.698093ms)
+✔ new project clears checkpoint and export state (8.74899ms)
+✔ export labels the saved checkpoint and warns that unsaved edits are excluded (5.211887ms)
+ℹ tests 25
+ℹ suites 0
+ℹ pass 25
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 326.691337

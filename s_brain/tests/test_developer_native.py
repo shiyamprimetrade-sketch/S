@@ -21,4 +21,4 @@ class DeveloperNativeTests(unittest.TestCase):
             # The fixed demo has not passed its format gate. A failure must stay
             # a failure rather than returning a deterministic template silently.
             with self.assertRaises(ValueError):
-                native.generate({'name':'Kepler','answers':{'purpose':'Print a greeting'}},'python-cli')
+                native._generate('A','python-cli')

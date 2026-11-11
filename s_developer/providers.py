@@ -13,6 +13,10 @@ class NoRedirect(HTTPRedirectHandler):
     def redirect_request(self,*args,**kwargs):raise PermissionError('Model service redirects are forbidden')
 
 
+class ContextLimitError(ValueError):
+    """Required prompt does not fit; it must not be silently truncated."""
+
+
 def local_json(route, body, timeout=90, limit=300000):
     if route not in ('generate','pull','tags'):raise ValueError('Unknown local model route')
     # No environment proxy, external URL, credentials or redirects. This is only
@@ -97,8 +101,8 @@ class NativeProvider:
     def _generate(self,prompt,recipe):
         if self.backend=='stdlib':
             from .portable_native import PortableBrain
-            # Explicit small-model budget. It never changes to an external provider.
-            value=PortableBrain(self.checkpoint).generate(prompt.encode()[-64:].decode('utf-8',errors='ignore'),128)['output']
+            if len(prompt.encode())>64:raise ContextLimitError('Portable generation input exceeds 64-byte context budget; no requirements were discarded')
+            value=PortableBrain(self.checkpoint).generate(prompt,128)['output']
             return decode_proposal(value,recipe)
         try:
             import torch
@@ -108,7 +112,9 @@ class NativeProvider:
         with self.lock,torch.random.fork_rng(devices=[]):
             model,manifest=load_weights(self.checkpoint,'cpu')
             torch.manual_seed(42)
-            ids=torch.tensor([list(prompt.encode())[-model.cfg.context:]],dtype=torch.long)
+            if len(prompt.encode())>model.cfg.context:
+                raise ContextLimitError('Native generation input exceeds model context; no requirements were discarded')
+            ids=torch.tensor([list(prompt.encode())],dtype=torch.long)
             output=model.generate(ids,steps=1024,temperature=0.7,top_k=30)
             value=bytes(output[0,ids.shape[1]:].tolist()).decode('utf-8',errors='replace')
         # Reject nonconforming output; never turn a template into a claimed model answer.

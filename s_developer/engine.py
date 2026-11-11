@@ -27,6 +27,7 @@ class DevelopmentEngine:
                  'ollama-external':bool(self.config.get('ollama_model'))},
                 'execution_enabled':self.config.get('execution_enabled') is True,
                 'native_backend':self.config.get('native_backend','torch'),
+                'coding_evaluation':'public Python-function cases; independent host-side answers; no general promotion',
                 'runtime':'digest-pinned Docker; no host execution fallback',
                 'images_prepared':sorted(self.config.get('images',{})),
                 'business_acceptance':'requires independent review beyond toolchain tests',
@@ -153,6 +154,14 @@ class DevelopmentEngine:
                      'elapsed_seconds':result['elapsed_seconds'],'inference_completed':True,
                      'coding_capability':'unverified'})
         return result
+    def evaluate_coding(self,body):
+        self._body(body,('project_id','provider','execute','max_repairs','consent'))
+        self.store.get_project(body['project_id'])
+        from .capability import CapabilityEvaluator
+        with self.lock:
+            result=CapabilityEvaluator(self.config).evaluate(body['provider'],True,body['execute'],body['max_repairs'])
+        self._record(body['project_id'],{'stage':'coding-evaluation','report':result})
+        return result
     def request(self,verb,path,query,body):
         if verb=='GET':
             pid=query.get('project_id',[''])[0]
@@ -164,6 +173,6 @@ class DevelopmentEngine:
         if verb=='POST':
             routes={'/api/developer/generate':self.generate,'/api/developer/edit':self.edit,
                     '/api/developer/restore-source':self.restore,'/api/developer/build':self.build,
-                    '/api/developer/neural-probe':self.neural_probe}
+                    '/api/developer/neural-probe':self.neural_probe,'/api/developer/evaluate-coding':self.evaluate_coding}
             if path in routes:return routes[path](body)
         raise ValueError('Unknown developer engine route')
