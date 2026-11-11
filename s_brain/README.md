@@ -43,3 +43,5 @@ Training is byte-level next-token prediction using GQA, RoPE, RMSNorm, and SwiGL
 5. Add an explicit opt-in model selection adapter to S; retain the original Ollama backend and avoid automatic unsafe switching.
 
 **Status:** Experimental integration tested on Windows; the tiny trained checkpoint failed its synthetic reasoning diagnostic. See the integration report for measured results and remaining gates.
+
+Final browser and preservation evidence is documented in [the integration report](../docs/brain-console-integration.md).
