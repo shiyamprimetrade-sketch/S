@@ -14,3 +14,9 @@ __pycache__/
 
 /s-brain-host.json
 /data/s-brain-memory.sqlite3*
+
+# Local package/build outputs
+/build/
+/dist/
+/*.egg-info/
+/.venv/

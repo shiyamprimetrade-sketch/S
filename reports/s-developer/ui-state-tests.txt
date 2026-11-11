@@ -1,0 +1,25 @@
+✔ late memory response cannot populate a different project (8.836296ms)
+✔ latest search wins when responses arrive backwards (4.432956ms)
+✔ double send cannot create duplicate sessions (4.439218ms)
+✔ changing project during session creation cancels submission and stale session reuse (5.798651ms)
+✔ late answer cannot appear after switching projects, even when switching back (2.586881ms)
+✔ memory editing preserves source and expiry instead of offering ignored changes (3.52154ms)
+✔ status refresh cannot re-enable Send while a request is pending (4.112656ms)
+✔ duplicate memory save is suppressed and old completion preserves new project editor (3.410883ms)
+✔ memory edit submits only supported fields (3.782589ms)
+✔ save sends structured answers and no execution permissions (11.704392ms)
+✔ duplicate save and project changes are blocked during request (5.318483ms)
+✔ approval requires explicit confirmation and persists approval flag (6.099465ms)
+✔ reopen populates answers and preserves checkpoint revision on next save (8.604823ms)
+✔ malicious markup renders as text and never becomes HTML (5.810824ms)
+✔ rollback is confirmed, revision checked, and old approval is not resent (6.58396ms)
+✔ new project clears checkpoint and export state (8.344595ms)
+✔ export labels the saved checkpoint and warns that unsaved edits are excluded (12.012751ms)
+ℹ tests 17
+ℹ suites 0
+ℹ pass 17
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 326.841879

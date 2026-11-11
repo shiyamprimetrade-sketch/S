@@ -1,0 +1,42 @@
+name: S Developer foundation
+on:
+  pull_request:
+    paths:
+      - 's_developer/**'
+      - 'web/**'
+      - 'continuum/server.py'
+      - 'pyproject.toml'
+      - 'tests/test_developer.py'
+      - 'scripts/*developer*'
+      - 'scripts/S.cmd'
+      - 'scripts/s_launcher.py'
+      - '.github/workflows/s-developer.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  developer:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Existing and developer HTTP/persistence tests
+        run: python -m unittest discover -s tests -v
+      - name: Developer UI state tests
+        run: node --test scripts/test_developer_ui.cjs
+      - name: Existing native console UI state tests
+        run: node --test scripts/test_brain_ui.cjs
+      - name: Build and install package
+        run: python -m pip install --no-deps .
+      - name: Installed entry point and persistence smoke
+        run: python scripts/smoke_developer_install.py

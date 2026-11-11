@@ -12,6 +12,9 @@ from .storage import Store
 
 ROOT=Path(__file__).resolve().parent.parent
 WEB=ROOT/'web'
+if not WEB.is_dir():
+    from importlib.resources import files
+    WEB=Path(str(files('s_web_assets')))
 
 class API(BaseHTTPRequestHandler):
     server_version='AxiomFlow/0.1'
@@ -38,6 +41,7 @@ class API(BaseHTTPRequestHandler):
     def _static(self,name):
         allow={'/':'index.html','/app.js':'app.js','/style.css':'style.css'}
         allow.update({'/brain':'brain.html','/brain.js':'brain.js','/brain.css':'brain.css'})
+        allow.update({'/developer':'developer.html','/developer.js':'developer.js','/developer.css':'developer.css'})
         if name not in allow:return self._json(404,{'error':'Not found'})
         p=WEB/allow[name]
         body=p.read_bytes()
@@ -51,6 +55,8 @@ class API(BaseHTTPRequestHandler):
     def _api(self,verb):
         path=urlparse(self.path).path
         s=self.server.store
+        if path.startswith('/api/developer/'):
+            return self.server.developer.request(verb,path,self._query(),None if verb=='GET' else self._body())
         if path.startswith('/api/brain/'):
             return self.server.brain.request(verb,path,self._query(),None if verb=='GET' else self._body())
         if verb=='GET':
@@ -114,6 +120,8 @@ class AppServer(ThreadingHTTPServer):
         self.store.seed_if_empty()
         from .brain_console import BrainConsole
         self.brain=BrainConsole(self.store)
+        from s_developer.specifications import Specifications
+        self.developer=Specifications(self.store)
 
 def serve(db_path,port=8765):
     with AppServer('127.0.0.1',port,db_path) as app:
