@@ -1,0 +1,200 @@
+{
+  "experiment": "s-synthetic-coding-curriculum-v1",
+  "plan_sha256": "9c749943e1895ea6ab5c2c4d32b6c01f6138d957ce1838550eb41cf0973a8cee",
+  "dataset_sha256": "341384e5679fe415930002c1c2019f5268eeb8788fae879420b0f5ecd380b72e",
+  "decoder": "greedy bytes, stop at first complete JSON object; no correction or token constraints",
+  "max_new_tokens": 200,
+  "semantic_execution": "not_assessed",
+  "automatic_promotion": false,
+  "models": [
+    {
+      "label": "old-demo",
+      "weights_sha256": "a6caeb1f219c01f42cec3ab54fb5dcdb61e20d6530dc91173a7805bdd7d89859",
+      "training_steps": 256,
+      "cases": [
+        {
+          "id": "add-7-4",
+          "prompt_sha256": "c8773093e60144f9a93e71c652918ee1352f7498d5c2d08b0aacbd51d50712e7",
+          "raw": "ppy\": \": \": t(')\\nest: t_azest_azestest(')\\ndendar\n{\": t restestestestestes\\ndent: testestes\\ndes\\nde')\\ndest t t: testestestestestestestestestestestestes\\ntest: testestest: testestestestestestesteste",
+          "format_passed": false,
+          "diagnostic": "Expecting value: line 1 column 1 (char 0)"
+        },
+        {
+          "id": "subtract-7-4",
+          "prompt_sha256": "f07f2ce577bb40e76b2fddfb5479a0a3e22c9c05673cf4b2e450dc09cddd717e",
+          "raw": "ppy\": \"# \": \"pppy\": \": tequir\n{\": \"# \"ap.py\": \"# irendequindest t \"ppendent: t t: tes\\ne')\\ndequir\n{\": t(')\\ndest: test: testestestesteste')\\ndappp.py\", \"}}}\nRest t: test: test: test: test: tequilest(",
+          "format_passed": false,
+          "diagnostic": "Expecting value: line 1 column 1 (char 0)"
+        },
+        {
+          "id": "multiply-7-4",
+          "prompt_sha256": "11ffbedd4b68311299d1614cc96eb825cd677046ed9a2210ee08f1de3be9c3a8",
+          "raw": "pppy\": \": rindest(')\\ndestequir\n{\"# test(')\\ntest te')\\nt t: test: testendest: t(')\\ndest: test: testes\\ndar\n{\"filest: t('Fest(')\\nt: test: test: t(')\\ndappp.py\", t: t_ar\n{\": tes\\nt(')\\nt(')\\nt(')\\nte",
+          "format_passed": false,
+          "diagnostic": "Expecting value: line 1 column 1 (char 0)"
+        },
+        {
+          "id": "floor_divide-7-4",
+          "prompt_sha256": "ae55f014fb8d25e01f5c7233c21f91d849427eb1c6739138bfa938e199690ce4",
+          "raw": "ppy\": t(')\\ndestestentequir\n{\": tequirent(')\\nt t tent: test: tes\\nendest: Bir\n{\"fir\nRest: t: testequilest(')\\ndapp.py\": teststest_appp.py\": t(')\\ndazest: t(')\\ndest: t(')\\ndazest: testestestest: test",
+          "format_passed": false,
+          "diagnostic": "Expecting value: line 1 column 1 (char 0)"
+        },
+        {
+          "id": "add-13-4",
+          "prompt_sha256": "6eb905668dd6b2723909a7a563ad37d25e953c5328d3e68d2c90bdfd6593ad06",
+          "raw": "py\": indes\\ndestendendest t(')\\ndestequile')\\nt t t(')\\ndendest: tequir\n{\": t(')\\ndest: tes\\ndes\\ndest: t: test_app.py\": test: testestest_apppy\": t(')\\ndazestes\\nt: test(')\\nt: testesteste')\\nte')\\nt:",
+          "format_passed": false,
+          "diagnostic": "Expecting value: line 1 column 1 (char 0)"
+        },
+        {
+          "id": "subtract-13-4",
+          "prompt_sha256": "27b65321d40516bfec0fbf0cbe2da7ffdb69765266ea04f1410d88a9045eb133",
+          "raw": "ppy\": t(')\\ndestestendaroventequintequentest t(')\\ndappp.py\": t(')\\ndest: t: t: t: tes\\ndes\\ndendest t t: tst t: test: testestestestestestestestestes\\ndapppppy\": test: test: tes\\nt: tes\\nte'Duindappp.",
+          "format_passed": false,
+          "diagnostic": "Expecting value: line 1 column 1 (char 0)"
+        },
+        {
+          "id": "multiply-13-4",
+          "prompt_sha256": "f108a84446c90cacec5e5d6a895a163a9cdc9645300215e50a1384c248853c0f",
+          "raw": "pp.py\": t(')\\ndestestendest(')\\n\", teste')\\nte')\\ntest: t: test: tes\\ndendest: t: t: test: testestestestestes\\nt(')\\ndapp.py\": t(')\\nt(')\\nt(')\\ndappp.py\": \": ilest(')\\ndar\n{\"filest(')\\nt \": t: \": tes",
+          "format_passed": false,
+          "diagnostic": "Expecting value: line 1 column 1 (char 0)"
+        },
+        {
+          "id": "floor_divide-13-4",
+          "prompt_sha256": "dddc64a06cf2657663bb911c988937e874a2998df8f8f2df82d06340bda880ca",
+          "raw": "pazeeendendestestestestestequirovequinte')\\ndar\n{\"fint: tes\\ndent: t(')\\ndest: t: irovestequir\nRest: Elequilest: Duindest t_appp.py\": t(')\\nt(')\\n\"firovest ilest: t_app.pppy\": int t t(')\\ndest: test: ",
+          "format_passed": false,
+          "diagnostic": "Expecting value: line 1 column 1 (char 0)"
+        }
+      ]
+    },
+    {
+      "label": "random-control",
+      "weights_sha256": "b035bed31ddac0e44cbc610e4ef7fb2ab33db7c32b2526b02b294abcccca8298",
+      "training_steps": 0,
+      "cases": [
+        {
+          "id": "add-7-4",
+          "prompt_sha256": "c8773093e60144f9a93e71c652918ee1352f7498d5c2d08b0aacbd51d50712e7",
+          "raw": "........................................................................................................................................................................................................",
+          "format_passed": false,
+          "diagnostic": "Expecting value: line 1 column 1 (char 0)"
+        },
+        {
+          "id": "subtract-7-4",
+          "prompt_sha256": "f07f2ce577bb40e76b2fddfb5479a0a3e22c9c05673cf4b2e450dc09cddd717e",
+          "raw": "........................................................................................................................................................................................................",
+          "format_passed": false,
+          "diagnostic": "Expecting value: line 1 column 1 (char 0)"
+        },
+        {
+          "id": "multiply-7-4",
+          "prompt_sha256": "11ffbedd4b68311299d1614cc96eb825cd677046ed9a2210ee08f1de3be9c3a8",
+          "raw": "........................................................................................................................................................................................................",
+          "format_passed": false,
+          "diagnostic": "Expecting value: line 1 column 1 (char 0)"
+        },
+        {
+          "id": "floor_divide-7-4",
+          "prompt_sha256": "ae55f014fb8d25e01f5c7233c21f91d849427eb1c6739138bfa938e199690ce4",
+          "raw": "........................................................................................................................................................................................................",
+          "format_passed": false,
+          "diagnostic": "Expecting value: line 1 column 1 (char 0)"
+        },
+        {
+          "id": "add-13-4",
+          "prompt_sha256": "6eb905668dd6b2723909a7a563ad37d25e953c5328d3e68d2c90bdfd6593ad06",
+          "raw": "........................................................................................................................................................................................................",
+          "format_passed": false,
+          "diagnostic": "Expecting value: line 1 column 1 (char 0)"
+        },
+        {
+          "id": "subtract-13-4",
+          "prompt_sha256": "27b65321d40516bfec0fbf0cbe2da7ffdb69765266ea04f1410d88a9045eb133",
+          "raw": "........................................................................................................................................................................................................",
+          "format_passed": false,
+          "diagnostic": "Expecting value: line 1 column 1 (char 0)"
+        },
+        {
+          "id": "multiply-13-4",
+          "prompt_sha256": "f108a84446c90cacec5e5d6a895a163a9cdc9645300215e50a1384c248853c0f",
+          "raw": "........................................................................................................................................................................................................",
+          "format_passed": false,
+          "diagnostic": "Expecting value: line 1 column 1 (char 0)"
+        },
+        {
+          "id": "floor_divide-13-4",
+          "prompt_sha256": "dddc64a06cf2657663bb911c988937e874a2998df8f8f2df82d06340bda880ca",
+          "raw": "........................................................................................................................................................................................................",
+          "format_passed": false,
+          "diagnostic": "Expecting value: line 1 column 1 (char 0)"
+        }
+      ]
+    },
+    {
+      "label": "trained-candidate",
+      "weights_sha256": "5c2deca97553c02c36a227f96fbce3459ae7c11045808a20db87743f0a1dbd1b",
+      "training_steps": 400,
+      "cases": [
+        {
+          "id": "add-7-4",
+          "prompt_sha256": "c8773093e60144f9a93e71c652918ee1352f7498d5c2d08b0aacbd51d50712e7",
+          "raw": "{\":\\n\":\"testurn sturn sturef {\\n {\\\",\"ve\\\",\"\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd\ufffd_aluapy\"# {\\\",\"de}\\\":\",\"!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!4}}}}",
+          "format_passed": false,
+          "diagnostic": "Expecting ',' delimiter: line 1 column 39 (char 38)"
+        },
+        {
+          "id": "subtract-7-4",
+          "prompt_sha256": "f07f2ce577bb40e76b2fddfb5479a0a3e22c9c05673cf4b2e450dc09cddd717e",
+          "raw": "p):{\":\"desturn {\\n rn rn  sturn {\\\"value\\\":p[\\\",\"valuestest_aluapy\"dedestenintestendentenindest cast hos.\\n\"}}}}}}}}}}\\n\":\"t_appp.p.p.p.pesostendendest cast cast hosost hos\"}}}}}}}}\\n capy\"testurndest",
+          "format_passed": false,
+          "diagnostic": "Expecting value: line 1 column 1 (char 0)"
+        },
+        {
+          "id": "multiply-7-4",
+          "prompt_sha256": "11ffbedd4b68311299d1614cc96eb825cd677046ed9a2210ee08f1de3be9c3a8",
+          "raw": "{\":{\":\":\":\":\":\":\":\":\":\":\":\":\":\":\":\":\":\":\":\":\":\":\":\":\":\":\":\":\":\":\":\":\":\"# {\\\"}\\\",\",\",\",\":\":\".ppppppppetedededepepepen\"# cat cast cases.\\n\"vases.\\n\"t casesesest ca\\n\"vastuap.pest ca_______apestestesoles",
+          "format_passed": false,
+          "diagnostic": "Expecting ',' delimiter: line 1 column 10 (char 9)"
+        },
+        {
+          "id": "floor_divide-7-4",
+          "prompt_sha256": "ae55f014fb8d25e01f5c7233c21f91d849427eb1c6739138bfa938e199690ce4",
+          "raw": "{\":\":\":\\n    {\"vef {\\n {\\n {\\\",\"turn {\\\"turn {\":p[\\\"x\\\",\"]//////t_aluat_at_astendedestentenden\"}}}\\n\"vastualuastestestestestest catest by cat casoluas\":{\"# cas\"vapy\"vapy\"tes\"tes\"des\"desolve(py\"ve(p.p.",
+          "format_passed": false,
+          "diagnostic": "Expecting ',' delimiter: line 1 column 16 (char 15)"
+        },
+        {
+          "id": "add-13-4",
+          "prompt_sha256": "6eb905668dd6b2723909a7a563ad37d25e953c5328d3e68d2c90bdfd6593ad06",
+          "raw": "p):\":\":\"desturn solve(p):\\n {\\\",\":pp.pppp.py\"dest_aluestuesst_alueden\":{\\\"vappp.py\":\":\"# rn 2}\\n\"}\\n\"}\\n Evastestestedededest cat host hos//t cast casossosoluas\"}}}}}}}}}}}}}\\n capy capy\"# cap6}}}}}}\\",
+          "format_passed": false,
+          "diagnostic": "Expecting value: line 1 column 1 (char 0)"
+        },
+        {
+          "id": "subtract-13-4",
+          "prompt_sha256": "27b65321d40516bfec0fbf0cbe2da7ffdb69765266ea04f1410d88a9045eb133",
+          "raw": "p):\":\"desolvef solve(p):p[\\n solurete\\\"turestueturetuest_apy {\\n\"den\"tuatestestest_ast_atestest cast cast cast cases\"\\n capppestestesostes\":{\":{\":{\":{\":\"# {\":\"vap.{\\n\"}\\\"]////222}\\n capy resturestuest",
+          "format_passed": false,
+          "diagnostic": "Expecting value: line 1 column 1 (char 0)"
+        },
+        {
+          "id": "multiply-13-4",
+          "prompt_sha256": "f108a84446c90cacec5e5d6a895a163a9cdc9645300215e50a1384c248853c0f",
+          "raw": "{\":{\":\":{\":\":\":\":\":\":\":\":\":\":\":\":\":\":\":\":\":\":\":\":\":\":\":\":\":\":\":\":\":\":\"# {\\\"}\\\",\",\",\",\":\":\" {\\n\"}\\n\"valuat_apededepen\"# in\"# cappp.\\n\"# \ufffd4fin\\n\"vapestestest castest ca\\n\"fin\"}}}}}}}}\\n\"t__appp.py\":\"des",
+          "format_passed": false,
+          "diagnostic": "Expecting ',' delimiter: line 1 column 11 (char 10)"
+        },
+        {
+          "id": "floor_divide-13-4",
+          "prompt_sha256": "dddc64a06cf2657663bb911c988937e874a2998df8f8f2df82d06340bda880ca",
+          "raw": "{\":{\":\\n sturn {9}\\n {\\n {\\n {\\\"turn Evaluresturn Evaluestualuatuatuatend0}}}}\\ntuastuastuatest cast cast castest cat caluasost casos\"# cappp.{\":{\\n\"testes\"tuasosoluasosturndesturndesturestuesolualue\\",
+          "format_passed": false,
+          "diagnostic": "Expecting value: line 1 column 7 (char 6)"
+        }
+      ]
+    }
+  ]
+}

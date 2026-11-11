@@ -1,0 +1,176 @@
+{
+  "experiment": "s-synthetic-coding-curriculum-v1",
+  "plan_sha256": "9c749943e1895ea6ab5c2c4d32b6c01f6138d957ce1838550eb41cf0973a8cee",
+  "image": "python@sha256:5e2bdb1b0d542d5039cffb8181c65930093949194a65c365dfb1b0fe13a4fa5b",
+  "model_output_replay": "required separately; this runner does not attest inference",
+  "automatic_promotion": false,
+  "models": [
+    {
+      "label": "old-demo",
+      "weights_sha256": "a6caeb1f219c01f42cec3ab54fb5dcdb61e20d6530dc91173a7805bdd7d89859",
+      "tasks": [
+        {
+          "id": "add-7-4",
+          "format_passed": false,
+          "cases": [],
+          "passed": false
+        },
+        {
+          "id": "subtract-7-4",
+          "format_passed": false,
+          "cases": [],
+          "passed": false
+        },
+        {
+          "id": "multiply-7-4",
+          "format_passed": false,
+          "cases": [],
+          "passed": false
+        },
+        {
+          "id": "floor_divide-7-4",
+          "format_passed": false,
+          "cases": [],
+          "passed": false
+        },
+        {
+          "id": "add-13-4",
+          "format_passed": false,
+          "cases": [],
+          "passed": false
+        },
+        {
+          "id": "subtract-13-4",
+          "format_passed": false,
+          "cases": [],
+          "passed": false
+        },
+        {
+          "id": "multiply-13-4",
+          "format_passed": false,
+          "cases": [],
+          "passed": false
+        },
+        {
+          "id": "floor_divide-13-4",
+          "format_passed": false,
+          "cases": [],
+          "passed": false
+        }
+      ],
+      "tasks_correct": 0
+    },
+    {
+      "label": "random-control",
+      "weights_sha256": "b035bed31ddac0e44cbc610e4ef7fb2ab33db7c32b2526b02b294abcccca8298",
+      "tasks": [
+        {
+          "id": "add-7-4",
+          "format_passed": false,
+          "cases": [],
+          "passed": false
+        },
+        {
+          "id": "subtract-7-4",
+          "format_passed": false,
+          "cases": [],
+          "passed": false
+        },
+        {
+          "id": "multiply-7-4",
+          "format_passed": false,
+          "cases": [],
+          "passed": false
+        },
+        {
+          "id": "floor_divide-7-4",
+          "format_passed": false,
+          "cases": [],
+          "passed": false
+        },
+        {
+          "id": "add-13-4",
+          "format_passed": false,
+          "cases": [],
+          "passed": false
+        },
+        {
+          "id": "subtract-13-4",
+          "format_passed": false,
+          "cases": [],
+          "passed": false
+        },
+        {
+          "id": "multiply-13-4",
+          "format_passed": false,
+          "cases": [],
+          "passed": false
+        },
+        {
+          "id": "floor_divide-13-4",
+          "format_passed": false,
+          "cases": [],
+          "passed": false
+        }
+      ],
+      "tasks_correct": 0
+    },
+    {
+      "label": "trained-candidate",
+      "weights_sha256": "5c2deca97553c02c36a227f96fbce3459ae7c11045808a20db87743f0a1dbd1b",
+      "tasks": [
+        {
+          "id": "add-7-4",
+          "format_passed": false,
+          "cases": [],
+          "passed": false
+        },
+        {
+          "id": "subtract-7-4",
+          "format_passed": false,
+          "cases": [],
+          "passed": false
+        },
+        {
+          "id": "multiply-7-4",
+          "format_passed": false,
+          "cases": [],
+          "passed": false
+        },
+        {
+          "id": "floor_divide-7-4",
+          "format_passed": false,
+          "cases": [],
+          "passed": false
+        },
+        {
+          "id": "add-13-4",
+          "format_passed": false,
+          "cases": [],
+          "passed": false
+        },
+        {
+          "id": "subtract-13-4",
+          "format_passed": false,
+          "cases": [],
+          "passed": false
+        },
+        {
+          "id": "multiply-13-4",
+          "format_passed": false,
+          "cases": [],
+          "passed": false
+        },
+        {
+          "id": "floor_divide-13-4",
+          "format_passed": false,
+          "cases": [],
+          "passed": false
+        }
+      ],
+      "tasks_correct": 0
+    }
+  ],
+  "target_met": false,
+  "improved_over_controls": false
+}

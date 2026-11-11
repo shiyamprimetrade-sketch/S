@@ -52,6 +52,7 @@ def main(argv=None):
     parser.add_argument('--max-repairs',type=int,default=0)
     parser.add_argument('--backend',choices=('torch','stdlib'),default='stdlib')
     parser.add_argument('--prompt',default='Request: Hello\n')
+    parser.add_argument('--decoding',choices=('sampled','greedy-json'),default='sampled')
     parser.add_argument('--tokens',type=int,default=16)
     parser.add_argument('--execute-tests',action='store_true',help='Run independent coding cases in prepared containers')
     args = parser.parse_args(argv)
@@ -66,6 +67,9 @@ def main(argv=None):
             args.output.parent.mkdir(parents=True,exist_ok=True)
             args.output.write_text(json.dumps(result,indent=2),encoding='utf-8')
         print(json.dumps(result,indent=2));return 0 if result['suite_passed'] else 1
+    if args.command==['model','configure-decoding']:
+        from .models import configure_decoding
+        print(json.dumps(configure_decoding(args.db,args.decoding),indent=2));return 0
     if args.command==['model','configure-runtime']:
         from .models import configure_runtime
         print(json.dumps(configure_runtime(args.db,args.backend),indent=2));return 0

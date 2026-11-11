@@ -1,0 +1,16 @@
+{"step": 100, "train_nll": 0.09352828562259674, "validation_nll": 0.40654146671295166, "gradient_norm": 0.6996017694473267, "learning_rate": 0.0029920862421583855, "elapsed_seconds": 9.564}
+{"step": 200, "train_nll": 0.025804780423641205, "validation_nll": 0.4210224449634552, "gradient_norm": 0.14415068924427032, "learning_rate": 0.0029293317810967835, "elapsed_seconds": 18.185}
+{"step": 300, "train_nll": 0.02386375702917576, "validation_nll": 0.4519261121749878, "gradient_norm": 0.10659981518983841, "learning_rate": 0.0028067571878262454, "elapsed_seconds": 27.234}
+{"step": 400, "train_nll": 0.035670261830091476, "validation_nll": 0.40013936161994934, "gradient_norm": 0.5411045551300049, "learning_rate": 0.0026300939140962267, "elapsed_seconds": 35.965}
+{"step": 500, "train_nll": 0.02285229042172432, "validation_nll": 0.41977471113204956, "gradient_norm": 0.14747031033039093, "learning_rate": 0.0024076025382392162, "elapsed_seconds": 44.353}
+{"step": 600, "train_nll": 0.02468351647257805, "validation_nll": 0.4616319239139557, "gradient_norm": 0.18035289645195007, "learning_rate": 0.002149686509708885, "elapsed_seconds": 52.879}
+{"step": 700, "train_nll": 0.020334884524345398, "validation_nll": 0.4738309979438782, "gradient_norm": 0.13186973333358765, "learning_rate": 0.0018684056953462327, "elapsed_seconds": 62.368}
+{"step": 800, "train_nll": 0.01961180940270424, "validation_nll": 0.4469490945339203, "gradient_norm": 0.09310537576675415, "learning_rate": 0.0015769124734096864, "elapsed_seconds": 71.224}
+{"step": 900, "train_nll": 0.02022867277264595, "validation_nll": 0.453718364238739, "gradient_norm": 0.09395516663789749, "learning_rate": 0.001288836742985552, "elapsed_seconds": 80.16}
+{"step": 1000, "train_nll": 0.018163640052080154, "validation_nll": 0.4638054668903351, "gradient_norm": 0.09458471089601517, "learning_rate": 0.0010176486050552836, "elapsed_seconds": 89.309}
+{"step": 1100, "train_nll": 0.021951979026198387, "validation_nll": 0.4816100299358368, "gradient_norm": 0.09014207869768143, "learning_rate": 0.0007760285155445327, "elapsed_seconds": 98.695}
+{"step": 1200, "train_nll": 0.020761609077453613, "validation_nll": 0.4663321077823639, "gradient_norm": 0.09956030547618866, "learning_rate": 0.0005752743612973809, "elapsed_seconds": 107.111}
+{"step": 1300, "train_nll": 0.01829482428729534, "validation_nll": 0.48229271173477173, "gradient_norm": 0.07660824805498123, "learning_rate": 0.0004247731834442082, "elapsed_seconds": 115.562}
+{"step": 1400, "train_nll": 0.016880331560969353, "validation_nll": 0.4755103588104248, "gradient_norm": 0.06308582425117493, "learning_rate": 0.000331562249791383, "elapsed_seconds": 124.384}
+{"step": 1500, "train_nll": 0.019102545455098152, "validation_nll": 0.48113733530044556, "gradient_norm": 0.10194430500268936, "learning_rate": 0.0003, "elapsed_seconds": 137.088}
+Training complete; test generation has not run.

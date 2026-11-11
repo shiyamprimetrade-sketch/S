@@ -1,0 +1,200 @@
+{
+  "experiment": "s-synthetic-coding-curriculum-v2",
+  "plan_sha256": "db0c450d9a16cd08aef8878a7076b0a7f0262599163d132435b2182ea310ae58",
+  "dataset_sha256": "8c315fbb491f96b847c4ccf98d111e64ccc8a874f73b44f46497929c4a9b362e",
+  "decoder": "greedy bytes, stop at first complete JSON object; no correction or token constraints",
+  "max_new_tokens": 200,
+  "semantic_execution": "not_assessed",
+  "automatic_promotion": false,
+  "models": [
+    {
+      "label": "old-demo",
+      "weights_sha256": "a6caeb1f219c01f42cec3ab54fb5dcdb61e20d6530dc91173a7805bdd7d89859",
+      "training_steps": 256,
+      "cases": [
+        {
+          "id": "add-47-4",
+          "prompt_sha256": "6d8bd2d19dfcf54a8faf148194e1e5cb6115153f321d0e89920a7b2cbb6e070b",
+          "raw": "{\"filent_azendestendarovendazenest t t(')\\ndar\n{\"file')\\ndest t(')\\ndent: t t: test_app.ppy\": testesteste')\\ndest: testestest(')\\ndapppy\": t: tst(')\\nest teste')\\nte')\\nt: t: testestestest_appppppy\": ",
+          "format_passed": false,
+          "diagnostic": "Invalid control character at: line 1 column 47 (char 46)"
+        },
+        {
+          "id": "subtract-47-4",
+          "prompt_sha256": "a0cead58b7bee6abe5167c290a5fcdae165edd24f218efc479897c55fb5f97de",
+          "raw": "{\"firint(')\\nest(')\\n\"fintequilent(')\\ndest: irest(')\\ndent: t indendest t t: tes\\nde')\\ndest t t(')\\ndapp.pppy\": ir\n{\": ir\n{\": t(')\\ndest te')\\nestent_arovestest: test: tes\\nt(')\\nt t(')\\nt(')\\nt(')\\",
+          "format_passed": false,
+          "diagnostic": "Expecting ':' delimiter: line 1 column 23 (char 22)"
+        },
+        {
+          "id": "multiply-47-4",
+          "prompt_sha256": "9d37643141589b9db59c668db4f6c503e45e8272526e3eaddbcc5312a6bdf35f",
+          "raw": "{\": t(')\\ndestestestestestestequindest: tequintequindest(')\\ndendest: t: t: test: tequndest: t(')\\ndest t tes\\ndar\n{\"fint: t(')\\ndapppp.py\": testest(')\\ndazest t(')\\ndappp.py\": t: t(')\\ndazeest(')\\nda",
+          "format_passed": false,
+          "diagnostic": "Invalid control character at: line 1 column 115 (char 114)"
+        },
+        {
+          "id": "floor_divide-47-4",
+          "prompt_sha256": "046317b3ffd546cbb8098844f8653452fe14566d68407e0dfffe98f7ac787d2f",
+          "raw": "{\": {\"app.py\": \"py\": \": r\nRestest: ilequilest t t: t(')\\ntestest: Duindes\\nequindequint(')\\nt(')\\ndar\n{\"fir\n{\": t(')\\ndappp.py\": \"# r\n{\": \": \": t(')\\nt(')\\ndestest: t \"}}}\n{\"# t: test: Bilest(')\\nt t(",
+          "format_passed": false,
+          "diagnostic": "Expecting ':' delimiter: line 1 column 7 (char 6)"
+        },
+        {
+          "id": "add-97-4",
+          "prompt_sha256": "66b04820c120f63c55038310e0bceb94dd3e73c2139a3eda14fe19297e7bd824",
+          "raw": "{\"filest_azendestendarovendazenest t t(')\\ndar\n{\"filequint t t \": t t(')\\ndest: t(')\\ndest: t(')\\nt(')\\nt Ast t Ast test: testestestestst('Duilestestest: test: tes\\nt(')\\nt t t: test(')\\nt: test: test",
+          "format_passed": false,
+          "diagnostic": "Invalid control character at: line 1 column 47 (char 46)"
+        },
+        {
+          "id": "subtract-97-4",
+          "prompt_sha256": "69743689705d6d9e4d262dbf066efe5fe1d7b82136124f8059b402b65e4b8e2d",
+          "raw": "{\"firint(')\\nest(')\\n\"fintequilent(')\\ndest: irest(')\\ndent: t indest t: test_app.py\": tequir\n{\": \": indest t(')\\ndendent t t(')\\nt('Dunt(')\\nesteste')\\ndappppp.pppp.py\": \", indest \": t(')\\ndapp.py\", ",
+          "format_passed": false,
+          "diagnostic": "Expecting ':' delimiter: line 1 column 23 (char 22)"
+        },
+        {
+          "id": "multiply-97-4",
+          "prompt_sha256": "fd99156e34e00b7a8bb697878b80add11108c4dc04f4d3f181008784bef41d8d",
+          "raw": "{\": t(')\\ndestestestestestestequindest: tequintequindest(')\\ndendest: t: t: test: tequndest: t(')\\ndest t tes\\ndar\n{\"fint: t(')\\ndapppp.py\": testest(')\\ndazest t(')\\ndappp.py\": t: t(')\\ndazeest(')\\nda",
+          "format_passed": false,
+          "diagnostic": "Invalid control character at: line 1 column 115 (char 114)"
+        },
+        {
+          "id": "floor_divide-97-4",
+          "prompt_sha256": "87e636dd2aa3f98013723d7c19909eb65392db3ee4cd1ab65d735a91fa94a738",
+          "raw": "{\": {\"app.py\": \"py\": \": r\nRestest: ilequilest t t: t(')\\ntestest: Duindes\\nequindequint(')\\nt(')\\ndar\n{\"fir\n{\": t(')\\ndappp.py\": \"# r\n{\": \": \": t(')\\nt(')\\ndestest: t \"}}}\n{\"# t: test: Bilest(')\\nt t(",
+          "format_passed": false,
+          "diagnostic": "Expecting ':' delimiter: line 1 column 7 (char 6)"
+        }
+      ]
+    },
+    {
+      "label": "random-control",
+      "weights_sha256": "f1dcccdabc46a72875e6ed1ba433aaeb89b6b1411b151f4cbfc2387518eac9a2",
+      "training_steps": 0,
+      "cases": [
+        {
+          "id": "add-47-4",
+          "prompt_sha256": "6d8bd2d19dfcf54a8faf148194e1e5cb6115153f321d0e89920a7b2cbb6e070b",
+          "raw": "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n",
+          "format_passed": false,
+          "diagnostic": "Expecting value: line 201 column 1 (char 200)"
+        },
+        {
+          "id": "subtract-47-4",
+          "prompt_sha256": "a0cead58b7bee6abe5167c290a5fcdae165edd24f218efc479897c55fb5f97de",
+          "raw": "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n",
+          "format_passed": false,
+          "diagnostic": "Expecting value: line 201 column 1 (char 200)"
+        },
+        {
+          "id": "multiply-47-4",
+          "prompt_sha256": "9d37643141589b9db59c668db4f6c503e45e8272526e3eaddbcc5312a6bdf35f",
+          "raw": "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n",
+          "format_passed": false,
+          "diagnostic": "Expecting value: line 201 column 1 (char 200)"
+        },
+        {
+          "id": "floor_divide-47-4",
+          "prompt_sha256": "046317b3ffd546cbb8098844f8653452fe14566d68407e0dfffe98f7ac787d2f",
+          "raw": "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n",
+          "format_passed": false,
+          "diagnostic": "Expecting value: line 201 column 1 (char 200)"
+        },
+        {
+          "id": "add-97-4",
+          "prompt_sha256": "66b04820c120f63c55038310e0bceb94dd3e73c2139a3eda14fe19297e7bd824",
+          "raw": "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n",
+          "format_passed": false,
+          "diagnostic": "Expecting value: line 201 column 1 (char 200)"
+        },
+        {
+          "id": "subtract-97-4",
+          "prompt_sha256": "69743689705d6d9e4d262dbf066efe5fe1d7b82136124f8059b402b65e4b8e2d",
+          "raw": "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n",
+          "format_passed": false,
+          "diagnostic": "Expecting value: line 201 column 1 (char 200)"
+        },
+        {
+          "id": "multiply-97-4",
+          "prompt_sha256": "fd99156e34e00b7a8bb697878b80add11108c4dc04f4d3f181008784bef41d8d",
+          "raw": "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n",
+          "format_passed": false,
+          "diagnostic": "Expecting value: line 201 column 1 (char 200)"
+        },
+        {
+          "id": "floor_divide-97-4",
+          "prompt_sha256": "87e636dd2aa3f98013723d7c19909eb65392db3ee4cd1ab65d735a91fa94a738",
+          "raw": "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n",
+          "format_passed": false,
+          "diagnostic": "Expecting value: line 201 column 1 (char 200)"
+        }
+      ]
+    },
+    {
+      "label": "trained-candidate",
+      "weights_sha256": "40434006382446f0595486a64e698d2a365fd67c430e1caf023725dd15ef624c",
+      "training_steps": 100,
+      "cases": [
+        {
+          "id": "add-47-4",
+          "prompt_sha256": "6d8bd2d19dfcf54a8faf148194e1e5cb6115153f321d0e89920a7b2cbb6e070b",
+          "raw": "{\":\"des\"de(\"de(py\":\"# rn re(\"vap):\\\"x\\\"appppppppppp.p[\\ndendent_ap.p.p.p):\":ppendendes.p):p):\"}}}}}}}}}}}}}}}}}}}}}}}}}}}\\nt t ten\"x\\ntest_ap):\":\"# Indes.\\ntefilefilurnde(ppp):{\"filesolefilest s.\\\"fil",
+          "format_passed": false,
+          "diagnostic": "Expecting ':' delimiter: line 1 column 5 (char 4)"
+        },
+        {
+          "id": "subtract-47-4",
+          "prompt_sha256": "a0cead58b7bee6abe5167c290a5fcdae165edd24f218efc479897c55fb5f97de",
+          "raw": "{\":\"des\"de(\"de(py\":\"appp):\\n re(p.pp.p[\\\":\\n {\\n\"\u001588}\\\"}\\\"tentest_appen\":\"tendest_appesten\":\"dendep):\"# rndendendest_ap):\\ndendendende(p):\":\"# Indent_ap):py\"x\\nde(ppy\"ve(pp):{\"ap):\"f rn\":\"app.pppppp):",
+          "format_passed": false,
+          "diagnostic": "Expecting ':' delimiter: line 1 column 5 (char 4)"
+        },
+        {
+          "id": "multiply-47-4",
+          "prompt_sha256": "9d37643141589b9db59c668db4f6c503e45e8272526e3eaddbcc5312a6bdf35f",
+          "raw": "{\":\"des\"de(\"de(py\":\"# rn re(p):\"vest_app[\\\":\"turn tuen\",\"t_apependependendendendenden\":pen\":pp):[\\ndendendendep):\"x\\ndendende\\ndendenden\u0015\u0015\u0015\u0015\u0015\u0015\u0015\u0015\u0015\u0015\u0015\u0015\u0015\u0015\u0015\u0015\u0015\u0015\u0015\u0015\u0015\u0015\u0015\u0015\u0015\u0015\u0015\u0015\u0015\u0015\u0015\u0015\u0015\u0015\u0015\u0015\u0015\u0015\u0015\u0015\u0015\u0015\u0015\u0015\u0015\u0015\u0015\u0015\u0015\u0015\u0015\u0015\u0015\u0015\u0015\u0015\u0015\u0015\u0015\u0015\u0015\u0015\u0015\u0015",
+          "format_passed": false,
+          "diagnostic": "Expecting ':' delimiter: line 1 column 5 (char 4)"
+        },
+        {
+          "id": "floor_divide-47-4",
+          "prompt_sha256": "046317b3ffd546cbb8098844f8653452fe14566d68407e0dfffe98f7ac787d2f",
+          "raw": "{\":\"des\"de(\"ve(py\":\"appp):\\n re(p[\\n  rn t t {\\\"ven\"tendependendendenden\":\"testest_alurn\"}}\\n\"}}}\\n\"}}\\n\":\"t_apppppp):\\ndendendendent_alurnden\"}}}}}\\\":p.\\nde(\"apy\"alurnde(p):\"valurest_ap.\\\"f st_apppy\"",
+          "format_passed": false,
+          "diagnostic": "Expecting ':' delimiter: line 1 column 5 (char 4)"
+        },
+        {
+          "id": "add-97-4",
+          "prompt_sha256": "66b04820c120f63c55038310e0bceb94dd3e73c2139a3eda14fe19297e7bd824",
+          "raw": "{\":\"des\"de(\"de(py\":\"# rn re(\"vap):\\\"x\\\"appppppppppp.p[\\ndendent_ap.p.p.p):\":\"t_apppppes.p.p):p):p.\\ntendenden\":pppppp):\"x\\ndendentendestest_apy\"}}\\nt_app):p)):5555}}}}\\n\"ves.\\\"filvefilurndestefilveste",
+          "format_passed": false,
+          "diagnostic": "Expecting ':' delimiter: line 1 column 5 (char 4)"
+        },
+        {
+          "id": "subtract-97-4",
+          "prompt_sha256": "69743689705d6d9e4d262dbf066efe5fe1d7b82136124f8059b402b65e4b8e2d",
+          "raw": "{\":\"des\"de(\"de(py\":\"appp):\\n re(p.pp.p[\\\":\\n {\\n\"vappppppp.pent_ap.p.p.p):\":ppendendes.p):p):\":pppppppp.\\ndendendendes.p):\\ndent t Int_ap):\"}}}}}}\\nt_ap.\\nt_ap):{\"ves.\\nt_appy\"f s.\\ndes.p.\\ndefilveste",
+          "format_passed": false,
+          "diagnostic": "Expecting ':' delimiter: line 1 column 5 (char 4)"
+        },
+        {
+          "id": "multiply-97-4",
+          "prompt_sha256": "fd99156e34e00b7a8bb697878b80add11108c4dc04f4d3f181008784bef41d8d",
+          "raw": "{\":\"des\"de(\"de(py\":\"# rn re(p):\"vest_app[\\\":\"turn tuen\",\"t_apependependendendendenden\":pen\":pp):[\\ndendendendep):\"x\\ndendende\\ndendenden\u0015\u0015\u0015\u0015\u0015\u0015\u0015\u0015\u0015\u0015\u0015\u0015\u0015\u0015\u0015\u0015\u0015\u0015\u0015\u0015\u0015\u0015\u0015\u0015\u0015\u0015\u0015\u0015\u0015\u0015\u0015\u0015\u0015\u0015\u0015\u0015\u0015\u0015\u0015\u0015\u0015\u0015\u0015\u0015\u0015\u0015\u0015\u0015\u0015\u0015\u0015\u0015\u0015\u0015\u0015\u0015\u0015\u0015\u0015\u0015\u0015\u0015\u0015\u0015",
+          "format_passed": false,
+          "diagnostic": "Expecting ':' delimiter: line 1 column 5 (char 4)"
+        },
+        {
+          "id": "floor_divide-97-4",
+          "prompt_sha256": "87e636dd2aa3f98013723d7c19909eb65392db3ee4cd1ab65d735a91fa94a738",
+          "raw": "{\":\"des\"de(\"ve(py\":\"appp):\\n re(p[\\n  rn t t {\\\"ven\"tendependendendenden\":\"testest_alurn\"}}}}}}}}\\n\"x\\n\"den\"den\"t_apppe(p):\":\"# Inde(pende(p):p[\\ndende(p):{\"vale(ppppy\"ve(pppp):p):{\"f rndes.pp.p):{\"ve",
+          "format_passed": false,
+          "diagnostic": "Expecting ':' delimiter: line 1 column 5 (char 4)"
+        }
+      ]
+    }
+  ]
+}

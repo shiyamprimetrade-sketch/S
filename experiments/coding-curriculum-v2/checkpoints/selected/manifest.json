@@ -1,0 +1,33 @@
+{
+  "created_utc": "2026-11-11T17:25:23.112821+00:00",
+  "dataset_fingerprint": "8c315fbb491f96b847c4ccf98d111e64ccc8a874f73b44f46497929c4a9b362e",
+  "extras": {
+    "independently_initialized": true,
+    "no_pretrained_weights": true,
+    "plan_sha256": "db0c450d9a16cd08aef8878a7076b0a7f0262599163d132435b2182ea310ae58",
+    "selection": "lowest fixed validation completion NLL, before any test generation",
+    "source": "self-authored-synthetic"
+  },
+  "model_config": {
+    "context": 512,
+    "dim": 64,
+    "heads": 4,
+    "kv_heads": 2,
+    "layers": 2,
+    "vocab_size": 256
+  },
+  "runtime": {
+    "cuda_available": false,
+    "cuda_version": null,
+    "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+    "python": "3.12.14",
+    "torch": "2.15.0+cpu"
+  },
+  "schema": 1,
+  "seed": 20261112,
+  "step": 100,
+  "train_loss": 0.09526540338993073,
+  "train_tokens": 90775,
+  "validation_loss": 0.15963691473007202,
+  "weights_sha256": "40434006382446f0595486a64e698d2a365fd67c430e1caf023725dd15ef624c"
+}

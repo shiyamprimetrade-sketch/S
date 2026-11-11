@@ -85,17 +85,21 @@ class TemplateProvider:
 
 class NativeProvider:
     id='native'
-    def __init__(self,checkpoint,backend='torch'):
+    def __init__(self,checkpoint,backend='torch',decoding='sampled'):
         self.checkpoint=Path(checkpoint)
         if backend not in ('torch','stdlib'):raise ValueError('Unknown native backend')
+        if decoding not in ('sampled','greedy-json'):raise ValueError('Unknown native decoder')
+        if backend=='stdlib' and decoding!='sampled':raise ValueError('Greedy JSON decoding requires the torch backend')
         self.backend=backend
+        self.decoding=decoding
         self.lock=threading.Lock()
     def provenance(self):
         from s_brain.checkpoint import load_manifest
         manifest=load_manifest(self.checkpoint)
         return {'provider':'native','independently_generated_neural_code':manifest.extras.get('independently_initialized') is True,
-                'runtime_backend':self.backend,
-                'training_provenance':manifest.extras.get('data',manifest.extras.get('provenance','not supplied')),
+                'runtime_backend':self.backend,'decoding':self.decoding,
+                'generation_budget':200 if self.decoding=='greedy-json' else (128 if self.backend=='stdlib' else 1024),
+                'training_provenance':manifest.extras.get('data',manifest.extras.get('provenance',manifest.extras.get('source','not supplied'))),
                 'model_sha256':manifest.weights_sha256,'training_steps':manifest.step,
                 'capability':'experimental; code-generation reliability unestablished'}
     def _generate(self,prompt,recipe):
@@ -114,9 +118,13 @@ class NativeProvider:
             torch.manual_seed(42)
             if len(prompt.encode())>model.cfg.context:
                 raise ContextLimitError('Native generation input exceeds model context; no requirements were discarded')
-            ids=torch.tensor([list(prompt.encode())],dtype=torch.long)
-            output=model.generate(ids,steps=1024,temperature=0.7,top_k=30)
-            value=bytes(output[0,ids.shape[1]:].tolist()).decode('utf-8',errors='replace')
+            if self.decoding=='greedy-json':
+                from s_brain.coding_decode import greedy_json
+                value=greedy_json(model,prompt,max_new_tokens=200)
+            else:
+                ids=torch.tensor([list(prompt.encode())],dtype=torch.long)
+                output=model.generate(ids,steps=1024,temperature=0.7,top_k=30)
+                value=bytes(output[0,ids.shape[1]:].tolist()).decode('utf-8',errors='replace')
         # Reject nonconforming output; never turn a template into a claimed model answer.
         return decode_proposal(value,recipe)
     def generate(self,spec,recipe):return self._generate(prompt_for(spec,recipe),recipe)
@@ -147,6 +155,6 @@ class OllamaProvider:
 
 def provider(identifier,config):
     if identifier=='template':return TemplateProvider()
-    if identifier=='native' and config.get('native_checkpoint'):return NativeProvider(config['native_checkpoint'],config.get('native_backend','torch'))
+    if identifier=='native' and config.get('native_checkpoint'):return NativeProvider(config['native_checkpoint'],config.get('native_backend','torch'),config.get('native_decoding','sampled'))
     if identifier=='ollama-external' and config.get('ollama_model'):return OllamaProvider(config['ollama_model'])
     raise PermissionError('Provider is not configured by the local operator')

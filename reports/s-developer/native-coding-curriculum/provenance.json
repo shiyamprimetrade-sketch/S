@@ -1,0 +1,13 @@
+{
+  "source_commit": "baacd32db3ff80a4385e583149da5ed5a294d40b",
+  "source_tree": "60a3b9a3e807af9b1dda6d80dfd96c6de3e6f60a",
+  "workflow_run": 43069519135,
+  "job": 130693300558,
+  "artifact_id": 13876459884,
+  "artifact_sha256": "9418f6ef452e1a9f07b2bf162930d0c281e2a9860e3873bb7dee65b2f7dd5d09",
+  "run_url": "https://github.com/shiyamprimetrade-sketch/S/actions/runs/43069519135",
+  "neural_replay_run_url": "https://github.com/shiyamprimetrade-sketch/S/actions/runs/43069519308",
+  "quality_target_passed": false,
+  "neural_candidate_programs_executed": 0,
+  "notes": "Fixture build/repair/oracle successes are infrastructure evidence, not neural coding successes."
+}
