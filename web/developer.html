@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>S Developer · Requirements workspace</title><link rel="stylesheet" href="/developer.css"></head>
+<body>
+<header><a class="brand" href="/">S<span>DEVELOPER</span></a><span class="badge">LOCAL REQUIREMENTS WORKSPACE</span><a href="/brain">S Native console ↗</a></header>
+<main>
+<aside><p class="eyebrow">YOUR WORKSPACE</p><h2>Projects</h2><button id="new-project" type="button">＋ New project</button><div id="projects" aria-label="Saved projects"></div><p class="aside-note">Saved locally in S project memory. Each save creates a checkpoint.</p><hr><p class="eyebrow">DEVELOPMENT STAGES</p><ol><li class="active">Describe & clarify</li><li>Review specification</li><li class="future">Architecture · pending</li><li class="future">Code & build · pending</li><li class="future">Verify & deliver · pending</li></ol><button id="show-toolchains" type="button">View toolchain catalog</button></aside>
+<section class="workspace">
+<p class="eyebrow">FROM AN IDEA TO A SPECIFICATION</p><h1>What do you want to build?</h1><p class="intro">Describe your project in English. S will organize your answers and keep missing requirements visible.</p>
+<form id="requirements-form">
+<div class="command-row"><label for="request">Development command</label><input id="request" value="S develop application" maxlength="4000" required><button id="route" type="button">Recognize intent</button></div>
+<div class="section-title"><h2>01 / Project requirements</h2><span id="kind">APPLICATION</span></div>
+<label for="name">Project name</label><input id="name" required maxlength="100" placeholder="Give your project a name">
+<div id="questions"></div>
+<div class="actions"><button class="primary" id="save" type="submit">Save draft checkpoint</button><button id="approve" type="button">Approve specification</button><button id="export" type="button" disabled>Export JSON</button></div>
+<p class="privacy">Keep passwords, API keys and personal records out of requirements. Approval saves a decision in project memory; execution permissions remain disabled.</p>
+</form>
+<p id="status" role="status" aria-live="polite">Ready. Start with your project’s purpose.</p>
+<section id="catalog-panel" hidden><h2>Toolchain catalog</h2><p>Official-source discovery pointers. Stable versions and OS-specific support have not been verified. These entries are not installed build adapters. No downloads run here.</p><div id="catalog"></div></section>
+</section>
+<aside class="review"><p class="eyebrow">SPECIFICATION REVIEW</p><h2 id="review-title">Your blueprint starts here</h2><p id="revision">No saved checkpoint</p><div id="summary">Your answers remain editable. Save a draft to see focused clarification questions and a structured plan.</div><h3>Checkpoint history</h3><div id="history">No checkpoints yet.</div><details><summary>Structured specification</summary><pre id="spec-json">{}</pre></details><p class="notice">Code generation, source editing, terminal, builds, previews and packaging are pending. Native-model coding reliability has not been established.</p></aside>
+</main><script src="/developer.js"></script>
+</body></html>
