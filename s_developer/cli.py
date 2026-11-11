@@ -50,10 +50,19 @@ def main(argv=None):
     parser.add_argument('--provider',choices=('template','native','ollama-external'),default='template')
     parser.add_argument('--consent',action='store_true')
     parser.add_argument('--max-repairs',type=int,default=0)
+    parser.add_argument('--backend',choices=('torch','stdlib'),default='stdlib')
+    parser.add_argument('--prompt',default='Request: Hello\n')
+    parser.add_argument('--tokens',type=int,default=16)
     args = parser.parse_args(argv)
     from .models import load_config,save_config,install_demo,install_native,train_demo
     config=load_config(args.db)
     config['execution_enabled']=args.enable_builds
+    if args.command==['model','configure-runtime']:
+        from .models import configure_runtime
+        print(json.dumps(configure_runtime(args.db,args.backend),indent=2));return 0
+    if args.command==['model','probe']:
+        from .models import probe_native
+        print(json.dumps(probe_native(config,args.prompt,args.tokens),indent=2));return 0
     if args.command==['model','install-demo']:
         print(json.dumps(install_demo(args.db),indent=2));return 0
     if args.command==['model','install-native']:

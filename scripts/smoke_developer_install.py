@@ -58,6 +58,10 @@ def main():
                                cwd=directory,capture_output=True,text=True,timeout=20)
         assert install.returncode==0,install.stderr
         assert json.loads(install.stdout)['installed'] is True
+        probe=subprocess.run([args.launcher,'--db',str(directory/'s.sqlite3'),'model','probe','--tokens','2'],
+                             cwd=directory,capture_output=True,text=True,timeout=20)
+        assert probe.returncode==0,probe.stderr
+        assert json.loads(probe.stdout)['runtime']=='python-stdlib-f32'
         process,base=launch(args.launcher,directory)
         try:
             assert b'requirements-form' in request(base,'/developer')
@@ -72,7 +76,7 @@ def main():
             assert reopened==spec
             assert request(base,'/api/developer/history?project_id='+spec['project_id'])==[spec]
         finally:stop(process)
-    print('PASS: installed S, packaged neural checkpoint install, UI assets, HTTP specification save, restart and checkpoint reopen')
+    print('PASS: installed S, dependency-free neural inference, packaged weights/UI, specification save and restart')
 
 
 if __name__=='__main__':main()

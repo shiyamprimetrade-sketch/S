@@ -81,17 +81,25 @@ class TemplateProvider:
 
 class NativeProvider:
     id='native'
-    def __init__(self,checkpoint):
+    def __init__(self,checkpoint,backend='torch'):
         self.checkpoint=Path(checkpoint)
+        if backend not in ('torch','stdlib'):raise ValueError('Unknown native backend')
+        self.backend=backend
         self.lock=threading.Lock()
     def provenance(self):
         from s_brain.checkpoint import load_manifest
         manifest=load_manifest(self.checkpoint)
         return {'provider':'native','independently_generated_neural_code':manifest.extras.get('independently_initialized') is True,
+                'runtime_backend':self.backend,
                 'training_provenance':manifest.extras.get('data',manifest.extras.get('provenance','not supplied')),
                 'model_sha256':manifest.weights_sha256,'training_steps':manifest.step,
                 'capability':'experimental; code-generation reliability unestablished'}
     def _generate(self,prompt,recipe):
+        if self.backend=='stdlib':
+            from .portable_native import PortableBrain
+            # Explicit small-model budget. It never changes to an external provider.
+            value=PortableBrain(self.checkpoint).generate(prompt.encode()[-64:].decode('utf-8',errors='ignore'),128)['output']
+            return decode_proposal(value,recipe)
         try:
             import torch
         except (ImportError,OSError) as error:
@@ -133,6 +141,6 @@ class OllamaProvider:
 
 def provider(identifier,config):
     if identifier=='template':return TemplateProvider()
-    if identifier=='native' and config.get('native_checkpoint'):return NativeProvider(config['native_checkpoint'])
+    if identifier=='native' and config.get('native_checkpoint'):return NativeProvider(config['native_checkpoint'],config.get('native_backend','torch'))
     if identifier=='ollama-external' and config.get('ollama_model'):return OllamaProvider(config['ollama_model'])
     raise PermissionError('Provider is not configured by the local operator')

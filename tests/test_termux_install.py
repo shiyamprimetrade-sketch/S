@@ -33,6 +33,7 @@ class TermuxTests(unittest.TestCase):
             self.assertEqual(run.returncode,0,run.stderr)
             self.assertIn('"installed": true',run.stdout)
             self.assertTrue(result['model_installed'])
+            self.assertTrue(result['native_runtime']['configured'])
             self.assertFalse(result['phone_execution_verified'])
             self.assertFalse(Path(result['database']).exists())
             second=installer.install(root,root,installer.SOURCE,sys.executable)

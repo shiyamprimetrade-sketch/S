@@ -21,7 +21,8 @@ KNOWN = {
   "continuum/server.py": [
     "6e75cf62dd4d1182a415f5257402cef7a0583b566a04a6abe099450fbc887c98",
     "b7cdc4d44e9f1faba14cfa24d864ce5c4d3275cf46245690290a3b207a3d8497",
-    "9a96271fd10d5dd8458abc854a3d6a0caaddfaec38a42d3ee4c2571efacf6735"
+    "9a96271fd10d5dd8458abc854a3d6a0caaddfaec38a42d3ee4c2571efacf6735",
+    "a6c964332d25eb0ef017091b28bcc857c9a137d40ce404279ec3ee707c202fc8"
   ],
   "web/index.html": [
     "48eaf288b56a8663a991f1c5cd3b2b5b277004e8bd92fbdd5b3eae259b180961",
@@ -32,13 +33,16 @@ KNOWN = {
     "76beaabf49317bf58787ee2a3a7dced6e2c28a2ca4f62fcad0f7f19f42e8319f"
   ],
   "web/developer.html": [
-    "74e963c2e54b0c72e94091e0aef37c3898a2dff21ba035face831bed0dec5e00"
+    "74e963c2e54b0c72e94091e0aef37c3898a2dff21ba035face831bed0dec5e00",
+    "8cbf3da3bfa655f07b91e5a1fd95dafba1967277aee2680eb1a5bd70b1409b1f"
   ],
   "web/developer.css": [
-    "a49c7221306c5faf7e59a22a7e5bddbd4d49bd32a4088912fcd223770bdb7ea0"
+    "a49c7221306c5faf7e59a22a7e5bddbd4d49bd32a4088912fcd223770bdb7ea0",
+    "0c150626a51954a4315792c8142ba46a76f53610539e84f469c67052c11ed4d9"
   ],
   "web/developer.js": [
-    "472739c707aa1bdad16bcc9948226447596861a10b4d44b01e923f478c137e5b"
+    "472739c707aa1bdad16bcc9948226447596861a10b4d44b01e923f478c137e5b",
+    "e3bccdd54c6dae9387395efac425b5fba6444f04f716be1149f0c7ce326a8302"
   ],
   "scripts/S.cmd": [
     "c91693105f5257e1ba466bf3931b69ec2db77710fabd68fd67904197fe0e6527"
@@ -51,7 +55,8 @@ KNOWN = {
   ],
   "s_developer/cli.py": [
     "dee501f2da72c7c43c8d5c015eddda9abfc2beac9542d79722638be028ef1bc8",
-    "75cd99d9e5cfd83c88cd958dc9293a20c1d7b7682781d3ea0cdf374a91b9171b"
+    "75cd99d9e5cfd83c88cd958dc9293a20c1d7b7682781d3ea0cdf374a91b9171b",
+    "53c6e309dc7ea720906c2ac749f4871536d43892ec6323d7ee7f10025d47b15d"
   ],
   "s_developer/intent.py": [
     "2a832a82d132a606eefbbd4b8370296e56b17af323e057257cbc1bb25b57f004"
@@ -60,17 +65,37 @@ KNOWN = {
     "ba5811b55557e1f23926a77846462ea7ef0cc66a540fdbdd6fe04a1deafec2e5"
   ],
   "s_developer/specifications.py": [
-    "2437b57e452ec18edf708f9c2822fa971659daa8b0df78762c84a6a905c39d73"
+    "2437b57e452ec18edf708f9c2822fa971659daa8b0df78762c84a6a905c39d73",
+    "c0573bb341dc2b5c814652f37f104b002ebe54bd0d9fb4a20eb56d1748f15a52"
   ],
-  "s_developer/bundles.py": [],
-  "s_developer/models.py": [],
-  "s_developer/engine.py": [],
-  "s_developer/providers.py": [],
-  "s_developer/sandbox.py": [],
-  "s_developer/resources/native-demo/manifest.json": [],
-  "s_developer/resources/native-demo/training-report.json": [],
-  "s_developer/resources/native-demo/model.safetensors": [],
-  "web/coding.js": []
+  "s_developer/bundles.py": [
+    "9419dd4a48d35665c2e85fdc497b4d96aa1a82d1383f28d33e472af7e34da7e7"
+  ],
+  "s_developer/models.py": [
+    "1673c153b2963f76285df2944c450252275e3900afb8ad978361ea055b2330b1"
+  ],
+  "s_developer/engine.py": [
+    "375764f987a369b27e07c777e715e4b3f6074e7442d375a411e7f4b5531c9a63"
+  ],
+  "s_developer/providers.py": [
+    "ca8c2230fe12f96063157b55cdd3496cdfadc921bda4b445a13c2cc883c48c36"
+  ],
+  "s_developer/sandbox.py": [
+    "81dc3f1cf57a703a5c0f1853c449eb5ab5e4f1a26e6931ccc98a2c652c2d44a2"
+  ],
+  "s_developer/resources/native-demo/manifest.json": [
+    "f429931d11e206f26beabecab995e9fa73b084f04ab6800c96a43274f99ff1f3"
+  ],
+  "s_developer/resources/native-demo/training-report.json": [
+    "0863eb9f75fa815bbef67010e1711de4e7ce99131c2f8776996100fe658c9330"
+  ],
+  "s_developer/resources/native-demo/model.safetensors": [
+    "a6caeb1f219c01f42cec3ab54fb5dcdb61e20d6530dc91173a7805bdd7d89859"
+  ],
+  "web/coding.js": [
+    "d0ec65bdfed903bee006e1d887dc1b1a626682d9adc7eaf424faf74dd9015ded"
+  ],
+  "s_developer/portable_native.py": []
 }
 
 

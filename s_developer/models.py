@@ -14,9 +14,10 @@ def config_path(db):return Path(db).resolve().parent/'s-developer-host.json'
 def load_config(db):
     path=config_path(db)
     value=json.loads(path.read_text(encoding='utf-8')) if path.is_file() else {}
-    if not isinstance(value,dict) or set(value)-{'native_checkpoint','ollama_model','images'}:
+    if not isinstance(value,dict) or set(value)-{'native_checkpoint','native_backend','ollama_model','images'}:
         raise ValueError('Unknown developer host configuration fields')
     if 'images' in value and not isinstance(value['images'],dict):raise ValueError('Images must be a mapping')
+    if value.get('native_backend','torch') not in ('torch','stdlib'):raise ValueError('Unknown native runtime backend')
     return value
 
 
@@ -66,6 +67,24 @@ def install_native(db,checkpoint):
 def install_demo(db):
     from importlib.resources import files
     return install_native(db,Path(str(files('s_developer')/'resources'/'native-demo')))
+
+
+def configure_runtime(db,backend):
+    if backend not in ('torch','stdlib'):raise ValueError('Choose torch or stdlib')
+    config=load_config(db)
+    if not config.get('native_checkpoint'):raise ValueError('Install a native checkpoint first')
+    if backend=='stdlib':
+        from .portable_native import PortableBrain
+        PortableBrain(config['native_checkpoint'])
+    save_config(db,{'native_backend':backend})
+    return {'configured':True,'native_backend':backend,'inference_verified':False}
+
+
+def probe_native(config,prompt='Request: Hello\n',tokens=16):
+    if not config.get('native_checkpoint'):raise ValueError('Install a native checkpoint first with S model install-demo')
+    if type(tokens) is not int or not 1<=tokens<=32:raise ValueError('Runtime probe budget must be 1–32 tokens')
+    from .portable_native import PortableBrain
+    return PortableBrain(config['native_checkpoint']).generate(prompt,tokens)
 
 
 def train_demo(output,steps=128):

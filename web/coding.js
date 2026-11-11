@@ -50,13 +50,25 @@ async function codingLoad() {
 }
 $('code-open').onclick=()=>action(async()=>{
   $('code-panel').hidden=false;
-  const capabilities=await api('capabilities');$('code-capabilities').textContent=JSON.stringify(capabilities,null,2);
+  const capabilities=await api('capabilities');$('code-capabilities').textContent=
+    `S Native: ${capabilities.providers.native?'checkpoint configured':'not installed'}. Runtime: ${capabilities.native_backend}. `+
+    `Container builds: ${capabilities.execution_enabled?'enabled by operator':'disabled by operator'}. `+
+    `External local model: ${capabilities.providers['ollama-external']?'configured':'not configured'}.`;
   if(current&&current.status==='approved') {
     const rows=await api('artifacts?project_id='+encodeURIComponent(codingProject()));
     if(rows.length)await codingLoad();
   }
 });
 $('code-refresh').onclick=()=>action(codingLoad);
+$('neural-probe').onclick=()=>action(async()=>{
+  if(!current)throw Error('Save a project draft before recording a runtime test.');
+  codingConsent();
+  const pid=current.project_id;
+  const result=await api('neural-probe',{project_id:pid,prompt:$('neural-prompt').value,tokens:16,consent:true});
+  if(!current||current.project_id!==pid)throw Error('Discarded a runtime result from another project.');
+  $('code-output').textContent=JSON.stringify(result,null,2);$('code-consent').checked=false;
+  message('Neural calculations completed. This is a runtime check; coding ability is still unverified.');
+});
 $('code-generate').onclick=()=>action(async()=>{
   const pid=codingProject();codingConsent();
   if(codingDirty&&!window.confirm('Discard unsaved source edits and create a new generated checkpoint?'))return;
