@@ -52,14 +52,18 @@ def install(home, prefix, source, python):
     finally:
         if temporary and temporary.exists():temporary.unlink()
     sys.path.insert(0,str(source))
-    from s_developer.models import load_config,install_demo
+    from s_developer.models import load_config,install_demo,configure_runtime
     database=data_dir/'continuum.sqlite3'
     model_result={'installed':False,'status':'existing native provider configuration preserved'}
     if not load_config(database).get('native_checkpoint'):
         model_result=install_demo(database)
+    runtime_result={'configured':False,'status':'existing explicit runtime preserved'}
+    if 'native_backend' not in load_config(database):
+        try:runtime_result=configure_runtime(database,'stdlib')
+        except ValueError:runtime_result={'configured':False,'status':'existing checkpoint exceeds portable runtime limits; preserved'}
     return {'launcher':str(launcher),'source':str(source),'database':str(database),
             'previous_launcher':str(previous) if previous else None,
-            'model_installed':model_result['installed'],'native_model':model_result,'phone_execution_verified':False}
+            'model_installed':model_result['installed'],'native_model':model_result,'native_runtime':runtime_result,'phone_execution_verified':False}
 
 
 def main():
@@ -70,7 +74,7 @@ def main():
     print(json.dumps(result,indent=2))
     print('\nStart the local workspace:\n'+shlex.quote(result['launcher'])+' develop application')
     print('Keep Termux running; Ctrl+C stops S. Data stays private to this phone account.')
-    print('A small experimental neural checkpoint is included. Native inference additionally requires a working PyTorch runtime; Android inference is unverified. This is not an APK.')
+    print('A small experimental checkpoint and standard-library runtime are included. Run S model probe to test inference on this device. Coding ability remains unverified. This is not an APK.')
 
 
 if __name__=='__main__':main()

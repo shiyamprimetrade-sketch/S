@@ -1,0 +1,1 @@
+PASS: installed S, dependency-free neural inference, packaged weights/UI, specification save and restart

@@ -26,6 +26,7 @@ class DevelopmentEngine:
         return {'recipes':RECIPES,'providers':{'template':True,'native':bool(self.config.get('native_checkpoint')),
                  'ollama-external':bool(self.config.get('ollama_model'))},
                 'execution_enabled':self.config.get('execution_enabled') is True,
+                'native_backend':self.config.get('native_backend','torch'),
                 'runtime':'digest-pinned Docker; no host execution fallback',
                 'images_prepared':sorted(self.config.get('images',{})),
                 'business_acceptance':'requires independent review beyond toolchain tests',
@@ -139,6 +140,19 @@ class DevelopmentEngine:
             out.writestr('S-PROVENANCE.json',json.dumps({k:v for k,v in artifact.items() if k!='files'},indent=2))
         return {'filename':'s-source-'+artifact['source_sha256'][:12]+'.zip',
                 'archive_base64':base64.b64encode(stream.getvalue()).decode()}
+    def neural_probe(self,body):
+        self._body(body,('project_id','prompt','tokens','consent'))
+        self.store.get_project(body['project_id'])
+        from .models import probe_native
+        try:
+            with self.lock:result=probe_native(self.config,body['prompt'],body['tokens'])
+        except TimeoutError as error:
+            raise ValueError('Neural runtime time budget exceeded; use a shorter prompt or fewer probe tokens in the CLI') from error
+        self._record(body['project_id'],{'stage':'neural-probe','runtime':result['runtime'],
+                     'weights_sha256':result['weights_sha256'],'generated_tokens':result['generated_tokens'],
+                     'elapsed_seconds':result['elapsed_seconds'],'inference_completed':True,
+                     'coding_capability':'unverified'})
+        return result
     def request(self,verb,path,query,body):
         if verb=='GET':
             pid=query.get('project_id',[''])[0]
@@ -149,6 +163,7 @@ class DevelopmentEngine:
             if path=='/api/developer/archive':return self.archive(pid)
         if verb=='POST':
             routes={'/api/developer/generate':self.generate,'/api/developer/edit':self.edit,
-                    '/api/developer/restore-source':self.restore,'/api/developer/build':self.build}
+                    '/api/developer/restore-source':self.restore,'/api/developer/build':self.build,
+                    '/api/developer/neural-probe':self.neural_probe}
             if path in routes:return routes[path](body)
         raise ValueError('Unknown developer engine route')

@@ -55,3 +55,13 @@ test('bounded build submission is confirmed and reports actual result',async()=>
   call.reply({artifact:artifact(),attempts:[],final_status:'blocked'});await f.flush();f.pending.shift().reply([artifact()]);await job;
   assert.match(f.el('code-output').textContent,/blocked/);assert.equal(f.el('code-consent').checked,false);
 });
+
+test('runtime probe is consented and remains a runtime-only result',async()=>{
+  const f=fixture();f.c.current.status='draft';f.el('neural-prompt').value='A';f.el('code-consent').checked=false;
+  await f.el('neural-probe').onclick();assert.equal(f.pending.length,0);
+  f.el('code-consent').checked=true;const job=f.el('neural-probe').onclick();const call=f.pending.shift();
+  assert.equal(call.route,'neural-probe');assert.equal(call.body.project_id,'P');assert.equal(call.body.tokens,16);
+  assert.equal(call.body.model_path,undefined);
+  call.reply({inference_completed:true,coding_capability:'unverified',runtime:'python-stdlib-f32'});await job;
+  assert.match(f.el('code-output').textContent,/python-stdlib-f32/);assert.match(f.messages.pop(),/coding ability is still unverified/);
+});

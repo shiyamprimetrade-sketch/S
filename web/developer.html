@@ -20,6 +20,9 @@
 <section id="code-panel" hidden>
 <h2>02 / Generate, inspect and verify</h2>
 <p id="code-capabilities">Load host capabilities to see available providers. Native model installation is an operator CLI action.</p>
+<label for="neural-prompt">Small neural runtime test (up to 64 UTF-8 bytes)</label><input id="neural-prompt" value="Request: Hello" maxlength="64">
+<button id="neural-probe" type="button">Test neural runtime · 16 tokens</button>
+<p>This runs real checkpoint calculations without PyTorch. A completed test does not establish useful answers or coding ability. Save a project draft and approve the action below first.</p>
 <label for="code-recipe">Supported starter or model target</label>
 <select id="code-recipe"><option value="static-site">Static informational website</option><option value="python-cli">Python starter CLI + tests</option><option value="c-cli">C starter CLI</option></select>
 <label for="code-provider">Generation / repair provider</label>
