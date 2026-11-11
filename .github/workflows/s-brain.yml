@@ -6,6 +6,7 @@ on:
       - "s_brain/**"
       - "continuum/brain_console.py"
       - "web/brain.*"
+      - "scripts/test_brain_ui.cjs"
       - ".github/workflows/s-brain.yml"
   push:
     branches:
@@ -14,6 +15,7 @@ on:
       - "s_brain/**"
       - "continuum/brain_console.py"
       - "web/brain.*"
+      - "scripts/test_brain_ui.cjs"
       - ".github/workflows/s-brain.yml"
 
 permissions:
@@ -36,3 +38,8 @@ jobs:
         run: python -m compileall -q s_brain
       - name: Unit tests
         run: python -m unittest discover -s s_brain/tests -v
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Browser state regression tests
+        run: node --test scripts/test_brain_ui.cjs

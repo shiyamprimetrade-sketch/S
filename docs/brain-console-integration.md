@@ -59,3 +59,11 @@ Browser checks exercised explicit consent rejection, add/search/edit memory, fai
 The implementation commit passed S-Brain Linux CPU CI and all four existing Continuum Windows/Ubuntu jobs. Final documentation-commit CI is recorded in PR14 and the local delivery checkpoint. Browser verification, installed startup and database preservation passed. The next release phase still needs recovery rehearsal and a release manifest. The dashboard reports missing best-checkpoint evidence as `Not measured`. No broad reasoning, generalization, production readiness, public-access security, or real-world RAG improvement has been demonstrated.
 
 The next model milestone is a predeclared instruction-following benchmark with independent data and a fixed training budget. Promote only if that gate and regression checks pass; retain failed results.
+
+## Browser reliability refinement — November 11
+
+Six reproducible failures were found in the initial browser adapter: late memory results could appear after switching projects, older searches could replace newer searches, repeated sends could create duplicate sessions, a project change during session creation could reuse the wrong session, old answers could reappear after switching projects, and the editor offered source/retention changes that the content-only update API ignored.
+
+The browser now captures request scope and consent before asynchronous work, invalidates responses when the project changes, applies only the latest memory query, and blocks duplicate sends and saves. Refreshing status cannot re-enable Send during generation. Memory edits explicitly preserve source and expiry; creating a new memory remains the way to choose new provenance or retention. An in-flight generation already accepted by the server may still finish and persist in its original project's history; switching projects hides that result rather than cancelling server execution.
+
+Run `node --test scripts/test_brain_ui.cjs` for nine deterministic delayed-response regression checks. The first six failed before the fix and passed afterward. These tests exercise the real frontend script with controlled DOM/network fixtures; they are not neural capability tests. The GitHub S-Brain workflow runs them alongside the existing Python suite. No model weights or private data changed in this refinement.

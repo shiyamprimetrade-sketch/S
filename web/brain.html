@@ -14,7 +14,7 @@
 <label><input type="checkbox" id="tools">Approve the following read-only tool proposal for this request</label>
 <label>Tool proposal JSON (calculator, text_stats or json_extract only)<textarea id="intents">[]</textarea></label>
 <button id="send">Send to S Native</button><pre id="answer" aria-live="polite"></pre><details><summary>Sources, tool execution and audit</summary><pre id="evidence"></pre></details>
-<h2>Project memory</h2><p>No automatic memory capture. Save and edit require explicit permission. Existing chat history remains in the normal S database.</p>
+<h2>Project memory</h2><p>No automatic memory capture. Save and edit require explicit permission. Existing chat history remains in the normal S database. Editing changes content only; source and expiry stay fixed. Create a new memory for a different source or retention period.</p>
 <label>Search<input id="query"></label><button id="search">Search memory</button><button id="list">List project memory</button>
 <label>Memory ID (select Edit below)<input id="memory-id" readonly></label>
 <label>Content<textarea id="content" maxlength="8192"></textarea></label>
