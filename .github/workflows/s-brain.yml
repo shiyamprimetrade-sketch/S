@@ -1,0 +1,45 @@
+name: S-Brain experimental checks
+
+on:
+  pull_request:
+    paths:
+      - "s_brain/**"
+      - "continuum/brain_console.py"
+      - "web/brain.*"
+      - "scripts/test_brain_ui.cjs"
+      - ".github/workflows/s-brain.yml"
+  push:
+    branches:
+      - "feature/s-brain-independent-transformer"
+    paths:
+      - "s_brain/**"
+      - "continuum/brain_console.py"
+      - "web/brain.*"
+      - "scripts/test_brain_ui.cjs"
+      - ".github/workflows/s-brain.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  s-brain-tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install CPU PyTorch
+        run: |
+          python -m pip install --index-url https://download.pytorch.org/whl/cpu torch
+          python -m pip install safetensors numpy
+      - name: Compile Python files
+        run: python -m compileall -q s_brain
+      - name: Unit tests
+        run: python -m unittest discover -s s_brain/tests -v
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Browser state regression tests
+        run: node --test scripts/test_brain_ui.cjs

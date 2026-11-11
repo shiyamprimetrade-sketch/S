@@ -2,6 +2,7 @@
 import json
 import mimetypes
 import os
+import socket
 import threading
 from http.server import BaseHTTPRequestHandler,ThreadingHTTPServer
 from pathlib import Path
@@ -12,6 +13,9 @@ from .storage import Store
 
 ROOT=Path(__file__).resolve().parent.parent
 WEB=ROOT/'web'
+if not WEB.is_dir():
+    from importlib.resources import files
+    WEB=Path(str(files('s_web_assets')))
 
 class API(BaseHTTPRequestHandler):
     server_version='AxiomFlow/0.1'
@@ -37,6 +41,8 @@ class API(BaseHTTPRequestHandler):
         return self._query().get(name,[''])[0]
     def _static(self,name):
         allow={'/':'index.html','/app.js':'app.js','/style.css':'style.css'}
+        allow.update({'/brain':'brain.html','/brain.js':'brain.js','/brain.css':'brain.css'})
+        allow.update({'/developer':'developer.html','/developer.js':'developer.js','/developer.css':'developer.css'})
         if name not in allow:return self._json(404,{'error':'Not found'})
         p=WEB/allow[name]
         body=p.read_bytes()
@@ -50,11 +56,17 @@ class API(BaseHTTPRequestHandler):
     def _api(self,verb):
         path=urlparse(self.path).path
         s=self.server.store
+        if path.startswith('/api/developer/'):
+            return self.server.developer.request(verb,path,self._query(),None if verb=='GET' else self._body())
+        if path.startswith('/api/brain/'):
+            return self.server.brain.request(verb,path,self._query(),None if verb=='GET' else self._body())
         if verb=='GET':
             if path=='/api/health':
                 from .teacherlab import MODEL
                 models=ollama_models()
                 if MODEL.exists():models=[TEACHER_MODEL]+models
+                from .s_brain_bridge import enabled as brain_enabled, available as brain_available, MODEL as BRAIN_MODEL
+                if brain_enabled() and brain_available():models=[BRAIN_MODEL]+models
                 return {'ok':True,'models':models,'default_model':TEACHER_MODEL if MODEL.exists() else DEFAULT_MODEL,'data_file':str(s.path)}
             if path=='/api/projects':return s.list_projects()
             if path=='/api/sessions':return s.list_sessions(self._param('project_id'))
@@ -71,6 +83,7 @@ class API(BaseHTTPRequestHandler):
             if path=='/api/projects':return s.create_project(b.get('name',''))
             if path=='/api/sessions':return s.create_session(b.get('project_id',''),b.get('title','New conversation'))
             if path=='/api/notes':return s.add_note(b.get('project_id',''),b.get('title',''),b.get('body',''),b.get('kind','lesson'),b.get('evidence',''))
+            if path=='/api/chat' and b.get('model')=='s-brain:experimental':return self.server.brain.chat(b)
             if path=='/api/chat':return chat(s,b.get('session_id',''),b.get('text',''),b.get('model',DEFAULT_MODEL))
         raise ValueError('Unknown route')
     def _guard(self):
@@ -100,12 +113,23 @@ class API(BaseHTTPRequestHandler):
 
 class AppServer(ThreadingHTTPServer):
     daemon_threads=True
+    # SO_REUSEADDR permits a second listener on Windows. Protect the local UI
+    # port from accidental app sharing; Unix keeps normal restart semantics.
+    allow_reuse_address=os.name!='nt'
+    def server_bind(self):
+        if os.name=='nt':
+            self.socket.setsockopt(socket.SOL_SOCKET,socket.SO_EXCLUSIVEADDRUSE,1)
+        super().server_bind()
     def __init__(self,host,port,db_path):
         if host not in ('127.0.0.1','localhost'):
             raise ValueError('Only loopback binding is supported')
         super().__init__((host,port),API)
         self.store=Store(db_path)
         self.store.seed_if_empty()
+        from .brain_console import BrainConsole
+        self.brain=BrainConsole(self.store)
+        from s_developer.specifications import Specifications
+        self.developer=Specifications(self.store)
 
 def serve(db_path,port=8765):
     with AppServer('127.0.0.1',port,db_path) as app:

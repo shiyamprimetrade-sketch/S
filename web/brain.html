@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>S Native integration</title><link rel="stylesheet" href="/style.css"><link rel="stylesheet" href="/brain.css"></head>
+<body class="brain-page"><main><a href="/developer">S Developer workspace</a>
+<h1>S Native integration</h1><p><a href="/">Return to S chat</a></p>
+<p>Experimental independently trained weights. Memory is retrieval, not training. Tools never authorize themselves.</p>
+<label>Project <select id="scope"></select></label>
+<label>Model <select id="engine"><option value="s-brain:experimental">S Native (experimental)</option><option disabled>Ollama Teacher — optional, separate development workflow</option></select></label>
+<button id="refresh">Refresh status</button><p id="status" role="status"></p>
+<h2>Learning dashboard</h2><dl id="summary"></dl><details><summary>Checkpoint, dataset, learning curves and benchmark evidence</summary><pre id="metrics"></pre></details>
+<h2>Chat</h2><label><input type="checkbox" id="memory">Use approved project memory</label>
+<label><input type="checkbox" id="citations">Require verified source IDs and revisions</label>
+<p>Source integrity does not prove semantic correctness. Context overflow is rejected, never silently truncated.</p>
+<label>Question<textarea id="question" maxlength="4096"></textarea></label>
+<label><input type="checkbox" id="tools">Approve the following read-only tool proposal for this request</label>
+<label>Tool proposal JSON (calculator, text_stats or json_extract only)<textarea id="intents">[]</textarea></label>
+<button id="send">Send to S Native</button><pre id="answer" aria-live="polite"></pre><details><summary>Sources, tool execution and audit</summary><pre id="evidence"></pre></details>
+<h2>Project memory</h2><p>No automatic memory capture. Save and edit require explicit permission. Existing chat history remains in the normal S database. Editing changes content only; source and expiry stay fixed. Create a new memory for a different source or retention period.</p>
+<label>Search<input id="query"></label><button id="search">Search memory</button><button id="list">List project memory</button>
+<label>Memory ID (select Edit below)<input id="memory-id" readonly></label>
+<label>Content<textarea id="content" maxlength="8192"></textarea></label>
+<label>Source attribution<input id="source" maxlength="512"></label>
+<label>Retention seconds<input id="ttl" type="number" min="1" max="31536000" value="86400"></label>
+<label><input id="consent" type="checkbox">I authorize storing this content locally for this project</label>
+<button id="save">Save memory</button><button id="clear">New memory</button><div id="records"></div>
+<p id="error" role="alert"></p>
+<script src="/brain.js"></script></main></body></html>

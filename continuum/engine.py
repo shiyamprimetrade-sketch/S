@@ -38,6 +38,19 @@ def chat(store,sid,user_input,model=DEFAULT_MODEL,timeout=180):
     if not isinstance(model,str) or len(model)>120 or '://' in model or model.startswith('/') or not all(c.isalnum() or c in '._:-/' for c in model):
         raise ValueError('Invalid local model name')
     store.add_message(sid,'user',user_input)
+    if model=='s-brain:experimental':
+        from .s_brain_bridge import BrainBridgeError, chat_text, enabled
+        if not enabled():
+            raise LocalModelError('S-Brain not enabled; set AXIOM_ENABLE_S_BRAIN=1 explicitly')
+        begin=time.monotonic()
+        try:
+            response=chat_text(user_input,timeout=timeout)
+        except BrainBridgeError as exc:
+            raise LocalModelError(str(exc)) from exc
+        elapsed=int((time.monotonic()-begin)*1000)
+        item=store.add_message(sid,'assistant',response,model=model,elapsed_ms=elapsed)
+        store.log(pid,'chat',f'model={model} elapsed_ms={elapsed} experimental=true')
+        return item
     if model==TEACHER_MODEL:
         from .teacherlab import respond_offline
         begin=time.monotonic()

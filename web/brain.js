@@ -1,0 +1,48 @@
+'use strict';
+const el=id=>document.getElementById(id);
+let session=null, scopeRevision=0, memoryRequest=0, sending=false, saving=false, available=false;
+async function api(path,body){const r=await fetch(path,{headers:{'Content-Type':'application/json'},...(body===undefined?{}:{method:'POST',body:JSON.stringify(body)})});const v=await r.json();if(!r.ok)throw Error(v.error||'Request failed');return v;}
+function guarded(action){return async()=>{const revision=scopeRevision;el('error').textContent='';try{await action();}catch(e){if(revision===scopeRevision)el('error').textContent=e.message;}};}
+const scope=()=>el('scope').value;
+function resetEditor(){for(const id of ['memory-id','content','source'])el(id).value='';el('consent').checked=false;el('source').readOnly=false;el('ttl').disabled=false;el('ttl').value='86400';}
+function sendState(){el('send').disabled=sending||!available;el('send').textContent=sending?'Generating locally…':'Send to S Native';}
+async function status(){const s=await api('/api/brain/status');el('status').textContent=s.available?'S Native available — experimental, not production-promoted':'Unavailable: '+s.error;available=s.available;sendState();el('summary').replaceChildren();for(const [label,value] of Object.entries({'Parameters':s.metrics.parameters??'Unavailable','Training steps':s.metrics.training_steps??'Not trained','Training loss':s.metrics.training_loss??'Not measured','Validation loss':s.metrics.validation_loss??'Not measured','Gradient norm':s.metrics.gradient_norm??'Not measured','Weight change (L2)':s.metrics.weight_change??'Not measured'})){const term=document.createElement('dt');term.textContent=label;const detail=document.createElement('dd');detail.textContent=typeof value==='number'?String(Number(value.toPrecision(6))):value;el('summary').append(term,detail);}el('metrics').textContent=JSON.stringify({checkpoint_hash:s.checkpoint_hash||'Unavailable',context:s.context||'Unavailable',...s.metrics},null,2);el('memory').disabled=!s.memory_enabled;el('tools').disabled=!s.tools_enabled;el('save').disabled=!s.memory_enabled;if(!s.memory_enabled)el('memory').checked=false;if(!s.tools_enabled)el('tools').checked=false;}
+function render(rows){el('records').replaceChildren();for(const row of rows){const section=document.createElement('section');const text=document.createElement('pre');text.textContent=JSON.stringify(row,null,2);const edit=document.createElement('button');edit.textContent='Edit';edit.onclick=()=>{el('memory-id').value=row.id;el('content').value=row.content;el('source').value=row.source;el('source').readOnly=true;el('ttl').value=String(Math.max(0,row.expires_at-Math.floor(Date.now()/1000)));el('ttl').disabled=true;el('consent').checked=false;};const remove=document.createElement('button');remove.textContent='Delete';remove.onclick=guarded(async()=>{if(!confirm('Delete this memory permanently from this project?'))return;const revision=scopeRevision;await api('/api/brain/forget',{project_id:scope(),id:row.id,consent:true});if(revision===scopeRevision)await list();});section.append(text,edit,remove);el('records').append(section);}}
+async function list(query){
+  const revision=scopeRevision, request=++memoryRequest;
+  const params=new URLSearchParams({project_id:scope()});
+  if(query!==undefined)params.set('q',query);
+  const rows=await api('/api/brain/'+(query===undefined?'memory':'search')+'?'+params);
+  if(revision===scopeRevision&&request===memoryRequest)render(rows);
+}
+el('refresh').onclick=guarded(status);
+el('scope').onchange=()=>{scopeRevision++;session=null;resetEditor();el('memory').checked=false;el('citations').checked=false;el('tools').checked=false;el('intents').value='[]';el('records').replaceChildren();el('answer').textContent='';el('evidence').textContent='';el('error').textContent='';};
+el('send').onclick=guarded(async()=>{
+  if(sending||!available)return;
+  const text=el('question').value;
+  if(!text.trim())throw Error('Enter a question');
+  const revision=scopeRevision;
+  const body={project_id:scope(),text,memory:el('memory').checked,cite_sources:el('citations').checked,
+    tool_intents:el('tools').checked?JSON.parse(el('intents').value):[],approve_tools:el('tools').checked};
+  sending=true;sendState();el('answer').textContent='';el('evidence').textContent='';
+  try{
+    const selected=session||await api('/api/sessions',{project_id:body.project_id,title:'S Native integration chat'});
+    if(revision!==scopeRevision)return;
+    session=selected;
+    const result=await api('/api/brain/assist',{...body,session_id:selected.id});
+    if(revision!==scopeRevision)return;
+    el('answer').textContent=result.content;el('evidence').textContent=JSON.stringify(result.brain,null,2);
+  }finally{sending=false;sendState();}
+});
+el('save').onclick=guarded(async()=>{
+  if(saving)return;
+  if(!el('consent').checked)throw Error('Explicit storage permission is required');
+  const revision=scopeRevision, id=el('memory-id').value;
+  const body={project_id:scope(),id,content:el('content').value,consent:true};
+  if(!id){body.source=el('source').value;body.ttl_seconds=Number(el('ttl').value);}
+  saving=true;
+  try{await api('/api/brain/'+(id?'update':'remember'),body);if(revision===scopeRevision){resetEditor();await list();}}
+  finally{saving=false;}
+});
+el('clear').onclick=resetEditor;el('list').onclick=guarded(()=>list());el('search').onclick=guarded(()=>list(el('query').value));
+guarded(async()=>{for(const p of await api('/api/projects')){const option=document.createElement('option');option.value=p.id;option.textContent=p.name;el('scope').append(option);}await status();})();
