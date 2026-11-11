@@ -20,7 +20,8 @@ SOURCE=Path(__file__).resolve().parents[1]
 KNOWN = {
   "continuum/server.py": [
     "6e75cf62dd4d1182a415f5257402cef7a0583b566a04a6abe099450fbc887c98",
-    "b7cdc4d44e9f1faba14cfa24d864ce5c4d3275cf46245690290a3b207a3d8497"
+    "b7cdc4d44e9f1faba14cfa24d864ce5c4d3275cf46245690290a3b207a3d8497",
+    "9a96271fd10d5dd8458abc854a3d6a0caaddfaec38a42d3ee4c2571efacf6735"
   ],
   "web/index.html": [
     "48eaf288b56a8663a991f1c5cd3b2b5b277004e8bd92fbdd5b3eae259b180961",
@@ -49,7 +50,8 @@ KNOWN = {
     "320c369629ff9f1e170a76e111160b3f32929493752566c0502a3e9a0e21d70a"
   ],
   "s_developer/cli.py": [
-    "dee501f2da72c7c43c8d5c015eddda9abfc2beac9542d79722638be028ef1bc8"
+    "dee501f2da72c7c43c8d5c015eddda9abfc2beac9542d79722638be028ef1bc8",
+    "75cd99d9e5cfd83c88cd958dc9293a20c1d7b7682781d3ea0cdf374a91b9171b"
   ],
   "s_developer/intent.py": [
     "2a832a82d132a606eefbbd4b8370296e56b17af323e057257cbc1bb25b57f004"
@@ -59,13 +61,22 @@ KNOWN = {
   ],
   "s_developer/specifications.py": [
     "2437b57e452ec18edf708f9c2822fa971659daa8b0df78762c84a6a905c39d73"
-  ]
+  ],
+  "s_developer/bundles.py": [],
+  "s_developer/models.py": [],
+  "s_developer/engine.py": [],
+  "s_developer/providers.py": [],
+  "s_developer/sandbox.py": [],
+  "s_developer/resources/native-demo/manifest.json": [],
+  "s_developer/resources/native-demo/training-report.json": [],
+  "s_developer/resources/native-demo/model.safetensors": [],
+  "web/coding.js": []
 }
 
 
 def digest(path):
     # Git/Windows may check out the same reviewed text with CRLF endings.
-    return hashlib.sha256(Path(path).read_bytes().replace(b'\r\n',b'\n')).hexdigest()
+    return hashlib.sha256((Path(path).read_bytes() if Path(path).suffix=='.safetensors' else Path(path).read_bytes().replace(b'\r\n',b'\n'))).hexdigest()
 
 
 def bounded(root, relative):

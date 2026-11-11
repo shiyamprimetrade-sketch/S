@@ -1,0 +1,32 @@
+name: S controlled development acceptance
+on:
+  pull_request:
+    paths:
+      - 's_developer/**'
+      - 'continuum/server.py'
+      - 'web/**'
+      - 'scripts/verify_controlled_development.py'
+      - '.github/workflows/s-controlled-development.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  actual-container-builds:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify Docker availability
+        run: docker --context default info
+      - name: Actual isolated builds, tests, repair and permission checks
+        run: python scripts/verify_controlled_development.py --approve-runtime-download --report build/controlled-acceptance.json
+      - name: Preserve actual execution evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: controlled-development-evidence
+          path: build/controlled-acceptance.json
+          if-no-files-found: warn

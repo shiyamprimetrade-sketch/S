@@ -4,10 +4,13 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "s-unified-developer"
-version = "0.1.0"
+version = "0.2.0"
 description = "S local requirements workspace and unified toolchain catalog foundation"
 requires-python = ">=3.11"
 dependencies = []
+
+[project.optional-dependencies]
+neural = ["torch>=2.5,<3", "safetensors>=0.4,<1", "numpy>=1.26,<3"]
 
 [project.scripts]
 S = "s_developer.cli:main"
@@ -20,3 +23,4 @@ s_web_assets = "web"
 
 [tool.setuptools.package-data]
 s_web_assets = ["*.html", "*.js", "*.css"]
+s_developer = ["resources/native-demo/*.safetensors", "resources/native-demo/*.json"]

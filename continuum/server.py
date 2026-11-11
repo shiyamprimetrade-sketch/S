@@ -43,6 +43,7 @@ class API(BaseHTTPRequestHandler):
         allow={'/':'index.html','/app.js':'app.js','/style.css':'style.css'}
         allow.update({'/brain':'brain.html','/brain.js':'brain.js','/brain.css':'brain.css'})
         allow.update({'/developer':'developer.html','/developer.js':'developer.js','/developer.css':'developer.css'})
+        allow['/coding.js']='coding.js'
         if name not in allow:return self._json(404,{'error':'Not found'})
         p=WEB/allow[name]
         body=p.read_bytes()
@@ -120,7 +121,7 @@ class AppServer(ThreadingHTTPServer):
         if os.name=='nt':
             self.socket.setsockopt(socket.SOL_SOCKET,socket.SO_EXCLUSIVEADDRUSE,1)
         super().server_bind()
-    def __init__(self,host,port,db_path):
+    def __init__(self,host,port,db_path,developer_config=None):
         if host not in ('127.0.0.1','localhost'):
             raise ValueError('Only loopback binding is supported')
         super().__init__((host,port),API)
@@ -129,7 +130,10 @@ class AppServer(ThreadingHTTPServer):
         from .brain_console import BrainConsole
         self.brain=BrainConsole(self.store)
         from s_developer.specifications import Specifications
-        self.developer=Specifications(self.store)
+        if developer_config is None:
+            from s_developer.models import load_config
+            developer_config=load_config(db_path)
+        self.developer=Specifications(self.store,developer_config)
 
 def serve(db_path,port=8765):
     with AppServer('127.0.0.1',port,db_path) as app:

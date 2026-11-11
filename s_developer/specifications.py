@@ -61,10 +61,12 @@ def structure(request, answers):
 
 
 class Specifications:
-    def __init__(self, store):
+    def __init__(self, store, engine_config=None):
         self.store = store
         with store.connect() as db:
             db.executescript(SCHEMA)
+        from .engine import DevelopmentEngine
+        self.engine=DevelopmentEngine(self,engine_config)
 
     def latest(self, project_id):
         self.store.get_project(project_id)
@@ -160,4 +162,4 @@ class Specifications:
                 return parse_intent(body.get('request'))
             if path == '/api/developer/spec': return self.save(body)
             if path == '/api/developer/rollback': return self.rollback(body)
-        raise ValueError('Unknown developer route')
+        return self.engine.request(verb,path,query,body)

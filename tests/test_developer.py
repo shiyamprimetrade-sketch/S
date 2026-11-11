@@ -183,6 +183,20 @@ class HTTPTests(unittest.TestCase):
         status,body,_=self.request('/api/developer/history?project_id='+saved['project_id'])
         self.assertEqual(json.loads(body),[saved])
 
+    def test_http_generation_editor_archive_and_host_build_denial(self):
+        _,raw,_=self.request('/api/developer/spec',dict(name='HTTP fixture',request='S develop website',answers=ANSWERS,approve=True))
+        spec=json.loads(raw)
+        status,raw,_=self.request('/api/developer/generate',dict(project_id=spec['project_id'],spec_revision=1,
+                                  expected_artifact_revision=0,recipe='static-site',provider='template',consent=True))
+        self.assertEqual(status,200)
+        artifact=json.loads(raw);self.assertIn('index.html',artifact['files'])
+        status,raw,_=self.request('/api/developer/edit',dict(project_id=spec['project_id'],expected_artifact_revision=1,
+                                  path='style.css',content='body { color: green; }',consent=True))
+        self.assertEqual(status,200);self.assertEqual(json.loads(raw)['revision'],2)
+        self.assertEqual(self.request('/api/developer/archive?project_id='+spec['project_id'])[0],200)
+        self.assertEqual(self.request('/api/developer/build',dict(project_id=spec['project_id'],artifact_revision=2,
+                                   repair_provider='template',max_repairs=1,consent=True))[0],403)
+
     def test_host_origin_execution_and_traversal_denial(self):
         self.assertEqual(self.request('/developer',headers={'Host':'attacker.invalid'})[0],403)
         self.assertEqual(self.request('/api/developer/spec',{},headers={'Origin':'https://attacker.invalid'})[0],403)

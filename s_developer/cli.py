@@ -39,7 +39,66 @@ def main(argv=None):
     parser.add_argument('--no-browser', action='store_true')
     parser.add_argument('command', nargs='+', help='develop application | build me a website | toolchains')
     parser.add_argument('--detect', metavar='LANGUAGE', help='Explicitly probe a trusted installed toolchain')
+    parser.add_argument('--enable-builds',action='store_true',help='Enable consented, container-only execution')
+    parser.add_argument('--checkpoint',type=Path)
+    parser.add_argument('--output',type=Path)
+    parser.add_argument('--steps',type=int,default=128)
+    parser.add_argument('--model')
+    parser.add_argument('--approve-download',action='store_true')
+    parser.add_argument('--project')
+    parser.add_argument('--recipe',choices=('static-site','python-cli','c-cli'),default='python-cli')
+    parser.add_argument('--provider',choices=('template','native','ollama-external'),default='template')
+    parser.add_argument('--consent',action='store_true')
+    parser.add_argument('--max-repairs',type=int,default=0)
     args = parser.parse_args(argv)
+    from .models import load_config,save_config,install_demo,install_native,train_demo
+    config=load_config(args.db)
+    config['execution_enabled']=args.enable_builds
+    if args.command==['model','install-demo']:
+        print(json.dumps(install_demo(args.db),indent=2));return 0
+    if args.command==['model','install-native']:
+        if not args.checkpoint:parser.error('--checkpoint is required')
+        print(json.dumps(install_native(args.db,args.checkpoint),indent=2));return 0
+    if args.command==['model','train-demo']:
+        if not args.output:parser.error('--output must name a new checkpoint directory')
+        print(json.dumps(train_demo(args.output,args.steps),indent=2));return 0
+    if args.command==['model','configure-ollama']:
+        from .providers import OllamaProvider
+        engine=OllamaProvider(args.model);provenance=engine.provenance()
+        save_config(args.db,{'ollama_model':args.model})
+        print(json.dumps(provenance,indent=2));return 0
+    if args.command==['model','pull-ollama']:
+        # Explicit, named official external model only; not labelled native S.
+        if args.model!='qwen2.5-coder:0.5b':parser.error('Only the optional qwen2.5-coder:0.5b external starter is supported by this installer')
+        if not args.approve_download:parser.error('Model download requires --approve-download')
+        from .providers import local_json,OllamaProvider
+        result=local_json('pull',{'model':args.model,'stream':False},timeout=300)
+        if result.get('status')!='success':parser.error('Ollama model pull did not report success')
+        provenance=OllamaProvider(args.model).provenance();save_config(args.db,{'ollama_model':args.model})
+        print(json.dumps(provenance,indent=2));return 0
+    if len(args.command)==3 and args.command[:2]==['runtime','prepare']:
+        from .sandbox import prepare_image
+        result=prepare_image(args.command[2],args.approve_download)
+        if result['installed']:
+            images=load_config(args.db).get('images',{});images[args.command[2]]=result['image'];save_config(args.db,{'images':images})
+        print(json.dumps(result,indent=2));return 0
+    if len(args.command)==2 and args.command[0]=='project':
+        from .specifications import Specifications
+        from continuum.storage import Store
+        specs=Specifications(Store(args.db),config);engine=specs.engine
+        if not args.project:parser.error('--project is required')
+        if args.command[1]=='generate':
+            artifacts=engine.artifacts(args.project)
+            result=engine.generate({'project_id':args.project,'spec_revision':specs.latest(args.project)['revision'],
+                'expected_artifact_revision':artifacts[0]['revision'] if artifacts else 0,'recipe':args.recipe,
+                'provider':args.provider,'consent':args.consent})
+        elif args.command[1]=='build':
+            result=engine.build({'project_id':args.project,'artifact_revision':engine.latest(args.project)['revision'],
+                'repair_provider':args.provider,'max_repairs':args.max_repairs,'consent':args.consent})
+        elif args.command[1]=='status':result={'artifact':engine.latest(args.project),'runs':engine.runs(args.project)}
+        else:parser.error('Use project generate, build, or status')
+        print(json.dumps(result,indent=2))
+        return 0 if args.command[1]!='build' or result['final_status']=='toolchain_passed' else 1
     if args.command == ['toolchains']:
         print(json.dumps(detect(args.detect) if args.detect else catalog(), indent=2))
         return 0
@@ -52,12 +111,12 @@ def main(argv=None):
     # Binding before opening the browser prevents accidentally using an unrelated
     # service on an occupied port. Never silently reuses or kills an existing app.
     try:
-        app = AppServer('127.0.0.1', args.port, args.db)
+        app = AppServer('127.0.0.1', args.port, args.db,developer_config=config)
     except OSError as error:
         parser.exit(2, f'Cannot start S Developer: {error}. Choose another --port.\n')
     url = f'http://127.0.0.1:{app.server_port}/developer#' + urlencode({'request': intent['request']})
     print(f'S Developer: {url}', flush=True)
-    print('Requirements only. No code, tools or downloads execute from this workspace.', flush=True)
+    print('Source generation and review enabled. Builds require host opt-in, action consent and prepared Docker images.', flush=True)
     # Hash fragment keeps the original request out of HTTP URLs/access logs.
     with app:
         if not args.no_browser:
