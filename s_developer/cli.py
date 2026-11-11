@@ -3,6 +3,7 @@ import argparse
 import json
 import os
 from pathlib import Path
+import subprocess
 import threading
 from urllib.parse import urlencode
 import webbrowser
@@ -11,8 +12,24 @@ from continuum.server import AppServer
 from .intent import parse_intent
 from .registry import catalog, detect
 
-DEFAULT_DB = DB if (ROOT/'S_PROJECT.md').is_file() else Path(os.environ.get(
+DEFAULT_DB = DB if (ROOT/'web'/'index.html').is_file() else Path(os.environ.get(
     'AXIOM_DB', str(Path(os.environ.get('LOCALAPPDATA', str(Path.home()/'.local'/'share')))/'S'/'continuum.sqlite3')))
+
+
+def open_browser(url):
+    """Use Termux's Android intent helper when available; no shell commands."""
+    prefix = os.environ.get('PREFIX', '')
+    helper = Path(prefix)/'bin'/'termux-open-url' if prefix else None
+    if helper and helper.is_file():
+        try:
+            subprocess.run([str(helper), url], stdin=subprocess.DEVNULL,
+                           stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
+                           timeout=10, check=True, shell=False)
+            return True
+        except (OSError, subprocess.SubprocessError):
+            print('Android browser could not be opened. Open the printed localhost URL manually.', flush=True)
+            return False
+    return webbrowser.open(url)
 
 
 def main(argv=None):
@@ -44,7 +61,7 @@ def main(argv=None):
     # Hash fragment keeps the original request out of HTTP URLs/access logs.
     with app:
         if not args.no_browser:
-            threading.Timer(0.2, lambda: webbrowser.open(url)).start()
+            threading.Timer(0.2, lambda: open_browser(url)).start()
         try:
             app.serve_forever()
         except KeyboardInterrupt:

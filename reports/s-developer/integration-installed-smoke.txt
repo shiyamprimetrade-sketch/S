@@ -1,0 +1,1 @@
+PASS: installed S launch, packaged UI assets, HTTP specification save, restart and checkpoint reopen

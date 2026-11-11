@@ -2,6 +2,7 @@
 import json
 import mimetypes
 import os
+import socket
 import threading
 from http.server import BaseHTTPRequestHandler,ThreadingHTTPServer
 from pathlib import Path
@@ -112,6 +113,13 @@ class API(BaseHTTPRequestHandler):
 
 class AppServer(ThreadingHTTPServer):
     daemon_threads=True
+    # SO_REUSEADDR permits a second listener on Windows. Protect the local UI
+    # port from accidental app sharing; Unix keeps normal restart semantics.
+    allow_reuse_address=os.name!='nt'
+    def server_bind(self):
+        if os.name=='nt':
+            self.socket.setsockopt(socket.SOL_SOCKET,socket.SO_EXCLUSIVEADDRUSE,1)
+        super().server_bind()
     def __init__(self,host,port,db_path):
         if host not in ('127.0.0.1','localhost'):
             raise ValueError('Only loopback binding is supported')
