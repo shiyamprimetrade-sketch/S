@@ -1,0 +1,31 @@
+{
+  "created_utc": "2026-11-11T15:53:09.592314+00:00",
+  "dataset_fingerprint": "f29a5d6fc46063f93f6ce53d1a4c46fcd5cbc3c160286aadc38116051a23287e",
+  "extras": {
+    "data": "self-authored synthetic fixture; no user conversations or external teacher",
+    "experiment": "small generative code-format diagnostic; not a production coder",
+    "independently_initialized": true
+  },
+  "model_config": {
+    "context": 256,
+    "dim": 32,
+    "heads": 4,
+    "kv_heads": 2,
+    "layers": 1,
+    "vocab_size": 256
+  },
+  "runtime": {
+    "cuda_available": false,
+    "cuda_version": null,
+    "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+    "python": "3.12.14",
+    "torch": "2.15.0+cpu"
+  },
+  "schema": 1,
+  "seed": 20261111,
+  "step": 256,
+  "train_loss": 0.1209963783621788,
+  "train_tokens": 98304,
+  "validation_loss": 1.6647034883499146,
+  "weights_sha256": "a6caeb1f219c01f42cec3ab54fb5dcdb61e20d6530dc91173a7805bdd7d89859"
+}

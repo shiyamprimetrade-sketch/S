@@ -4,6 +4,7 @@ on:
   pull_request:
     paths:
       - "s_brain/**"
+      - "s_developer/**"
       - "continuum/brain_console.py"
       - "web/brain.*"
       - "scripts/test_brain_ui.cjs"
@@ -13,6 +14,7 @@ on:
       - "feature/s-brain-independent-transformer"
     paths:
       - "s_brain/**"
+      - "s_developer/**"
       - "continuum/brain_console.py"
       - "web/brain.*"
       - "scripts/test_brain_ui.cjs"

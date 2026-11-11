@@ -16,8 +16,27 @@
 <p class="privacy">Keep passwords, API keys and personal records out of requirements. Approval saves a decision in project memory; execution permissions remain disabled.</p>
 </form>
 <p id="status" role="status" aria-live="polite">Ready. Start with your project’s purpose.</p>
+<button id="code-open" type="button">Open source, model and build workspace</button>
+<section id="code-panel" hidden>
+<h2>02 / Generate, inspect and verify</h2>
+<p id="code-capabilities">Load host capabilities to see available providers. Native model installation is an operator CLI action.</p>
+<label for="code-recipe">Supported starter or model target</label>
+<select id="code-recipe"><option value="static-site">Static informational website</option><option value="python-cli">Python starter CLI + tests</option><option value="c-cli">C starter CLI</option></select>
+<label for="code-provider">Generation / repair provider</label>
+<select id="code-provider"><option value="template">Deterministic template — no neural generation</option><option value="native">S Native — experimental, unreliable code generation</option><option value="ollama-external">Local Ollama external model — separately configured</option></select>
+<p>Templates create narrow starter projects. Requested business features are not automatically implemented by displaying their requirements.</p>
+<label><input id="code-consent" type="checkbox"> Approve this source generation or execution action for the selected saved project.</label>
+<div class="actions"><button id="code-generate" type="button">Generate source checkpoint</button><button id="code-refresh" type="button">Reopen saved source</button><button id="code-export" type="button">Download source ZIP</button></div>
+<p id="code-revision">No source checkpoint loaded.</p>
+<div class="code-grid"><nav id="code-files" aria-label="Source files"></nav><div><label for="code-content" id="code-filename">Source editor</label><textarea id="code-content" spellcheck="false" aria-label="Source code editor"></textarea><button id="code-save" type="button">Save source checkpoint</button></div></div>
+<label for="code-repairs">Maximum automatic repairs (0–2)</label><input id="code-repairs" type="number" min="0" max="2" value="0">
+<button id="code-build" type="button">Build, test and attempt bounded repair</button>
+<p>Builds run only in prepared Docker containers, with network disabled and no host shell fallback. Docker is normally unavailable in Termux; source editing and model installation remain separate capabilities.</p>
+<h3>Build / test diagnostics</h3><pre id="code-output" role="status">No build has run.</pre>
+<h3>Source checkpoint history</h3><div id="code-history"></div>
+</section>
 <section id="catalog-panel" hidden><h2>Toolchain catalog</h2><p>Official-source discovery pointers. Stable versions and OS-specific support have not been verified. These entries are not installed build adapters. No downloads run here.</p><div id="catalog"></div></section>
 </section>
-<aside class="review"><p class="eyebrow">SPECIFICATION REVIEW</p><h2 id="review-title">Your blueprint starts here</h2><p id="revision">No saved checkpoint</p><div id="summary">Your answers remain editable. Save a draft to see focused clarification questions and a structured plan.</div><h3>Checkpoint history</h3><div id="history">No checkpoints yet.</div><details><summary>Structured specification</summary><pre id="spec-json">{}</pre></details><p class="notice">Code generation, source editing, terminal, builds, previews and packaging are pending. Native-model coding reliability has not been established.</p></aside>
-</main><script src="/developer.js"></script>
+<aside class="review"><p class="eyebrow">SPECIFICATION REVIEW</p><h2 id="review-title">Your blueprint starts here</h2><p id="revision">No saved checkpoint</p><div id="summary">Your answers remain editable. Save a draft to see focused clarification questions and a structured plan.</div><h3>Checkpoint history</h3><div id="history">No checkpoints yet.</div><details><summary>Structured specification</summary><pre id="spec-json">{}</pre></details><p class="notice">Source generation/editing and consented container builds are available in the coding workspace. Native-model coding reliability, full business acceptance, arbitrary dependency installation, live preview and a full terminal remain unverified or pending.</p></aside>
+</main><script src="/developer.js"></script><script src="/coding.js"></script>
 </body></html>

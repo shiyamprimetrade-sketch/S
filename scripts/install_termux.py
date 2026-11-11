@@ -51,9 +51,15 @@ def install(home, prefix, source, python):
         os.replace(temporary,launcher)
     finally:
         if temporary and temporary.exists():temporary.unlink()
-    return {'launcher':str(launcher),'source':str(source),'database':str(data_dir/'continuum.sqlite3'),
+    sys.path.insert(0,str(source))
+    from s_developer.models import load_config,install_demo
+    database=data_dir/'continuum.sqlite3'
+    model_result={'installed':False,'status':'existing native provider configuration preserved'}
+    if not load_config(database).get('native_checkpoint'):
+        model_result=install_demo(database)
+    return {'launcher':str(launcher),'source':str(source),'database':str(database),
             'previous_launcher':str(previous) if previous else None,
-            'model_installed':False,'phone_execution_verified':False}
+            'model_installed':model_result['installed'],'native_model':model_result,'phone_execution_verified':False}
 
 
 def main():
@@ -64,7 +70,7 @@ def main():
     print(json.dumps(result,indent=2))
     print('\nStart the local workspace:\n'+shlex.quote(result['launcher'])+' develop application')
     print('Keep Termux running; Ctrl+C stops S. Data stays private to this phone account.')
-    print('This installs a Termux launcher, not an APK or a native neural model.')
+    print('A small experimental neural checkpoint is included. Native inference additionally requires a working PyTorch runtime; Android inference is unverified. This is not an APK.')
 
 
 if __name__=='__main__':main()

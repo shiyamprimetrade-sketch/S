@@ -54,6 +54,10 @@ def main():
     if not args.launcher: parser.error('Install S first or pass --launcher')
     with tempfile.TemporaryDirectory() as temporary:
         directory=Path(temporary)
+        install=subprocess.run([args.launcher,'--db',str(directory/'s.sqlite3'),'model','install-demo'],
+                               cwd=directory,capture_output=True,text=True,timeout=20)
+        assert install.returncode==0,install.stderr
+        assert json.loads(install.stdout)['installed'] is True
         process,base=launch(args.launcher,directory)
         try:
             assert b'requirements-form' in request(base,'/developer')
@@ -68,7 +72,7 @@ def main():
             assert reopened==spec
             assert request(base,'/api/developer/history?project_id='+spec['project_id'])==[spec]
         finally:stop(process)
-    print('PASS: installed S launch, packaged UI assets, HTTP specification save, restart and checkpoint reopen')
+    print('PASS: installed S, packaged neural checkpoint install, UI assets, HTTP specification save, restart and checkpoint reopen')
 
 
 if __name__=='__main__':main()

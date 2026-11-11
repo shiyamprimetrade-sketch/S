@@ -1,0 +1,31 @@
+✔ late memory response cannot populate a different project (5.091101ms)
+✔ latest search wins when responses arrive backwards (6.044308ms)
+✔ double send cannot create duplicate sessions (6.25924ms)
+✔ changing project during session creation cancels submission and stale session reuse (3.473233ms)
+✔ late answer cannot appear after switching projects, even when switching back (1.520707ms)
+✔ memory editing preserves source and expiry instead of offering ignored changes (2.365648ms)
+✔ status refresh cannot re-enable Send while a request is pending (2.49979ms)
+✔ duplicate memory save is suppressed and old completion preserves new project editor (2.034078ms)
+✔ memory edit submits only supported fields (2.638539ms)
+✔ generation requires approved saved requirements and explicit consent (4.650005ms)
+✔ source generation carries scoped revision and no runtime permissions (2.458231ms)
+✔ project change clears source, consent and diagnostics (1.954468ms)
+✔ cross-project source responses cannot populate the editor (1.333496ms)
+✔ unsaved source cannot run and repair budget cannot expand (2.811113ms)
+✔ bounded build submission is confirmed and reports actual result (3.833897ms)
+✔ save sends structured answers and no execution permissions (7.917743ms)
+✔ duplicate save and project changes are blocked during request (3.903819ms)
+✔ approval requires explicit confirmation and persists approval flag (4.325478ms)
+✔ reopen populates answers and preserves checkpoint revision on next save (4.461613ms)
+✔ malicious markup renders as text and never becomes HTML (2.903335ms)
+✔ rollback is confirmed, revision checked, and old approval is not resent (3.544956ms)
+✔ new project clears checkpoint and export state (13.361965ms)
+✔ export labels the saved checkpoint and warns that unsaved edits are excluded (2.626637ms)
+ℹ tests 23
+ℹ suites 0
+ℹ pass 23
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 235.891522

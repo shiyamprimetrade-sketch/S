@@ -1,6 +1,7 @@
 'use strict';
 const $ = id => document.getElementById(id);
 let current = null, questions = {}, busy = false, editVersion = 0;
+let onProjectChange=()=>{}, hasSourceEdits=()=>false;
 const message = (text, error=false) => { $('status').textContent=text; $('status').classList.toggle('error',error); };
 async function api(path, body) {
   const response = await fetch('/api/developer/'+path, body === undefined ? {} : {
@@ -12,7 +13,7 @@ async function api(path, body) {
 function node(tag, text) { const n=document.createElement(tag); n.textContent=text; return n; }
 function lock(value) {
   busy=value;
-  document.querySelectorAll('button,input,textarea').forEach(n=>n.disabled=value);
+  document.querySelectorAll('button,input,textarea,select').forEach(n=>n.disabled=value);
   $('export').disabled=value || !current;
 }
 async function action(fn) {
@@ -28,6 +29,7 @@ function setForm(spec) {
   show(spec);
 }
 function show(spec) {
+  onProjectChange(spec);
   $('kind').textContent=spec.intent.kind.toUpperCase();
   $('review-title').textContent=spec.name;
   $('revision').textContent=`Revision ${spec.revision} · ${spec.status}`;
@@ -47,7 +49,7 @@ async function projects() {
   const items=await api('projects'); $('projects').replaceChildren();
   items.forEach(p=>{ const button=node('button',p.name); button.type='button';
     button.onclick=()=>action(async()=>{
-      if(editVersion && !window.confirm('Discard unsaved changes and open this project?'))return;
+      if((editVersion || hasSourceEdits()) && !window.confirm('Discard unsaved changes and open this project?'))return;
       const spec=await api('spec?project_id='+encodeURIComponent(p.id));
       setForm(spec); editVersion=0; await history(); message('Reopened saved project.');
     }); $('projects').append(button); });
@@ -65,6 +67,7 @@ async function history() {
   });
 }
 async function save(approve) {
+  if(hasSourceEdits() && !window.confirm('Discard unsaved source edits before saving a new requirements checkpoint?'))return;
   if(!$('requirements-form').reportValidity())return;
   if(approve && !window.confirm('Approve these requirements and save a decision in S project memory? This does not authorize execution.'))return;
   const spec=await api('spec',{name:$('name').value,request:$('request').value,answers:answers(),
@@ -77,8 +80,8 @@ $('requirements-form').onsubmit=e=>{e.preventDefault();action(()=>save(false));}
 $('approve').onclick=()=>action(()=>save(true));
 $('route').onclick=()=>action(async()=>{ const intent=await api('intent',{request:$('request').value}); $('kind').textContent=intent.kind.toUpperCase(); message('Intent recognized. Complete the requirements below.'); });
 $('new-project').onclick=()=>action(async()=>{
-  if(editVersion && !window.confirm('Discard unsaved changes and start a new project?'))return;
-  current=null;editVersion=0;$('requirements-form').reset();$('review-title').textContent='Your blueprint starts here';
+  if((editVersion || hasSourceEdits()) && !window.confirm('Discard unsaved changes and start a new project?'))return;
+  current=null;editVersion=0;onProjectChange(null);$('requirements-form').reset();$('review-title').textContent='Your blueprint starts here';
   $('revision').textContent='No saved checkpoint';$('summary').textContent='Describe and save your requirements.';
   $('history').textContent='No checkpoints yet.';$('spec-json').textContent='{}';$('kind').textContent='APPLICATION';message('New project.');
 });
@@ -96,7 +99,7 @@ $('show-toolchains').onclick=()=>action(async()=>{
   }
   $('catalog-panel').hidden=false;message('Catalog only. No installation or tool execution performed.');
 });
-window.addEventListener('beforeunload',event=>{if(editVersion){event.preventDefault();event.returnValue='';}});
+window.addEventListener('beforeunload',event=>{if(editVersion || hasSourceEdits()){event.preventDefault();event.returnValue='';}});
 action(async()=>{
   questions=await api('questions');
   for(const [key,question] of Object.entries(questions)) {

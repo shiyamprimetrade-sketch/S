@@ -1,0 +1,64 @@
+{
+  "parameters": 23648,
+  "steps": 256,
+  "initial_validation_nll": 29.142210006713867,
+  "final_validation_nll": 1.6615785360336304,
+  "parameter_update_l2": 25.30261872948647,
+  "weights_sha256": "57c7b83b21476eace3048d6c30c09b22ab02097a114737359ced3478b8fba649",
+  "provenance": {
+    "independently_initialized": true,
+    "data": "self-authored synthetic fixture; no user conversations or external teacher",
+    "experiment": "small generative code-format diagnostic; not a production coder"
+  },
+  "learning_curve": [
+    {
+      "step": 1,
+      "train_nll": 29.536775588989258,
+      "validation_nll": 28.250532150268555
+    },
+    {
+      "step": 32,
+      "train_nll": 3.147409439086914,
+      "validation_nll": 3.1677722930908203
+    },
+    {
+      "step": 64,
+      "train_nll": 1.0160350799560547,
+      "validation_nll": 1.9436755180358887
+    },
+    {
+      "step": 96,
+      "train_nll": 0.6043066382408142,
+      "validation_nll": 1.721255898475647
+    },
+    {
+      "step": 128,
+      "train_nll": 0.256954163312912,
+      "validation_nll": 1.4167500734329224
+    },
+    {
+      "step": 160,
+      "train_nll": 0.3004065752029419,
+      "validation_nll": 1.553000807762146
+    },
+    {
+      "step": 192,
+      "train_nll": 0.11763495206832886,
+      "validation_nll": 1.3170280456542969
+    },
+    {
+      "step": 224,
+      "train_nll": 0.1576206535100937,
+      "validation_nll": 1.5023326873779297
+    },
+    {
+      "step": 256,
+      "train_nll": 0.1256514936685562,
+      "validation_nll": 1.5389312505722046
+    }
+  ],
+  "neural_codegen_format_diagnostic": {
+    "passed": false,
+    "error": "JSONDecodeError: Expecting value: line 1 column 1 (char 0)"
+  }
+}

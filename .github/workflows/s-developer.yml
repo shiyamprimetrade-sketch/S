@@ -36,7 +36,7 @@ jobs:
       - name: Existing and developer HTTP/persistence tests
         run: python -m unittest discover -s tests -v
       - name: Developer UI state tests
-        run: node --test scripts/test_developer_ui.cjs
+        run: node --test scripts/test_developer_ui.cjs scripts/test_coding_ui.cjs
       - name: Existing native console UI state tests
         run: node --test scripts/test_brain_ui.cjs
       - name: Build and install package
