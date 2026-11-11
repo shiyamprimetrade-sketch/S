@@ -131,3 +131,24 @@ operation/constant-sensitive diagnostics on training/validation data. Do not
 retune these now-public test answers and call that independent generalization.
 Full autonomous coding, clean Windows installer acceptance H and physical-device
 installation remain unverified.
+
+## Published verification evidence
+
+PR #19 code commit `baacd32db3ff80a4385e583149da5ed5a294d40b`
+(source tree `60a3b9a3e807af9b1dda6d80dfd96c6de3e6f60a`) passed all four
+workflows: S Developer foundation (Windows/Linux package and interface checks),
+S-Brain experimental checks (801 tests and exact frozen-output replay), AxiomFlow
+Continuum matrix, and controlled development acceptance.
+
+Actual Docker reports are preserved under
+`reports/s-developer/native-coding-curriculum/`. Their provenance file records
+the source commit, workflow/job/artifact IDs and verified archive SHA-256.
+[Container execution log](https://github.com/shiyamprimetrade-sketch/S/actions/runs/43069519135)
+and [neural replay log](https://github.com/shiyamprimetrade-sketch/S/actions/runs/43069519308)
+remain separate evidence. Both experimental reports explicitly record
+`target_met: false` and `improved_over_controls: false`. Zero candidate programs
+executed because none passed format. The real container fixture oracle accepted
+correct code 3/3, rejected exit-zero and constant-answer attempts 0/3, and verified
+fixture repair from 0/3 to 3/3. Those successes are never attributed to the native
+neural checkpoints. Documentation/evidence-only follow-up commits do not alter
+the tested executable source or weights.

@@ -1,0 +1,176 @@
+{
+  "experiment": "s-synthetic-coding-curriculum-v2",
+  "plan_sha256": "db0c450d9a16cd08aef8878a7076b0a7f0262599163d132435b2182ea310ae58",
+  "image": "python@sha256:5e2bdb1b0d542d5039cffb8181c65930093949194a65c365dfb1b0fe13a4fa5b",
+  "model_output_replay": "required separately; this runner does not attest inference",
+  "automatic_promotion": false,
+  "models": [
+    {
+      "label": "old-demo",
+      "weights_sha256": "a6caeb1f219c01f42cec3ab54fb5dcdb61e20d6530dc91173a7805bdd7d89859",
+      "tasks": [
+        {
+          "id": "add-47-4",
+          "format_passed": false,
+          "cases": [],
+          "passed": false
+        },
+        {
+          "id": "subtract-47-4",
+          "format_passed": false,
+          "cases": [],
+          "passed": false
+        },
+        {
+          "id": "multiply-47-4",
+          "format_passed": false,
+          "cases": [],
+          "passed": false
+        },
+        {
+          "id": "floor_divide-47-4",
+          "format_passed": false,
+          "cases": [],
+          "passed": false
+        },
+        {
+          "id": "add-97-4",
+          "format_passed": false,
+          "cases": [],
+          "passed": false
+        },
+        {
+          "id": "subtract-97-4",
+          "format_passed": false,
+          "cases": [],
+          "passed": false
+        },
+        {
+          "id": "multiply-97-4",
+          "format_passed": false,
+          "cases": [],
+          "passed": false
+        },
+        {
+          "id": "floor_divide-97-4",
+          "format_passed": false,
+          "cases": [],
+          "passed": false
+        }
+      ],
+      "tasks_correct": 0
+    },
+    {
+      "label": "random-control",
+      "weights_sha256": "f1dcccdabc46a72875e6ed1ba433aaeb89b6b1411b151f4cbfc2387518eac9a2",
+      "tasks": [
+        {
+          "id": "add-47-4",
+          "format_passed": false,
+          "cases": [],
+          "passed": false
+        },
+        {
+          "id": "subtract-47-4",
+          "format_passed": false,
+          "cases": [],
+          "passed": false
+        },
+        {
+          "id": "multiply-47-4",
+          "format_passed": false,
+          "cases": [],
+          "passed": false
+        },
+        {
+          "id": "floor_divide-47-4",
+          "format_passed": false,
+          "cases": [],
+          "passed": false
+        },
+        {
+          "id": "add-97-4",
+          "format_passed": false,
+          "cases": [],
+          "passed": false
+        },
+        {
+          "id": "subtract-97-4",
+          "format_passed": false,
+          "cases": [],
+          "passed": false
+        },
+        {
+          "id": "multiply-97-4",
+          "format_passed": false,
+          "cases": [],
+          "passed": false
+        },
+        {
+          "id": "floor_divide-97-4",
+          "format_passed": false,
+          "cases": [],
+          "passed": false
+        }
+      ],
+      "tasks_correct": 0
+    },
+    {
+      "label": "trained-candidate",
+      "weights_sha256": "40434006382446f0595486a64e698d2a365fd67c430e1caf023725dd15ef624c",
+      "tasks": [
+        {
+          "id": "add-47-4",
+          "format_passed": false,
+          "cases": [],
+          "passed": false
+        },
+        {
+          "id": "subtract-47-4",
+          "format_passed": false,
+          "cases": [],
+          "passed": false
+        },
+        {
+          "id": "multiply-47-4",
+          "format_passed": false,
+          "cases": [],
+          "passed": false
+        },
+        {
+          "id": "floor_divide-47-4",
+          "format_passed": false,
+          "cases": [],
+          "passed": false
+        },
+        {
+          "id": "add-97-4",
+          "format_passed": false,
+          "cases": [],
+          "passed": false
+        },
+        {
+          "id": "subtract-97-4",
+          "format_passed": false,
+          "cases": [],
+          "passed": false
+        },
+        {
+          "id": "multiply-97-4",
+          "format_passed": false,
+          "cases": [],
+          "passed": false
+        },
+        {
+          "id": "floor_divide-97-4",
+          "format_passed": false,
+          "cases": [],
+          "passed": false
+        }
+      ],
+      "tasks_correct": 0
+    }
+  ],
+  "target_met": false,
+  "improved_over_controls": false
+}

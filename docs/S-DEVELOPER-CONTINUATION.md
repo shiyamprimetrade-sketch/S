@@ -10,7 +10,7 @@ PRs #14–18 are merged. Main before this milestone was
 `fa1f354f9b31569343177935f060f551459216a9` (PR #18). Existing requirements,
 structured specifications, controlled generation/build/repair, rollback,
 portable inference and independent evaluation interfaces remain preserved.
-The old native checkpoint remains unchanged and failed 0/3 bundle checks in the
+The old native checkpoint remains unchanged and produced 0/3 valid bundles in the
 prior baseline; semantic correctness was unassessed.
 
 ## Current milestone
@@ -33,8 +33,10 @@ constants and records its follow-up rationale; no further test-tuned run was mad
 
 See `docs/S-NATIVE-CODING-CURRICULUM.md` and
 `experiments/coding-curriculum-v{1,2}/` for exact plans, data, safe weights, hashes,
-logs, raw generation failures and reproducible commands. Check the related PR
-for current CI and merge status; never infer it from this checkpoint alone.
+logs, raw generation failures and reproducible commands. Code commit `baacd32db3ff80a4385e583149da5ed5a294d40b` in PR #19 passed all
+four GitHub workflows. Exact real-Docker reports and archive provenance are saved
+in `reports/s-developer/native-coding-curriculum/`; both model quality targets
+remain false. Check PR #19 for current merge status.
 
 Local verification: 108 application tests, 801 neural tests and 25 UI tests passed.
 Package 0.2.3 builds; entry-point smoke is recorded in the related PR. The local
@@ -44,8 +46,8 @@ are separate from infrastructure success.
 
 ## Next concrete work
 
-Complete/inspect all CI, preserve actual execution evidence, integrate only the
-reviewed tested tree. For a future learning experiment, investigate robust
+Verify PR #19 merge state before resuming; integrate only the reviewed tested
+tree if it is still open. For a future learning experiment, investigate robust
 free-running validation generation and operation/constant-sensitive metrics on
 training/validation splits. Predeclare a fresh test set and compute budget.
 Do not present memorization or teacher-forced NLL as held-out coding ability.

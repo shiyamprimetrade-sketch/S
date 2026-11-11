@@ -1,0 +1,1061 @@
+[
+  {
+    "schema_version": 1,
+    "benchmark": "s-public-coding-diagnostic-v1",
+    "provider": {
+      "provider": "test-fixture",
+      "mode": "correct",
+      "independently_generated_neural_code": false
+    },
+    "tasks": [
+      {
+        "id": "positive-total",
+        "prompt_sha256": "e335a438973aedbe5dd285c77360c1e6cd2a7cc98a02e6fa0559b47cc91570a1",
+        "format_passed": true,
+        "initial_correct": true,
+        "final_correct": true,
+        "attempts": [
+          {
+            "attempt": 0,
+            "source_sha256": "72098eae4fcc54b635847d6091806fb2baedb1393c441484ab046c4e0b5a3e71",
+            "cases": [
+              {
+                "case_index": 0,
+                "split": "public",
+                "verdict": {
+                  "status": "passed",
+                  "passed": true,
+                  "actual": {
+                    "total": 5
+                  },
+                  "diagnostic": "JSON result matched the host oracle"
+                },
+                "returncode": 0,
+                "image": "python@sha256:5e2bdb1b0d542d5039cffb8181c65930093949194a65c365dfb1b0fe13a4fa5b"
+              },
+              {
+                "case_index": 1,
+                "split": "withheld",
+                "verdict": {
+                  "status": "passed",
+                  "passed": true,
+                  "actual": {
+                    "total": 10
+                  },
+                  "diagnostic": "JSON result matched the host oracle"
+                },
+                "returncode": 0,
+                "image": "python@sha256:5e2bdb1b0d542d5039cffb8181c65930093949194a65c365dfb1b0fe13a4fa5b"
+              },
+              {
+                "case_index": 2,
+                "split": "withheld",
+                "verdict": {
+                  "status": "passed",
+                  "passed": true,
+                  "actual": {
+                    "total": 0
+                  },
+                  "diagnostic": "JSON result matched the host oracle"
+                },
+                "returncode": 0,
+                "image": "python@sha256:5e2bdb1b0d542d5039cffb8181c65930093949194a65c365dfb1b0fe13a4fa5b"
+              }
+            ],
+            "passed": true
+          }
+        ],
+        "source_sha256": "72098eae4fcc54b635847d6091806fb2baedb1393c441484ab046c4e0b5a3e71",
+        "source_history": [
+          {
+            "source_sha256": "72098eae4fcc54b635847d6091806fb2baedb1393c441484ab046c4e0b5a3e71",
+            "files": {
+              "app.py": "from dataclasses import dataclass\n@dataclass\nclass Answer:\n    total: int\ndef solve(p):\n    return vars(Answer(sum(v for v in p[\"values\"] if v>0)))\n",
+              "test_app.py": "raise RuntimeError(\"Generated tests must not be used as the host oracle\")\n"
+            }
+          }
+        ],
+        "status": "passed"
+      },
+      {
+        "id": "unique-words",
+        "prompt_sha256": "7b15904e86a748c316566394dd19bf2f1c4060c21f0adb3045723de0408e666e",
+        "format_passed": true,
+        "initial_correct": true,
+        "final_correct": true,
+        "attempts": [
+          {
+            "attempt": 0,
+            "source_sha256": "8cbf801d5fb211a5024171318ac7b9a4ce11681c140905e0cc831d78d750e2d1",
+            "cases": [
+              {
+                "case_index": 0,
+                "split": "public",
+                "verdict": {
+                  "status": "passed",
+                  "passed": true,
+                  "actual": {
+                    "words": [
+                      "alpha",
+                      "beta"
+                    ]
+                  },
+                  "diagnostic": "JSON result matched the host oracle"
+                },
+                "returncode": 0,
+                "image": "python@sha256:5e2bdb1b0d542d5039cffb8181c65930093949194a65c365dfb1b0fe13a4fa5b"
+              },
+              {
+                "case_index": 1,
+                "split": "withheld",
+                "verdict": {
+                  "status": "passed",
+                  "passed": true,
+                  "actual": {
+                    "words": [
+                      "apple",
+                      "zebra"
+                    ]
+                  },
+                  "diagnostic": "JSON result matched the host oracle"
+                },
+                "returncode": 0,
+                "image": "python@sha256:5e2bdb1b0d542d5039cffb8181c65930093949194a65c365dfb1b0fe13a4fa5b"
+              },
+              {
+                "case_index": 2,
+                "split": "withheld",
+                "verdict": {
+                  "status": "passed",
+                  "passed": true,
+                  "actual": {
+                    "words": []
+                  },
+                  "diagnostic": "JSON result matched the host oracle"
+                },
+                "returncode": 0,
+                "image": "python@sha256:5e2bdb1b0d542d5039cffb8181c65930093949194a65c365dfb1b0fe13a4fa5b"
+              }
+            ],
+            "passed": true
+          }
+        ],
+        "source_sha256": "8cbf801d5fb211a5024171318ac7b9a4ce11681c140905e0cc831d78d750e2d1",
+        "source_history": [
+          {
+            "source_sha256": "8cbf801d5fb211a5024171318ac7b9a4ce11681c140905e0cc831d78d750e2d1",
+            "files": {
+              "app.py": "def solve(p):\n    return {\"words\":sorted(set(p[\"text\"].lower().split()))}\n",
+              "test_app.py": "raise RuntimeError(\"Generated tests must not be used as the host oracle\")\n"
+            }
+          }
+        ],
+        "status": "passed"
+      },
+      {
+        "id": "palindrome",
+        "prompt_sha256": "851e7cc9e78bba164a23283ff3378c3495cbc3c1800f721a9396f49c011b24a6",
+        "format_passed": true,
+        "initial_correct": true,
+        "final_correct": true,
+        "attempts": [
+          {
+            "attempt": 0,
+            "source_sha256": "4d4d87602c83ee92367a45037ce23f3d821e54c0df6b8fac5d91b2eb18e89bf9",
+            "cases": [
+              {
+                "case_index": 0,
+                "split": "public",
+                "verdict": {
+                  "status": "passed",
+                  "passed": true,
+                  "actual": {
+                    "palindrome": true
+                  },
+                  "diagnostic": "JSON result matched the host oracle"
+                },
+                "returncode": 0,
+                "image": "python@sha256:5e2bdb1b0d542d5039cffb8181c65930093949194a65c365dfb1b0fe13a4fa5b"
+              },
+              {
+                "case_index": 1,
+                "split": "withheld",
+                "verdict": {
+                  "status": "passed",
+                  "passed": true,
+                  "actual": {
+                    "palindrome": false
+                  },
+                  "diagnostic": "JSON result matched the host oracle"
+                },
+                "returncode": 0,
+                "image": "python@sha256:5e2bdb1b0d542d5039cffb8181c65930093949194a65c365dfb1b0fe13a4fa5b"
+              },
+              {
+                "case_index": 2,
+                "split": "withheld",
+                "verdict": {
+                  "status": "passed",
+                  "passed": true,
+                  "actual": {
+                    "palindrome": true
+                  },
+                  "diagnostic": "JSON result matched the host oracle"
+                },
+                "returncode": 0,
+                "image": "python@sha256:5e2bdb1b0d542d5039cffb8181c65930093949194a65c365dfb1b0fe13a4fa5b"
+              }
+            ],
+            "passed": true
+          }
+        ],
+        "source_sha256": "4d4d87602c83ee92367a45037ce23f3d821e54c0df6b8fac5d91b2eb18e89bf9",
+        "source_history": [
+          {
+            "source_sha256": "4d4d87602c83ee92367a45037ce23f3d821e54c0df6b8fac5d91b2eb18e89bf9",
+            "files": {
+              "app.py": "def solve(p):\n    s=p[\"text\"].replace(\" \",\"\").lower()\n    return {\"palindrome\":s==s[::-1]}\n",
+              "test_app.py": "raise RuntimeError(\"Generated tests must not be used as the host oracle\")\n"
+            }
+          }
+        ],
+        "status": "passed"
+      }
+    ],
+    "format_passed": 3,
+    "initial_tasks_correct": 3,
+    "final_tasks_correct": 3,
+    "task_count": 3,
+    "execution_requested": true,
+    "elapsed_seconds": 2.535,
+    "repair_budget": 0,
+    "case_timeout_seconds": 10,
+    "tasks_fully_assessed": 3,
+    "suite_passed": true,
+    "promotion_eligible": false,
+    "scope": "Three public synthetic Python-function diagnostics only; not general coding/business capability",
+    "integrity": "Expected answers compared outside generated containers; withheld cases excluded from generation and repair"
+  },
+  {
+    "schema_version": 1,
+    "benchmark": "s-public-coding-diagnostic-v1",
+    "provider": {
+      "provider": "test-fixture",
+      "mode": "exit-zero",
+      "independently_generated_neural_code": false
+    },
+    "tasks": [
+      {
+        "id": "positive-total",
+        "prompt_sha256": "e335a438973aedbe5dd285c77360c1e6cd2a7cc98a02e6fa0559b47cc91570a1",
+        "format_passed": true,
+        "initial_correct": false,
+        "final_correct": false,
+        "attempts": [
+          {
+            "attempt": 0,
+            "source_sha256": "404abc2d9d04b1faf52642fd65f3f78c5f7143b30d48cb7e4f2ffc73894df4a1",
+            "cases": [
+              {
+                "case_index": 0,
+                "split": "public",
+                "verdict": {
+                  "status": "invalid_output",
+                  "passed": false,
+                  "diagnostic": "Expected one finite JSON result without extra stdout"
+                },
+                "returncode": 0,
+                "image": "python@sha256:5e2bdb1b0d542d5039cffb8181c65930093949194a65c365dfb1b0fe13a4fa5b"
+              },
+              {
+                "case_index": 1,
+                "split": "withheld",
+                "verdict": {
+                  "status": "invalid_output",
+                  "passed": false,
+                  "diagnostic": "Expected one finite JSON result without extra stdout"
+                },
+                "returncode": 0,
+                "image": "python@sha256:5e2bdb1b0d542d5039cffb8181c65930093949194a65c365dfb1b0fe13a4fa5b"
+              },
+              {
+                "case_index": 2,
+                "split": "withheld",
+                "verdict": {
+                  "status": "invalid_output",
+                  "passed": false,
+                  "diagnostic": "Expected one finite JSON result without extra stdout"
+                },
+                "returncode": 0,
+                "image": "python@sha256:5e2bdb1b0d542d5039cffb8181c65930093949194a65c365dfb1b0fe13a4fa5b"
+              }
+            ],
+            "passed": false
+          }
+        ],
+        "source_sha256": "404abc2d9d04b1faf52642fd65f3f78c5f7143b30d48cb7e4f2ffc73894df4a1",
+        "source_history": [
+          {
+            "source_sha256": "404abc2d9d04b1faf52642fd65f3f78c5f7143b30d48cb7e4f2ffc73894df4a1",
+            "files": {
+              "app.py": "import os\nos._exit(0)\n",
+              "test_app.py": "raise RuntimeError(\"Generated tests must not be used as the host oracle\")\n"
+            }
+          }
+        ],
+        "status": "failed_independent_cases"
+      },
+      {
+        "id": "unique-words",
+        "prompt_sha256": "7b15904e86a748c316566394dd19bf2f1c4060c21f0adb3045723de0408e666e",
+        "format_passed": true,
+        "initial_correct": false,
+        "final_correct": false,
+        "attempts": [
+          {
+            "attempt": 0,
+            "source_sha256": "404abc2d9d04b1faf52642fd65f3f78c5f7143b30d48cb7e4f2ffc73894df4a1",
+            "cases": [
+              {
+                "case_index": 0,
+                "split": "public",
+                "verdict": {
+                  "status": "invalid_output",
+                  "passed": false,
+                  "diagnostic": "Expected one finite JSON result without extra stdout"
+                },
+                "returncode": 0,
+                "image": "python@sha256:5e2bdb1b0d542d5039cffb8181c65930093949194a65c365dfb1b0fe13a4fa5b"
+              },
+              {
+                "case_index": 1,
+                "split": "withheld",
+                "verdict": {
+                  "status": "invalid_output",
+                  "passed": false,
+                  "diagnostic": "Expected one finite JSON result without extra stdout"
+                },
+                "returncode": 0,
+                "image": "python@sha256:5e2bdb1b0d542d5039cffb8181c65930093949194a65c365dfb1b0fe13a4fa5b"
+              },
+              {
+                "case_index": 2,
+                "split": "withheld",
+                "verdict": {
+                  "status": "invalid_output",
+                  "passed": false,
+                  "diagnostic": "Expected one finite JSON result without extra stdout"
+                },
+                "returncode": 0,
+                "image": "python@sha256:5e2bdb1b0d542d5039cffb8181c65930093949194a65c365dfb1b0fe13a4fa5b"
+              }
+            ],
+            "passed": false
+          }
+        ],
+        "source_sha256": "404abc2d9d04b1faf52642fd65f3f78c5f7143b30d48cb7e4f2ffc73894df4a1",
+        "source_history": [
+          {
+            "source_sha256": "404abc2d9d04b1faf52642fd65f3f78c5f7143b30d48cb7e4f2ffc73894df4a1",
+            "files": {
+              "app.py": "import os\nos._exit(0)\n",
+              "test_app.py": "raise RuntimeError(\"Generated tests must not be used as the host oracle\")\n"
+            }
+          }
+        ],
+        "status": "failed_independent_cases"
+      },
+      {
+        "id": "palindrome",
+        "prompt_sha256": "851e7cc9e78bba164a23283ff3378c3495cbc3c1800f721a9396f49c011b24a6",
+        "format_passed": true,
+        "initial_correct": false,
+        "final_correct": false,
+        "attempts": [
+          {
+            "attempt": 0,
+            "source_sha256": "404abc2d9d04b1faf52642fd65f3f78c5f7143b30d48cb7e4f2ffc73894df4a1",
+            "cases": [
+              {
+                "case_index": 0,
+                "split": "public",
+                "verdict": {
+                  "status": "invalid_output",
+                  "passed": false,
+                  "diagnostic": "Expected one finite JSON result without extra stdout"
+                },
+                "returncode": 0,
+                "image": "python@sha256:5e2bdb1b0d542d5039cffb8181c65930093949194a65c365dfb1b0fe13a4fa5b"
+              },
+              {
+                "case_index": 1,
+                "split": "withheld",
+                "verdict": {
+                  "status": "invalid_output",
+                  "passed": false,
+                  "diagnostic": "Expected one finite JSON result without extra stdout"
+                },
+                "returncode": 0,
+                "image": "python@sha256:5e2bdb1b0d542d5039cffb8181c65930093949194a65c365dfb1b0fe13a4fa5b"
+              },
+              {
+                "case_index": 2,
+                "split": "withheld",
+                "verdict": {
+                  "status": "invalid_output",
+                  "passed": false,
+                  "diagnostic": "Expected one finite JSON result without extra stdout"
+                },
+                "returncode": 0,
+                "image": "python@sha256:5e2bdb1b0d542d5039cffb8181c65930093949194a65c365dfb1b0fe13a4fa5b"
+              }
+            ],
+            "passed": false
+          }
+        ],
+        "source_sha256": "404abc2d9d04b1faf52642fd65f3f78c5f7143b30d48cb7e4f2ffc73894df4a1",
+        "source_history": [
+          {
+            "source_sha256": "404abc2d9d04b1faf52642fd65f3f78c5f7143b30d48cb7e4f2ffc73894df4a1",
+            "files": {
+              "app.py": "import os\nos._exit(0)\n",
+              "test_app.py": "raise RuntimeError(\"Generated tests must not be used as the host oracle\")\n"
+            }
+          }
+        ],
+        "status": "failed_independent_cases"
+      }
+    ],
+    "format_passed": 3,
+    "initial_tasks_correct": 0,
+    "final_tasks_correct": 0,
+    "task_count": 3,
+    "execution_requested": true,
+    "elapsed_seconds": 2.325,
+    "repair_budget": 0,
+    "case_timeout_seconds": 10,
+    "tasks_fully_assessed": 3,
+    "suite_passed": false,
+    "promotion_eligible": false,
+    "scope": "Three public synthetic Python-function diagnostics only; not general coding/business capability",
+    "integrity": "Expected answers compared outside generated containers; withheld cases excluded from generation and repair"
+  },
+  {
+    "schema_version": 1,
+    "benchmark": "s-public-coding-diagnostic-v1",
+    "provider": {
+      "provider": "test-fixture",
+      "mode": "constant-answer",
+      "independently_generated_neural_code": false
+    },
+    "tasks": [
+      {
+        "id": "positive-total",
+        "prompt_sha256": "e335a438973aedbe5dd285c77360c1e6cd2a7cc98a02e6fa0559b47cc91570a1",
+        "format_passed": true,
+        "initial_correct": false,
+        "final_correct": false,
+        "attempts": [
+          {
+            "attempt": 0,
+            "source_sha256": "27832ab8b204f37bbc7148ef264f107940cc6bdd26b80504d230a994fcc6263a",
+            "cases": [
+              {
+                "case_index": 0,
+                "split": "public",
+                "verdict": {
+                  "status": "passed",
+                  "passed": true,
+                  "actual": {
+                    "total": 5
+                  },
+                  "diagnostic": "JSON result matched the host oracle"
+                },
+                "returncode": 0,
+                "image": "python@sha256:5e2bdb1b0d542d5039cffb8181c65930093949194a65c365dfb1b0fe13a4fa5b"
+              },
+              {
+                "case_index": 1,
+                "split": "withheld",
+                "verdict": {
+                  "status": "wrong_answer",
+                  "passed": false,
+                  "actual": {
+                    "total": 5
+                  },
+                  "diagnostic": "JSON result did not satisfy this case"
+                },
+                "returncode": 0,
+                "image": "python@sha256:5e2bdb1b0d542d5039cffb8181c65930093949194a65c365dfb1b0fe13a4fa5b"
+              },
+              {
+                "case_index": 2,
+                "split": "withheld",
+                "verdict": {
+                  "status": "wrong_answer",
+                  "passed": false,
+                  "actual": {
+                    "total": 5
+                  },
+                  "diagnostic": "JSON result did not satisfy this case"
+                },
+                "returncode": 0,
+                "image": "python@sha256:5e2bdb1b0d542d5039cffb8181c65930093949194a65c365dfb1b0fe13a4fa5b"
+              }
+            ],
+            "passed": false
+          }
+        ],
+        "source_sha256": "27832ab8b204f37bbc7148ef264f107940cc6bdd26b80504d230a994fcc6263a",
+        "source_history": [
+          {
+            "source_sha256": "27832ab8b204f37bbc7148ef264f107940cc6bdd26b80504d230a994fcc6263a",
+            "files": {
+              "app.py": "def solve(p): return {\"total\":5}\n",
+              "test_app.py": "raise RuntimeError(\"Generated tests must not be used as the host oracle\")\n"
+            }
+          }
+        ],
+        "status": "failed_independent_cases"
+      },
+      {
+        "id": "unique-words",
+        "prompt_sha256": "7b15904e86a748c316566394dd19bf2f1c4060c21f0adb3045723de0408e666e",
+        "format_passed": true,
+        "initial_correct": false,
+        "final_correct": false,
+        "attempts": [
+          {
+            "attempt": 0,
+            "source_sha256": "27832ab8b204f37bbc7148ef264f107940cc6bdd26b80504d230a994fcc6263a",
+            "cases": [
+              {
+                "case_index": 0,
+                "split": "public",
+                "verdict": {
+                  "status": "wrong_answer",
+                  "passed": false,
+                  "actual": {
+                    "total": 5
+                  },
+                  "diagnostic": "JSON result did not satisfy this case"
+                },
+                "returncode": 0,
+                "image": "python@sha256:5e2bdb1b0d542d5039cffb8181c65930093949194a65c365dfb1b0fe13a4fa5b"
+              },
+              {
+                "case_index": 1,
+                "split": "withheld",
+                "verdict": {
+                  "status": "wrong_answer",
+                  "passed": false,
+                  "actual": {
+                    "total": 5
+                  },
+                  "diagnostic": "JSON result did not satisfy this case"
+                },
+                "returncode": 0,
+                "image": "python@sha256:5e2bdb1b0d542d5039cffb8181c65930093949194a65c365dfb1b0fe13a4fa5b"
+              },
+              {
+                "case_index": 2,
+                "split": "withheld",
+                "verdict": {
+                  "status": "wrong_answer",
+                  "passed": false,
+                  "actual": {
+                    "total": 5
+                  },
+                  "diagnostic": "JSON result did not satisfy this case"
+                },
+                "returncode": 0,
+                "image": "python@sha256:5e2bdb1b0d542d5039cffb8181c65930093949194a65c365dfb1b0fe13a4fa5b"
+              }
+            ],
+            "passed": false
+          }
+        ],
+        "source_sha256": "27832ab8b204f37bbc7148ef264f107940cc6bdd26b80504d230a994fcc6263a",
+        "source_history": [
+          {
+            "source_sha256": "27832ab8b204f37bbc7148ef264f107940cc6bdd26b80504d230a994fcc6263a",
+            "files": {
+              "app.py": "def solve(p): return {\"total\":5}\n",
+              "test_app.py": "raise RuntimeError(\"Generated tests must not be used as the host oracle\")\n"
+            }
+          }
+        ],
+        "status": "failed_independent_cases"
+      },
+      {
+        "id": "palindrome",
+        "prompt_sha256": "851e7cc9e78bba164a23283ff3378c3495cbc3c1800f721a9396f49c011b24a6",
+        "format_passed": true,
+        "initial_correct": false,
+        "final_correct": false,
+        "attempts": [
+          {
+            "attempt": 0,
+            "source_sha256": "27832ab8b204f37bbc7148ef264f107940cc6bdd26b80504d230a994fcc6263a",
+            "cases": [
+              {
+                "case_index": 0,
+                "split": "public",
+                "verdict": {
+                  "status": "wrong_answer",
+                  "passed": false,
+                  "actual": {
+                    "total": 5
+                  },
+                  "diagnostic": "JSON result did not satisfy this case"
+                },
+                "returncode": 0,
+                "image": "python@sha256:5e2bdb1b0d542d5039cffb8181c65930093949194a65c365dfb1b0fe13a4fa5b"
+              },
+              {
+                "case_index": 1,
+                "split": "withheld",
+                "verdict": {
+                  "status": "wrong_answer",
+                  "passed": false,
+                  "actual": {
+                    "total": 5
+                  },
+                  "diagnostic": "JSON result did not satisfy this case"
+                },
+                "returncode": 0,
+                "image": "python@sha256:5e2bdb1b0d542d5039cffb8181c65930093949194a65c365dfb1b0fe13a4fa5b"
+              },
+              {
+                "case_index": 2,
+                "split": "withheld",
+                "verdict": {
+                  "status": "wrong_answer",
+                  "passed": false,
+                  "actual": {
+                    "total": 5
+                  },
+                  "diagnostic": "JSON result did not satisfy this case"
+                },
+                "returncode": 0,
+                "image": "python@sha256:5e2bdb1b0d542d5039cffb8181c65930093949194a65c365dfb1b0fe13a4fa5b"
+              }
+            ],
+            "passed": false
+          }
+        ],
+        "source_sha256": "27832ab8b204f37bbc7148ef264f107940cc6bdd26b80504d230a994fcc6263a",
+        "source_history": [
+          {
+            "source_sha256": "27832ab8b204f37bbc7148ef264f107940cc6bdd26b80504d230a994fcc6263a",
+            "files": {
+              "app.py": "def solve(p): return {\"total\":5}\n",
+              "test_app.py": "raise RuntimeError(\"Generated tests must not be used as the host oracle\")\n"
+            }
+          }
+        ],
+        "status": "failed_independent_cases"
+      }
+    ],
+    "format_passed": 3,
+    "initial_tasks_correct": 0,
+    "final_tasks_correct": 0,
+    "task_count": 3,
+    "execution_requested": true,
+    "elapsed_seconds": 2.331,
+    "repair_budget": 0,
+    "case_timeout_seconds": 10,
+    "tasks_fully_assessed": 3,
+    "suite_passed": false,
+    "promotion_eligible": false,
+    "scope": "Three public synthetic Python-function diagnostics only; not general coding/business capability",
+    "integrity": "Expected answers compared outside generated containers; withheld cases excluded from generation and repair"
+  },
+  {
+    "schema_version": 1,
+    "benchmark": "s-public-coding-diagnostic-v1",
+    "provider": {
+      "provider": "test-fixture",
+      "mode": "repair",
+      "independently_generated_neural_code": false
+    },
+    "tasks": [
+      {
+        "id": "positive-total",
+        "prompt_sha256": "e335a438973aedbe5dd285c77360c1e6cd2a7cc98a02e6fa0559b47cc91570a1",
+        "format_passed": true,
+        "initial_correct": false,
+        "final_correct": true,
+        "attempts": [
+          {
+            "attempt": 0,
+            "source_sha256": "86f9a28d78c34f07b0ba1f2480d8782e11731433a7e1273ff73b11a2874f858d",
+            "cases": [
+              {
+                "case_index": 0,
+                "split": "public",
+                "verdict": {
+                  "status": "wrong_answer",
+                  "passed": false,
+                  "actual": {},
+                  "diagnostic": "JSON result did not satisfy this case"
+                },
+                "returncode": 0,
+                "image": "python@sha256:5e2bdb1b0d542d5039cffb8181c65930093949194a65c365dfb1b0fe13a4fa5b"
+              },
+              {
+                "case_index": 1,
+                "split": "withheld",
+                "verdict": {
+                  "status": "wrong_answer",
+                  "passed": false,
+                  "actual": {},
+                  "diagnostic": "JSON result did not satisfy this case"
+                },
+                "returncode": 0,
+                "image": "python@sha256:5e2bdb1b0d542d5039cffb8181c65930093949194a65c365dfb1b0fe13a4fa5b"
+              },
+              {
+                "case_index": 2,
+                "split": "withheld",
+                "verdict": {
+                  "status": "wrong_answer",
+                  "passed": false,
+                  "actual": {},
+                  "diagnostic": "JSON result did not satisfy this case"
+                },
+                "returncode": 0,
+                "image": "python@sha256:5e2bdb1b0d542d5039cffb8181c65930093949194a65c365dfb1b0fe13a4fa5b"
+              }
+            ],
+            "passed": false
+          },
+          {
+            "attempt": 1,
+            "source_sha256": "72098eae4fcc54b635847d6091806fb2baedb1393c441484ab046c4e0b5a3e71",
+            "cases": [
+              {
+                "case_index": 0,
+                "split": "public",
+                "verdict": {
+                  "status": "passed",
+                  "passed": true,
+                  "actual": {
+                    "total": 5
+                  },
+                  "diagnostic": "JSON result matched the host oracle"
+                },
+                "returncode": 0,
+                "image": "python@sha256:5e2bdb1b0d542d5039cffb8181c65930093949194a65c365dfb1b0fe13a4fa5b"
+              },
+              {
+                "case_index": 1,
+                "split": "withheld",
+                "verdict": {
+                  "status": "passed",
+                  "passed": true,
+                  "actual": {
+                    "total": 10
+                  },
+                  "diagnostic": "JSON result matched the host oracle"
+                },
+                "returncode": 0,
+                "image": "python@sha256:5e2bdb1b0d542d5039cffb8181c65930093949194a65c365dfb1b0fe13a4fa5b"
+              },
+              {
+                "case_index": 2,
+                "split": "withheld",
+                "verdict": {
+                  "status": "passed",
+                  "passed": true,
+                  "actual": {
+                    "total": 0
+                  },
+                  "diagnostic": "JSON result matched the host oracle"
+                },
+                "returncode": 0,
+                "image": "python@sha256:5e2bdb1b0d542d5039cffb8181c65930093949194a65c365dfb1b0fe13a4fa5b"
+              }
+            ],
+            "passed": true
+          }
+        ],
+        "source_sha256": "86f9a28d78c34f07b0ba1f2480d8782e11731433a7e1273ff73b11a2874f858d",
+        "source_history": [
+          {
+            "source_sha256": "86f9a28d78c34f07b0ba1f2480d8782e11731433a7e1273ff73b11a2874f858d",
+            "files": {
+              "app.py": "def solve(p): return {}\n",
+              "test_app.py": "raise RuntimeError(\"Generated tests must not be used as the host oracle\")\n"
+            }
+          },
+          {
+            "source_sha256": "72098eae4fcc54b635847d6091806fb2baedb1393c441484ab046c4e0b5a3e71",
+            "files": {
+              "app.py": "from dataclasses import dataclass\n@dataclass\nclass Answer:\n    total: int\ndef solve(p):\n    return vars(Answer(sum(v for v in p[\"values\"] if v>0)))\n",
+              "test_app.py": "raise RuntimeError(\"Generated tests must not be used as the host oracle\")\n"
+            }
+          }
+        ],
+        "status": "passed"
+      },
+      {
+        "id": "unique-words",
+        "prompt_sha256": "7b15904e86a748c316566394dd19bf2f1c4060c21f0adb3045723de0408e666e",
+        "format_passed": true,
+        "initial_correct": false,
+        "final_correct": true,
+        "attempts": [
+          {
+            "attempt": 0,
+            "source_sha256": "86f9a28d78c34f07b0ba1f2480d8782e11731433a7e1273ff73b11a2874f858d",
+            "cases": [
+              {
+                "case_index": 0,
+                "split": "public",
+                "verdict": {
+                  "status": "wrong_answer",
+                  "passed": false,
+                  "actual": {},
+                  "diagnostic": "JSON result did not satisfy this case"
+                },
+                "returncode": 0,
+                "image": "python@sha256:5e2bdb1b0d542d5039cffb8181c65930093949194a65c365dfb1b0fe13a4fa5b"
+              },
+              {
+                "case_index": 1,
+                "split": "withheld",
+                "verdict": {
+                  "status": "wrong_answer",
+                  "passed": false,
+                  "actual": {},
+                  "diagnostic": "JSON result did not satisfy this case"
+                },
+                "returncode": 0,
+                "image": "python@sha256:5e2bdb1b0d542d5039cffb8181c65930093949194a65c365dfb1b0fe13a4fa5b"
+              },
+              {
+                "case_index": 2,
+                "split": "withheld",
+                "verdict": {
+                  "status": "wrong_answer",
+                  "passed": false,
+                  "actual": {},
+                  "diagnostic": "JSON result did not satisfy this case"
+                },
+                "returncode": 0,
+                "image": "python@sha256:5e2bdb1b0d542d5039cffb8181c65930093949194a65c365dfb1b0fe13a4fa5b"
+              }
+            ],
+            "passed": false
+          },
+          {
+            "attempt": 1,
+            "source_sha256": "8cbf801d5fb211a5024171318ac7b9a4ce11681c140905e0cc831d78d750e2d1",
+            "cases": [
+              {
+                "case_index": 0,
+                "split": "public",
+                "verdict": {
+                  "status": "passed",
+                  "passed": true,
+                  "actual": {
+                    "words": [
+                      "alpha",
+                      "beta"
+                    ]
+                  },
+                  "diagnostic": "JSON result matched the host oracle"
+                },
+                "returncode": 0,
+                "image": "python@sha256:5e2bdb1b0d542d5039cffb8181c65930093949194a65c365dfb1b0fe13a4fa5b"
+              },
+              {
+                "case_index": 1,
+                "split": "withheld",
+                "verdict": {
+                  "status": "passed",
+                  "passed": true,
+                  "actual": {
+                    "words": [
+                      "apple",
+                      "zebra"
+                    ]
+                  },
+                  "diagnostic": "JSON result matched the host oracle"
+                },
+                "returncode": 0,
+                "image": "python@sha256:5e2bdb1b0d542d5039cffb8181c65930093949194a65c365dfb1b0fe13a4fa5b"
+              },
+              {
+                "case_index": 2,
+                "split": "withheld",
+                "verdict": {
+                  "status": "passed",
+                  "passed": true,
+                  "actual": {
+                    "words": []
+                  },
+                  "diagnostic": "JSON result matched the host oracle"
+                },
+                "returncode": 0,
+                "image": "python@sha256:5e2bdb1b0d542d5039cffb8181c65930093949194a65c365dfb1b0fe13a4fa5b"
+              }
+            ],
+            "passed": true
+          }
+        ],
+        "source_sha256": "86f9a28d78c34f07b0ba1f2480d8782e11731433a7e1273ff73b11a2874f858d",
+        "source_history": [
+          {
+            "source_sha256": "86f9a28d78c34f07b0ba1f2480d8782e11731433a7e1273ff73b11a2874f858d",
+            "files": {
+              "app.py": "def solve(p): return {}\n",
+              "test_app.py": "raise RuntimeError(\"Generated tests must not be used as the host oracle\")\n"
+            }
+          },
+          {
+            "source_sha256": "8cbf801d5fb211a5024171318ac7b9a4ce11681c140905e0cc831d78d750e2d1",
+            "files": {
+              "app.py": "def solve(p):\n    return {\"words\":sorted(set(p[\"text\"].lower().split()))}\n",
+              "test_app.py": "raise RuntimeError(\"Generated tests must not be used as the host oracle\")\n"
+            }
+          }
+        ],
+        "status": "passed"
+      },
+      {
+        "id": "palindrome",
+        "prompt_sha256": "851e7cc9e78bba164a23283ff3378c3495cbc3c1800f721a9396f49c011b24a6",
+        "format_passed": true,
+        "initial_correct": false,
+        "final_correct": true,
+        "attempts": [
+          {
+            "attempt": 0,
+            "source_sha256": "86f9a28d78c34f07b0ba1f2480d8782e11731433a7e1273ff73b11a2874f858d",
+            "cases": [
+              {
+                "case_index": 0,
+                "split": "public",
+                "verdict": {
+                  "status": "wrong_answer",
+                  "passed": false,
+                  "actual": {},
+                  "diagnostic": "JSON result did not satisfy this case"
+                },
+                "returncode": 0,
+                "image": "python@sha256:5e2bdb1b0d542d5039cffb8181c65930093949194a65c365dfb1b0fe13a4fa5b"
+              },
+              {
+                "case_index": 1,
+                "split": "withheld",
+                "verdict": {
+                  "status": "wrong_answer",
+                  "passed": false,
+                  "actual": {},
+                  "diagnostic": "JSON result did not satisfy this case"
+                },
+                "returncode": 0,
+                "image": "python@sha256:5e2bdb1b0d542d5039cffb8181c65930093949194a65c365dfb1b0fe13a4fa5b"
+              },
+              {
+                "case_index": 2,
+                "split": "withheld",
+                "verdict": {
+                  "status": "wrong_answer",
+                  "passed": false,
+                  "actual": {},
+                  "diagnostic": "JSON result did not satisfy this case"
+                },
+                "returncode": 0,
+                "image": "python@sha256:5e2bdb1b0d542d5039cffb8181c65930093949194a65c365dfb1b0fe13a4fa5b"
+              }
+            ],
+            "passed": false
+          },
+          {
+            "attempt": 1,
+            "source_sha256": "4d4d87602c83ee92367a45037ce23f3d821e54c0df6b8fac5d91b2eb18e89bf9",
+            "cases": [
+              {
+                "case_index": 0,
+                "split": "public",
+                "verdict": {
+                  "status": "passed",
+                  "passed": true,
+                  "actual": {
+                    "palindrome": true
+                  },
+                  "diagnostic": "JSON result matched the host oracle"
+                },
+                "returncode": 0,
+                "image": "python@sha256:5e2bdb1b0d542d5039cffb8181c65930093949194a65c365dfb1b0fe13a4fa5b"
+              },
+              {
+                "case_index": 1,
+                "split": "withheld",
+                "verdict": {
+                  "status": "passed",
+                  "passed": true,
+                  "actual": {
+                    "palindrome": false
+                  },
+                  "diagnostic": "JSON result matched the host oracle"
+                },
+                "returncode": 0,
+                "image": "python@sha256:5e2bdb1b0d542d5039cffb8181c65930093949194a65c365dfb1b0fe13a4fa5b"
+              },
+              {
+                "case_index": 2,
+                "split": "withheld",
+                "verdict": {
+                  "status": "passed",
+                  "passed": true,
+                  "actual": {
+                    "palindrome": true
+                  },
+                  "diagnostic": "JSON result matched the host oracle"
+                },
+                "returncode": 0,
+                "image": "python@sha256:5e2bdb1b0d542d5039cffb8181c65930093949194a65c365dfb1b0fe13a4fa5b"
+              }
+            ],
+            "passed": true
+          }
+        ],
+        "source_sha256": "86f9a28d78c34f07b0ba1f2480d8782e11731433a7e1273ff73b11a2874f858d",
+        "source_history": [
+          {
+            "source_sha256": "86f9a28d78c34f07b0ba1f2480d8782e11731433a7e1273ff73b11a2874f858d",
+            "files": {
+              "app.py": "def solve(p): return {}\n",
+              "test_app.py": "raise RuntimeError(\"Generated tests must not be used as the host oracle\")\n"
+            }
+          },
+          {
+            "source_sha256": "4d4d87602c83ee92367a45037ce23f3d821e54c0df6b8fac5d91b2eb18e89bf9",
+            "files": {
+              "app.py": "def solve(p):\n    s=p[\"text\"].replace(\" \",\"\").lower()\n    return {\"palindrome\":s==s[::-1]}\n",
+              "test_app.py": "raise RuntimeError(\"Generated tests must not be used as the host oracle\")\n"
+            }
+          }
+        ],
+        "status": "passed"
+      }
+    ],
+    "format_passed": 3,
+    "initial_tasks_correct": 0,
+    "final_tasks_correct": 3,
+    "task_count": 3,
+    "execution_requested": true,
+    "elapsed_seconds": 4.809,
+    "repair_budget": 1,
+    "case_timeout_seconds": 10,
+    "tasks_fully_assessed": 3,
+    "suite_passed": true,
+    "promotion_eligible": false,
+    "scope": "Three public synthetic Python-function diagnostics only; not general coding/business capability",
+    "integrity": "Expected answers compared outside generated containers; withheld cases excluded from generation and repair"
+  }
+]
