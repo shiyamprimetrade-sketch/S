@@ -129,6 +129,8 @@ class BundleAndSandboxTests(unittest.TestCase):
             self.assertIn(flag,command)
         self.assertNotIn('--privileged',command);self.assertNotIn('/var/run/docker.sock',' '.join(command))
         self.assertEqual(command[-3:],['-I','-S','/driver/run.py'])
+        self.assertIn('/work:rw,exec,nosuid,nodev,size=64m,mode=1777',command)
+        self.assertIn('/tmp:rw,noexec,nosuid,size=32m,mode=1777',command)
         with self.assertRaises(PermissionError):DockerRunner({'python':'python:latest'}).command('docker','s','python-cli',Path('/s'),Path('/d'))
     def test_runtime_preparation_never_downloads_without_explicit_operator_flag(self):
         with patch('s_developer.sandbox.subprocess.run') as run:

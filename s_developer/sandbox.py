@@ -88,7 +88,7 @@ class DockerRunner:
                 '--user=65534:65534','--pids-limit=64','--memory=512m','--memory-swap=512m','--cpus=1',
                 '--log-driver=none','--ulimit','fsize=65536:65536','--ulimit','nofile=128:128',
                 '--tmpfs','/tmp:rw,noexec,nosuid,size=32m,mode=1777',
-                '--tmpfs','/work:rw,nosuid,size=64m,mode=1777','--workdir=/work',
+                '--tmpfs','/work:rw,exec,nosuid,nodev,size=64m,mode=1777','--workdir=/work',
                 '--mount',f'type=bind,src={source},dst=/src,readonly',
                 '--mount',f'type=bind,src={driver},dst=/driver,readonly',
                 '--env','HOME=/tmp','--env','HTTP_PROXY=','--env','HTTPS_PROXY=',

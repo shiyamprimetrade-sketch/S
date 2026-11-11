@@ -21,6 +21,7 @@ def main():
     if not args.approve_runtime_download:parser.error('Explicit approval to prepare official runtime images is required')
     images={key:prepare_image(key,True)['image'] for key in ('python','gcc')}
     report={'images':images,'tests':[],'mocked_execution':False}
+    args.report.parent.mkdir(parents=True,exist_ok=True)
     with tempfile.TemporaryDirectory() as temporary:
         root=Path(temporary)
         specifications=Specifications(Store(root/'s.sqlite3'),{'execution_enabled':True,'images':images})
@@ -30,7 +31,10 @@ def main():
             a=engine.generate(dict(project_id=spec['project_id'],spec_revision=1,expected_artifact_revision=0,recipe=recipe,provider='template',consent=True))
             return a
         def build(a,repairs=0):
-            return engine.build(dict(project_id=a['project_id'],artifact_revision=a['revision'],repair_provider='template',max_repairs=repairs,consent=True))
+            result=engine.build(dict(project_id=a['project_id'],artifact_revision=a['revision'],repair_provider='template',max_repairs=repairs,consent=True))
+            report['latest_run']=result
+            args.report.write_text(json.dumps(report,indent=2),encoding='utf-8')
+            return result
         for recipe in ('static-site','python-cli','c-cli'):
             a=project(recipe);result=build(a)
             assert result['final_status']=='toolchain_passed',result
@@ -78,6 +82,11 @@ class Boundaries(unittest.TestCase):
         report['tests'].append({'case':'real-container-output-budget-enforced','result':result})
     args.report.parent.mkdir(parents=True,exist_ok=True)
     args.report.write_text(json.dumps(report,indent=2),encoding='utf-8')
+    for case in report['tests']:
+        print(json.dumps({'case':case['case'],'final_status':case['result']['final_status'],
+            'checks':[{'status':a.get('result',{}).get('status'),'returncode':a.get('result',{}).get('returncode'),
+                       'output':a.get('result',{}).get('output','')[:2000]}
+                      for a in case['result']['attempts']]}))
     print('PASS: actual Docker website HTTP, Python tests, C compilation/run, bounded repair and isolation checks')
 
 

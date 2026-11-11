@@ -248,3 +248,11 @@ This is an implementation checkpoint, not completion of the entire master
 prompt. Neural general coding competence, clean Windows 11 installer H,
 Android model inference, arbitrary-business acceptance and the full original
 language/toolchain expansion have not been demonstrated.
+
+Initial real acceptance CI (run 43055092461) passed website HTTP and Python
+execution, then found that the temporary C build mount was non-executable by
+Docker default. Compilation succeeded, execution returned permission denied.
+The runtime now explicitly allows execution only on the disposable `/work`
+tmpfs, with `nosuid,nodev`; `/tmp` remains `noexec`. The failing C acceptance
+check remains enabled. The acceptance script now saves partial evidence before
+assertions, so a failed step retains earlier build results as an artifact.
