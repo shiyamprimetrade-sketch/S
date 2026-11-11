@@ -9,7 +9,7 @@ from s_developer.capability import CapabilityEvaluator
 from s_developer.sandbox import prepare_image
 
 CODE={
- 'positive-total':'def solve(p):\n    return {"total":sum(v for v in p["values"] if v>0)}\n',
+ 'positive-total':'from dataclasses import dataclass\n@dataclass\nclass Answer:\n    total: int\ndef solve(p):\n    return vars(Answer(sum(v for v in p["values"] if v>0)))\n',
  'unique-words':'def solve(p):\n    return {"words":sorted(set(p["text"].lower().split()))}\n',
  'palindrome':'def solve(p):\n    s=p["text"].replace(" ","").lower()\n    return {"palindrome":s==s[::-1]}\n',
 }

@@ -50,6 +50,8 @@ EVALUATION_DRIVER='''import json,sys,importlib.util
 payload=json.loads(sys.stdin.buffer.read(8193))
 spec=importlib.util.spec_from_file_location('candidate','/src/app.py')
 candidate=importlib.util.module_from_spec(spec)
+sys.modules[spec.name]=candidate
+sys.path.insert(0,'/src')
 spec.loader.exec_module(candidate)
 answer=candidate.solve(payload)
 print(json.dumps(answer,ensure_ascii=False,allow_nan=False))

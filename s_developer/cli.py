@@ -60,9 +60,9 @@ def main(argv=None):
     config['execution_enabled']=args.enable_builds
     if args.command==['evaluate','coding']:
         from .capability import CapabilityEvaluator
+        if args.output and args.output.exists():parser.error('Evaluation output exists; preserve it and select a new output path')
         result=CapabilityEvaluator(config).evaluate(args.provider,args.consent,args.execute_tests,args.max_repairs)
         if args.output:
-            if args.output.exists():parser.error('Evaluation output exists; preserve it and select a new output path')
             args.output.parent.mkdir(parents=True,exist_ok=True)
             args.output.write_text(json.dumps(result,indent=2),encoding='utf-8')
         print(json.dumps(result,indent=2));return 0 if result['suite_passed'] else 1
