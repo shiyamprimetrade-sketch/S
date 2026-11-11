@@ -6,6 +6,7 @@ on:
       - 'continuum/server.py'
       - 'web/**'
       - 'scripts/verify_controlled_development.py'
+      - 'scripts/verify_capability_evaluation.py'
       - '.github/workflows/s-controlled-development.yml'
   workflow_dispatch:
 permissions:
@@ -23,10 +24,14 @@ jobs:
         run: docker --context default info
       - name: Actual isolated builds, tests, repair and permission checks
         run: python scripts/verify_controlled_development.py --approve-runtime-download --report build/controlled-acceptance.json
+      - name: Independent coding oracle and false-success regression
+        run: python scripts/verify_capability_evaluation.py --approve-runtime-download --report build/capability-oracle.json
       - name: Preserve actual execution evidence
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: controlled-development-evidence
-          path: build/controlled-acceptance.json
+          path: |
+            build/controlled-acceptance.json
+            build/capability-oracle.json
           if-no-files-found: warn

@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "benchmark": "s-public-coding-diagnostic-v1",
+  "provider": {
+    "provider": "native",
+    "independently_generated_neural_code": true,
+    "runtime_backend": "torch",
+    "training_provenance": "self-authored synthetic fixture; no user conversations or external teacher",
+    "model_sha256": "a6caeb1f219c01f42cec3ab54fb5dcdb61e20d6530dc91173a7805bdd7d89859",
+    "training_steps": 256,
+    "capability": "experimental; code-generation reliability unestablished"
+  },
+  "tasks": [
+    {
+      "id": "positive-total",
+      "prompt_sha256": "e335a438973aedbe5dd285c77360c1e6cd2a7cc98a02e6fa0559b47cc91570a1",
+      "format_passed": false,
+      "initial_correct": false,
+      "final_correct": false,
+      "attempts": [],
+      "status": "generation_failed",
+      "diagnostic": "JSONDecodeError: Expecting value: line 1 column 1 (char 0)"
+    },
+    {
+      "id": "unique-words",
+      "prompt_sha256": "7b15904e86a748c316566394dd19bf2f1c4060c21f0adb3045723de0408e666e",
+      "format_passed": false,
+      "initial_correct": false,
+      "final_correct": false,
+      "attempts": [],
+      "status": "generation_failed",
+      "diagnostic": "JSONDecodeError: Expecting value: line 1 column 1 (char 0)"
+    },
+    {
+      "id": "palindrome",
+      "prompt_sha256": "851e7cc9e78bba164a23283ff3378c3495cbc3c1800f721a9396f49c011b24a6",
+      "format_passed": false,
+      "initial_correct": false,
+      "final_correct": false,
+      "attempts": [],
+      "status": "generation_failed",
+      "diagnostic": "JSONDecodeError: Expecting value: line 1 column 1 (char 0)"
+    }
+  ],
+  "format_passed": 0,
+  "initial_tasks_correct": 0,
+  "final_tasks_correct": 0,
+  "task_count": 3,
+  "execution_requested": false,
+  "elapsed_seconds": 33.508,
+  "tasks_fully_assessed": 0,
+  "suite_passed": false,
+  "promotion_eligible": false,
+  "scope": "Three public synthetic Python-function diagnostics only; not general coding/business capability",
+  "integrity": "Expected answers compared outside generated containers; withheld cases excluded from generation and repair"
+}

@@ -44,6 +44,17 @@ cc -std=c17 -Wall -Wextra -Werror /src/main.c -o /work/program
 ''',
 }
 
+# No expected answers or hidden cases are mounted into the container. The host
+# compares JSON output independently, rather than trusting generated test code.
+EVALUATION_DRIVER='''import json,sys,importlib.util
+payload=json.loads(sys.stdin.buffer.read(8193))
+spec=importlib.util.spec_from_file_location('candidate','/src/app.py')
+candidate=importlib.util.module_from_spec(spec)
+spec.loader.exec_module(candidate)
+answer=candidate.solve(payload)
+print(json.dumps(answer,ensure_ascii=False,allow_nan=False))
+'''
+
 
 def docker_program():
     path=shutil.which('docker')
@@ -96,8 +107,13 @@ class DockerRunner:
                 '--env','all_proxy=','--env','NO_PROXY=','--env','no_proxy=',
                 '--env','FTP_PROXY=','--env','ftp_proxy=',
                 '--entrypoint='+entry[0],image,*entry[1:]]
-    def run(self,files,recipe,timeout=30):
+    def run(self,files,recipe,timeout=30,evaluation_input=None):
         files=validate_files(files,recipe)
+        payload=None
+        if evaluation_input is not None:
+            if recipe!='python-cli':raise ValueError('Independent evaluation currently supports Python only')
+            payload=json.dumps(evaluation_input,allow_nan=False).encode('utf-8')
+            if len(payload)>8192:raise ValueError('Evaluation input exceeds 8 KB')
         executable=docker_program()
         with tempfile.TemporaryDirectory(prefix='s-build-') as temporary:
             root=Path(temporary);source=root/'source';driver=root/'driver'
@@ -107,15 +123,22 @@ class DockerRunner:
             for relative,content in files.items():
                 target=source/relative;target.parent.mkdir(parents=True,exist_ok=True)
                 target.write_text(content,encoding='utf-8');target.chmod(0o644)
-            (driver/('run.sh' if recipe=='c-cli' else 'run.py')).write_text(DRIVERS[recipe],encoding='utf-8')
+            (driver/('run.sh' if recipe=='c-cli' else 'run.py')).write_text(EVALUATION_DRIVER if payload is not None else DRIVERS[recipe],encoding='utf-8')
             (driver/('run.sh' if recipe=='c-cli' else 'run.py')).chmod(0o644)
             name='s-build-'+uuid.uuid4().hex
             command=self.command(executable,name,recipe,source,driver)
+            if payload is not None:command.insert(command.index('run')+1,'--interactive')
             pieces=[];overflow=threading.Event();limit=64000
             start=time.monotonic();process=None
             try:
-                process=subprocess.Popen(command,env=docker_env(),stdin=subprocess.DEVNULL,
+                process=subprocess.Popen(command,env=docker_env(),stdin=subprocess.PIPE if payload is not None else subprocess.DEVNULL,
                                          stdout=subprocess.PIPE,stderr=subprocess.STDOUT,shell=False)
+                writer=None
+                if payload is not None:
+                    def send_input():
+                        try:process.stdin.write(payload);process.stdin.close()
+                        except (OSError,ValueError):pass
+                    writer=threading.Thread(target=send_input,daemon=True);writer.start()
                 def reader():
                     size=0
                     while True:
@@ -137,6 +160,10 @@ class DockerRunner:
                 if process is not None:
                     thread.join(timeout=5)
                     process.stdout.close()
+                    if writer is not None:
+                        writer.join(timeout=5)
+                        try:process.stdin.close()
+                        except (OSError,ValueError):pass
             output=redact(b''.join(pieces).decode('utf-8',errors='replace'))
             status='toolchain_passed' if process.returncode==0 and not timed_out and not overflow.is_set() else 'failed'
             return {'status':status,'returncode':process.returncode,'output':output,'timed_out':timed_out,

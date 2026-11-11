@@ -1,66 +1,52 @@
-# S Developer continuation — phone neural runtime checkpoint
+# S Developer continuation — independent coding evaluator
 
-This file is a continuation record, not evidence that a physical device was
-updated. Read `prompts/S-UNIFIED-DEVELOPMENT-MASTER.md` and current Git/CI state
-before resuming. Never restart the existing S implementation.
+Read `prompts/S-UNIFIED-DEVELOPMENT-MASTER.md`, current Git state and the related
+PRs before resuming. Do not restart existing phases or infer device installation
+from GitHub changes. Owner remains Md Shiyam Talukder.
 
-## Base and active milestone
+## Verified base
 
-Base main: `5a2ffc3dca235abb06c063c999968898fc76840b` (merged PR #16).
-Feature branch: `feature/s-phone-neural-runtime`.
-Goal: make the existing small S checkpoint executable without PyTorch, with
-bounded inference, numerical parity checks, a user-facing probe and preserved
-coding-quality limitations. Also deliver the revised master continuation prompt.
+PR #17 passed all four required workflows and was merged into main at
+`6a4191d9a9ca43944768e67bcacf14f378b82bc3`. It preserves the existing weights and
+adds a stdlib small-model runtime/probe, numerical parity tests and the revised
+master prompt. Actual phone inference remains unverified; the supplied screenshot
+proved only requirements-page visibility. Earlier PRs #14–16 remain preserved.
 
-The user supplied a phone screenshot showing the requirements page at localhost.
-That establishes visible page loading only. Physical-device inference and new
-commit installation still require device-side evidence.
+## Active milestone
 
-## Implementation
+Branch: `feature/s-capability-evaluation`, based on PR #17 source commit
+`7df7707bd457357a3d8afc05f72337338b8a6ece`.
+Goal: independently judge generated function outputs, refuse false-success exit
+codes, preserve provider/source provenance and keep withheld answers out of model
+prompts/repair feedback. Add CLI and consented GUI evaluation without expanding
+host access. Correct native prompt truncation instead of hiding context limits.
 
-- `s_developer/portable_native.py`: restricted F32 safetensors reader and the
-  existing SBrain equations, using only Python stdlib; incremental KV cache,
-  RoPE, grouped-query attention, RMSNorm and SiLU; no model conversion/download.
-- Explicit `native_backend` configuration preserves the existing torch default.
-  Termux setup chooses stdlib only when no explicit backend exists and the
-  installed checkpoint fits the restricted portable budgets.
-- `S model probe`: dependency-free real inference, max 32 diagnostic tokens.
-  `S model configure-runtime --backend stdlib` selects the small-model provider.
-- Project-scoped, consented UI runtime test with no model/path/command override.
-  The probe does not approve source, execution or coding quality.
-- Installer/upgrader and packaged installation smoke include the portable file.
-  Existing weights, private data and explicit provider configuration are retained.
+## Implementation and local evidence
 
-Weights unchanged: SHA-256
-`a6caeb1f219c01f42cec3ab54fb5dcdb61e20d6530dc91173a7805bdd7d89859`.
-The native neural coding diagnostic from PR #16 still failed; runtime portability
-is not model retraining or evidence of useful general coding.
+`capability.py` contains three public synthetic diagnostic tasks. Expected values
+are compared on the host; only one input is sent to the isolated fixed driver.
+Candidate tests are not the oracle. Reports separate format success, initial/final
+correctness, assessed tasks, runtime blocks and context blocks. One benchmark
+repair maximum; no general promotion from this tiny public suite.
 
-## Local verification
+102 local app tests, 798 neural tests and 25 UI tests passed. Actual S neural
+baseline: 0/3 valid source bundles, zero tasks independently executed; semantic
+accuracy therefore unassessed. Exact unchanged weight hash, failed results and
+commands are retained in `docs/S-CODING-CAPABILITY-EVALUATION.md` and
+`reports/s-developer/native-coding-baseline-v1.json`.
 
-94 app/portable/permission/updater tests passed; 798 S-Brain tests passed, including
-actual prefix-logit parity and 16-token greedy equivalence; 24 UI state tests
-passed. A clean no-runtime-dependency wheel installation installed the original
-weights, executed the stdlib neural probe, served assets and preserved a saved
-specification over restart.
+The new CI script uses clearly labelled correct/wrong/exit-zero/repair source
+fixtures with real Docker and host comparisons. These verify the evaluator,
+not neural ability. Required current CI/merge evidence is in the feature PR;
+check it before claiming all checks passed or this branch merged.
 
-An initial 21-prefix comparison against actual PyTorch measured max absolute
-logit error 0.000005091501314780089. The regression tolerance is 0.0003 and also
-covers UTF-8 byte prefixes and a full greedy continuation. Local 16-token output
-was a partial code-shaped fragment, not a valid project. Host timing is not a
-phone benchmark. See `docs/S-PORTABLE-NEURAL-RUNTIME.md` and the related test logs.
+## Next concrete actions
 
-## Integration and next evidence
-
-Publish this checkpoint through a feature PR; required CI and merge evidence are
-recorded in that PR. Check actual PR status before asserting it passed/merged.
-The current host cannot directly operate Shiyam's phone or Windows installation.
-A user-run `S model probe` or consented UI probe on the phone is the remaining
-physical-device check. Keep the result, runtime name, weight hash, token count
-and timing; do not label inference completion as a coding-quality pass.
-
-After this milestone: improve native structured code generation using a declared
-held-out evaluation and appropriate authorized data/compute. Preserve the failed
-baseline. Continue the remaining master acceptance matrix, especially broad
-feature implementation and clean Windows installer H. No general neural coder,
-Android APK, full language expansion or full master-prompt completion is claimed.
+Complete CI and integrate only the tested source when authorized checks pass.
+For actual learning improvements, declare a separate data/model/context/compute
+budget and held-out evaluation before training. Do not learn these exact public
+benchmark answers and label memorization independent generalization. Preserve the
+failed baseline and every source/model checkpoint. Continue master acceptance
+checks, especially useful real project behavior and clean Windows installer H.
+No full autonomous neural coder, ownership transfer, unlimited runtime or invisible
+background work is claimed. Persist unfinished work before a real session limit.

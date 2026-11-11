@@ -34,7 +34,8 @@ KNOWN = {
   ],
   "web/developer.html": [
     "74e963c2e54b0c72e94091e0aef37c3898a2dff21ba035face831bed0dec5e00",
-    "8cbf3da3bfa655f07b91e5a1fd95dafba1967277aee2680eb1a5bd70b1409b1f"
+    "8cbf3da3bfa655f07b91e5a1fd95dafba1967277aee2680eb1a5bd70b1409b1f",
+    "0edb1088dc0b8c5c8e3b8a3f3d441aa88a8e438eb29eff5fd73334ab71bbdb29"
   ],
   "web/developer.css": [
     "a49c7221306c5faf7e59a22a7e5bddbd4d49bd32a4088912fcd223770bdb7ea0",
@@ -56,7 +57,8 @@ KNOWN = {
   "s_developer/cli.py": [
     "dee501f2da72c7c43c8d5c015eddda9abfc2beac9542d79722638be028ef1bc8",
     "75cd99d9e5cfd83c88cd958dc9293a20c1d7b7682781d3ea0cdf374a91b9171b",
-    "53c6e309dc7ea720906c2ac749f4871536d43892ec6323d7ee7f10025d47b15d"
+    "53c6e309dc7ea720906c2ac749f4871536d43892ec6323d7ee7f10025d47b15d",
+    "aefc2f3ffde1a278a1418a5e96ce3804b5f70df429d0cfe79f059e1da04759e0"
   ],
   "s_developer/intent.py": [
     "2a832a82d132a606eefbbd4b8370296e56b17af323e057257cbc1bb25b57f004"
@@ -72,13 +74,16 @@ KNOWN = {
     "9419dd4a48d35665c2e85fdc497b4d96aa1a82d1383f28d33e472af7e34da7e7"
   ],
   "s_developer/models.py": [
-    "1673c153b2963f76285df2944c450252275e3900afb8ad978361ea055b2330b1"
+    "1673c153b2963f76285df2944c450252275e3900afb8ad978361ea055b2330b1",
+    "343f6abea222f2f60b8277b7c14f48d5b74bd5b89224a3b5baf10d7c59a749f8"
   ],
   "s_developer/engine.py": [
-    "375764f987a369b27e07c777e715e4b3f6074e7442d375a411e7f4b5531c9a63"
+    "375764f987a369b27e07c777e715e4b3f6074e7442d375a411e7f4b5531c9a63",
+    "0681f3f6659ff99c04ca59df1c758073beba79b966aca36314d317c08df45e72"
   ],
   "s_developer/providers.py": [
-    "ca8c2230fe12f96063157b55cdd3496cdfadc921bda4b445a13c2cc883c48c36"
+    "ca8c2230fe12f96063157b55cdd3496cdfadc921bda4b445a13c2cc883c48c36",
+    "ffa2f505f4a28862b344a8cde47894c13ea0bcec86a722f089856f9db2a31170"
   ],
   "s_developer/sandbox.py": [
     "81dc3f1cf57a703a5c0f1853c449eb5ab5e4f1a26e6931ccc98a2c652c2d44a2"
@@ -93,9 +98,13 @@ KNOWN = {
     "a6caeb1f219c01f42cec3ab54fb5dcdb61e20d6530dc91173a7805bdd7d89859"
   ],
   "web/coding.js": [
-    "d0ec65bdfed903bee006e1d887dc1b1a626682d9adc7eaf424faf74dd9015ded"
+    "d0ec65bdfed903bee006e1d887dc1b1a626682d9adc7eaf424faf74dd9015ded",
+    "dde899887d67b07d2a6b38ffcda2d87d8bee3b19ad85ad99789af872eeaed3c9"
   ],
-  "s_developer/portable_native.py": []
+  "s_developer/portable_native.py": [
+    "b79d27da62e1e63d3fe50048edd050a4f2687dff61754f52524b6d2b7a2199be"
+  ],
+  "s_developer/capability.py": []
 }
 
 

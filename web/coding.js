@@ -69,6 +69,21 @@ $('neural-probe').onclick=()=>action(async()=>{
   $('code-output').textContent=JSON.stringify(result,null,2);$('code-consent').checked=false;
   message('Neural calculations completed. This is a runtime check; coding ability is still unverified.');
 });
+$('evaluate-coding').onclick=()=>action(async()=>{
+  if(!current)throw Error('Save a project draft to record evaluation evidence.');
+  codingConsent();const pid=current.project_id;
+  const execute=$('evaluation-execute').checked;
+  if(execute&&!window.confirm('Execute synthetic evaluation code in the prepared isolated containers?'))return;
+  $('code-output').textContent='Running three bounded coding diagnostics. Provider generation and independent execution are assessed separately…';
+  const result=await api('evaluate-coding',{project_id:pid,provider:$('code-provider').value,
+    execute,max_repairs:0,consent:true});
+  if(!current||current.project_id!==pid)throw Error('Discarded evaluation from another project.');
+  $('code-output').textContent=JSON.stringify(result,null,2);$('code-consent').checked=false;
+  const assessed=result.tasks_fully_assessed||0;
+  message((assessed?`Coding diagnostic: ${result.final_tasks_correct}/${assessed} assessed tasks correct. `:
+    `Source format: ${result.format_passed||0}/${result.task_count}. Independent execution was not assessed. `)+
+    'General capability is not established.');
+});
 $('code-generate').onclick=()=>action(async()=>{
   const pid=codingProject();codingConsent();
   if(codingDirty&&!window.confirm('Discard unsaved source edits and create a new generated checkpoint?'))return;
