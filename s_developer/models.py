@@ -14,10 +14,12 @@ def config_path(db):return Path(db).resolve().parent/'s-developer-host.json'
 def load_config(db):
     path=config_path(db)
     value=json.loads(path.read_text(encoding='utf-8')) if path.is_file() else {}
-    if not isinstance(value,dict) or set(value)-{'native_checkpoint','native_backend','ollama_model','images'}:
+    if not isinstance(value,dict) or set(value)-{'native_checkpoint','native_backend','native_decoding','ollama_model','images'}:
         raise ValueError('Unknown developer host configuration fields')
     if 'images' in value and not isinstance(value['images'],dict):raise ValueError('Images must be a mapping')
     if value.get('native_backend','torch') not in ('torch','stdlib'):raise ValueError('Unknown native runtime backend')
+    if value.get('native_decoding','sampled') not in ('sampled','greedy-json'):raise ValueError('Unknown native decoder')
+    if value.get('native_backend')=='stdlib' and value.get('native_decoding','sampled')!='sampled':raise ValueError('Greedy JSON decoding requires torch')
     return value
 
 
@@ -76,8 +78,19 @@ def configure_runtime(db,backend):
     if backend=='stdlib':
         from .portable_native import PortableBrain
         PortableBrain(config['native_checkpoint'])
-    save_config(db,{'native_backend':backend})
-    return {'configured':True,'native_backend':backend,'inference_verified':False}
+    decoding='sampled' if backend=='stdlib' else config.get('native_decoding','sampled')
+    save_config(db,{'native_backend':backend,'native_decoding':decoding})
+    return {'configured':True,'native_backend':backend,'native_decoding':decoding,'inference_verified':False}
+
+
+def configure_decoding(db,decoding):
+    if decoding not in ('sampled','greedy-json'):raise ValueError('Choose sampled or greedy-json')
+    config=load_config(db)
+    if not config.get('native_checkpoint'):raise ValueError('Install a native checkpoint first')
+    if decoding=='greedy-json' and config.get('native_backend','torch')!='torch':
+        raise ValueError('Greedy JSON decoding requires torch')
+    save_config(db,{'native_decoding':decoding})
+    return {'configured':True,'native_decoding':decoding,'inference_verified':False}
 
 
 def probe_native(config,prompt='Request: Hello\n',tokens=16):

@@ -1,0 +1,55 @@
+{
+  "experiment": "s-synthetic-coding-curriculum-v2",
+  "provenance": "Self-authored synthetic arithmetic source bundles; no teacher output or pretrained weights",
+  "seed": 20261112,
+  "model": {
+    "vocab_size": 256,
+    "dim": 64,
+    "layers": 2,
+    "heads": 4,
+    "kv_heads": 2,
+    "context": 512
+  },
+  "steps": 2000,
+  "batch_size": 8,
+  "threads": 2,
+  "learning_rate": 0.003,
+  "minimum_learning_rate": 0.0003,
+  "warmup_steps": 50,
+  "evaluation_interval": 100,
+  "validation_constants": [
+    41,
+    83
+  ],
+  "test_constants": [
+    47,
+    97
+  ],
+  "constant_range": [
+    25,
+    120
+  ],
+  "operations": [
+    "add",
+    "subtract",
+    "multiply",
+    "floor_divide"
+  ],
+  "selection": "lowest fixed validation completion NLL, before any test generation",
+  "decoder": "greedy bytes, stop at first complete JSON object; no correction or token constraints",
+  "max_new_tokens": 200,
+  "target": {
+    "held_out_tasks": 8,
+    "minimum_tasks_correct": 6,
+    "cases_per_task": 3
+  },
+  "limitations": [
+    "public synthetic within-family transfer only",
+    "no broad coding ability claim",
+    "no automatic promotion",
+    "semantic execution requires isolated Docker"
+  ],
+  "prompt_suffix": "\nAnswer:\n",
+  "test_file_comment": "# Independent tests.\n",
+  "rationale": "Follow-up to v1 format failure: explicit consistent answer boundary, broader two/three-digit training constants, fresh held-out constants; no v1 test answers used"
+}

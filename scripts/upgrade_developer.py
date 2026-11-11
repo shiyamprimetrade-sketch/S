@@ -55,6 +55,7 @@ KNOWN = {
     "320c369629ff9f1e170a76e111160b3f32929493752566c0502a3e9a0e21d70a"
   ],
   "s_developer/cli.py": [
+    "7c89726a8f62c74b0487af58c75aac155b5e88dc87eea805e1c045de3f0b94ea",
     "dee501f2da72c7c43c8d5c015eddda9abfc2beac9542d79722638be028ef1bc8",
     "75cd99d9e5cfd83c88cd958dc9293a20c1d7b7682781d3ea0cdf374a91b9171b",
     "53c6e309dc7ea720906c2ac749f4871536d43892ec6323d7ee7f10025d47b15d",
@@ -74,6 +75,7 @@ KNOWN = {
     "9419dd4a48d35665c2e85fdc497b4d96aa1a82d1383f28d33e472af7e34da7e7"
   ],
   "s_developer/models.py": [
+    "343f6abea222f2f60b8277b7c14f48d5b74bd5b89224a3b5baf10d7c59a749f8",
     "1673c153b2963f76285df2944c450252275e3900afb8ad978361ea055b2330b1",
     "343f6abea222f2f60b8277b7c14f48d5b74bd5b89224a3b5baf10d7c59a749f8"
   ],
@@ -82,6 +84,7 @@ KNOWN = {
     "0681f3f6659ff99c04ca59df1c758073beba79b966aca36314d317c08df45e72"
   ],
   "s_developer/providers.py": [
+    "a557611dcf3dac8ea723e5245edc98c84c046131779264008041927af753ca98",
     "ca8c2230fe12f96063157b55cdd3496cdfadc921bda4b445a13c2cc883c48c36",
     "ffa2f505f4a28862b344a8cde47894c13ea0bcec86a722f089856f9db2a31170"
   ],
@@ -104,7 +107,8 @@ KNOWN = {
   "s_developer/portable_native.py": [
     "b79d27da62e1e63d3fe50048edd050a4f2687dff61754f52524b6d2b7a2199be"
   ],
-  "s_developer/capability.py": []
+  "s_developer/capability.py": [],
+  "s_brain/coding_decode.py": []
 }
 
 

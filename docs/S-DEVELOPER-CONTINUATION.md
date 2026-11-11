@@ -1,52 +1,55 @@
-# S Developer continuation — independent coding evaluator
+# S Developer continuation checkpoint
 
-Read `prompts/S-UNIFIED-DEVELOPMENT-MASTER.md`, current Git state and the related
-PRs before resuming. Do not restart existing phases or infer device installation
-from GitHub changes. Owner remains Md Shiyam Talukder.
+Read `prompts/S-UNIFIED-DEVELOPMENT-MASTER.md`, current Git state and related PRs
+before resuming. Preserve all existing checkpoints. Owner remains Md Shiyam
+Talukder. Repository changes do not prove installation on the owner's devices.
 
 ## Verified base
 
-PR #17 passed all four required workflows and was merged into main at
-`6a4191d9a9ca43944768e67bcacf14f378b82bc3`. It preserves the existing weights and
-adds a stdlib small-model runtime/probe, numerical parity tests and the revised
-master prompt. Actual phone inference remains unverified; the supplied screenshot
-proved only requirements-page visibility. Earlier PRs #14–16 remain preserved.
+PRs #14–18 are merged. Main before this milestone was
+`fa1f354f9b31569343177935f060f551459216a9` (PR #18). Existing requirements,
+structured specifications, controlled generation/build/repair, rollback,
+portable inference and independent evaluation interfaces remain preserved.
+The old native checkpoint remains unchanged and failed 0/3 bundle checks in the
+prior baseline; semantic correctness was unassessed.
 
-## Active milestone
+## Current milestone
 
-Branch: `feature/s-capability-evaluation`, based on PR #17 source commit
-`7df7707bd457357a3d8afc05f72337338b8a6ece`.
-Goal: independently judge generated function outputs, refuse false-success exit
-codes, preserve provider/source provenance and keep withheld answers out of model
-prompts/repair feedback. Add CLI and consented GUI evaluation without expanding
-host access. Correct native prompt truncation instead of hiding context limits.
+Branch: `feature/s-native-coding-curriculum`.
 
-## Implementation and local evidence
+Implemented a reproducible self-authored synthetic curriculum, completion-masked
+full-record training, fixed-validation checkpoint selection, checksum-verified
+random/old/trained controls, unconstrained bounded greedy JSON decoding, exact
+output replay and independent isolated arithmetic oracle. Added an explicit
+operator decoder selection; sampled inference remains default. Candidate models
+are separate opt-in experiment artifacts, not replacements.
 
-`capability.py` contains three public synthetic diagnostic tasks. Expected values
-are compared on the host; only one input is sent to the isolated fixed driver.
-Candidate tests are not the oracle. Reports separate format success, initial/final
-correctness, assessed tasks, runtime blocks and context blocks. One benchmark
-repair maximum; no general promotion from this tiny public suite.
+Two predeclared runs completed: 1,500 and 2,000 CPU updates. Each independently
+initialized model has 115,008 parameters. Selected steps are 400 and 100 based on
+validation NLL. **Both produced 0/8 valid held-out source bundles; no candidate code
+reached semantic execution and neither model is promoted.** Training loss and
+lower validation NLL do not prove a working neural coder. v2 uses fresh held-out
+constants and records its follow-up rationale; no further test-tuned run was made.
 
-102 local app tests, 798 neural tests and 25 UI tests passed. Actual S neural
-baseline: 0/3 valid source bundles, zero tasks independently executed; semantic
-accuracy therefore unassessed. Exact unchanged weight hash, failed results and
-commands are retained in `docs/S-CODING-CAPABILITY-EVALUATION.md` and
-`reports/s-developer/native-coding-baseline-v1.json`.
+See `docs/S-NATIVE-CODING-CURRICULUM.md` and
+`experiments/coding-curriculum-v{1,2}/` for exact plans, data, safe weights, hashes,
+logs, raw generation failures and reproducible commands. Check the related PR
+for current CI and merge status; never infer it from this checkpoint alone.
 
-The new CI script uses clearly labelled correct/wrong/exit-zero/repair source
-fixtures with real Docker and host comparisons. These verify the evaluator,
-not neural ability. Required current CI/merge evidence is in the feature PR;
-check it before claiming all checks passed or this branch merged.
+Local verification: 108 application tests, 801 neural tests and 25 UI tests passed.
+Package 0.2.3 builds; entry-point smoke is recorded in the related PR. The local
+host has no Docker; actual restricted builds/oracle fixture execution is checked
+in GitHub CI. Exact frozen neural output replay and experimental quality results
+are separate from infrastructure success.
 
-## Next concrete actions
+## Next concrete work
 
-Complete CI and integrate only the tested source when authorized checks pass.
-For actual learning improvements, declare a separate data/model/context/compute
-budget and held-out evaluation before training. Do not learn these exact public
-benchmark answers and label memorization independent generalization. Preserve the
-failed baseline and every source/model checkpoint. Continue master acceptance
-checks, especially useful real project behavior and clean Windows installer H.
-No full autonomous neural coder, ownership transfer, unlimited runtime or invisible
-background work is claimed. Persist unfinished work before a real session limit.
+Complete/inspect all CI, preserve actual execution evidence, integrate only the
+reviewed tested tree. For a future learning experiment, investigate robust
+free-running validation generation and operation/constant-sensitive metrics on
+training/validation splits. Predeclare a fresh test set and compute budget.
+Do not present memorization or teacher-forced NLL as held-out coding ability.
+Continue master acceptance requirements, including useful real application
+behavior and clean Windows installer H. Actual Android/PC upgrades, physical phone
+inference, unrestricted autonomous host access and a general neural coder are
+not claimed. Persist a concrete checkpoint at a genuine session limit.

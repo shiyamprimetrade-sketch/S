@@ -3,6 +3,8 @@ on:
   pull_request:
     paths:
       - 's_developer/**'
+      - 'experiments/coding-curriculum-v*/**'
+      - 'scripts/*coding_curriculum.py'
       - 'continuum/server.py'
       - 'web/**'
       - 'scripts/verify_controlled_development.py'
@@ -26,6 +28,10 @@ jobs:
         run: python scripts/verify_controlled_development.py --approve-runtime-download --report build/controlled-acceptance.json
       - name: Independent coding oracle and false-success regression
         run: python scripts/verify_capability_evaluation.py --approve-runtime-download --report build/capability-oracle.json
+      - name: Judge frozen neural programs against independent arithmetic cases
+        run: |
+          python scripts/verify_coding_curriculum.py --experiment experiments/coding-curriculum-v1 --approve-runtime-download --report build/coding-curriculum-execution-v1.json
+          python scripts/verify_coding_curriculum.py --experiment experiments/coding-curriculum-v2 --approve-runtime-download --report build/coding-curriculum-execution-v2.json
       - name: Preserve actual execution evidence
         if: always()
         uses: actions/upload-artifact@v4
@@ -34,4 +40,6 @@ jobs:
           path: |
             build/controlled-acceptance.json
             build/capability-oracle.json
+            build/coding-curriculum-execution-v1.json
+            build/coding-curriculum-execution-v2.json
           if-no-files-found: warn

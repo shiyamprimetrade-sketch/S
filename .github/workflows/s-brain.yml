@@ -4,6 +4,8 @@ on:
   pull_request:
     paths:
       - "s_brain/**"
+      - "experiments/coding-curriculum-v*/**"
+      - "scripts/*coding_curriculum.py"
       - "s_developer/**"
       - "continuum/brain_console.py"
       - "web/brain.*"
@@ -14,6 +16,8 @@ on:
       - "feature/s-brain-independent-transformer"
     paths:
       - "s_brain/**"
+      - "experiments/coding-curriculum-v*/**"
+      - "scripts/*coding_curriculum.py"
       - "s_developer/**"
       - "continuum/brain_console.py"
       - "web/brain.*"
@@ -40,6 +44,10 @@ jobs:
         run: python -m compileall -q s_brain
       - name: Unit tests
         run: python -m unittest discover -s s_brain/tests -v
+      - name: Replay frozen independent neural outputs
+        run: |
+          python scripts/evaluate_coding_curriculum.py --experiment experiments/coding-curriculum-v1 --verify experiments/coding-curriculum-v1/generated.json
+          python scripts/evaluate_coding_curriculum.py --experiment experiments/coding-curriculum-v2 --verify experiments/coding-curriculum-v2/generated.json
       - uses: actions/setup-node@v4
         with:
           node-version: "22"
