@@ -119,3 +119,10 @@ Local continuation verification: **69** app/requirements/updater tests passed,
 clean virtual environment passed its outside-checkout launch/save/restart smoke.
 The Termux-specific tests are host-side fixtures, not an Android execution claim.
 Windows CI is the gate for the exclusive-port fix before integration.
+
+The next Windows run confirmed the port fix and exposed open SQLite backup
+handles in the new updater. Corrected with explicit connection closing; a new
+regression checks that both backup connections are closed before return. Local
+final app suite: **70 tests passed**. All **795 S-Brain tests** also passed again.
+The previous failed Windows run remains available as 43049871973; it is not
+counted as passing evidence. Final post-fix CI must pass before merge.

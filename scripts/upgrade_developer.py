@@ -4,6 +4,7 @@ Default is a dry run. Only known baseline hashes may be replaced. Local DB,
 weights and host settings never leave the PC and are not replaced.
 """
 import argparse
+from contextlib import closing
 import hashlib
 import json
 import os
@@ -126,7 +127,7 @@ def apply(root,source=SOURCE):
     db=root/'data'/'continuum.sqlite3'
     if db.is_symlink() or db.parent.is_symlink():raise ValueError('Symlinked database; back up manually')
     if db.is_file():
-        with sqlite3.connect(db.resolve().as_uri()+'?mode=ro',uri=True) as original, sqlite3.connect(backup/'continuum.sqlite3') as copy:
+        with closing(sqlite3.connect(db.resolve().as_uri()+'?mode=ro',uri=True)) as original, closing(sqlite3.connect(backup/'continuum.sqlite3')) as copy:
             original.backup(copy)
             if copy.execute('PRAGMA integrity_check').fetchone()[0]!='ok':raise ValueError('Backup integrity failure')
     (backup/'manifest.json').write_text(json.dumps(manifest,indent=2),encoding='utf-8')

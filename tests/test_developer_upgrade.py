@@ -27,6 +27,17 @@ class UpgradeTests(unittest.TestCase):
         self.store=Store(self.app/'data'/'continuum.sqlite3')
         self.project=self.store.create_project('Synthetic continuity fixture')
 
+    def test_backup_connections_are_closed_before_updater_returns(self):
+        real_connect=upgrade.sqlite3.connect
+        connections=[]
+        def connect(*args,**kwargs):
+            connection=real_connect(*args,**kwargs);connections.append(connection);return connection
+        with patch.object(upgrade.sqlite3,'connect',side_effect=connect):
+            upgrade.apply(self.app)
+        self.assertEqual(len(connections),2)
+        for connection in connections:
+            with self.assertRaises(upgrade.sqlite3.ProgrammingError):connection.execute('SELECT 1')
+
     def test_upgrade_backup_and_rollback_preserve_database_and_config(self):
         original=(self.app/'continuum'/'server.py').read_bytes()
         config=(self.app/'s-brain-host.json').read_bytes()
