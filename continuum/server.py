@@ -37,6 +37,7 @@ class API(BaseHTTPRequestHandler):
         return self._query().get(name,[''])[0]
     def _static(self,name):
         allow={'/':'index.html','/app.js':'app.js','/style.css':'style.css'}
+        allow.update({'/brain':'brain.html','/brain.js':'brain.js','/brain.css':'brain.css'})
         if name not in allow:return self._json(404,{'error':'Not found'})
         p=WEB/allow[name]
         body=p.read_bytes()
@@ -50,6 +51,8 @@ class API(BaseHTTPRequestHandler):
     def _api(self,verb):
         path=urlparse(self.path).path
         s=self.server.store
+        if path.startswith('/api/brain/'):
+            return self.server.brain.request(verb,path,self._query(),None if verb=='GET' else self._body())
         if verb=='GET':
             if path=='/api/health':
                 from .teacherlab import MODEL
@@ -73,6 +76,7 @@ class API(BaseHTTPRequestHandler):
             if path=='/api/projects':return s.create_project(b.get('name',''))
             if path=='/api/sessions':return s.create_session(b.get('project_id',''),b.get('title','New conversation'))
             if path=='/api/notes':return s.add_note(b.get('project_id',''),b.get('title',''),b.get('body',''),b.get('kind','lesson'),b.get('evidence',''))
+            if path=='/api/chat' and b.get('model')=='s-brain:experimental':return self.server.brain.chat(b)
             if path=='/api/chat':return chat(s,b.get('session_id',''),b.get('text',''),b.get('model',DEFAULT_MODEL))
         raise ValueError('Unknown route')
     def _guard(self):
@@ -108,6 +112,8 @@ class AppServer(ThreadingHTTPServer):
         super().__init__((host,port),API)
         self.store=Store(db_path)
         self.store.seed_if_empty()
+        from .brain_console import BrainConsole
+        self.brain=BrainConsole(self.store)
 
 def serve(db_path,port=8765):
     with AppServer('127.0.0.1',port,db_path) as app:

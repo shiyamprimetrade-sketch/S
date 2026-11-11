@@ -11,3 +11,6 @@ __pycache__/
 
 # Generated plaintext training data (compressed corpus is committed)
 /models/*.json
+
+/s-brain-host.json
+/data/s-brain-memory.sqlite3*

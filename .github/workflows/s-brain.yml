@@ -4,12 +4,16 @@ on:
   pull_request:
     paths:
       - "s_brain/**"
+      - "continuum/brain_console.py"
+      - "web/brain.*"
       - ".github/workflows/s-brain.yml"
   push:
     branches:
       - "feature/s-brain-independent-transformer"
     paths:
       - "s_brain/**"
+      - "continuum/brain_console.py"
+      - "web/brain.*"
       - ".github/workflows/s-brain.yml"
 
 permissions:

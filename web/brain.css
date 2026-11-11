@@ -1,0 +1,9 @@
+.brain-page{height:auto;min-height:100vh;overflow:auto;background:#111827;color:#e5e7eb;font:16px/1.55 system-ui,sans-serif}
+.brain-page main{display:block;max-width:1000px;margin:0 auto;padding:28px 24px 70px;width:100%;overflow:visible}
+.brain-page h1{font-size:30px}.brain-page h2{margin-top:32px;padding-top:20px;border-top:1px solid #374151}
+.brain-page a{color:#67e8f9}.brain-page label{display:block;margin:12px 0}.brain-page input,.brain-page select,.brain-page textarea{background:#1f2937;color:#f9fafb;border:1px solid #64748b;border-radius:6px;padding:9px;font:inherit;max-width:100%}
+.brain-page textarea{display:block;width:100%;min-height:80px}.brain-page input[type=checkbox]{width:18px;height:18px;margin-right:10px;vertical-align:middle}
+.brain-page button{background:#0e7490;color:white;border:1px solid #22d3ee;border-radius:6px;padding:9px 16px;margin:6px 8px 6px 0;cursor:pointer;font:inherit}.brain-page button:disabled{opacity:.45;cursor:not-allowed}
+.brain-page pre{white-space:pre-wrap;overflow-wrap:anywhere;max-height:420px;overflow:auto;padding:16px;background:#1f2937;border-radius:8px;font:13px/1.6 ui-monospace,monospace}
+.brain-page dl{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px 20px;background:#1f2937;padding:18px;border-radius:8px}.brain-page dt{color:#9ca3af}.brain-page dd{margin:0;font-weight:600}
+.brain-page details{padding:12px;border:1px solid #374151;border-radius:8px}.brain-page summary{cursor:pointer}.brain-page #status{color:#67e8f9}.brain-page #error{color:#fca5a5}.brain-page #records section{border-top:1px solid #64748b;padding:12px 0}

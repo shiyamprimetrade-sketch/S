@@ -4,7 +4,7 @@ This is an **untrained-by-default**, standalone autoregressive byte-level langua
 
 ## Isolation
 - Existing S Continuum API remains on `127.0.0.1:8765`.
-- Experimental S-Brain runs on `127.0.0.1:8766`, with no integration or automatic fallback yet.
+- The optional native console integrates at `/brain` on port 8765; standalone development serving remains separate on port 8766. See [integration evidence and limits](../docs/brain-console-integration.md).
 - No pretrained weights, datasets, private conversations, API keys, or secrets are committed.
 - Existing TeacherLab is a different intent classifier and remains unchanged.
 
@@ -33,7 +33,7 @@ $body = @{prompt="Hello S";max_new_tokens=32} | ConvertTo-Json
 Invoke-RestMethod http://127.0.0.1:8766/generate -Method Post -ContentType application/json -Body $body
 ```
 
-Training is byte-level next-token prediction using GQA, RoPE, RMSNorm, and SwiGLU. The checkpoint stores the best validation loss observed at intervals. No KV cache, supervised instruction tuning, multimodality, advanced evaluation or distributed training is implemented. The 10% suffix validation split may still contain near-duplicates: real benchmarks require independent held-out data.
+Training is byte-level next-token prediction using GQA, RoPE, RMSNorm, and SwiGLU. The checkpoint stores the best validation loss observed at intervals. Cycles 1–10 added KV cache, supervised training and evaluation infrastructure; multimodality and distributed training remain unsupported. The 10% suffix validation split may still contain near-duplicates: real benchmarks require independent held-out data.
 
 ## Integration criteria
 1. Unit tests pass in the intended training environment.
@@ -42,4 +42,4 @@ Training is byte-level next-token prediction using GQA, RoPE, RMSNorm, and SwiGL
 4. Resolve any conflict with the original server's port and request format (standalone module deliberately uses 8766).
 5. Add an explicit opt-in model selection adapter to S; retain the original Ollama backend and avoid automatic unsafe switching.
 
-**Status:** Code staged for review; no claim of training, deployment, or benchmark success on the user's PC.
+**Status:** Experimental integration tested on Windows; the tiny trained checkpoint failed its synthetic reasoning diagnostic. See the integration report for measured results and remaining gates.

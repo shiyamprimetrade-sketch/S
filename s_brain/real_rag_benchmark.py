@@ -172,6 +172,7 @@ def real_model_ablation(
                 seed=plan.seed,
                 max_new_tokens=plan.max_new_tokens,
                 bootstrap_iterations=plan.bootstrap_iterations,
+                minimum_exact_gain=plan.minimum_gain_to_claim,
             ),
         )
     summary=scores["summary"]
