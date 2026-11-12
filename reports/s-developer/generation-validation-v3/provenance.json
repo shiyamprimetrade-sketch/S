@@ -1,0 +1,19 @@
+{
+  "source_commit": "1a7790c49c718e112181c5effaea8a73eeb17ede",
+  "source_tree": "c601990330fac7733868e2af1efabf52182a33ca",
+  "run_id": 43193762090,
+  "job_id": 131099343085,
+  "artifact_id": 13931009609,
+  "artifact_sha256": "34273ac2ef171bd8e6283dbff150e7a7f562f0f4a5be6c8b5d833a60428f3125",
+  "run_url": "https://github.com/shiyamprimetrade-sketch/S/actions/runs/43193762090",
+  "neural_replay_run_url": "https://github.com/shiyamprimetrade-sketch/S/actions/runs/43193762369",
+  "valid_neural_bundles": 8,
+  "initial_tasks_correct": 0,
+  "final_tasks_correct": 8,
+  "final_cases_correct": 56,
+  "repair_provider": "requirements-literal",
+  "repair_is_neural": false,
+  "unassisted_target_met": false,
+  "supplementary_repair_target_met": true,
+  "automatic_promotion": false
+}

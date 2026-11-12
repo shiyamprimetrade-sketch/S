@@ -32,8 +32,11 @@ neural generation. No model is automatically promoted.
 See `docs/S-GENERATION-VALIDATION-FIX.md` and `experiments/coding-curriculum-v3/`.
 Local verification: 115 app tests, 807 neural tests and 25 UI tests passed;
 old/new frozen outputs replay; package/installed launcher smoke passes. Local
-Docker is absent. Inspect the feature PR for real isolated semantic results,
-CI, published evidence and merge status before claiming those checks passed.
+Docker is absent. Real Docker CI verified 0/8 initial and 8/8 repaired programs,
+56/56 final independent cases. Actual reports/artifact provenance are saved under
+`reports/s-developer/generation-validation-v3/`. Raw neural target remains false;
+the separately declared deterministic-repair target passed. Neural output replay
+also passed remotely. Inspect PR #20 for final Windows/Linux and merge status.
 
 ## Next action
 

@@ -109,3 +109,22 @@ No default model is replaced or automatically promoted. These 512-context models
 are not supported by the current stdlib portable runtime; physical phone/PC
 installation and general autonomous coding remain unverified. The next independent
 learning gap is faithful literal copying without deterministic repair.
+
+## Actual isolated outcome
+
+Code commit `1a7790c49c718e112181c5effaea8a73eeb17ede` (PR #20) was exercised
+in [real Docker CI](https://github.com/shiyamprimetrade-sketch/S/actions/runs/43193762090).
+The candidate passed **0/8 tasks before repair and 8/8 after repair**, with **56/56
+independent final cases passing**. Every task used exactly one declared literal
+repair. The old and random controls remained 0/8. The raw neural target remains
+false; the distinct repair target is true. No score is attributed to a hidden
+neural fix or external model.
+
+The complete initial/final cases, repaired source and provenance are preserved in
+`reports/s-developer/generation-validation-v3/execution.json`. Its companion
+provenance records the exact code/tree, workflow/job/artifact IDs and verified
+archive digest. CI now explicitly requires the predeclared repair acceptance
+target, while keeping unassisted quality separate. The ordinary website/Python/C
+build, fixture repair and isolation regressions also passed in that Docker job.
+The neural workflow independently reproduced the frozen outputs. Inspect PR #20
+for final Windows/Linux matrix and merge status.

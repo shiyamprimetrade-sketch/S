@@ -33,6 +33,9 @@ jobs:
           python scripts/verify_coding_curriculum.py --experiment experiments/coding-curriculum-v1 --approve-runtime-download --report build/coding-curriculum-execution-v1.json
           python scripts/verify_coding_curriculum.py --experiment experiments/coding-curriculum-v2 --approve-runtime-download --report build/coding-curriculum-execution-v2.json
           python scripts/verify_coding_curriculum.py --experiment experiments/coding-curriculum-v3 --approve-runtime-download --approve-requirements-literal-repair --report build/coding-curriculum-execution-v3.json
+      - name: Require the declared literal-repair acceptance target
+        run: |
+          python -c "import json; r=json.load(open('build/coding-curriculum-execution-v3.json')); assert r['repair_target_met'] is True; assert r['models'][-1]['tasks_correct']==8; print('PASS: all eight final programs satisfy seven independent cases after at most one declared repair; unassisted results remain separately reported')"
       - name: Preserve actual execution evidence
         if: always()
         uses: actions/upload-artifact@v4
