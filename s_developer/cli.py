@@ -48,6 +48,7 @@ def main(argv=None):
     parser.add_argument('--project')
     parser.add_argument('--recipe',choices=('static-site','python-cli','c-cli'),default='python-cli')
     parser.add_argument('--provider',choices=('template','native','ollama-external'),default='template')
+    parser.add_argument('--repair-provider',choices=('template','native','ollama-external','requirements-literal'))
     parser.add_argument('--consent',action='store_true')
     parser.add_argument('--max-repairs',type=int,default=0)
     parser.add_argument('--backend',choices=('torch','stdlib'),default='stdlib')
@@ -116,7 +117,7 @@ def main(argv=None):
                 'provider':args.provider,'consent':args.consent})
         elif args.command[1]=='build':
             result=engine.build({'project_id':args.project,'artifact_revision':engine.latest(args.project)['revision'],
-                'repair_provider':args.provider,'max_repairs':args.max_repairs,'consent':args.consent})
+                'repair_provider':args.repair_provider or args.provider,'max_repairs':args.max_repairs,'consent':args.consent})
         elif args.command[1]=='status':result={'artifact':engine.latest(args.project),'runs':engine.runs(args.project)}
         else:parser.error('Use project generate, build, or status')
         print(json.dumps(result,indent=2))

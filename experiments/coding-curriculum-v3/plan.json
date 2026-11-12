@@ -1,0 +1,74 @@
+{
+  "experiment": "s-synthetic-coding-curriculum-v3",
+  "provenance": "Self-authored synthetic arithmetic source bundles; no teacher output or pretrained weights",
+  "seed": 20261113,
+  "model": {
+    "vocab_size": 256,
+    "dim": 96,
+    "layers": 3,
+    "heads": 4,
+    "kv_heads": 2,
+    "context": 512
+  },
+  "steps": 2400,
+  "batch_size": 8,
+  "threads": 2,
+  "learning_rate": 0.003,
+  "minimum_learning_rate": 0.0003,
+  "warmup_steps": 50,
+  "evaluation_interval": 200,
+  "validation_constants": [
+    239,
+    281
+  ],
+  "test_constants": [
+    257,
+    293
+  ],
+  "constant_range": [
+    221,
+    320
+  ],
+  "operations": [
+    "add",
+    "subtract",
+    "multiply",
+    "floor_divide"
+  ],
+  "selection": "lexicographic validation free-generation AST contract agreement, then bundle validity, then lowest NLL; never test score",
+  "decoder": "greedy bytes, stop at first complete JSON object; no correction or token constraints",
+  "max_new_tokens": 200,
+  "target": {
+    "held_out_tasks": 8,
+    "minimum_tasks_correct": 6,
+    "cases_per_task": 7
+  },
+  "limitations": [
+    "public synthetic within-family constant transfer only",
+    "wording templates shared across splits; constant values and complete answers disjoint",
+    "no broad coding ability claim",
+    "no automatic promotion",
+    "semantic execution requires isolated Docker"
+  ],
+  "prompt_suffix": "\nAnswer:\n",
+  "test_file_comment": "# Independent tests.\n",
+  "rationale": "Fix NLL-only selection; diagnose generated validation bundles, explicitly weight operation/constant bytes, enlarge existing architecture; fresh held-out constants, known wording templates. No claim of unseen-paraphrase generalization.",
+  "selection_metric": "free-generation-contract",
+  "semantic_token_weight": 8,
+  "prompt_styles": {
+    "train": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "validation": [
+      3
+    ],
+    "test": [
+      4
+    ]
+  },
+  "case_strategy": "arithmetic-boundaries"
+}

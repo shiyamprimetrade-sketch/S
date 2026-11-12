@@ -1,6 +1,6 @@
 # AxiomFlow Continuum — independent invention workspace
 
-**Status:** A runnable local-first chat prototype, persistent project memory and backup/export system. Uses a **separately installed local open-weight AI model** via Ollama. Does **not** contain a trained model or recreate GPT-6. No cloud subscriptions or API keys required *after* Python, Ollama and a model have been downloaded. No automatic tool execution or full self-modification is claimed.
+**Status:** A runnable local-first chat prototype, persistent project memory and backup/export system. Uses a **separately installed local open-weight AI model** via Ollama. Includes experimental independently trained **SBrain** checkpoints; current coding evidence and limits are documented below. Does **not** recreate GPT-6. No cloud subscriptions or API keys required *after* Python, Ollama and a model have been downloaded. No automatic tool execution or full self-modification is claimed.
 
 ## Quick start — Windows 11
 
@@ -86,3 +86,12 @@ See `docs/TEACHER-STUDENT-ML.md`. The original private chat is **not** included 
 this public repository; only curated technical paraphrases were used.
 
 **Reproducibility:** The complete 4,000-row synthetic dataset is committed compressed as `data/simulations/teacher_student_4000.jsonl.gz`; `lab_cli build` recreates the working plaintext JSONL.
+
+## Generated-code verification upgrade
+
+Package 0.2.4 adds free-running validation-based checkpoint selection and explicit,
+bounded arithmetic-literal repair. The new model emits valid source bundles for
+8/8 held-out arithmetic tasks, but raw programs still copy incorrect constants.
+Repair is deterministic, separately labelled and never presented as untouched
+neural success. See [measured scope, commands and verification](docs/S-GENERATION-VALIDATION-FIX.md).
+Existing checkpoints, original interfaces and project data remain preserved.

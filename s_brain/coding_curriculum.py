@@ -45,7 +45,8 @@ def records(plan):
             completion = json.dumps({'files': {
                 'app.py': f'def solve(p):\n    return {{"value":p["x"]{symbol}{constant}}}\n',
                 'test_app.py': plan.get('test_file_comment', '# Evaluated by independent host cases.\n')}}, separators=(',', ':'))
-            for style in ([0, 1, 2] if split == 'train' else [3 if split == 'validation' else 4]):
+            defaults = {'train': [0, 1, 2], 'validation': [3], 'test': [4]}
+            for style in plan.get('prompt_styles', defaults)[split]:
                 prompt = PROTOCOL + contract(operation, constant, style) + plan.get('prompt_suffix', '')
                 rows.append({'id': f'{operation}-{constant}-{style}', 'split': split,
                              'operation': operation, 'constant': constant, 'style': style,
@@ -73,6 +74,13 @@ def oracle(operation, constant, value):
     elif operation == 'floor_divide': result = value // constant
     else: raise ValueError('Unknown operation')
     return {'value': result}
+
+
+def case_inputs(plan, task):
+    if plan.get('case_strategy') == 'arithmetic-boundaries':
+        k = task['constant']
+        return [-21, 0, 19, k-1, k, -k-1, 2*k]
+    return [-21, 0, 19]
 
 
 def batches(rows, context):

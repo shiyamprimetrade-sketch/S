@@ -1,0 +1,35 @@
+{
+  "created_utc": "2026-11-12T09:32:06.891034+00:00",
+  "dataset_fingerprint": "8704257f6bb1b48357d7d877117f8221980c4df5b6ad32f770e9ba665d49def9",
+  "extras": {
+    "generation_selection": "free-generation-contract",
+    "independently_initialized": true,
+    "no_pretrained_weights": true,
+    "plan_sha256": "02c81c881c3e481223356e70b6a3d598defc3c62b5fc6ff0bc0fa2522b48d5f3",
+    "selection": "lexicographic validation free-generation AST contract agreement, then bundle validity, then lowest NLL; never test score",
+    "semantic_token_weight": 8,
+    "source": "self-authored-synthetic"
+  },
+  "model_config": {
+    "context": 512,
+    "dim": 96,
+    "heads": 4,
+    "kv_heads": 2,
+    "layers": 3,
+    "vocab_size": 256
+  },
+  "runtime": {
+    "cuda_available": false,
+    "cuda_version": null,
+    "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+    "python": "3.12.14",
+    "torch": "2.15.0+cpu"
+  },
+  "schema": 1,
+  "seed": 20261113,
+  "step": 1200,
+  "train_loss": 0.14924825727939606,
+  "train_tokens": 1096774,
+  "validation_loss": 0.025692706927657127,
+  "weights_sha256": "be18814895673f2a80075e0d2baedbda9277f927291ac614b7d3b2ebaa344711"
+}

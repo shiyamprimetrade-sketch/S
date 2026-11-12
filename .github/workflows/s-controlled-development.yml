@@ -32,6 +32,7 @@ jobs:
         run: |
           python scripts/verify_coding_curriculum.py --experiment experiments/coding-curriculum-v1 --approve-runtime-download --report build/coding-curriculum-execution-v1.json
           python scripts/verify_coding_curriculum.py --experiment experiments/coding-curriculum-v2 --approve-runtime-download --report build/coding-curriculum-execution-v2.json
+          python scripts/verify_coding_curriculum.py --experiment experiments/coding-curriculum-v3 --approve-runtime-download --approve-requirements-literal-repair --report build/coding-curriculum-execution-v3.json
       - name: Preserve actual execution evidence
         if: always()
         uses: actions/upload-artifact@v4
@@ -42,4 +43,5 @@ jobs:
             build/capability-oracle.json
             build/coding-curriculum-execution-v1.json
             build/coding-curriculum-execution-v2.json
+            build/coding-curriculum-execution-v3.json
           if-no-files-found: warn

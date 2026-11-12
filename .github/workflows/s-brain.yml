@@ -48,6 +48,7 @@ jobs:
         run: |
           python scripts/evaluate_coding_curriculum.py --experiment experiments/coding-curriculum-v1 --verify experiments/coding-curriculum-v1/generated.json
           python scripts/evaluate_coding_curriculum.py --experiment experiments/coding-curriculum-v2 --verify experiments/coding-curriculum-v2/generated.json
+          python scripts/evaluate_coding_curriculum.py --experiment experiments/coding-curriculum-v3 --verify experiments/coding-curriculum-v3/generated.json
       - uses: actions/setup-node@v4
         with:
           node-version: "22"

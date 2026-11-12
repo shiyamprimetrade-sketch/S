@@ -1,0 +1,232 @@
+{
+  "experiment": "s-synthetic-coding-curriculum-v3",
+  "plan_sha256": "02c81c881c3e481223356e70b6a3d598defc3c62b5fc6ff0bc0fa2522b48d5f3",
+  "dataset_sha256": "8704257f6bb1b48357d7d877117f8221980c4df5b6ad32f770e9ba665d49def9",
+  "decoder": "greedy bytes, stop at first complete JSON object; no correction or token constraints",
+  "max_new_tokens": 200,
+  "semantic_execution": "not_assessed",
+  "automatic_promotion": false,
+  "models": [
+    {
+      "label": "old-demo",
+      "weights_sha256": "a6caeb1f219c01f42cec3ab54fb5dcdb61e20d6530dc91173a7805bdd7d89859",
+      "training_steps": 256,
+      "cases": [
+        {
+          "id": "add-257-4",
+          "prompt_sha256": "d4eec39a2be50dfbb03aba20f81748fa493d5cb6440e8db983a707ea9b9bfa96",
+          "raw": "{\"firint: test_azest_azent: testequestest(')\\ndest: testestest(')\\ndappp.py\": t: iroves\\ndest: test: test: tstest: test: testestst(')\\ndazee')\\ntestes\\nt test(')\\nte')\\nte')\\nt: t: tes\"files\", test('E",
+          "format_passed": false,
+          "diagnostic": "Expecting value: line 1 column 79 (char 78)"
+        },
+        {
+          "id": "subtract-257-4",
+          "prompt_sha256": "d668395789a71b4b6752daaddf9e7ec13ab157a4d2f4767b6a35842ea6fd7435",
+          "raw": "{\": {\"apppy\": t(')\\n\"}}\nRequilent(')\\ndest: t: test: test: testestendest: testes\\nest: t(')\\nt(')\\nt(')\\ndar\n{\"filendappp.py\": t(')\\nt ileppp.pp.py\": \", \": \"}}}}}}}}}}\n{\"fil')\\ndest: t(')\\nt(')\\nt(')\\",
+          "format_passed": false,
+          "diagnostic": "Expecting ':' delimiter: line 1 column 7 (char 6)"
+        },
+        {
+          "id": "multiply-257-4",
+          "prompt_sha256": "272e6e8490ee51216da8f543a03f6b01f1363bb605ab0f89e40a91a37ba84334",
+          "raw": "{\"firest(')\\ndestendest \": \": t(')\\ndestest: indest t t t t: tes\\ndest: t: t: t: testestestestestestest(')\\nt('Duilest(')\\ndar\n{\"filest(')\\ndapppp.ppp.py\": \": t(')\\ndazest(')\\ndappp.py\": t(')\\nt(')\\nt",
+          "format_passed": false,
+          "diagnostic": "Invalid control character at: line 1 column 127 (char 126)"
+        },
+        {
+          "id": "floor_divide-257-4",
+          "prompt_sha256": "686c18ca371027af1a7ab742af20b4933d675c401b7ee5fd0c9eb24b0a914a76",
+          "raw": "Rest: tequirovestequinte')\\nte')\\ndest: test: tes\\ndent: indareeest: t(')\\ndest: t(')\\ntestes\\ndapp.py\": t: t(')\\ndazest(')\\nt(')\\ndestestest: testestestest(')\\nt: testestestestestest: teste')\\ndappp.",
+          "format_passed": false,
+          "diagnostic": "Expecting value: line 1 column 1 (char 0)"
+        },
+        {
+          "id": "add-293-4",
+          "prompt_sha256": "b89c2f54990fd2e2b8a821a73756dcbff140ec4121fd5398b2eda5f0c80617f3",
+          "raw": "{\"firint: test_azest_azent: testequestest(')\\ndest: testestest(')\\ndappp.py\": t: iroves\\ndest: test: test: tstest: test: testestst(')\\ndazee')\\ntestes\\nt test(')\\nte')\\nte')\\nt: t: tes\"files\", test('E",
+          "format_passed": false,
+          "diagnostic": "Expecting value: line 1 column 79 (char 78)"
+        },
+        {
+          "id": "subtract-293-4",
+          "prompt_sha256": "97b23de81fb788d4e2efab40edd76212b2c2a8767720601a5043ad1b6dd6cd43",
+          "raw": "{\": {\"apppy\": t(')\\ndeste')\\ndazequile')\\ndest: El\n{\": {\"ppp.py\": \"py\": \": indestequir\nRequilendendest: Bil')\\ndappp.py\": t(')\\ndeste')\\ndapp.py\": t(')\\ndestequndapp.py\", \"# int t fint t(')\\ndenteee')",
+          "format_passed": false,
+          "diagnostic": "Expecting ':' delimiter: line 1 column 7 (char 6)"
+        },
+        {
+          "id": "multiply-293-4",
+          "prompt_sha256": "0f9ae1944552c0fc46e3d371b1175894c03258c0f2c526bcbf89262e169ece16",
+          "raw": "{\"firest(')\\ndestestestendar\n{\": t r\n{\": \"ap.prindest indent t \": t: test: test: testestestestestest: testes\\nt(')\\nt(')\\nt(')\\ndappp.py\": test: test_app.pp.p.py\": \": \": indazest(')\\ndappp.ppy\": t('El",
+          "format_passed": false,
+          "diagnostic": "Invalid control character at: line 1 column 29 (char 28)"
+        },
+        {
+          "id": "floor_divide-293-4",
+          "prompt_sha256": "d2839a68254bcdcf88dc3d6a49c8418a2416f4180fdfc855b6acc7a085d1bf80",
+          "raw": "Rest: tequirovestequinte')\\nte')\\ndest: test: tes\\ndent: indareeest: t(')\\ndest: t(')\\ntestes\\ndapp.py\": t: t(')\\ndazest(')\\nt(')\\ndestestest: testestestest(')\\nt: testestestestestest: teste')\\ndappp.",
+          "format_passed": false,
+          "diagnostic": "Expecting value: line 1 column 1 (char 0)"
+        }
+      ]
+    },
+    {
+      "label": "random-control",
+      "weights_sha256": "bf806305ee7bd46469b50389d5119b46e520abd9549db17edca78765adb01522",
+      "training_steps": 0,
+      "cases": [
+        {
+          "id": "add-257-4",
+          "prompt_sha256": "d4eec39a2be50dfbb03aba20f81748fa493d5cb6440e8db983a707ea9b9bfa96",
+          "raw": "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n",
+          "format_passed": false,
+          "diagnostic": "Expecting value: line 201 column 1 (char 200)"
+        },
+        {
+          "id": "subtract-257-4",
+          "prompt_sha256": "d668395789a71b4b6752daaddf9e7ec13ab157a4d2f4767b6a35842ea6fd7435",
+          "raw": "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n",
+          "format_passed": false,
+          "diagnostic": "Expecting value: line 201 column 1 (char 200)"
+        },
+        {
+          "id": "multiply-257-4",
+          "prompt_sha256": "272e6e8490ee51216da8f543a03f6b01f1363bb605ab0f89e40a91a37ba84334",
+          "raw": "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n",
+          "format_passed": false,
+          "diagnostic": "Expecting value: line 201 column 1 (char 200)"
+        },
+        {
+          "id": "floor_divide-257-4",
+          "prompt_sha256": "686c18ca371027af1a7ab742af20b4933d675c401b7ee5fd0c9eb24b0a914a76",
+          "raw": "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n",
+          "format_passed": false,
+          "diagnostic": "Expecting value: line 201 column 1 (char 200)"
+        },
+        {
+          "id": "add-293-4",
+          "prompt_sha256": "b89c2f54990fd2e2b8a821a73756dcbff140ec4121fd5398b2eda5f0c80617f3",
+          "raw": "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n",
+          "format_passed": false,
+          "diagnostic": "Expecting value: line 201 column 1 (char 200)"
+        },
+        {
+          "id": "subtract-293-4",
+          "prompt_sha256": "97b23de81fb788d4e2efab40edd76212b2c2a8767720601a5043ad1b6dd6cd43",
+          "raw": "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n",
+          "format_passed": false,
+          "diagnostic": "Expecting value: line 201 column 1 (char 200)"
+        },
+        {
+          "id": "multiply-293-4",
+          "prompt_sha256": "0f9ae1944552c0fc46e3d371b1175894c03258c0f2c526bcbf89262e169ece16",
+          "raw": "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n",
+          "format_passed": false,
+          "diagnostic": "Expecting value: line 201 column 1 (char 200)"
+        },
+        {
+          "id": "floor_divide-293-4",
+          "prompt_sha256": "d2839a68254bcdcf88dc3d6a49c8418a2416f4180fdfc855b6acc7a085d1bf80",
+          "raw": "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n",
+          "format_passed": false,
+          "diagnostic": "Expecting value: line 201 column 1 (char 200)"
+        }
+      ]
+    },
+    {
+      "label": "trained-candidate",
+      "weights_sha256": "be18814895673f2a80075e0d2baedbda9277f927291ac614b7d3b2ebaa344711",
+      "training_steps": 1200,
+      "cases": [
+        {
+          "id": "add-257-4",
+          "prompt_sha256": "d4eec39a2be50dfbb03aba20f81748fa493d5cb6440e8db983a707ea9b9bfa96",
+          "raw": "{\"files\":{\"app.py\":\"def solve(p):\\n    return {\\\"value\\\":p[\\\"x\\\"]+270}\\n\",\"test_app.py\":\"# Independent tests.\\n\"}}",
+          "format_passed": true,
+          "files": {
+            "app.py": "def solve(p):\n    return {\"value\":p[\"x\"]+270}\n",
+            "test_app.py": "# Independent tests.\n"
+          },
+          "source_sha256": "ca08ba6fab6996293e9feb5527e70dcdc91129364e49209eb4bbb21414b3e938"
+        },
+        {
+          "id": "subtract-257-4",
+          "prompt_sha256": "d668395789a71b4b6752daaddf9e7ec13ab157a4d2f4767b6a35842ea6fd7435",
+          "raw": "{\"files\":{\"app.py\":\"def solve(p):\\n    return {\\\"value\\\":p[\\\"x\\\"]-270}\\n\",\"test_app.py\":\"# Independent tests.\\n\"}}",
+          "format_passed": true,
+          "files": {
+            "app.py": "def solve(p):\n    return {\"value\":p[\"x\"]-270}\n",
+            "test_app.py": "# Independent tests.\n"
+          },
+          "source_sha256": "cd6a9d432267352a2e028060c5a994c0ae7d347ecb0ae8b323ccd9f56c0828c2"
+        },
+        {
+          "id": "multiply-257-4",
+          "prompt_sha256": "272e6e8490ee51216da8f543a03f6b01f1363bb605ab0f89e40a91a37ba84334",
+          "raw": "{\"files\":{\"app.py\":\"def solve(p):\\n    return {\\\"value\\\":p[\\\"x\\\"]*270}\\n\",\"test_app.py\":\"# Independent tests.\\n\"}}",
+          "format_passed": true,
+          "files": {
+            "app.py": "def solve(p):\n    return {\"value\":p[\"x\"]*270}\n",
+            "test_app.py": "# Independent tests.\n"
+          },
+          "source_sha256": "39442b9c6310574ff2921ca37c719ad13d1fb36004eb935708d9a3a65284a597"
+        },
+        {
+          "id": "floor_divide-257-4",
+          "prompt_sha256": "686c18ca371027af1a7ab742af20b4933d675c401b7ee5fd0c9eb24b0a914a76",
+          "raw": "{\"files\":{\"app.py\":\"def solve(p):\\n    return {\\\"value\\\":p[\\\"x\\\"]//270}\\n\",\"test_app.py\":\"# Independent tests.\\n\"}}",
+          "format_passed": true,
+          "files": {
+            "app.py": "def solve(p):\n    return {\"value\":p[\"x\"]//270}\n",
+            "test_app.py": "# Independent tests.\n"
+          },
+          "source_sha256": "87de454525c4f65a81ec20a0ecbcc07641672026aba14ef13b8841a1072056bc"
+        },
+        {
+          "id": "add-293-4",
+          "prompt_sha256": "b89c2f54990fd2e2b8a821a73756dcbff140ec4121fd5398b2eda5f0c80617f3",
+          "raw": "{\"files\":{\"app.py\":\"def solve(p):\\n    return {\\\"value\\\":p[\\\"x\\\"]+299}\\n\",\"test_app.py\":\"# Independent tests.\\n\"}}",
+          "format_passed": true,
+          "files": {
+            "app.py": "def solve(p):\n    return {\"value\":p[\"x\"]+299}\n",
+            "test_app.py": "# Independent tests.\n"
+          },
+          "source_sha256": "1063167dfe855b8d25fe6a5b03bcdd675ed59aac3c262a90effd7e518e97f115"
+        },
+        {
+          "id": "subtract-293-4",
+          "prompt_sha256": "97b23de81fb788d4e2efab40edd76212b2c2a8767720601a5043ad1b6dd6cd43",
+          "raw": "{\"files\":{\"app.py\":\"def solve(p):\\n    return {\\\"value\\\":p[\\\"x\\\"]-299}\\n\",\"test_app.py\":\"# Independent tests.\\n\"}}",
+          "format_passed": true,
+          "files": {
+            "app.py": "def solve(p):\n    return {\"value\":p[\"x\"]-299}\n",
+            "test_app.py": "# Independent tests.\n"
+          },
+          "source_sha256": "7b3fee6c08b8551955e83872d5d607fdab652fcfb7733d35b7ad7f12a283098e"
+        },
+        {
+          "id": "multiply-293-4",
+          "prompt_sha256": "0f9ae1944552c0fc46e3d371b1175894c03258c0f2c526bcbf89262e169ece16",
+          "raw": "{\"files\":{\"app.py\":\"def solve(p):\\n    return {\\\"value\\\":p[\\\"x\\\"]*299}\\n\",\"test_app.py\":\"# Independent tests.\\n\"}}",
+          "format_passed": true,
+          "files": {
+            "app.py": "def solve(p):\n    return {\"value\":p[\"x\"]*299}\n",
+            "test_app.py": "# Independent tests.\n"
+          },
+          "source_sha256": "7a0c041e01a998937244e52e5a17ab4efadff8e32ada7fbd7ce7d2cc34c4bbaf"
+        },
+        {
+          "id": "floor_divide-293-4",
+          "prompt_sha256": "d2839a68254bcdcf88dc3d6a49c8418a2416f4180fdfc855b6acc7a085d1bf80",
+          "raw": "{\"files\":{\"app.py\":\"def solve(p):\\n    return {\\\"value\\\":p[\\\"x\\\"]//230}\\n\",\"test_app.py\":\"# Independent tests.\\n\"}}",
+          "format_passed": true,
+          "files": {
+            "app.py": "def solve(p):\n    return {\"value\":p[\"x\"]//230}\n",
+            "test_app.py": "# Independent tests.\n"
+          },
+          "source_sha256": "ba4f8773d6e3e491adbdcbe19933290283eb760780b7813c9c7ebfe6ab96ee8c"
+        }
+      ]
+    }
+  ]
+}
