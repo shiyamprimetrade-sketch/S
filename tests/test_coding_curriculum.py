@@ -33,7 +33,7 @@ class CurriculumTests(unittest.TestCase):
 
     def test_preserved_datasets_and_selected_models_match_the_training_ledger(self):
         from s_brain.checkpoint import load_manifest
-        for version in (1,2):
+        for version in (1,2,3):
             root=PLAN.parent.parent/f'coding-curriculum-v{version}'
             plan=read_plan(root/'plan.json');rows=records(plan)
             archived=[json.loads(line) for line in gzip.decompress((root/'dataset.jsonl.gz').read_bytes()).splitlines()]

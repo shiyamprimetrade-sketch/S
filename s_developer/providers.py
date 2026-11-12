@@ -154,6 +154,9 @@ class OllamaProvider:
 
 
 def provider(identifier,config):
+    if identifier=='requirements-literal':
+        from .literal_repair import LiteralRepairProvider
+        return LiteralRepairProvider()
     if identifier=='template':return TemplateProvider()
     if identifier=='native' and config.get('native_checkpoint'):return NativeProvider(config['native_checkpoint'],config.get('native_backend','torch'),config.get('native_decoding','sampled'))
     if identifier=='ollama-external' and config.get('ollama_model'):return OllamaProvider(config['ollama_model'])

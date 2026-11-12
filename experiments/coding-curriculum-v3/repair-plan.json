@@ -1,0 +1,13 @@
+{
+  "experiment": "s-synthetic-coding-curriculum-v3",
+  "declared_before_test_generation": true,
+  "basis": "Validation model copied wrong constants while generating structurally valid arithmetic code",
+  "max_repairs": 1,
+  "allowed_change": "Exactly one positive integer literal from the explicit approved arithmetic requirement; generated operator and AST shape unchanged",
+  "provider": "requirements-literal",
+  "permission": "Explicit --approve-requirements-literal-repair required in isolated verifier",
+  "minimum_final_tasks_correct": 8,
+  "initial_target_unchanged": true,
+  "test_cases_or_expected_answers_provided_to_repair": false,
+  "neural_repair_claimed": false
+}

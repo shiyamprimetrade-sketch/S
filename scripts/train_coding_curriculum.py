@@ -12,6 +12,7 @@ from s_brain.model import Config, SBrain
 from s_brain.checkpoint import save_checkpoint
 from s_brain.supervised_data import masked_cross_entropy
 from s_brain.coding_curriculum import batches, digest, read_plan, records
+from s_brain.generation_validation import generation_metrics, selection_rank, semantic_token_weights
 
 
 def main():
@@ -44,17 +45,22 @@ def main():
     fingerprint = digest(rows)
     extras = {'independently_initialized': True, 'source': 'self-authored-synthetic',
               'plan_sha256': digest(plan), 'no_pretrained_weights': True,
+              'semantic_token_weight': plan.get('semantic_token_weight',1),
+              'generation_selection': plan.get('selection_metric','nll'),
               'selection': plan['selection']}
     def save(name, step, tokens, loss, validation_loss):
         return save_checkpoint(args.output / name, model, cfg, step=step,
             train_tokens=tokens, train_loss=loss, validation_loss=validation_loss,
             seed=plan['seed'], dataset_fingerprint=fingerprint, extras=extras)
     best = evaluate()
+    generation_selection = plan.get('selection_metric') == 'free-generation-contract'
+    best_rank = (-1, -1, float('-inf'))
     save('random-control', 0, 0, best, best)
     report = {'plan_sha256': digest(plan), 'dataset_sha256': fingerprint,
               'parameters': sum(p.numel() for p in model.parameters()),
               'split_counts': {s: sum(r['split'] == s for r in rows) for s in ('train','validation','test')},
               'initial_validation_nll': best, 'history': [], 'selected_step': 0,
+              'train_nll_definition': 'Optimizer completion CE; operation/constant bytes weighted by semantic_token_weight when configured. Validation NLL is unweighted.',
               'weight_update_l2_definition': 'Latest update state_dict L2, including tied aliases; not selected-checkpoint distance',
               'selection_frozen_before_test_generation': True}
     tokens = 0
@@ -65,7 +71,12 @@ def main():
         x, y = batches(selected, cfg.context)
         optimizer.zero_grad(set_to_none=True)
         logits, _ = model(x)
-        loss = masked_cross_entropy(logits, y)
+        if plan.get('semantic_token_weight', 1) != 1:
+            weights = semantic_token_weights(selected, y, plan['semantic_token_weight'])
+            per_token = torch.nn.functional.cross_entropy(logits.float().transpose(1,2), y, reduction='none', ignore_index=-100)
+            loss = (per_token * weights).sum() / weights.sum()
+        else:
+            loss = masked_cross_entropy(logits, y)
         if not torch.isfinite(loss):
             raise RuntimeError('Nonfinite loss; training stopped')
         loss.backward()
@@ -82,10 +93,26 @@ def main():
                    'gradient_norm':float(norm), 'learning_rate':lr,
                    'elapsed_seconds':round(time.monotonic()-start, 3)}
             report['history'].append(row)
-            if val < best:
+            if generation_selection:
+                metrics = generation_metrics(model, validation, plan['max_new_tokens'])
+                row['free_generation'] = metrics
+                rank = selection_rank(metrics, val)
+                improved = rank > best_rank
+            else:
+                improved = val < best
+            if improved:
+                if generation_selection: best_rank = rank
                 best = val
                 report['selected_step'] = step
-                manifest = save('selected', step, tokens, row['train_nll'], val)
+                snapshot = f'checkpoints/step-{step:06d}' if generation_selection else 'selected'
+                manifest = save(snapshot, step, tokens, row['train_nll'], val)
+                if generation_selection:
+                    import shutil
+                    selected_dir = args.output/'selected'
+                    selected_dir.mkdir(exist_ok=True)
+                    for name in ('manifest.json','model.safetensors'):
+                        shutil.copyfile(args.output/snapshot/name, selected_dir/name)
+                    report['selected_validation_generation'] = metrics
                 report['selected_weights_sha256'] = manifest.weights_sha256
             report['weight_update_l2'] = math.sqrt(sum(float(((v.detach()-initial[k])**2).sum()) for k,v in model.state_dict().items()))
             (args.output/'training-report.json').write_text(json.dumps(report, indent=2)+'\n')
