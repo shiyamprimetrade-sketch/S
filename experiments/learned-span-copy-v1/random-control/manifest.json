@@ -1,0 +1,15 @@
+{
+  "schema": 1,
+  "kind": "s-learned-span-copy",
+  "adapter_config": {
+    "dim": 96,
+    "hidden": 64
+  },
+  "step": 0,
+  "seed": 20261115,
+  "base_weights_sha256": "be18814895673f2a80075e0d2baedbda9277f927291ac614b7d3b2ebaa344711",
+  "weights_sha256": "99e059cc6a33184ee9485aef4772f7d15f3a3cdc092f978d9f8b3ee0f46a3091",
+  "plan_sha256": "937131c7fbf426528a8cf978c95091e699458f83fac0836c12d857f6a7c7cbe6",
+  "dataset_sha256": "b93fa2b2e07a11af5dfdfb64f0a48606784d2f4f82cb5ceb0822fe37d0eb9bcc",
+  "provenance": "self-authored synthetic; frozen independently trained SBrain + learned span endpoints/gate; one bounded copy action, no repair"
+}

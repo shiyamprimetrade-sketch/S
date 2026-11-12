@@ -26,7 +26,7 @@
 <label for="code-recipe">Supported starter or model target</label>
 <select id="code-recipe"><option value="static-site">Static informational website</option><option value="python-cli">Python starter CLI + tests</option><option value="c-cli">C starter CLI</option></select>
 <label for="code-provider">Generation / repair provider</label>
-<select id="code-provider"><option value="template">Deterministic template — no neural generation</option><option value="native">S Native — experimental, unreliable code generation</option><option value="ollama-external">Local Ollama external model — separately configured</option></select>
+<select id="code-provider"><option value="template">Deterministic template — no neural generation</option><option value="native">S Native — experimental, unreliable code generation</option><option value="native-copy">S Native + learned copy — experimental arithmetic</option><option value="ollama-external">Local Ollama external model — separately configured</option></select>
 <p>Templates create narrow starter projects. Requested business features are not automatically implemented by displaying their requirements.</p>
 <label><input id="code-consent" type="checkbox"> Approve this source generation or execution action for the selected saved project.</label>
 <div class="actions"><button id="code-generate" type="button">Generate source checkpoint</button><button id="code-refresh" type="button">Reopen saved source</button><button id="code-export" type="button">Download source ZIP</button></div>

@@ -1,47 +1,46 @@
 # S Developer continuation checkpoint
 
-Owner: Md Shiyam Talukder. Read the master directive, current Git state and related
-PR before resuming. Never infer device installation from a GitHub merge.
+Owner: Md Shiyam Talukder. Preserve project boundaries and every prior verified
+checkpoint. Read the master directive and related PR before resuming. A GitHub
+merge does not prove installation on the owner's PC/phone.
 
 ## Preserved base
 
-PRs #14–19 are merged. Main before this milestone is
-`2947aa80b797295c8a32e7f7d612083a79ec85ec`. All prior architecture, memory, tools,
-interfaces, model checkpoints and tests are preserved. v1/v2 coding experiments
-failed all eight source-bundle format checks; their complete evidence remains.
+PRs #14–20 are merged. Main before this milestone is
+`af6db819a6d710e1d7a00cee3e77ce7108f6c83a`. v3 SBrain still copies wrong constants;
+PR #20 verified 8/8 arithmetic tasks only after a separate deterministic literal
+repair. Its raw 0/8 and every earlier failure remain unchanged and preserved.
 
 ## Current milestone
 
-Branch: `feature/s-generation-validation`.
+Branch `feature/s-learned-byte-copy`: explicit learned source-copy generation,
+without post-generation repair. Frozen 329,376-parameter independently trained
+SBrain; independently initialized copy adapters on fresh synthetic CC0 corpora.
 
-Fixed NLL-only model selection by adding free-running validation source/contract
-checks. Added semantic-token training weights and arithmetic boundary inputs to
-catch incorrect divisors. New v3 run: 329,376 random-initialized parameters,
-2,400 updates, selected checkpoint step 1,200 by validation generation metrics.
-Held-out constants are fresh; wording templates are shared. This is a narrow
-arithmetic experiment, never a claim of general programming ability.
+Byte attention/gate: 6,241 parameters, 1,200 updates, selected 1,100. Validation
+8/8; held-out source-contract agreement 5/8, below its six-task target. Span
+endpoint/gate follow-up: 18,819 parameters, 2,000 updates, selected 900. Validation
+8/8; fresh held-out source-contract agreement 6/8. One span action, 32-byte limit,
+explicitly labelled controller. No literal parser, expected answers, source patch
+or repair at inference. Known wording templates are shared; no general coding or
+unseen-template claim. Validation-only prototypes preceded the isolated final
+span run; no held-out test output was used to retrain either frozen candidate.
 
-Actual held-out generation: candidate 8/8 valid bundles; old and random controls
-0/8. All eight raw candidate programs copy an incorrect constant. Their original
-source is frozen. No test-tuned retraining is allowed. A separately predeclared
-one-step deterministic literal repair copies only an explicit approved numeric
-requirement, preserving the neural operator. Initial/final execution and repair
-provenance must remain separate; never attribute repaired results to untouched
-neural generation. No model is automatically promoted.
+`docs/S-LEARNED-COPY.md` and `experiments/learned-{byte,span}-copy-v1/` contain
+plans, data, safe weights, hashes, logs and raw results. New `native-copy` provider
+and explicit local adapter installation are available in CLI/GUI. Default model
+and execution authority are unchanged. Full prompts exceeding context are refused.
 
-See `docs/S-GENERATION-VALIDATION-FIX.md` and `experiments/coding-curriculum-v3/`.
-Local verification: 115 app tests, 807 neural tests and 25 UI tests passed;
-old/new frozen outputs replay; package/installed launcher smoke passes. Local
-Docker is absent. Real Docker CI verified 0/8 initial and 8/8 repaired programs,
-56/56 final independent cases. Actual reports/artifact provenance are saved under
-`reports/s-developer/generation-validation-v3/`. Raw neural target remains false;
-the separately declared deterministic-repair target passed. Neural output replay
-also passed remotely. Inspect PR #20 for final Windows/Linux and merge status.
+Local: 119 app, 814 neural, 25 UI tests passed. New frozen outputs replay exactly;
+package/installed launcher/persistence/stdlib smoke passes. Local Docker is absent.
+Inspect the related PR for actual zero-repair runtime scores, final Windows/Linux
+CI, evidence preservation and merge status before claiming those checks passed.
 
-## Next action
+## Next concrete work
 
-Finish CI and preserve actual reports; integrate only the tested tree. Retain the
-pure-neural quality target even if the separately labelled deterministic repair
-succeeds. Future independent training must address literal-copy reliability with
-fresh held-out data and predeclared budgets. Full general autonomous coding,
-Windows clean-install acceptance H and physical Android/PC upgrades remain open.
+Complete real isolated seven-case-per-task acceptance and required CI; preserve
+actual reports and integrate the tested tree. Never relabel copy-assisted results
+as the unmodified base model's unassisted improvement. Do not retune the now-public
+held-out constants. Remaining failures, general autonomous programming, Windows
+clean-installer acceptance H and physical device upgrades remain open. No model
+is automatically promoted based on this small public synthetic diagnostic.

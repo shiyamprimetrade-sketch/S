@@ -1,0 +1,21 @@
+{"step": 100, "loss": 1.2136775255203247, "validation_objective": 0.3768349885940552, "format": 8, "contracts": 7, "elapsed_seconds": 9.576}
+{"step": 200, "loss": 1.1504942178726196, "validation_objective": 0.5789386034011841, "format": 7, "contracts": 7, "elapsed_seconds": 19.169}
+{"step": 300, "loss": 0.7179911136627197, "validation_objective": 1.2852628231048584, "format": 7, "contracts": 5, "elapsed_seconds": 29.667}
+{"step": 400, "loss": 0.6843026876449585, "validation_objective": 0.8666965365409851, "format": 7, "contracts": 5, "elapsed_seconds": 39.605}
+{"step": 500, "loss": 0.7899591326713562, "validation_objective": 0.4336976110935211, "format": 8, "contracts": 8, "elapsed_seconds": 49.809}
+{"step": 600, "loss": 0.7240144610404968, "validation_objective": 0.443889856338501, "format": 7, "contracts": 7, "elapsed_seconds": 59.391}
+{"step": 700, "loss": 0.6622849106788635, "validation_objective": 0.41219788789749146, "format": 8, "contracts": 8, "elapsed_seconds": 70.344}
+{"step": 800, "loss": 0.6263348460197449, "validation_objective": 0.5413004755973816, "format": 8, "contracts": 7, "elapsed_seconds": 79.886}
+{"step": 900, "loss": 0.45519572496414185, "validation_objective": 0.2686953544616699, "format": 8, "contracts": 8, "elapsed_seconds": 89.076}
+{"step": 1000, "loss": 0.9982137084007263, "validation_objective": 0.5648431777954102, "format": 8, "contracts": 7, "elapsed_seconds": 98.155}
+{"step": 1100, "loss": 0.8231411576271057, "validation_objective": 0.4830971658229828, "format": 8, "contracts": 7, "elapsed_seconds": 107.294}
+{"step": 1200, "loss": 0.3531193435192108, "validation_objective": 0.2876778841018677, "format": 8, "contracts": 8, "elapsed_seconds": 116.119}
+{"step": 1300, "loss": 0.945107102394104, "validation_objective": 0.38790085911750793, "format": 8, "contracts": 8, "elapsed_seconds": 128.308}
+{"step": 1400, "loss": 0.7546489238739014, "validation_objective": 0.35732799768447876, "format": 8, "contracts": 7, "elapsed_seconds": 137.475}
+{"step": 1500, "loss": 0.49936339259147644, "validation_objective": 0.6240012049674988, "format": 8, "contracts": 6, "elapsed_seconds": 147.208}
+{"step": 1600, "loss": 0.7850814461708069, "validation_objective": 0.4902441203594208, "format": 8, "contracts": 7, "elapsed_seconds": 157.444}
+{"step": 1700, "loss": 0.7339592576026917, "validation_objective": 0.8433270454406738, "format": 8, "contracts": 5, "elapsed_seconds": 166.78}
+{"step": 1800, "loss": 0.3590928614139557, "validation_objective": 0.6237748265266418, "format": 8, "contracts": 6, "elapsed_seconds": 176.448}
+{"step": 1900, "loss": 1.1858750581741333, "validation_objective": 0.8606540560722351, "format": 8, "contracts": 5, "elapsed_seconds": 185.977}
+{"step": 2000, "loss": 0.47165411710739136, "validation_objective": 0.4091557264328003, "format": 8, "contracts": 7, "elapsed_seconds": 196.766}
+Complete: base unchanged; no test generation or repair.
