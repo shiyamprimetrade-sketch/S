@@ -139,7 +139,7 @@ class NativeCopyProvider(NativeProvider):
         from s_brain.checkpoint import load_manifest
         from .copy_models import validate_adapter
         base=load_manifest(self.checkpoint);copy=validate_adapter(self.adapter,base)
-        return {'provider':self.id,'independently_generated_neural_code':base.extras.get('independently_initialized') is True,
+        return {'provider':self.id,'independently_generated_neural_code':base.extras.get('independently_initialized') is True and copy.get('independently_initialized') is True,
                 'runtime_backend':'torch','decoding':copy['kind']+'-greedy','model_sha256':base.weights_sha256,
                 'copy_kind':copy['kind'],
                 'copy_adapter_sha256':copy['weights_sha256'],'copy_training_steps':copy['step'],

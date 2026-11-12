@@ -44,6 +44,14 @@ class CopyModelTests(unittest.TestCase):
             token_constants={r['constant'] for r in records(read_plan(EXP/'plan.json'))}
             self.assertFalse(token_constants & {r['constant'] for r in rows})
 
+    def test_unknown_adapter_origin_is_not_labelled_independent_neural_generation(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            db=Path(temporary)/'s.sqlite3';install_native(db,BASE);install_copy_adapter(db,EXP/'selected')
+            config=load_config(db);manifest=Path(config['native_copy_adapter'])/'manifest.json'
+            value=json.loads(manifest.read_text());value['independently_initialized']=False
+            manifest.write_text(json.dumps(value))
+            self.assertFalse(provider('native-copy',config).provenance()['independently_generated_neural_code'])
+
     def test_wrong_base_random_control_and_corruption_are_refused(self):
         other=ROOT/'s_developer/resources/native-demo'
         with self.assertRaises(ValueError):validate_adapter(EXP/'selected',load_manifest(other))

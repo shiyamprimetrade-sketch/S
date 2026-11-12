@@ -59,7 +59,7 @@ def main():
     def save(path,step):
         path=args.output/path;path.mkdir(parents=True,exist_ok=True)
         save_file(adapter.state_dict(),str(path/'adapter.safetensors'))
-        meta={'schema':1,'kind':'s-learned-byte-copy','adapter_config':plan['adapter'],'step':step,
+        meta={'schema':1,'independently_initialized':True,'kind':'s-learned-byte-copy','adapter_config':plan['adapter'],'step':step,
               'base_weights_sha256':manifest.weights_sha256,'weights_sha256':sha256_file(path/'adapter.safetensors'),
               'dataset_sha256':digest(rows),'plan_sha256':digest(plan),'seed':plan['seed'],
               'provenance':'self-authored synthetic; frozen independent SBrain plus independently initialized learned source attention/gate'}

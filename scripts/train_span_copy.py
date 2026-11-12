@@ -36,7 +36,7 @@ def main():
             'adapter_parameters':sum(v.numel() for v in adapter.parameters()),'split_counts':{s:sum(r['split']==s for r in rows) for s in ('train','validation','test')},'history':[],'test_generation_started':False,'repairs_allowed':0,'source_executed':False}
     def save(name,step):
         root=a.output/name;root.mkdir(parents=True,exist_ok=True);save_file(adapter.state_dict(),str(root/'adapter.safetensors'))
-        value={'schema':1,'kind':'s-learned-span-copy','adapter_config':plan['adapter'],'step':step,'seed':plan['seed'],
+        value={'schema':1,'independently_initialized':True,'kind':'s-learned-span-copy','adapter_config':plan['adapter'],'step':step,'seed':plan['seed'],
                'base_weights_sha256':manifest.weights_sha256,'weights_sha256':sha256_file(root/'adapter.safetensors'),'plan_sha256':digest(plan),'dataset_sha256':digest(rows),
                'provenance':'self-authored synthetic; frozen independently trained SBrain + learned span endpoints/gate; one bounded copy action, no repair'}
         (root/'manifest.json').write_text(json.dumps(value,indent=2)+'\n');return value

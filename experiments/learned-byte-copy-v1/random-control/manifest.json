@@ -11,5 +11,6 @@
   "dataset_sha256": "c93e451e1d62534d9f0f8b2f30c32ca377d286979e5dd0f2254f7d043953d77b",
   "plan_sha256": "e988d10092509d5c0cfe0db8ef2eaea1140ff1161564f7deb3e0ca646a5511df",
   "seed": 20261114,
-  "provenance": "self-authored synthetic; frozen independent SBrain plus independently initialized learned source attention/gate"
+  "provenance": "self-authored synthetic; frozen independent SBrain plus independently initialized learned source attention/gate",
+  "independently_initialized": true
 }

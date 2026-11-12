@@ -102,5 +102,5 @@ Package 0.2.5 adds an opt-in learned-copy adapter/provider while keeping the bas
 SBrain weights unchanged. It is a distinct copy-assisted generation mechanism,
 not the deterministic literal repair from PR #20. Fresh source-contract checks
 reach 5/8 with byte attention and 6/8 with a bounded learned span controller;
-actual isolated runtime evidence is recorded separately. See
+real restricted Docker execution confirms those scores with zero repairs; base/random controls remain 0/8. See
 [scope, reproducible commands and remaining failures](docs/S-LEARNED-COPY.md).

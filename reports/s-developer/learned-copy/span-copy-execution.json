@@ -1,0 +1,3197 @@
+{
+  "experiment": "s-learned-span-copy-v1",
+  "plan_sha256": "937131c7fbf426528a8cf978c95091e699458f83fac0836c12d857f6a7c7cbe6",
+  "image": "python@sha256:5e2bdb1b0d542d5039cffb8181c65930093949194a65c365dfb1b0fe13a4fa5b",
+  "repairs_performed": 0,
+  "automatic_promotion": false,
+  "models": [
+    {
+      "label": "base-unassisted",
+      "tasks": [
+        {
+          "id": "add-593-4",
+          "passed": false,
+          "cases": [
+            {
+              "input": {
+                "x": -21
+              },
+              "expected": {
+                "value": 572
+              },
+              "verdict": {
+                "status": "wrong_answer",
+                "passed": false,
+                "actual": {
+                  "value": 278
+                },
+                "diagnostic": "JSON result did not satisfy this case"
+              },
+              "returncode": 0,
+              "output": "{\"value\": 278}\n"
+            },
+            {
+              "input": {
+                "x": 0
+              },
+              "expected": {
+                "value": 593
+              },
+              "verdict": {
+                "status": "wrong_answer",
+                "passed": false,
+                "actual": {
+                  "value": 299
+                },
+                "diagnostic": "JSON result did not satisfy this case"
+              },
+              "returncode": 0,
+              "output": "{\"value\": 299}\n"
+            },
+            {
+              "input": {
+                "x": 19
+              },
+              "expected": {
+                "value": 612
+              },
+              "verdict": {
+                "status": "wrong_answer",
+                "passed": false,
+                "actual": {
+                  "value": 318
+                },
+                "diagnostic": "JSON result did not satisfy this case"
+              },
+              "returncode": 0,
+              "output": "{\"value\": 318}\n"
+            },
+            {
+              "input": {
+                "x": 592
+              },
+              "expected": {
+                "value": 1185
+              },
+              "verdict": {
+                "status": "wrong_answer",
+                "passed": false,
+                "actual": {
+                  "value": 891
+                },
+                "diagnostic": "JSON result did not satisfy this case"
+              },
+              "returncode": 0,
+              "output": "{\"value\": 891}\n"
+            },
+            {
+              "input": {
+                "x": 593
+              },
+              "expected": {
+                "value": 1186
+              },
+              "verdict": {
+                "status": "wrong_answer",
+                "passed": false,
+                "actual": {
+                  "value": 892
+                },
+                "diagnostic": "JSON result did not satisfy this case"
+              },
+              "returncode": 0,
+              "output": "{\"value\": 892}\n"
+            },
+            {
+              "input": {
+                "x": -594
+              },
+              "expected": {
+                "value": -1
+              },
+              "verdict": {
+                "status": "wrong_answer",
+                "passed": false,
+                "actual": {
+                  "value": -295
+                },
+                "diagnostic": "JSON result did not satisfy this case"
+              },
+              "returncode": 0,
+              "output": "{\"value\": -295}\n"
+            },
+            {
+              "input": {
+                "x": 1186
+              },
+              "expected": {
+                "value": 1779
+              },
+              "verdict": {
+                "status": "wrong_answer",
+                "passed": false,
+                "actual": {
+                  "value": 1485
+                },
+                "diagnostic": "JSON result did not satisfy this case"
+              },
+              "returncode": 0,
+              "output": "{\"value\": 1485}\n"
+            }
+          ]
+        },
+        {
+          "id": "subtract-593-4",
+          "passed": false,
+          "cases": [
+            {
+              "input": {
+                "x": -21
+              },
+              "expected": {
+                "value": -614
+              },
+              "verdict": {
+                "status": "wrong_answer",
+                "passed": false,
+                "actual": {
+                  "value": -320
+                },
+                "diagnostic": "JSON result did not satisfy this case"
+              },
+              "returncode": 0,
+              "output": "{\"value\": -320}\n"
+            },
+            {
+              "input": {
+                "x": 0
+              },
+              "expected": {
+                "value": -593
+              },
+              "verdict": {
+                "status": "wrong_answer",
+                "passed": false,
+                "actual": {
+                  "value": -299
+                },
+                "diagnostic": "JSON result did not satisfy this case"
+              },
+              "returncode": 0,
+              "output": "{\"value\": -299}\n"
+            },
+            {
+              "input": {
+                "x": 19
+              },
+              "expected": {
+                "value": -574
+              },
+              "verdict": {
+                "status": "wrong_answer",
+                "passed": false,
+                "actual": {
+                  "value": -280
+                },
+                "diagnostic": "JSON result did not satisfy this case"
+              },
+              "returncode": 0,
+              "output": "{\"value\": -280}\n"
+            },
+            {
+              "input": {
+                "x": 592
+              },
+              "expected": {
+                "value": -1
+              },
+              "verdict": {
+                "status": "wrong_answer",
+                "passed": false,
+                "actual": {
+                  "value": 293
+                },
+                "diagnostic": "JSON result did not satisfy this case"
+              },
+              "returncode": 0,
+              "output": "{\"value\": 293}\n"
+            },
+            {
+              "input": {
+                "x": 593
+              },
+              "expected": {
+                "value": 0
+              },
+              "verdict": {
+                "status": "wrong_answer",
+                "passed": false,
+                "actual": {
+                  "value": 294
+                },
+                "diagnostic": "JSON result did not satisfy this case"
+              },
+              "returncode": 0,
+              "output": "{\"value\": 294}\n"
+            },
+            {
+              "input": {
+                "x": -594
+              },
+              "expected": {
+                "value": -1187
+              },
+              "verdict": {
+                "status": "wrong_answer",
+                "passed": false,
+                "actual": {
+                  "value": -893
+                },
+                "diagnostic": "JSON result did not satisfy this case"
+              },
+              "returncode": 0,
+              "output": "{\"value\": -893}\n"
+            },
+            {
+              "input": {
+                "x": 1186
+              },
+              "expected": {
+                "value": 593
+              },
+              "verdict": {
+                "status": "wrong_answer",
+                "passed": false,
+                "actual": {
+                  "value": 887
+                },
+                "diagnostic": "JSON result did not satisfy this case"
+              },
+              "returncode": 0,
+              "output": "{\"value\": 887}\n"
+            }
+          ]
+        },
+        {
+          "id": "multiply-593-4",
+          "passed": false,
+          "cases": [
+            {
+              "input": {
+                "x": -21
+              },
+              "expected": {
+                "value": -12453
+              },
+              "verdict": {
+                "status": "wrong_answer",
+                "passed": false,
+                "actual": {
+                  "value": -6279
+                },
+                "diagnostic": "JSON result did not satisfy this case"
+              },
+              "returncode": 0,
+              "output": "{\"value\": -6279}\n"
+            },
+            {
+              "input": {
+                "x": 0
+              },
+              "expected": {
+                "value": 0
+              },
+              "verdict": {
+                "status": "passed",
+                "passed": true,
+                "actual": {
+                  "value": 0
+                },
+                "diagnostic": "JSON result matched the host oracle"
+              },
+              "returncode": 0,
+              "output": "{\"value\": 0}\n"
+            },
+            {
+              "input": {
+                "x": 19
+              },
+              "expected": {
+                "value": 11267
+              },
+              "verdict": {
+                "status": "wrong_answer",
+                "passed": false,
+                "actual": {
+                  "value": 5681
+                },
+                "diagnostic": "JSON result did not satisfy this case"
+              },
+              "returncode": 0,
+              "output": "{\"value\": 5681}\n"
+            },
+            {
+              "input": {
+                "x": 592
+              },
+              "expected": {
+                "value": 351056
+              },
+              "verdict": {
+                "status": "wrong_answer",
+                "passed": false,
+                "actual": {
+                  "value": 177008
+                },
+                "diagnostic": "JSON result did not satisfy this case"
+              },
+              "returncode": 0,
+              "output": "{\"value\": 177008}\n"
+            },
+            {
+              "input": {
+                "x": 593
+              },
+              "expected": {
+                "value": 351649
+              },
+              "verdict": {
+                "status": "wrong_answer",
+                "passed": false,
+                "actual": {
+                  "value": 177307
+                },
+                "diagnostic": "JSON result did not satisfy this case"
+              },
+              "returncode": 0,
+              "output": "{\"value\": 177307}\n"
+            },
+            {
+              "input": {
+                "x": -594
+              },
+              "expected": {
+                "value": -352242
+              },
+              "verdict": {
+                "status": "wrong_answer",
+                "passed": false,
+                "actual": {
+                  "value": -177606
+                },
+                "diagnostic": "JSON result did not satisfy this case"
+              },
+              "returncode": 0,
+              "output": "{\"value\": -177606}\n"
+            },
+            {
+              "input": {
+                "x": 1186
+              },
+              "expected": {
+                "value": 703298
+              },
+              "verdict": {
+                "status": "wrong_answer",
+                "passed": false,
+                "actual": {
+                  "value": 354614
+                },
+                "diagnostic": "JSON result did not satisfy this case"
+              },
+              "returncode": 0,
+              "output": "{\"value\": 354614}\n"
+            }
+          ]
+        },
+        {
+          "id": "floor_divide-593-4",
+          "passed": false,
+          "cases": [
+            {
+              "input": {
+                "x": -21
+              },
+              "expected": {
+                "value": -1
+              },
+              "verdict": {
+                "status": "passed",
+                "passed": true,
+                "actual": {
+                  "value": -1
+                },
+                "diagnostic": "JSON result matched the host oracle"
+              },
+              "returncode": 0,
+              "output": "{\"value\": -1}\n"
+            },
+            {
+              "input": {
+                "x": 0
+              },
+              "expected": {
+                "value": 0
+              },
+              "verdict": {
+                "status": "passed",
+                "passed": true,
+                "actual": {
+                  "value": 0
+                },
+                "diagnostic": "JSON result matched the host oracle"
+              },
+              "returncode": 0,
+              "output": "{\"value\": 0}\n"
+            },
+            {
+              "input": {
+                "x": 19
+              },
+              "expected": {
+                "value": 0
+              },
+              "verdict": {
+                "status": "passed",
+                "passed": true,
+                "actual": {
+                  "value": 0
+                },
+                "diagnostic": "JSON result matched the host oracle"
+              },
+              "returncode": 0,
+              "output": "{\"value\": 0}\n"
+            },
+            {
+              "input": {
+                "x": 592
+              },
+              "expected": {
+                "value": 0
+              },
+              "verdict": {
+                "status": "wrong_answer",
+                "passed": false,
+                "actual": {
+                  "value": 2
+                },
+                "diagnostic": "JSON result did not satisfy this case"
+              },
+              "returncode": 0,
+              "output": "{\"value\": 2}\n"
+            },
+            {
+              "input": {
+                "x": 593
+              },
+              "expected": {
+                "value": 1
+              },
+              "verdict": {
+                "status": "wrong_answer",
+                "passed": false,
+                "actual": {
+                  "value": 2
+                },
+                "diagnostic": "JSON result did not satisfy this case"
+              },
+              "returncode": 0,
+              "output": "{\"value\": 2}\n"
+            },
+            {
+              "input": {
+                "x": -594
+              },
+              "expected": {
+                "value": -2
+              },
+              "verdict": {
+                "status": "wrong_answer",
+                "passed": false,
+                "actual": {
+                  "value": -3
+                },
+                "diagnostic": "JSON result did not satisfy this case"
+              },
+              "returncode": 0,
+              "output": "{\"value\": -3}\n"
+            },
+            {
+              "input": {
+                "x": 1186
+              },
+              "expected": {
+                "value": 2
+              },
+              "verdict": {
+                "status": "wrong_answer",
+                "passed": false,
+                "actual": {
+                  "value": 5
+                },
+                "diagnostic": "JSON result did not satisfy this case"
+              },
+              "returncode": 0,
+              "output": "{\"value\": 5}\n"
+            }
+          ]
+        },
+        {
+          "id": "add-683-4",
+          "passed": false,
+          "cases": [
+            {
+              "input": {
+                "x": -21
+              },
+              "expected": {
+                "value": 662
+              },
+              "verdict": {
+                "status": "wrong_answer",
+                "passed": false,
+                "actual": {
+                  "value": 247
+                },
+                "diagnostic": "JSON result did not satisfy this case"
+              },
+              "returncode": 0,
+              "output": "{\"value\": 247}\n"
+            },
+            {
+              "input": {
+                "x": 0
+              },
+              "expected": {
+                "value": 683
+              },
+              "verdict": {
+                "status": "wrong_answer",
+                "passed": false,
+                "actual": {
+                  "value": 268
+                },
+                "diagnostic": "JSON result did not satisfy this case"
+              },
+              "returncode": 0,
+              "output": "{\"value\": 268}\n"
+            },
+            {
+              "input": {
+                "x": 19
+              },
+              "expected": {
+                "value": 702
+              },
+              "verdict": {
+                "status": "wrong_answer",
+                "passed": false,
+                "actual": {
+                  "value": 287
+                },
+                "diagnostic": "JSON result did not satisfy this case"
+              },
+              "returncode": 0,
+              "output": "{\"value\": 287}\n"
+            },
+            {
+              "input": {
+                "x": 682
+              },
+              "expected": {
+                "value": 1365
+              },
+              "verdict": {
+                "status": "wrong_answer",
+                "passed": false,
+                "actual": {
+                  "value": 950
+                },
+                "diagnostic": "JSON result did not satisfy this case"
+              },
+              "returncode": 0,
+              "output": "{\"value\": 950}\n"
+            },
+            {
+              "input": {
+                "x": 683
+              },
+              "expected": {
+                "value": 1366
+              },
+              "verdict": {
+                "status": "wrong_answer",
+                "passed": false,
+                "actual": {
+                  "value": 951
+                },
+                "diagnostic": "JSON result did not satisfy this case"
+              },
+              "returncode": 0,
+              "output": "{\"value\": 951}\n"
+            },
+            {
+              "input": {
+                "x": -684
+              },
+              "expected": {
+                "value": -1
+              },
+              "verdict": {
+                "status": "wrong_answer",
+                "passed": false,
+                "actual": {
+                  "value": -416
+                },
+                "diagnostic": "JSON result did not satisfy this case"
+              },
+              "returncode": 0,
+              "output": "{\"value\": -416}\n"
+            },
+            {
+              "input": {
+                "x": 1366
+              },
+              "expected": {
+                "value": 2049
+              },
+              "verdict": {
+                "status": "wrong_answer",
+                "passed": false,
+                "actual": {
+                  "value": 1634
+                },
+                "diagnostic": "JSON result did not satisfy this case"
+              },
+              "returncode": 0,
+              "output": "{\"value\": 1634}\n"
+            }
+          ]
+        },
+        {
+          "id": "subtract-683-4",
+          "passed": false,
+          "cases": [
+            {
+              "input": {
+                "x": -21
+              },
+              "expected": {
+                "value": -704
+              },
+              "verdict": {
+                "status": "wrong_answer",
+                "passed": false,
+                "actual": {
+                  "value": -284
+                },
+                "diagnostic": "JSON result did not satisfy this case"
+              },
+              "returncode": 0,
+              "output": "{\"value\": -284}\n"
+            },
+            {
+              "input": {
+                "x": 0
+              },
+              "expected": {
+                "value": -683
+              },
+              "verdict": {
+                "status": "wrong_answer",
+                "passed": false,
+                "actual": {
+                  "value": -263
+                },
+                "diagnostic": "JSON result did not satisfy this case"
+              },
+              "returncode": 0,
+              "output": "{\"value\": -263}\n"
+            },
+            {
+              "input": {
+                "x": 19
+              },
+              "expected": {
+                "value": -664
+              },
+              "verdict": {
+                "status": "wrong_answer",
+                "passed": false,
+                "actual": {
+                  "value": -244
+                },
+                "diagnostic": "JSON result did not satisfy this case"
+              },
+              "returncode": 0,
+              "output": "{\"value\": -244}\n"
+            },
+            {
+              "input": {
+                "x": 682
+              },
+              "expected": {
+                "value": -1
+              },
+              "verdict": {
+                "status": "wrong_answer",
+                "passed": false,
+                "actual": {
+                  "value": 419
+                },
+                "diagnostic": "JSON result did not satisfy this case"
+              },
+              "returncode": 0,
+              "output": "{\"value\": 419}\n"
+            },
+            {
+              "input": {
+                "x": 683
+              },
+              "expected": {
+                "value": 0
+              },
+              "verdict": {
+                "status": "wrong_answer",
+                "passed": false,
+                "actual": {
+                  "value": 420
+                },
+                "diagnostic": "JSON result did not satisfy this case"
+              },
+              "returncode": 0,
+              "output": "{\"value\": 420}\n"
+            },
+            {
+              "input": {
+                "x": -684
+              },
+              "expected": {
+                "value": -1367
+              },
+              "verdict": {
+                "status": "wrong_answer",
+                "passed": false,
+                "actual": {
+                  "value": -947
+                },
+                "diagnostic": "JSON result did not satisfy this case"
+              },
+              "returncode": 0,
+              "output": "{\"value\": -947}\n"
+            },
+            {
+              "input": {
+                "x": 1366
+              },
+              "expected": {
+                "value": 683
+              },
+              "verdict": {
+                "status": "wrong_answer",
+                "passed": false,
+                "actual": {
+                  "value": 1103
+                },
+                "diagnostic": "JSON result did not satisfy this case"
+              },
+              "returncode": 0,
+              "output": "{\"value\": 1103}\n"
+            }
+          ]
+        },
+        {
+          "id": "multiply-683-4",
+          "passed": false,
+          "cases": [
+            {
+              "input": {
+                "x": -21
+              },
+              "expected": {
+                "value": -14343
+              },
+              "verdict": {
+                "status": "wrong_answer",
+                "passed": false,
+                "actual": {
+                  "value": -4998
+                },
+                "diagnostic": "JSON result did not satisfy this case"
+              },
+              "returncode": 0,
+              "output": "{\"value\": -4998}\n"
+            },
+            {
+              "input": {
+                "x": 0
+              },
+              "expected": {
+                "value": 0
+              },
+              "verdict": {
+                "status": "passed",
+                "passed": true,
+                "actual": {
+                  "value": 0
+                },
+                "diagnostic": "JSON result matched the host oracle"
+              },
+              "returncode": 0,
+              "output": "{\"value\": 0}\n"
+            },
+            {
+              "input": {
+                "x": 19
+              },
+              "expected": {
+                "value": 12977
+              },
+              "verdict": {
+                "status": "wrong_answer",
+                "passed": false,
+                "actual": {
+                  "value": 4522
+                },
+                "diagnostic": "JSON result did not satisfy this case"
+              },
+              "returncode": 0,
+              "output": "{\"value\": 4522}\n"
+            },
+            {
+              "input": {
+                "x": 682
+              },
+              "expected": {
+                "value": 465806
+              },
+              "verdict": {
+                "status": "wrong_answer",
+                "passed": false,
+                "actual": {
+                  "value": 162316
+                },
+                "diagnostic": "JSON result did not satisfy this case"
+              },
+              "returncode": 0,
+              "output": "{\"value\": 162316}\n"
+            },
+            {
+              "input": {
+                "x": 683
+              },
+              "expected": {
+                "value": 466489
+              },
+              "verdict": {
+                "status": "wrong_answer",
+                "passed": false,
+                "actual": {
+                  "value": 162554
+                },
+                "diagnostic": "JSON result did not satisfy this case"
+              },
+              "returncode": 0,
+              "output": "{\"value\": 162554}\n"
+            },
+            {
+              "input": {
+                "x": -684
+              },
+              "expected": {
+                "value": -467172
+              },
+              "verdict": {
+                "status": "wrong_answer",
+                "passed": false,
+                "actual": {
+                  "value": -162792
+                },
+                "diagnostic": "JSON result did not satisfy this case"
+              },
+              "returncode": 0,
+              "output": "{\"value\": -162792}\n"
+            },
+            {
+              "input": {
+                "x": 1366
+              },
+              "expected": {
+                "value": 932978
+              },
+              "verdict": {
+                "status": "wrong_answer",
+                "passed": false,
+                "actual": {
+                  "value": 325108
+                },
+                "diagnostic": "JSON result did not satisfy this case"
+              },
+              "returncode": 0,
+              "output": "{\"value\": 325108}\n"
+            }
+          ]
+        },
+        {
+          "id": "floor_divide-683-4",
+          "passed": false,
+          "cases": [
+            {
+              "input": {
+                "x": -21
+              },
+              "expected": {
+                "value": -1
+              },
+              "verdict": {
+                "status": "passed",
+                "passed": true,
+                "actual": {
+                  "value": -1
+                },
+                "diagnostic": "JSON result matched the host oracle"
+              },
+              "returncode": 0,
+              "output": "{\"value\": -1}\n"
+            },
+            {
+              "input": {
+                "x": 0
+              },
+              "expected": {
+                "value": 0
+              },
+              "verdict": {
+                "status": "passed",
+                "passed": true,
+                "actual": {
+                  "value": 0
+                },
+                "diagnostic": "JSON result matched the host oracle"
+              },
+              "returncode": 0,
+              "output": "{\"value\": 0}\n"
+            },
+            {
+              "input": {
+                "x": 19
+              },
+              "expected": {
+                "value": 0
+              },
+              "verdict": {
+                "status": "passed",
+                "passed": true,
+                "actual": {
+                  "value": 0
+                },
+                "diagnostic": "JSON result matched the host oracle"
+              },
+              "returncode": 0,
+              "output": "{\"value\": 0}\n"
+            },
+            {
+              "input": {
+                "x": 682
+              },
+              "expected": {
+                "value": 0
+              },
+              "verdict": {
+                "status": "wrong_answer",
+                "passed": false,
+                "actual": {
+                  "value": 2
+                },
+                "diagnostic": "JSON result did not satisfy this case"
+              },
+              "returncode": 0,
+              "output": "{\"value\": 2}\n"
+            },
+            {
+              "input": {
+                "x": 683
+              },
+              "expected": {
+                "value": 1
+              },
+              "verdict": {
+                "status": "wrong_answer",
+                "passed": false,
+                "actual": {
+                  "value": 2
+                },
+                "diagnostic": "JSON result did not satisfy this case"
+              },
+              "returncode": 0,
+              "output": "{\"value\": 2}\n"
+            },
+            {
+              "input": {
+                "x": -684
+              },
+              "expected": {
+                "value": -2
+              },
+              "verdict": {
+                "status": "wrong_answer",
+                "passed": false,
+                "actual": {
+                  "value": -3
+                },
+                "diagnostic": "JSON result did not satisfy this case"
+              },
+              "returncode": 0,
+              "output": "{\"value\": -3}\n"
+            },
+            {
+              "input": {
+                "x": 1366
+              },
+              "expected": {
+                "value": 2
+              },
+              "verdict": {
+                "status": "wrong_answer",
+                "passed": false,
+                "actual": {
+                  "value": 5
+                },
+                "diagnostic": "JSON result did not satisfy this case"
+              },
+              "returncode": 0,
+              "output": "{\"value\": 5}\n"
+            }
+          ]
+        }
+      ],
+      "tasks_correct": 0
+    },
+    {
+      "label": "random-copy",
+      "tasks": [
+        {
+          "id": "add-593-4",
+          "passed": false,
+          "cases": [
+            {
+              "input": {
+                "x": -21
+              },
+              "expected": {
+                "value": 572
+              },
+              "verdict": {
+                "status": "wrong_answer",
+                "passed": false,
+                "actual": {
+                  "value": 278
+                },
+                "diagnostic": "JSON result did not satisfy this case"
+              },
+              "returncode": 0,
+              "output": "{\"value\": 278}\n"
+            },
+            {
+              "input": {
+                "x": 0
+              },
+              "expected": {
+                "value": 593
+              },
+              "verdict": {
+                "status": "wrong_answer",
+                "passed": false,
+                "actual": {
+                  "value": 299
+                },
+                "diagnostic": "JSON result did not satisfy this case"
+              },
+              "returncode": 0,
+              "output": "{\"value\": 299}\n"
+            },
+            {
+              "input": {
+                "x": 19
+              },
+              "expected": {
+                "value": 612
+              },
+              "verdict": {
+                "status": "wrong_answer",
+                "passed": false,
+                "actual": {
+                  "value": 318
+                },
+                "diagnostic": "JSON result did not satisfy this case"
+              },
+              "returncode": 0,
+              "output": "{\"value\": 318}\n"
+            },
+            {
+              "input": {
+                "x": 592
+              },
+              "expected": {
+                "value": 1185
+              },
+              "verdict": {
+                "status": "wrong_answer",
+                "passed": false,
+                "actual": {
+                  "value": 891
+                },
+                "diagnostic": "JSON result did not satisfy this case"
+              },
+              "returncode": 0,
+              "output": "{\"value\": 891}\n"
+            },
+            {
+              "input": {
+                "x": 593
+              },
+              "expected": {
+                "value": 1186
+              },
+              "verdict": {
+                "status": "wrong_answer",
+                "passed": false,
+                "actual": {
+                  "value": 892
+                },
+                "diagnostic": "JSON result did not satisfy this case"
+              },
+              "returncode": 0,
+              "output": "{\"value\": 892}\n"
+            },
+            {
+              "input": {
+                "x": -594
+              },
+              "expected": {
+                "value": -1
+              },
+              "verdict": {
+                "status": "wrong_answer",
+                "passed": false,
+                "actual": {
+                  "value": -295
+                },
+                "diagnostic": "JSON result did not satisfy this case"
+              },
+              "returncode": 0,
+              "output": "{\"value\": -295}\n"
+            },
+            {
+              "input": {
+                "x": 1186
+              },
+              "expected": {
+                "value": 1779
+              },
+              "verdict": {
+                "status": "wrong_answer",
+                "passed": false,
+                "actual": {
+                  "value": 1485
+                },
+                "diagnostic": "JSON result did not satisfy this case"
+              },
+              "returncode": 0,
+              "output": "{\"value\": 1485}\n"
+            }
+          ]
+        },
+        {
+          "id": "subtract-593-4",
+          "passed": false,
+          "cases": [
+            {
+              "input": {
+                "x": -21
+              },
+              "expected": {
+                "value": -614
+              },
+              "verdict": {
+                "status": "wrong_answer",
+                "passed": false,
+                "actual": {
+                  "value": -320
+                },
+                "diagnostic": "JSON result did not satisfy this case"
+              },
+              "returncode": 0,
+              "output": "{\"value\": -320}\n"
+            },
+            {
+              "input": {
+                "x": 0
+              },
+              "expected": {
+                "value": -593
+              },
+              "verdict": {
+                "status": "wrong_answer",
+                "passed": false,
+                "actual": {
+                  "value": -299
+                },
+                "diagnostic": "JSON result did not satisfy this case"
+              },
+              "returncode": 0,
+              "output": "{\"value\": -299}\n"
+            },
+            {
+              "input": {
+                "x": 19
+              },
+              "expected": {
+                "value": -574
+              },
+              "verdict": {
+                "status": "wrong_answer",
+                "passed": false,
+                "actual": {
+                  "value": -280
+                },
+                "diagnostic": "JSON result did not satisfy this case"
+              },
+              "returncode": 0,
+              "output": "{\"value\": -280}\n"
+            },
+            {
+              "input": {
+                "x": 592
+              },
+              "expected": {
+                "value": -1
+              },
+              "verdict": {
+                "status": "wrong_answer",
+                "passed": false,
+                "actual": {
+                  "value": 293
+                },
+                "diagnostic": "JSON result did not satisfy this case"
+              },
+              "returncode": 0,
+              "output": "{\"value\": 293}\n"
+            },
+            {
+              "input": {
+                "x": 593
+              },
+              "expected": {
+                "value": 0
+              },
+              "verdict": {
+                "status": "wrong_answer",
+                "passed": false,
+                "actual": {
+                  "value": 294
+                },
+                "diagnostic": "JSON result did not satisfy this case"
+              },
+              "returncode": 0,
+              "output": "{\"value\": 294}\n"
+            },
+            {
+              "input": {
+                "x": -594
+              },
+              "expected": {
+                "value": -1187
+              },
+              "verdict": {
+                "status": "wrong_answer",
+                "passed": false,
+                "actual": {
+                  "value": -893
+                },
+                "diagnostic": "JSON result did not satisfy this case"
+              },
+              "returncode": 0,
+              "output": "{\"value\": -893}\n"
+            },
+            {
+              "input": {
+                "x": 1186
+              },
+              "expected": {
+                "value": 593
+              },
+              "verdict": {
+                "status": "wrong_answer",
+                "passed": false,
+                "actual": {
+                  "value": 887
+                },
+                "diagnostic": "JSON result did not satisfy this case"
+              },
+              "returncode": 0,
+              "output": "{\"value\": 887}\n"
+            }
+          ]
+        },
+        {
+          "id": "multiply-593-4",
+          "passed": false,
+          "cases": [
+            {
+              "input": {
+                "x": -21
+              },
+              "expected": {
+                "value": -12453
+              },
+              "verdict": {
+                "status": "wrong_answer",
+                "passed": false,
+                "actual": {
+                  "value": -6279
+                },
+                "diagnostic": "JSON result did not satisfy this case"
+              },
+              "returncode": 0,
+              "output": "{\"value\": -6279}\n"
+            },
+            {
+              "input": {
+                "x": 0
+              },
+              "expected": {
+                "value": 0
+              },
+              "verdict": {
+                "status": "passed",
+                "passed": true,
+                "actual": {
+                  "value": 0
+                },
+                "diagnostic": "JSON result matched the host oracle"
+              },
+              "returncode": 0,
+              "output": "{\"value\": 0}\n"
+            },
+            {
+              "input": {
+                "x": 19
+              },
+              "expected": {
+                "value": 11267
+              },
+              "verdict": {
+                "status": "wrong_answer",
+                "passed": false,
+                "actual": {
+                  "value": 5681
+                },
+                "diagnostic": "JSON result did not satisfy this case"
+              },
+              "returncode": 0,
+              "output": "{\"value\": 5681}\n"
+            },
+            {
+              "input": {
+                "x": 592
+              },
+              "expected": {
+                "value": 351056
+              },
+              "verdict": {
+                "status": "wrong_answer",
+                "passed": false,
+                "actual": {
+                  "value": 177008
+                },
+                "diagnostic": "JSON result did not satisfy this case"
+              },
+              "returncode": 0,
+              "output": "{\"value\": 177008}\n"
+            },
+            {
+              "input": {
+                "x": 593
+              },
+              "expected": {
+                "value": 351649
+              },
+              "verdict": {
+                "status": "wrong_answer",
+                "passed": false,
+                "actual": {
+                  "value": 177307
+                },
+                "diagnostic": "JSON result did not satisfy this case"
+              },
+              "returncode": 0,
+              "output": "{\"value\": 177307}\n"
+            },
+            {
+              "input": {
+                "x": -594
+              },
+              "expected": {
+                "value": -352242
+              },
+              "verdict": {
+                "status": "wrong_answer",
+                "passed": false,
+                "actual": {
+                  "value": -177606
+                },
+                "diagnostic": "JSON result did not satisfy this case"
+              },
+              "returncode": 0,
+              "output": "{\"value\": -177606}\n"
+            },
+            {
+              "input": {
+                "x": 1186
+              },
+              "expected": {
+                "value": 703298
+              },
+              "verdict": {
+                "status": "wrong_answer",
+                "passed": false,
+                "actual": {
+                  "value": 354614
+                },
+                "diagnostic": "JSON result did not satisfy this case"
+              },
+              "returncode": 0,
+              "output": "{\"value\": 354614}\n"
+            }
+          ]
+        },
+        {
+          "id": "floor_divide-593-4",
+          "passed": false,
+          "cases": [
+            {
+              "input": {
+                "x": -21
+              },
+              "expected": {
+                "value": -1
+              },
+              "verdict": {
+                "status": "passed",
+                "passed": true,
+                "actual": {
+                  "value": -1
+                },
+                "diagnostic": "JSON result matched the host oracle"
+              },
+              "returncode": 0,
+              "output": "{\"value\": -1}\n"
+            },
+            {
+              "input": {
+                "x": 0
+              },
+              "expected": {
+                "value": 0
+              },
+              "verdict": {
+                "status": "passed",
+                "passed": true,
+                "actual": {
+                  "value": 0
+                },
+                "diagnostic": "JSON result matched the host oracle"
+              },
+              "returncode": 0,
+              "output": "{\"value\": 0}\n"
+            },
+            {
+              "input": {
+                "x": 19
+              },
+              "expected": {
+                "value": 0
+              },
+              "verdict": {
+                "status": "passed",
+                "passed": true,
+                "actual": {
+                  "value": 0
+                },
+                "diagnostic": "JSON result matched the host oracle"
+              },
+              "returncode": 0,
+              "output": "{\"value\": 0}\n"
+            },
+            {
+              "input": {
+                "x": 592
+              },
+              "expected": {
+                "value": 0
+              },
+              "verdict": {
+                "status": "wrong_answer",
+                "passed": false,
+                "actual": {
+                  "value": 2
+                },
+                "diagnostic": "JSON result did not satisfy this case"
+              },
+              "returncode": 0,
+              "output": "{\"value\": 2}\n"
+            },
+            {
+              "input": {
+                "x": 593
+              },
+              "expected": {
+                "value": 1
+              },
+              "verdict": {
+                "status": "wrong_answer",
+                "passed": false,
+                "actual": {
+                  "value": 2
+                },
+                "diagnostic": "JSON result did not satisfy this case"
+              },
+              "returncode": 0,
+              "output": "{\"value\": 2}\n"
+            },
+            {
+              "input": {
+                "x": -594
+              },
+              "expected": {
+                "value": -2
+              },
+              "verdict": {
+                "status": "wrong_answer",
+                "passed": false,
+                "actual": {
+                  "value": -3
+                },
+                "diagnostic": "JSON result did not satisfy this case"
+              },
+              "returncode": 0,
+              "output": "{\"value\": -3}\n"
+            },
+            {
+              "input": {
+                "x": 1186
+              },
+              "expected": {
+                "value": 2
+              },
+              "verdict": {
+                "status": "wrong_answer",
+                "passed": false,
+                "actual": {
+                  "value": 5
+                },
+                "diagnostic": "JSON result did not satisfy this case"
+              },
+              "returncode": 0,
+              "output": "{\"value\": 5}\n"
+            }
+          ]
+        },
+        {
+          "id": "add-683-4",
+          "passed": false,
+          "cases": [
+            {
+              "input": {
+                "x": -21
+              },
+              "expected": {
+                "value": 662
+              },
+              "verdict": {
+                "status": "wrong_answer",
+                "passed": false,
+                "actual": {
+                  "value": 247
+                },
+                "diagnostic": "JSON result did not satisfy this case"
+              },
+              "returncode": 0,
+              "output": "{\"value\": 247}\n"
+            },
+            {
+              "input": {
+                "x": 0
+              },
+              "expected": {
+                "value": 683
+              },
+              "verdict": {
+                "status": "wrong_answer",
+                "passed": false,
+                "actual": {
+                  "value": 268
+                },
+                "diagnostic": "JSON result did not satisfy this case"
+              },
+              "returncode": 0,
+              "output": "{\"value\": 268}\n"
+            },
+            {
+              "input": {
+                "x": 19
+              },
+              "expected": {
+                "value": 702
+              },
+              "verdict": {
+                "status": "wrong_answer",
+                "passed": false,
+                "actual": {
+                  "value": 287
+                },
+                "diagnostic": "JSON result did not satisfy this case"
+              },
+              "returncode": 0,
+              "output": "{\"value\": 287}\n"
+            },
+            {
+              "input": {
+                "x": 682
+              },
+              "expected": {
+                "value": 1365
+              },
+              "verdict": {
+                "status": "wrong_answer",
+                "passed": false,
+                "actual": {
+                  "value": 950
+                },
+                "diagnostic": "JSON result did not satisfy this case"
+              },
+              "returncode": 0,
+              "output": "{\"value\": 950}\n"
+            },
+            {
+              "input": {
+                "x": 683
+              },
+              "expected": {
+                "value": 1366
+              },
+              "verdict": {
+                "status": "wrong_answer",
+                "passed": false,
+                "actual": {
+                  "value": 951
+                },
+                "diagnostic": "JSON result did not satisfy this case"
+              },
+              "returncode": 0,
+              "output": "{\"value\": 951}\n"
+            },
+            {
+              "input": {
+                "x": -684
+              },
+              "expected": {
+                "value": -1
+              },
+              "verdict": {
+                "status": "wrong_answer",
+                "passed": false,
+                "actual": {
+                  "value": -416
+                },
+                "diagnostic": "JSON result did not satisfy this case"
+              },
+              "returncode": 0,
+              "output": "{\"value\": -416}\n"
+            },
+            {
+              "input": {
+                "x": 1366
+              },
+              "expected": {
+                "value": 2049
+              },
+              "verdict": {
+                "status": "wrong_answer",
+                "passed": false,
+                "actual": {
+                  "value": 1634
+                },
+                "diagnostic": "JSON result did not satisfy this case"
+              },
+              "returncode": 0,
+              "output": "{\"value\": 1634}\n"
+            }
+          ]
+        },
+        {
+          "id": "subtract-683-4",
+          "passed": false,
+          "cases": [
+            {
+              "input": {
+                "x": -21
+              },
+              "expected": {
+                "value": -704
+              },
+              "verdict": {
+                "status": "wrong_answer",
+                "passed": false,
+                "actual": {
+                  "value": -284
+                },
+                "diagnostic": "JSON result did not satisfy this case"
+              },
+              "returncode": 0,
+              "output": "{\"value\": -284}\n"
+            },
+            {
+              "input": {
+                "x": 0
+              },
+              "expected": {
+                "value": -683
+              },
+              "verdict": {
+                "status": "wrong_answer",
+                "passed": false,
+                "actual": {
+                  "value": -263
+                },
+                "diagnostic": "JSON result did not satisfy this case"
+              },
+              "returncode": 0,
+              "output": "{\"value\": -263}\n"
+            },
+            {
+              "input": {
+                "x": 19
+              },
+              "expected": {
+                "value": -664
+              },
+              "verdict": {
+                "status": "wrong_answer",
+                "passed": false,
+                "actual": {
+                  "value": -244
+                },
+                "diagnostic": "JSON result did not satisfy this case"
+              },
+              "returncode": 0,
+              "output": "{\"value\": -244}\n"
+            },
+            {
+              "input": {
+                "x": 682
+              },
+              "expected": {
+                "value": -1
+              },
+              "verdict": {
+                "status": "wrong_answer",
+                "passed": false,
+                "actual": {
+                  "value": 419
+                },
+                "diagnostic": "JSON result did not satisfy this case"
+              },
+              "returncode": 0,
+              "output": "{\"value\": 419}\n"
+            },
+            {
+              "input": {
+                "x": 683
+              },
+              "expected": {
+                "value": 0
+              },
+              "verdict": {
+                "status": "wrong_answer",
+                "passed": false,
+                "actual": {
+                  "value": 420
+                },
+                "diagnostic": "JSON result did not satisfy this case"
+              },
+              "returncode": 0,
+              "output": "{\"value\": 420}\n"
+            },
+            {
+              "input": {
+                "x": -684
+              },
+              "expected": {
+                "value": -1367
+              },
+              "verdict": {
+                "status": "wrong_answer",
+                "passed": false,
+                "actual": {
+                  "value": -947
+                },
+                "diagnostic": "JSON result did not satisfy this case"
+              },
+              "returncode": 0,
+              "output": "{\"value\": -947}\n"
+            },
+            {
+              "input": {
+                "x": 1366
+              },
+              "expected": {
+                "value": 683
+              },
+              "verdict": {
+                "status": "wrong_answer",
+                "passed": false,
+                "actual": {
+                  "value": 1103
+                },
+                "diagnostic": "JSON result did not satisfy this case"
+              },
+              "returncode": 0,
+              "output": "{\"value\": 1103}\n"
+            }
+          ]
+        },
+        {
+          "id": "multiply-683-4",
+          "passed": false,
+          "cases": [
+            {
+              "input": {
+                "x": -21
+              },
+              "expected": {
+                "value": -14343
+              },
+              "verdict": {
+                "status": "wrong_answer",
+                "passed": false,
+                "actual": {
+                  "value": -4998
+                },
+                "diagnostic": "JSON result did not satisfy this case"
+              },
+              "returncode": 0,
+              "output": "{\"value\": -4998}\n"
+            },
+            {
+              "input": {
+                "x": 0
+              },
+              "expected": {
+                "value": 0
+              },
+              "verdict": {
+                "status": "passed",
+                "passed": true,
+                "actual": {
+                  "value": 0
+                },
+                "diagnostic": "JSON result matched the host oracle"
+              },
+              "returncode": 0,
+              "output": "{\"value\": 0}\n"
+            },
+            {
+              "input": {
+                "x": 19
+              },
+              "expected": {
+                "value": 12977
+              },
+              "verdict": {
+                "status": "wrong_answer",
+                "passed": false,
+                "actual": {
+                  "value": 4522
+                },
+                "diagnostic": "JSON result did not satisfy this case"
+              },
+              "returncode": 0,
+              "output": "{\"value\": 4522}\n"
+            },
+            {
+              "input": {
+                "x": 682
+              },
+              "expected": {
+                "value": 465806
+              },
+              "verdict": {
+                "status": "wrong_answer",
+                "passed": false,
+                "actual": {
+                  "value": 162316
+                },
+                "diagnostic": "JSON result did not satisfy this case"
+              },
+              "returncode": 0,
+              "output": "{\"value\": 162316}\n"
+            },
+            {
+              "input": {
+                "x": 683
+              },
+              "expected": {
+                "value": 466489
+              },
+              "verdict": {
+                "status": "wrong_answer",
+                "passed": false,
+                "actual": {
+                  "value": 162554
+                },
+                "diagnostic": "JSON result did not satisfy this case"
+              },
+              "returncode": 0,
+              "output": "{\"value\": 162554}\n"
+            },
+            {
+              "input": {
+                "x": -684
+              },
+              "expected": {
+                "value": -467172
+              },
+              "verdict": {
+                "status": "wrong_answer",
+                "passed": false,
+                "actual": {
+                  "value": -162792
+                },
+                "diagnostic": "JSON result did not satisfy this case"
+              },
+              "returncode": 0,
+              "output": "{\"value\": -162792}\n"
+            },
+            {
+              "input": {
+                "x": 1366
+              },
+              "expected": {
+                "value": 932978
+              },
+              "verdict": {
+                "status": "wrong_answer",
+                "passed": false,
+                "actual": {
+                  "value": 325108
+                },
+                "diagnostic": "JSON result did not satisfy this case"
+              },
+              "returncode": 0,
+              "output": "{\"value\": 325108}\n"
+            }
+          ]
+        },
+        {
+          "id": "floor_divide-683-4",
+          "passed": false,
+          "cases": [
+            {
+              "input": {
+                "x": -21
+              },
+              "expected": {
+                "value": -1
+              },
+              "verdict": {
+                "status": "passed",
+                "passed": true,
+                "actual": {
+                  "value": -1
+                },
+                "diagnostic": "JSON result matched the host oracle"
+              },
+              "returncode": 0,
+              "output": "{\"value\": -1}\n"
+            },
+            {
+              "input": {
+                "x": 0
+              },
+              "expected": {
+                "value": 0
+              },
+              "verdict": {
+                "status": "passed",
+                "passed": true,
+                "actual": {
+                  "value": 0
+                },
+                "diagnostic": "JSON result matched the host oracle"
+              },
+              "returncode": 0,
+              "output": "{\"value\": 0}\n"
+            },
+            {
+              "input": {
+                "x": 19
+              },
+              "expected": {
+                "value": 0
+              },
+              "verdict": {
+                "status": "passed",
+                "passed": true,
+                "actual": {
+                  "value": 0
+                },
+                "diagnostic": "JSON result matched the host oracle"
+              },
+              "returncode": 0,
+              "output": "{\"value\": 0}\n"
+            },
+            {
+              "input": {
+                "x": 682
+              },
+              "expected": {
+                "value": 0
+              },
+              "verdict": {
+                "status": "wrong_answer",
+                "passed": false,
+                "actual": {
+                  "value": 2
+                },
+                "diagnostic": "JSON result did not satisfy this case"
+              },
+              "returncode": 0,
+              "output": "{\"value\": 2}\n"
+            },
+            {
+              "input": {
+                "x": 683
+              },
+              "expected": {
+                "value": 1
+              },
+              "verdict": {
+                "status": "wrong_answer",
+                "passed": false,
+                "actual": {
+                  "value": 2
+                },
+                "diagnostic": "JSON result did not satisfy this case"
+              },
+              "returncode": 0,
+              "output": "{\"value\": 2}\n"
+            },
+            {
+              "input": {
+                "x": -684
+              },
+              "expected": {
+                "value": -2
+              },
+              "verdict": {
+                "status": "wrong_answer",
+                "passed": false,
+                "actual": {
+                  "value": -3
+                },
+                "diagnostic": "JSON result did not satisfy this case"
+              },
+              "returncode": 0,
+              "output": "{\"value\": -3}\n"
+            },
+            {
+              "input": {
+                "x": 1366
+              },
+              "expected": {
+                "value": 2
+              },
+              "verdict": {
+                "status": "wrong_answer",
+                "passed": false,
+                "actual": {
+                  "value": 5
+                },
+                "diagnostic": "JSON result did not satisfy this case"
+              },
+              "returncode": 0,
+              "output": "{\"value\": 5}\n"
+            }
+          ]
+        }
+      ],
+      "tasks_correct": 0
+    },
+    {
+      "label": "learned-copy",
+      "tasks": [
+        {
+          "id": "add-593-4",
+          "passed": true,
+          "cases": [
+            {
+              "input": {
+                "x": -21
+              },
+              "expected": {
+                "value": 572
+              },
+              "verdict": {
+                "status": "passed",
+                "passed": true,
+                "actual": {
+                  "value": 572
+                },
+                "diagnostic": "JSON result matched the host oracle"
+              },
+              "returncode": 0,
+              "output": "{\"value\": 572}\n"
+            },
+            {
+              "input": {
+                "x": 0
+              },
+              "expected": {
+                "value": 593
+              },
+              "verdict": {
+                "status": "passed",
+                "passed": true,
+                "actual": {
+                  "value": 593
+                },
+                "diagnostic": "JSON result matched the host oracle"
+              },
+              "returncode": 0,
+              "output": "{\"value\": 593}\n"
+            },
+            {
+              "input": {
+                "x": 19
+              },
+              "expected": {
+                "value": 612
+              },
+              "verdict": {
+                "status": "passed",
+                "passed": true,
+                "actual": {
+                  "value": 612
+                },
+                "diagnostic": "JSON result matched the host oracle"
+              },
+              "returncode": 0,
+              "output": "{\"value\": 612}\n"
+            },
+            {
+              "input": {
+                "x": 592
+              },
+              "expected": {
+                "value": 1185
+              },
+              "verdict": {
+                "status": "passed",
+                "passed": true,
+                "actual": {
+                  "value": 1185
+                },
+                "diagnostic": "JSON result matched the host oracle"
+              },
+              "returncode": 0,
+              "output": "{\"value\": 1185}\n"
+            },
+            {
+              "input": {
+                "x": 593
+              },
+              "expected": {
+                "value": 1186
+              },
+              "verdict": {
+                "status": "passed",
+                "passed": true,
+                "actual": {
+                  "value": 1186
+                },
+                "diagnostic": "JSON result matched the host oracle"
+              },
+              "returncode": 0,
+              "output": "{\"value\": 1186}\n"
+            },
+            {
+              "input": {
+                "x": -594
+              },
+              "expected": {
+                "value": -1
+              },
+              "verdict": {
+                "status": "passed",
+                "passed": true,
+                "actual": {
+                  "value": -1
+                },
+                "diagnostic": "JSON result matched the host oracle"
+              },
+              "returncode": 0,
+              "output": "{\"value\": -1}\n"
+            },
+            {
+              "input": {
+                "x": 1186
+              },
+              "expected": {
+                "value": 1779
+              },
+              "verdict": {
+                "status": "passed",
+                "passed": true,
+                "actual": {
+                  "value": 1779
+                },
+                "diagnostic": "JSON result matched the host oracle"
+              },
+              "returncode": 0,
+              "output": "{\"value\": 1779}\n"
+            }
+          ]
+        },
+        {
+          "id": "subtract-593-4",
+          "passed": true,
+          "cases": [
+            {
+              "input": {
+                "x": -21
+              },
+              "expected": {
+                "value": -614
+              },
+              "verdict": {
+                "status": "passed",
+                "passed": true,
+                "actual": {
+                  "value": -614
+                },
+                "diagnostic": "JSON result matched the host oracle"
+              },
+              "returncode": 0,
+              "output": "{\"value\": -614}\n"
+            },
+            {
+              "input": {
+                "x": 0
+              },
+              "expected": {
+                "value": -593
+              },
+              "verdict": {
+                "status": "passed",
+                "passed": true,
+                "actual": {
+                  "value": -593
+                },
+                "diagnostic": "JSON result matched the host oracle"
+              },
+              "returncode": 0,
+              "output": "{\"value\": -593}\n"
+            },
+            {
+              "input": {
+                "x": 19
+              },
+              "expected": {
+                "value": -574
+              },
+              "verdict": {
+                "status": "passed",
+                "passed": true,
+                "actual": {
+                  "value": -574
+                },
+                "diagnostic": "JSON result matched the host oracle"
+              },
+              "returncode": 0,
+              "output": "{\"value\": -574}\n"
+            },
+            {
+              "input": {
+                "x": 592
+              },
+              "expected": {
+                "value": -1
+              },
+              "verdict": {
+                "status": "passed",
+                "passed": true,
+                "actual": {
+                  "value": -1
+                },
+                "diagnostic": "JSON result matched the host oracle"
+              },
+              "returncode": 0,
+              "output": "{\"value\": -1}\n"
+            },
+            {
+              "input": {
+                "x": 593
+              },
+              "expected": {
+                "value": 0
+              },
+              "verdict": {
+                "status": "passed",
+                "passed": true,
+                "actual": {
+                  "value": 0
+                },
+                "diagnostic": "JSON result matched the host oracle"
+              },
+              "returncode": 0,
+              "output": "{\"value\": 0}\n"
+            },
+            {
+              "input": {
+                "x": -594
+              },
+              "expected": {
+                "value": -1187
+              },
+              "verdict": {
+                "status": "passed",
+                "passed": true,
+                "actual": {
+                  "value": -1187
+                },
+                "diagnostic": "JSON result matched the host oracle"
+              },
+              "returncode": 0,
+              "output": "{\"value\": -1187}\n"
+            },
+            {
+              "input": {
+                "x": 1186
+              },
+              "expected": {
+                "value": 593
+              },
+              "verdict": {
+                "status": "passed",
+                "passed": true,
+                "actual": {
+                  "value": 593
+                },
+                "diagnostic": "JSON result matched the host oracle"
+              },
+              "returncode": 0,
+              "output": "{\"value\": 593}\n"
+            }
+          ]
+        },
+        {
+          "id": "multiply-593-4",
+          "passed": true,
+          "cases": [
+            {
+              "input": {
+                "x": -21
+              },
+              "expected": {
+                "value": -12453
+              },
+              "verdict": {
+                "status": "passed",
+                "passed": true,
+                "actual": {
+                  "value": -12453
+                },
+                "diagnostic": "JSON result matched the host oracle"
+              },
+              "returncode": 0,
+              "output": "{\"value\": -12453}\n"
+            },
+            {
+              "input": {
+                "x": 0
+              },
+              "expected": {
+                "value": 0
+              },
+              "verdict": {
+                "status": "passed",
+                "passed": true,
+                "actual": {
+                  "value": 0
+                },
+                "diagnostic": "JSON result matched the host oracle"
+              },
+              "returncode": 0,
+              "output": "{\"value\": 0}\n"
+            },
+            {
+              "input": {
+                "x": 19
+              },
+              "expected": {
+                "value": 11267
+              },
+              "verdict": {
+                "status": "passed",
+                "passed": true,
+                "actual": {
+                  "value": 11267
+                },
+                "diagnostic": "JSON result matched the host oracle"
+              },
+              "returncode": 0,
+              "output": "{\"value\": 11267}\n"
+            },
+            {
+              "input": {
+                "x": 592
+              },
+              "expected": {
+                "value": 351056
+              },
+              "verdict": {
+                "status": "passed",
+                "passed": true,
+                "actual": {
+                  "value": 351056
+                },
+                "diagnostic": "JSON result matched the host oracle"
+              },
+              "returncode": 0,
+              "output": "{\"value\": 351056}\n"
+            },
+            {
+              "input": {
+                "x": 593
+              },
+              "expected": {
+                "value": 351649
+              },
+              "verdict": {
+                "status": "passed",
+                "passed": true,
+                "actual": {
+                  "value": 351649
+                },
+                "diagnostic": "JSON result matched the host oracle"
+              },
+              "returncode": 0,
+              "output": "{\"value\": 351649}\n"
+            },
+            {
+              "input": {
+                "x": -594
+              },
+              "expected": {
+                "value": -352242
+              },
+              "verdict": {
+                "status": "passed",
+                "passed": true,
+                "actual": {
+                  "value": -352242
+                },
+                "diagnostic": "JSON result matched the host oracle"
+              },
+              "returncode": 0,
+              "output": "{\"value\": -352242}\n"
+            },
+            {
+              "input": {
+                "x": 1186
+              },
+              "expected": {
+                "value": 703298
+              },
+              "verdict": {
+                "status": "passed",
+                "passed": true,
+                "actual": {
+                  "value": 703298
+                },
+                "diagnostic": "JSON result matched the host oracle"
+              },
+              "returncode": 0,
+              "output": "{\"value\": 703298}\n"
+            }
+          ]
+        },
+        {
+          "id": "floor_divide-593-4",
+          "passed": true,
+          "cases": [
+            {
+              "input": {
+                "x": -21
+              },
+              "expected": {
+                "value": -1
+              },
+              "verdict": {
+                "status": "passed",
+                "passed": true,
+                "actual": {
+                  "value": -1
+                },
+                "diagnostic": "JSON result matched the host oracle"
+              },
+              "returncode": 0,
+              "output": "{\"value\": -1}\n"
+            },
+            {
+              "input": {
+                "x": 0
+              },
+              "expected": {
+                "value": 0
+              },
+              "verdict": {
+                "status": "passed",
+                "passed": true,
+                "actual": {
+                  "value": 0
+                },
+                "diagnostic": "JSON result matched the host oracle"
+              },
+              "returncode": 0,
+              "output": "{\"value\": 0}\n"
+            },
+            {
+              "input": {
+                "x": 19
+              },
+              "expected": {
+                "value": 0
+              },
+              "verdict": {
+                "status": "passed",
+                "passed": true,
+                "actual": {
+                  "value": 0
+                },
+                "diagnostic": "JSON result matched the host oracle"
+              },
+              "returncode": 0,
+              "output": "{\"value\": 0}\n"
+            },
+            {
+              "input": {
+                "x": 592
+              },
+              "expected": {
+                "value": 0
+              },
+              "verdict": {
+                "status": "passed",
+                "passed": true,
+                "actual": {
+                  "value": 0
+                },
+                "diagnostic": "JSON result matched the host oracle"
+              },
+              "returncode": 0,
+              "output": "{\"value\": 0}\n"
+            },
+            {
+              "input": {
+                "x": 593
+              },
+              "expected": {
+                "value": 1
+              },
+              "verdict": {
+                "status": "passed",
+                "passed": true,
+                "actual": {
+                  "value": 1
+                },
+                "diagnostic": "JSON result matched the host oracle"
+              },
+              "returncode": 0,
+              "output": "{\"value\": 1}\n"
+            },
+            {
+              "input": {
+                "x": -594
+              },
+              "expected": {
+                "value": -2
+              },
+              "verdict": {
+                "status": "passed",
+                "passed": true,
+                "actual": {
+                  "value": -2
+                },
+                "diagnostic": "JSON result matched the host oracle"
+              },
+              "returncode": 0,
+              "output": "{\"value\": -2}\n"
+            },
+            {
+              "input": {
+                "x": 1186
+              },
+              "expected": {
+                "value": 2
+              },
+              "verdict": {
+                "status": "passed",
+                "passed": true,
+                "actual": {
+                  "value": 2
+                },
+                "diagnostic": "JSON result matched the host oracle"
+              },
+              "returncode": 0,
+              "output": "{\"value\": 2}\n"
+            }
+          ]
+        },
+        {
+          "id": "add-683-4",
+          "passed": false,
+          "cases": [
+            {
+              "input": {
+                "x": -21
+              },
+              "expected": {
+                "value": 662
+              },
+              "verdict": {
+                "status": "wrong_answer",
+                "passed": false,
+                "actual": {
+                  "value": 665
+                },
+                "diagnostic": "JSON result did not satisfy this case"
+              },
+              "returncode": 0,
+              "output": "{\"value\": 665}\n"
+            },
+            {
+              "input": {
+                "x": 0
+              },
+              "expected": {
+                "value": 683
+              },
+              "verdict": {
+                "status": "wrong_answer",
+                "passed": false,
+                "actual": {
+                  "value": 686
+                },
+                "diagnostic": "JSON result did not satisfy this case"
+              },
+              "returncode": 0,
+              "output": "{\"value\": 686}\n"
+            },
+            {
+              "input": {
+                "x": 19
+              },
+              "expected": {
+                "value": 702
+              },
+              "verdict": {
+                "status": "wrong_answer",
+                "passed": false,
+                "actual": {
+                  "value": 705
+                },
+                "diagnostic": "JSON result did not satisfy this case"
+              },
+              "returncode": 0,
+              "output": "{\"value\": 705}\n"
+            },
+            {
+              "input": {
+                "x": 682
+              },
+              "expected": {
+                "value": 1365
+              },
+              "verdict": {
+                "status": "wrong_answer",
+                "passed": false,
+                "actual": {
+                  "value": 1368
+                },
+                "diagnostic": "JSON result did not satisfy this case"
+              },
+              "returncode": 0,
+              "output": "{\"value\": 1368}\n"
+            },
+            {
+              "input": {
+                "x": 683
+              },
+              "expected": {
+                "value": 1366
+              },
+              "verdict": {
+                "status": "wrong_answer",
+                "passed": false,
+                "actual": {
+                  "value": 1369
+                },
+                "diagnostic": "JSON result did not satisfy this case"
+              },
+              "returncode": 0,
+              "output": "{\"value\": 1369}\n"
+            },
+            {
+              "input": {
+                "x": -684
+              },
+              "expected": {
+                "value": -1
+              },
+              "verdict": {
+                "status": "wrong_answer",
+                "passed": false,
+                "actual": {
+                  "value": 2
+                },
+                "diagnostic": "JSON result did not satisfy this case"
+              },
+              "returncode": 0,
+              "output": "{\"value\": 2}\n"
+            },
+            {
+              "input": {
+                "x": 1366
+              },
+              "expected": {
+                "value": 2049
+              },
+              "verdict": {
+                "status": "wrong_answer",
+                "passed": false,
+                "actual": {
+                  "value": 2052
+                },
+                "diagnostic": "JSON result did not satisfy this case"
+              },
+              "returncode": 0,
+              "output": "{\"value\": 2052}\n"
+            }
+          ]
+        },
+        {
+          "id": "subtract-683-4",
+          "passed": true,
+          "cases": [
+            {
+              "input": {
+                "x": -21
+              },
+              "expected": {
+                "value": -704
+              },
+              "verdict": {
+                "status": "passed",
+                "passed": true,
+                "actual": {
+                  "value": -704
+                },
+                "diagnostic": "JSON result matched the host oracle"
+              },
+              "returncode": 0,
+              "output": "{\"value\": -704}\n"
+            },
+            {
+              "input": {
+                "x": 0
+              },
+              "expected": {
+                "value": -683
+              },
+              "verdict": {
+                "status": "passed",
+                "passed": true,
+                "actual": {
+                  "value": -683
+                },
+                "diagnostic": "JSON result matched the host oracle"
+              },
+              "returncode": 0,
+              "output": "{\"value\": -683}\n"
+            },
+            {
+              "input": {
+                "x": 19
+              },
+              "expected": {
+                "value": -664
+              },
+              "verdict": {
+                "status": "passed",
+                "passed": true,
+                "actual": {
+                  "value": -664
+                },
+                "diagnostic": "JSON result matched the host oracle"
+              },
+              "returncode": 0,
+              "output": "{\"value\": -664}\n"
+            },
+            {
+              "input": {
+                "x": 682
+              },
+              "expected": {
+                "value": -1
+              },
+              "verdict": {
+                "status": "passed",
+                "passed": true,
+                "actual": {
+                  "value": -1
+                },
+                "diagnostic": "JSON result matched the host oracle"
+              },
+              "returncode": 0,
+              "output": "{\"value\": -1}\n"
+            },
+            {
+              "input": {
+                "x": 683
+              },
+              "expected": {
+                "value": 0
+              },
+              "verdict": {
+                "status": "passed",
+                "passed": true,
+                "actual": {
+                  "value": 0
+                },
+                "diagnostic": "JSON result matched the host oracle"
+              },
+              "returncode": 0,
+              "output": "{\"value\": 0}\n"
+            },
+            {
+              "input": {
+                "x": -684
+              },
+              "expected": {
+                "value": -1367
+              },
+              "verdict": {
+                "status": "passed",
+                "passed": true,
+                "actual": {
+                  "value": -1367
+                },
+                "diagnostic": "JSON result matched the host oracle"
+              },
+              "returncode": 0,
+              "output": "{\"value\": -1367}\n"
+            },
+            {
+              "input": {
+                "x": 1366
+              },
+              "expected": {
+                "value": 683
+              },
+              "verdict": {
+                "status": "passed",
+                "passed": true,
+                "actual": {
+                  "value": 683
+                },
+                "diagnostic": "JSON result matched the host oracle"
+              },
+              "returncode": 0,
+              "output": "{\"value\": 683}\n"
+            }
+          ]
+        },
+        {
+          "id": "multiply-683-4",
+          "passed": true,
+          "cases": [
+            {
+              "input": {
+                "x": -21
+              },
+              "expected": {
+                "value": -14343
+              },
+              "verdict": {
+                "status": "passed",
+                "passed": true,
+                "actual": {
+                  "value": -14343
+                },
+                "diagnostic": "JSON result matched the host oracle"
+              },
+              "returncode": 0,
+              "output": "{\"value\": -14343}\n"
+            },
+            {
+              "input": {
+                "x": 0
+              },
+              "expected": {
+                "value": 0
+              },
+              "verdict": {
+                "status": "passed",
+                "passed": true,
+                "actual": {
+                  "value": 0
+                },
+                "diagnostic": "JSON result matched the host oracle"
+              },
+              "returncode": 0,
+              "output": "{\"value\": 0}\n"
+            },
+            {
+              "input": {
+                "x": 19
+              },
+              "expected": {
+                "value": 12977
+              },
+              "verdict": {
+                "status": "passed",
+                "passed": true,
+                "actual": {
+                  "value": 12977
+                },
+                "diagnostic": "JSON result matched the host oracle"
+              },
+              "returncode": 0,
+              "output": "{\"value\": 12977}\n"
+            },
+            {
+              "input": {
+                "x": 682
+              },
+              "expected": {
+                "value": 465806
+              },
+              "verdict": {
+                "status": "passed",
+                "passed": true,
+                "actual": {
+                  "value": 465806
+                },
+                "diagnostic": "JSON result matched the host oracle"
+              },
+              "returncode": 0,
+              "output": "{\"value\": 465806}\n"
+            },
+            {
+              "input": {
+                "x": 683
+              },
+              "expected": {
+                "value": 466489
+              },
+              "verdict": {
+                "status": "passed",
+                "passed": true,
+                "actual": {
+                  "value": 466489
+                },
+                "diagnostic": "JSON result matched the host oracle"
+              },
+              "returncode": 0,
+              "output": "{\"value\": 466489}\n"
+            },
+            {
+              "input": {
+                "x": -684
+              },
+              "expected": {
+                "value": -467172
+              },
+              "verdict": {
+                "status": "passed",
+                "passed": true,
+                "actual": {
+                  "value": -467172
+                },
+                "diagnostic": "JSON result matched the host oracle"
+              },
+              "returncode": 0,
+              "output": "{\"value\": -467172}\n"
+            },
+            {
+              "input": {
+                "x": 1366
+              },
+              "expected": {
+                "value": 932978
+              },
+              "verdict": {
+                "status": "passed",
+                "passed": true,
+                "actual": {
+                  "value": 932978
+                },
+                "diagnostic": "JSON result matched the host oracle"
+              },
+              "returncode": 0,
+              "output": "{\"value\": 932978}\n"
+            }
+          ]
+        },
+        {
+          "id": "floor_divide-683-4",
+          "passed": false,
+          "cases": [
+            {
+              "input": {
+                "x": -21
+              },
+              "expected": {
+                "value": -1
+              },
+              "verdict": {
+                "status": "passed",
+                "passed": true,
+                "actual": {
+                  "value": -1
+                },
+                "diagnostic": "JSON result matched the host oracle"
+              },
+              "returncode": 0,
+              "output": "{\"value\": -1}\n"
+            },
+            {
+              "input": {
+                "x": 0
+              },
+              "expected": {
+                "value": 0
+              },
+              "verdict": {
+                "status": "passed",
+                "passed": true,
+                "actual": {
+                  "value": 0
+                },
+                "diagnostic": "JSON result matched the host oracle"
+              },
+              "returncode": 0,
+              "output": "{\"value\": 0}\n"
+            },
+            {
+              "input": {
+                "x": 19
+              },
+              "expected": {
+                "value": 0
+              },
+              "verdict": {
+                "status": "passed",
+                "passed": true,
+                "actual": {
+                  "value": 0
+                },
+                "diagnostic": "JSON result matched the host oracle"
+              },
+              "returncode": 0,
+              "output": "{\"value\": 0}\n"
+            },
+            {
+              "input": {
+                "x": 682
+              },
+              "expected": {
+                "value": 0
+              },
+              "verdict": {
+                "status": "passed",
+                "passed": true,
+                "actual": {
+                  "value": 0
+                },
+                "diagnostic": "JSON result matched the host oracle"
+              },
+              "returncode": 0,
+              "output": "{\"value\": 0}\n"
+            },
+            {
+              "input": {
+                "x": 683
+              },
+              "expected": {
+                "value": 1
+              },
+              "verdict": {
+                "status": "wrong_answer",
+                "passed": false,
+                "actual": {
+                  "value": 0
+                },
+                "diagnostic": "JSON result did not satisfy this case"
+              },
+              "returncode": 0,
+              "output": "{\"value\": 0}\n"
+            },
+            {
+              "input": {
+                "x": -684
+              },
+              "expected": {
+                "value": -2
+              },
+              "verdict": {
+                "status": "wrong_answer",
+                "passed": false,
+                "actual": {
+                  "value": -1
+                },
+                "diagnostic": "JSON result did not satisfy this case"
+              },
+              "returncode": 0,
+              "output": "{\"value\": -1}\n"
+            },
+            {
+              "input": {
+                "x": 1366
+              },
+              "expected": {
+                "value": 2
+              },
+              "verdict": {
+                "status": "wrong_answer",
+                "passed": false,
+                "actual": {
+                  "value": 1
+                },
+                "diagnostic": "JSON result did not satisfy this case"
+              },
+              "returncode": 0,
+              "output": "{\"value\": 1}\n"
+            }
+          ]
+        }
+      ],
+      "tasks_correct": 6
+    }
+  ],
+  "target_met": true,
+  "improved_over_controls": true
+}

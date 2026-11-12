@@ -11,5 +11,6 @@
   "weights_sha256": "88d846a7d4e5d0cc4377e69302697d7f8dbd6f724f9a0c028a4bfe531cd0e2d7",
   "plan_sha256": "937131c7fbf426528a8cf978c95091e699458f83fac0836c12d857f6a7c7cbe6",
   "dataset_sha256": "b93fa2b2e07a11af5dfdfb64f0a48606784d2f4f82cb5ceb0822fe37d0eb9bcc",
-  "provenance": "self-authored synthetic; frozen independently trained SBrain + learned span endpoints/gate; one bounded copy action, no repair"
+  "provenance": "self-authored synthetic; frozen independently trained SBrain + learned span endpoints/gate; one bounded copy action, no repair",
+  "independently_initialized": true
 }

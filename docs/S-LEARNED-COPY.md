@@ -18,7 +18,7 @@ Wording templates are shared; no unfamiliar-English generalization is claimed.
 Both adapters use the unchanged, independently trained v3 SBrain checkpoint:
 `be18814895673f2a80075e0d2baedbda9277f927291ac614b7d3b2ebaa344711`.
 Its 329,376 parameters are frozen, excluded from optimization and checked again
-after training. No external model, teacher service or pretrained weights is used.
+after training. No external model weights or teacher/model service is used; the previously trained SBrain base is reused locally.
 The new adapters are initialized independently and trained on synthetic CC0 data.
 
 | Experiment | Adapter parameters | Update budget / selected | Validation contracts | Held-out source-contract agreement |
@@ -114,8 +114,32 @@ improvement over both controls. A byte-experiment diagnostic does not relax its
 missed target. The local host lacks Docker; actual results require CI or a
 suitable isolated host.
 
-Local validation: 119 application tests, 814 neural tests, 25 UI tests; all passed.
+Local validation: 120 application tests, 814 neural tests, 25 UI tests; all passed.
 Both new frozen reports replay exactly. Package 0.2.5 and installed launcher,
 packaged UI, persistence and stdlib-inference smoke passed. The related PR records
 current actual execution/Windows/Linux CI and merge status. Remaining inaccurate
 span outputs and the failed byte candidate are kept visible for future work.
+
+## Actual zero-repair runtime evidence
+
+Code commit `a6fbe7fa6241b98fc0280ac0679e66e26d02865d` (PR #21) passed
+[restricted Docker execution](https://github.com/shiyamprimetrade-sketch/S/actions/runs/43219172983).
+The byte adapter passed **5/8 tasks**, below its declared target, and the span
+adapter passed **6/8 tasks**, meeting its six-task target. In both experiments,
+the unchanged base and random-adapter controls passed **0/8**. **No repairs were
+performed.** The span result has 46/56 individual cases correct; six complete
+programs each passed all seven cases. Two programs for 683 still emit 686 and
+remain failed. These are not hidden, patched or excluded from the denominator.
+
+Exact case inputs, expected/actual outputs and statuses are preserved under
+`reports/s-developer/learned-copy/`, with the source/tree, workflow/job/artifact
+IDs and checksum-verified archive digest. The neural CI independently replayed
+both frozen reports. A follow-up hardens origin labels so an adapter of unknown
+or external origin cannot inherit the base model's independent-training claim;
+this changes provenance metadata, not trained weights or generation outputs.
+The local registered `native-copy` provider also reproduced a frozen bundle
+through the content-addressed installer without executing source on the host.
+
+These results establish narrow copy-assisted generation without repair, not an
+improvement in the frozen base's unassisted score or general coding reliability.
+Check PR #21 for final Windows/Linux status and merge evidence.

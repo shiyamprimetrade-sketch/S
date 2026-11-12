@@ -1,0 +1,17 @@
+{
+  "source_commit": "a6fbe7fa6241b98fc0280ac0679e66e26d02865d",
+  "source_tree": "d8398379259e678b7c29d1661d05436512fd361f",
+  "artifact_id": 13944524056,
+  "artifact_sha256": "b96303c17c22a0b0fb2790a67757f7e71ca07f04276c7ccf6dfdbc23b41aa8e9",
+  "docker_run_id": 43219172983,
+  "docker_job_id": 131185999482,
+  "docker_url": "https://github.com/shiyamprimetrade-sketch/S/actions/runs/43219172983",
+  "neural_replay_url": "https://github.com/shiyamprimetrade-sketch/S/actions/runs/43219173195",
+  "byte_tasks_correct": 5,
+  "span_tasks_correct": 6,
+  "base_control_tasks_correct": 0,
+  "random_control_tasks_correct": 0,
+  "repairs_performed": 0,
+  "automatic_promotion": false,
+  "scope": "synthetic known-template constant transfer; copy-assisted architecture, not unchanged base improvement"
+}

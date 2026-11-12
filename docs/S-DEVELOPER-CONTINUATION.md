@@ -31,10 +31,14 @@ plans, data, safe weights, hashes, logs and raw results. New `native-copy` provi
 and explicit local adapter installation are available in CLI/GUI. Default model
 and execution authority are unchanged. Full prompts exceeding context are refused.
 
-Local: 119 app, 814 neural, 25 UI tests passed. New frozen outputs replay exactly;
+Local: 120 app, 814 neural, 25 UI tests passed. New frozen outputs replay exactly;
 package/installed launcher/persistence/stdlib smoke passes. Local Docker is absent.
-Inspect the related PR for actual zero-repair runtime scores, final Windows/Linux
-CI, evidence preservation and merge status before claiming those checks passed.
+Real Docker CI in PR #21 verified byte 5/8 and span 6/8 tasks correct with zero
+repairs; base/random controls 0/8 in both. Span meets its six-task target; byte
+misses it. Exact reports and artifact provenance are preserved in
+`reports/s-developer/learned-copy/`. Span has 46/56 individual cases correct, with
+two programs still failing. Inspect PR #21 for final Windows/Linux and merge
+status. Never relabel this new controller as unassisted frozen-base improvement.
 
 ## Next concrete work
 
