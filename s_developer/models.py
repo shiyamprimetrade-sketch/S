@@ -14,8 +14,9 @@ def config_path(db):return Path(db).resolve().parent/'s-developer-host.json'
 def load_config(db):
     path=config_path(db)
     value=json.loads(path.read_text(encoding='utf-8')) if path.is_file() else {}
-    if not isinstance(value,dict) or set(value)-{'native_checkpoint','native_backend','native_decoding','ollama_model','images'}:
+    if not isinstance(value,dict) or set(value)-{'native_checkpoint','native_backend','native_decoding','native_copy_adapter','ollama_model','images'}:
         raise ValueError('Unknown developer host configuration fields')
+    if 'native_copy_adapter' in value and (not isinstance(value['native_copy_adapter'],str) or not value['native_copy_adapter']):raise ValueError('Invalid copy adapter path')
     if 'images' in value and not isinstance(value['images'],dict):raise ValueError('Images must be a mapping')
     if value.get('native_backend','torch') not in ('torch','stdlib'):raise ValueError('Unknown native runtime backend')
     if value.get('native_decoding','sampled') not in ('sampled','greedy-json'):raise ValueError('Unknown native decoder')

@@ -95,3 +95,12 @@ bounded arithmetic-literal repair. The new model emits valid source bundles for
 Repair is deterministic, separately labelled and never presented as untouched
 neural success. See [measured scope, commands and verification](docs/S-GENERATION-VALIDATION-FIX.md).
 Existing checkpoints, original interfaces and project data remain preserved.
+
+## Learned source-copy experiments
+
+Package 0.2.5 adds an opt-in learned-copy adapter/provider while keeping the base
+SBrain weights unchanged. It is a distinct copy-assisted generation mechanism,
+not the deterministic literal repair from PR #20. Fresh source-contract checks
+reach 5/8 with byte attention and 6/8 with a bounded learned span controller;
+real restricted Docker execution confirms those scores with zero repairs; base/random controls remain 0/8. See
+[scope, reproducible commands and remaining failures](docs/S-LEARNED-COPY.md).

@@ -41,14 +41,15 @@ def main(argv=None):
     parser.add_argument('--detect', metavar='LANGUAGE', help='Explicitly probe a trusted installed toolchain')
     parser.add_argument('--enable-builds',action='store_true',help='Enable consented, container-only execution')
     parser.add_argument('--checkpoint',type=Path)
+    parser.add_argument('--adapter',type=Path)
     parser.add_argument('--output',type=Path)
     parser.add_argument('--steps',type=int,default=128)
     parser.add_argument('--model')
     parser.add_argument('--approve-download',action='store_true')
     parser.add_argument('--project')
     parser.add_argument('--recipe',choices=('static-site','python-cli','c-cli'),default='python-cli')
-    parser.add_argument('--provider',choices=('template','native','ollama-external'),default='template')
-    parser.add_argument('--repair-provider',choices=('template','native','ollama-external','requirements-literal'))
+    parser.add_argument('--provider',choices=('template','native','native-copy','ollama-external'),default='template')
+    parser.add_argument('--repair-provider',choices=('template','native','native-copy','ollama-external','requirements-literal'))
     parser.add_argument('--consent',action='store_true')
     parser.add_argument('--max-repairs',type=int,default=0)
     parser.add_argument('--backend',choices=('torch','stdlib'),default='stdlib')
@@ -79,6 +80,10 @@ def main(argv=None):
         print(json.dumps(probe_native(config,args.prompt,args.tokens),indent=2));return 0
     if args.command==['model','install-demo']:
         print(json.dumps(install_demo(args.db),indent=2));return 0
+    if args.command==['model','install-copy-adapter']:
+        from .copy_models import install_copy_adapter
+        if not args.adapter:parser.error('--adapter is required')
+        print(json.dumps(install_copy_adapter(args.db,args.adapter),indent=2));return 0
     if args.command==['model','install-native']:
         if not args.checkpoint:parser.error('--checkpoint is required')
         print(json.dumps(install_native(args.db,args.checkpoint),indent=2));return 0

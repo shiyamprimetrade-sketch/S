@@ -1,0 +1,16 @@
+{
+  "schema": 1,
+  "kind": "s-learned-byte-copy",
+  "adapter_config": {
+    "dim": 96,
+    "key_dim": 32
+  },
+  "step": 1100,
+  "base_weights_sha256": "be18814895673f2a80075e0d2baedbda9277f927291ac614b7d3b2ebaa344711",
+  "weights_sha256": "2c4c89e4ddad1798e27b9c03097abf586871b036ed07654c1eae0988d435cd19",
+  "dataset_sha256": "c93e451e1d62534d9f0f8b2f30c32ca377d286979e5dd0f2254f7d043953d77b",
+  "plan_sha256": "e988d10092509d5c0cfe0db8ef2eaea1140ff1161564f7deb3e0ca646a5511df",
+  "seed": 20261114,
+  "provenance": "self-authored synthetic; frozen independent SBrain plus independently initialized learned source attention/gate",
+  "independently_initialized": true
+}

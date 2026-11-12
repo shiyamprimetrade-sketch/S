@@ -1,0 +1,85 @@
+{
+  "experiment": "s-learned-span-copy-v1",
+  "provenance": "Self-authored synthetic arithmetic source bundles; no teacher output or pretrained weights",
+  "seed": 20261115,
+  "model": {
+    "vocab_size": 256,
+    "dim": 96,
+    "layers": 3,
+    "heads": 4,
+    "kv_heads": 2,
+    "context": 512
+  },
+  "steps": 2000,
+  "batch_size": 8,
+  "threads": 2,
+  "learning_rate": 0.003,
+  "minimum_learning_rate": 0.0003,
+  "warmup_steps": 50,
+  "evaluation_interval": 100,
+  "validation_constants": [
+    577,
+    641
+  ],
+  "test_constants": [
+    593,
+    683
+  ],
+  "constant_range": [
+    521,
+    720
+  ],
+  "operations": [
+    "add",
+    "subtract",
+    "multiply",
+    "floor_divide"
+  ],
+  "selection": "validation free-generation AST contract matches, then format count, then lowest validation source-endpoint/gate objective; freeze before test",
+  "decoder": "greedy bytes, stop at first complete JSON object; no correction or token constraints",
+  "max_new_tokens": 200,
+  "target": {
+    "held_out_tasks": 8,
+    "minimum_tasks_correct": 6,
+    "cases_per_task": 7
+  },
+  "limitations": [
+    "self-authored synthetic known-template constant transfer",
+    "different decoder from plain SBrain; learned copy mechanism explicitly labelled",
+    "not general coding ability or unseen-template transfer",
+    "no automatic default promotion"
+  ],
+  "prompt_suffix": "\nAnswer:\n",
+  "test_file_comment": "# Independent tests.\n",
+  "rationale": "Follow-up to token-copy validation alignment/stop errors; learned source endpoints + gate, one explicitly bounded span action, fresh data; no literal parser or repair at inference; validation-only linear prototypes underfit selectors/gate; final nonlinear heads declared before any span test generation",
+  "selection_metric": "free-generation-contract",
+  "semantic_token_weight": 8,
+  "prompt_styles": {
+    "train": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "validation": [
+      3
+    ],
+    "test": [
+      4
+    ]
+  },
+  "case_strategy": "arithmetic-boundaries",
+  "adapter": {
+    "dim": 96,
+    "hidden": 64
+  },
+  "base_checkpoint": "experiments/coding-curriculum-v3/checkpoints/selected",
+  "base_weights_sha256": "be18814895673f2a80075e0d2baedbda9277f927291ac614b7d3b2ebaa344711",
+  "base_frozen": true,
+  "training_objective": "supervised source-span endpoints and learned span-start gate on training records; base remains frozen",
+  "repairs_allowed": 0,
+  "adapter_kind": "s-learned-span-copy",
+  "copy_actions_budget": 1,
+  "max_span_bytes": 32
+}

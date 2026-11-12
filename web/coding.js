@@ -53,6 +53,7 @@ $('code-open').onclick=()=>action(async()=>{
   const capabilities=await api('capabilities');$('code-capabilities').textContent=
     `S Native: ${capabilities.providers.native?'checkpoint configured':'not installed'}. Runtime: ${capabilities.native_backend}. `+
     `Container builds: ${capabilities.execution_enabled?'enabled by operator':'disabled by operator'}. `+
+    `Learned copy: ${capabilities.providers['native-copy']?'configured (experimental)':'not configured'}. `+
     `External local model: ${capabilities.providers['ollama-external']?'configured':'not configured'}.`;
   if(current&&current.status==='approved') {
     const rows=await api('artifacts?project_id='+encodeURIComponent(codingProject()));

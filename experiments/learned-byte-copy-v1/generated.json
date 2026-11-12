@@ -1,0 +1,294 @@
+{
+  "experiment": "s-learned-byte-copy-v1",
+  "plan_sha256": "e988d10092509d5c0cfe0db8ef2eaea1140ff1161564f7deb3e0ca646a5511df",
+  "dataset_sha256": "c93e451e1d62534d9f0f8b2f30c32ca377d286979e5dd0f2254f7d043953d77b",
+  "base_weights_sha256": "be18814895673f2a80075e0d2baedbda9277f927291ac614b7d3b2ebaa344711",
+  "repairs_allowed": 0,
+  "semantic_execution": "not_assessed",
+  "automatic_promotion": false,
+  "models": [
+    {
+      "label": "base-unassisted",
+      "adapter_sha256": null,
+      "tasks": [
+        {
+          "id": "add-413-4",
+          "prompt_sha256": "b6bb4585b981bd7fbc9205ed89960f29b598c7df8330e3cc5217867c760953eb",
+          "raw": "{\"files\":{\"app.py\":\"def solve(p):\\n    return {\\\"value\\\":p[\\\"x\\\"]+231}\\n\",\"test_app.py\":\"# Independent tests.\\n\"}}",
+          "format_passed": true,
+          "files": {
+            "app.py": "def solve(p):\n    return {\"value\":p[\"x\"]+231}\n",
+            "test_app.py": "# Independent tests.\n"
+          },
+          "source_sha256": "648941c295312e1bed0ed1ed34b04d0bf049ddee54a47a9dc9894c53e0a8bcc7"
+        },
+        {
+          "id": "subtract-413-4",
+          "prompt_sha256": "aac2486e3c9cc3f3cc257c981f5d16bae3f242119105d5f8387ee13dd2f68c66",
+          "raw": "{\"files\":{\"app.py\":\"def solve(p):\\n    return {\\\"value\\\":p[\\\"x\\\"]-231}\\n\",\"test_app.py\":\"# Independent tests.\\n\"}}",
+          "format_passed": true,
+          "files": {
+            "app.py": "def solve(p):\n    return {\"value\":p[\"x\"]-231}\n",
+            "test_app.py": "# Independent tests.\n"
+          },
+          "source_sha256": "f28e4d3251c1d967658bd4533b2385e4b59dc616d02668d92ea38daf86d8c38d"
+        },
+        {
+          "id": "multiply-413-4",
+          "prompt_sha256": "cbe38dcb8a806f034f98c25c2bc1f938c7aafda957baf421ff02c4fca42ecb0c",
+          "raw": "{\"files\":{\"app.py\":\"def solve(p):\\n    return {\\\"value\\\":p[\\\"x\\\"]*231}\\n\",\"test_app.py\":\"# Independent tests.\\n\"}}",
+          "format_passed": true,
+          "files": {
+            "app.py": "def solve(p):\n    return {\"value\":p[\"x\"]*231}\n",
+            "test_app.py": "# Independent tests.\n"
+          },
+          "source_sha256": "2fc5510386be427214af101d074b5bd3c9306e13b92bcfee0beca4b113aceb6f"
+        },
+        {
+          "id": "floor_divide-413-4",
+          "prompt_sha256": "f7979e7b3194bea5116046e894d2dc71d0c8abd2159707e7a1210a1259dfa51c",
+          "raw": "{\"files\":{\"app.py\":\"def solve(p):\\n    return {\\\"value\\\":p[\\\"x\\\"]//231}\\n\",\"test_app.py\":\"# Independent tests.\\n\"}}",
+          "format_passed": true,
+          "files": {
+            "app.py": "def solve(p):\n    return {\"value\":p[\"x\"]//231}\n",
+            "test_app.py": "# Independent tests.\n"
+          },
+          "source_sha256": "1bcf0a255034d777680162358f22089e570c45e8a9cf343cd4166098e3025294"
+        },
+        {
+          "id": "add-487-4",
+          "prompt_sha256": "7a90265bd2bf191521d217807755ad25add3cfbc8ef32e0d21dab62f31b54d6c",
+          "raw": "{\"files\":{\"app.py\":\"def solve(p):\\n    return {\\\"value\\\":p[\\\"x\\\"]+278}\\n\",\"test_app.py\":\"# Independent tests.\\n\"}}",
+          "format_passed": true,
+          "files": {
+            "app.py": "def solve(p):\n    return {\"value\":p[\"x\"]+278}\n",
+            "test_app.py": "# Independent tests.\n"
+          },
+          "source_sha256": "3ed7606650b43c47945eaa1b60e75a0bc8db3d409afe428f31a180d0de6dd7e0"
+        },
+        {
+          "id": "subtract-487-4",
+          "prompt_sha256": "688cbc909de6c854d0c70d0ad2205b518c6ab557d6d00364700cfe57b84a9dc5",
+          "raw": "{\"files\":{\"app.py\":\"def solve(p):\\n    return {\\\"value\\\":p[\\\"x\\\"]-278}\\n\",\"test_app.py\":\"# Independent tests.\\n\"}}",
+          "format_passed": true,
+          "files": {
+            "app.py": "def solve(p):\n    return {\"value\":p[\"x\"]-278}\n",
+            "test_app.py": "# Independent tests.\n"
+          },
+          "source_sha256": "c1327626d1d63c133a82353f1561e028050a866c1b907c3c3e0ba4a1cb9ba17d"
+        },
+        {
+          "id": "multiply-487-4",
+          "prompt_sha256": "a9a2c1de8899c88639aacf8eb3884e298c2c06954f10b5897ebadd7e45d54042",
+          "raw": "{\"files\":{\"app.py\":\"def solve(p):\\n    return {\\\"value\\\":p[\\\"x\\\"]*278}\\n\",\"test_app.py\":\"# Independent tests.\\n\"}}",
+          "format_passed": true,
+          "files": {
+            "app.py": "def solve(p):\n    return {\"value\":p[\"x\"]*278}\n",
+            "test_app.py": "# Independent tests.\n"
+          },
+          "source_sha256": "5d9237f36cdf53a16ec7f708a6ef747b6da1a12517be846e6aeab2589b091582"
+        },
+        {
+          "id": "floor_divide-487-4",
+          "prompt_sha256": "00dbc42d29cdcf3d6a67a45574d0c0a587e8c07367c2e1afa8f8e49028d7e830",
+          "raw": "{\"files\":{\"app.py\":\"def solve(p):\\n    return {\\\"value\\\":p[\\\"x\\\"]//278}\\n\",\"test_app.py\":\"# Independent tests.\\n\"}}",
+          "format_passed": true,
+          "files": {
+            "app.py": "def solve(p):\n    return {\"value\":p[\"x\"]//278}\n",
+            "test_app.py": "# Independent tests.\n"
+          },
+          "source_sha256": "8e17fa838f2458c964e33b7f1efdbaffb54ec445e9f3396bcf946d6c87c7b7dd"
+        }
+      ]
+    },
+    {
+      "label": "random-copy",
+      "adapter_sha256": "f488dba7b1998b363300637fcddcd3aac2aa50d939007e9ba232396de6bb21fc",
+      "tasks": [
+        {
+          "id": "add-413-4",
+          "prompt_sha256": "b6bb4585b981bd7fbc9205ed89960f29b598c7df8330e3cc5217867c760953eb",
+          "raw": "{\"files\":{\"app.py\":\"def solve(p):\\n    return {\\\"value\\\":p[\\\"x\\\"]+231}\\n\",\"test_app.py\":\"# Independent tests.\\n\"}}",
+          "format_passed": true,
+          "files": {
+            "app.py": "def solve(p):\n    return {\"value\":p[\"x\"]+231}\n",
+            "test_app.py": "# Independent tests.\n"
+          },
+          "source_sha256": "648941c295312e1bed0ed1ed34b04d0bf049ddee54a47a9dc9894c53e0a8bcc7"
+        },
+        {
+          "id": "subtract-413-4",
+          "prompt_sha256": "aac2486e3c9cc3f3cc257c981f5d16bae3f242119105d5f8387ee13dd2f68c66",
+          "raw": "{\"files\":{\"app.py\":\"def solve(p):\\n    return {\\\"value\\\":p[\\\"x\\\"]-231}\\n\",\"test_app.py\":\"# Independent tests.\\n\"}}",
+          "format_passed": true,
+          "files": {
+            "app.py": "def solve(p):\n    return {\"value\":p[\"x\"]-231}\n",
+            "test_app.py": "# Independent tests.\n"
+          },
+          "source_sha256": "f28e4d3251c1d967658bd4533b2385e4b59dc616d02668d92ea38daf86d8c38d"
+        },
+        {
+          "id": "multiply-413-4",
+          "prompt_sha256": "cbe38dcb8a806f034f98c25c2bc1f938c7aafda957baf421ff02c4fca42ecb0c",
+          "raw": "{\"files\":{\"app.py\":\"def solve(p):\\n    return {\\\"value\\\":p[\\\"x\\\"]*231}\\n\",\"test_app.py\":\"# Independent tests.\\n\"}}",
+          "format_passed": true,
+          "files": {
+            "app.py": "def solve(p):\n    return {\"value\":p[\"x\"]*231}\n",
+            "test_app.py": "# Independent tests.\n"
+          },
+          "source_sha256": "2fc5510386be427214af101d074b5bd3c9306e13b92bcfee0beca4b113aceb6f"
+        },
+        {
+          "id": "floor_divide-413-4",
+          "prompt_sha256": "f7979e7b3194bea5116046e894d2dc71d0c8abd2159707e7a1210a1259dfa51c",
+          "raw": "{\"files\":{\"app.py\":\"def solve(p):\\n    return {\\\"value\\\":p[\\\"x\\\"]//231}\\n\",\"test_app.py\":\"# Independent tests.\\n\"}}",
+          "format_passed": true,
+          "files": {
+            "app.py": "def solve(p):\n    return {\"value\":p[\"x\"]//231}\n",
+            "test_app.py": "# Independent tests.\n"
+          },
+          "source_sha256": "1bcf0a255034d777680162358f22089e570c45e8a9cf343cd4166098e3025294"
+        },
+        {
+          "id": "add-487-4",
+          "prompt_sha256": "7a90265bd2bf191521d217807755ad25add3cfbc8ef32e0d21dab62f31b54d6c",
+          "raw": "{\"files\":{\"app.py\":\"def solve(p):\\n    return {\\\"value\\\":p[\\\"x\\\"]+278}\\n\",\"test_app.py\":\"# Independent tests.\\n\"}}",
+          "format_passed": true,
+          "files": {
+            "app.py": "def solve(p):\n    return {\"value\":p[\"x\"]+278}\n",
+            "test_app.py": "# Independent tests.\n"
+          },
+          "source_sha256": "3ed7606650b43c47945eaa1b60e75a0bc8db3d409afe428f31a180d0de6dd7e0"
+        },
+        {
+          "id": "subtract-487-4",
+          "prompt_sha256": "688cbc909de6c854d0c70d0ad2205b518c6ab557d6d00364700cfe57b84a9dc5",
+          "raw": "{\"files\":{\"app.py\":\"def solve(p):\\n    return {\\\"value\\\":p[\\\"x\\\"]-278}\\n\",\"test_app.py\":\"# Independent tests.\\n\"}}",
+          "format_passed": true,
+          "files": {
+            "app.py": "def solve(p):\n    return {\"value\":p[\"x\"]-278}\n",
+            "test_app.py": "# Independent tests.\n"
+          },
+          "source_sha256": "c1327626d1d63c133a82353f1561e028050a866c1b907c3c3e0ba4a1cb9ba17d"
+        },
+        {
+          "id": "multiply-487-4",
+          "prompt_sha256": "a9a2c1de8899c88639aacf8eb3884e298c2c06954f10b5897ebadd7e45d54042",
+          "raw": "{\"files\":{\"app.py\":\"def solve(p):\\n    return {\\\"value\\\":p[\\\"x\\\"]*278}\\n\",\"test_app.py\":\"# Independent tests.\\n\"}}",
+          "format_passed": true,
+          "files": {
+            "app.py": "def solve(p):\n    return {\"value\":p[\"x\"]*278}\n",
+            "test_app.py": "# Independent tests.\n"
+          },
+          "source_sha256": "5d9237f36cdf53a16ec7f708a6ef747b6da1a12517be846e6aeab2589b091582"
+        },
+        {
+          "id": "floor_divide-487-4",
+          "prompt_sha256": "00dbc42d29cdcf3d6a67a45574d0c0a587e8c07367c2e1afa8f8e49028d7e830",
+          "raw": "{\"files\":{\"app.py\":\"def solve(p):\\n    return {\\\"value\\\":p[\\\"x\\\"]//278}\\n\",\"test_app.py\":\"# Independent tests.\\n\"}}",
+          "format_passed": true,
+          "files": {
+            "app.py": "def solve(p):\n    return {\"value\":p[\"x\"]//278}\n",
+            "test_app.py": "# Independent tests.\n"
+          },
+          "source_sha256": "8e17fa838f2458c964e33b7f1efdbaffb54ec445e9f3396bcf946d6c87c7b7dd"
+        }
+      ]
+    },
+    {
+      "label": "learned-copy",
+      "adapter_sha256": "2c4c89e4ddad1798e27b9c03097abf586871b036ed07654c1eae0988d435cd19",
+      "tasks": [
+        {
+          "id": "add-413-4",
+          "prompt_sha256": "b6bb4585b981bd7fbc9205ed89960f29b598c7df8330e3cc5217867c760953eb",
+          "raw": "{\"files\":{\"app.py\":\"def solve(p):\\n    return {\\\"value\\\":p[\\\"x\\\"]+413}\\n\",\"test_app.py\":\"# Independent tests.\\n\"}}",
+          "format_passed": true,
+          "files": {
+            "app.py": "def solve(p):\n    return {\"value\":p[\"x\"]+413}\n",
+            "test_app.py": "# Independent tests.\n"
+          },
+          "source_sha256": "0c0caf7804b643abc417bb821b8b1bd8fcf3be37da7357bb067ada42318c5bb8"
+        },
+        {
+          "id": "subtract-413-4",
+          "prompt_sha256": "aac2486e3c9cc3f3cc257c981f5d16bae3f242119105d5f8387ee13dd2f68c66",
+          "raw": "{\"files\":{\"app.py\":\"def solve(p):\\n    return {\\\"value\\\":p[\\\"x\\\"]-413}\\n\",\"test_app.py\":\"# Independent tests.\\n\"}}",
+          "format_passed": true,
+          "files": {
+            "app.py": "def solve(p):\n    return {\"value\":p[\"x\"]-413}\n",
+            "test_app.py": "# Independent tests.\n"
+          },
+          "source_sha256": "d07819de6814d85903dcd5d64db748744f607c42dc4c513ffbf6788f01068b9e"
+        },
+        {
+          "id": "multiply-413-4",
+          "prompt_sha256": "cbe38dcb8a806f034f98c25c2bc1f938c7aafda957baf421ff02c4fca42ecb0c",
+          "raw": "{\"files\":{\"app.py\":\"def solve(p):\\n    return {\\\"value\\\":p[\\\"x\\\"]*4131}\\n\",\"test_app.py\":\"# Independent tests.\\n\"}}",
+          "format_passed": true,
+          "files": {
+            "app.py": "def solve(p):\n    return {\"value\":p[\"x\"]*4131}\n",
+            "test_app.py": "# Independent tests.\n"
+          },
+          "source_sha256": "4d227908ee176e6345c0b345b438318cba6a54c540147521cdf4b2b74e2d89b4"
+        },
+        {
+          "id": "floor_divide-413-4",
+          "prompt_sha256": "f7979e7b3194bea5116046e894d2dc71d0c8abd2159707e7a1210a1259dfa51c",
+          "raw": "{\"files\":{\"app.py\":\"def solve(p):\\n    return {\\\"value\\\":p[\\\"x\\\"]//413}\\n\",\"test_app.py\":\"# Independent tests.\\n\"}}",
+          "format_passed": true,
+          "files": {
+            "app.py": "def solve(p):\n    return {\"value\":p[\"x\"]//413}\n",
+            "test_app.py": "# Independent tests.\n"
+          },
+          "source_sha256": "dcd00bd582d019f9099ff2b5e1cc4ceeed6a3d05d2033732b52a1c0e76155abe"
+        },
+        {
+          "id": "add-487-4",
+          "prompt_sha256": "7a90265bd2bf191521d217807755ad25add3cfbc8ef32e0d21dab62f31b54d6c",
+          "raw": "{\"files\":{\"app.py\":\"def solve(p):\\n    return {\\\"value\\\":p[\\\"x\\\"]+487}\\n\",\"test_app.py\":\"# Independent tests.\\n\"}}",
+          "format_passed": true,
+          "files": {
+            "app.py": "def solve(p):\n    return {\"value\":p[\"x\"]+487}\n",
+            "test_app.py": "# Independent tests.\n"
+          },
+          "source_sha256": "3519799a44b759f87538cb3cd7c9da1b198ad4b7e8d74671f6bcea6f4a80b1b6"
+        },
+        {
+          "id": "subtract-487-4",
+          "prompt_sha256": "688cbc909de6c854d0c70d0ad2205b518c6ab557d6d00364700cfe57b84a9dc5",
+          "raw": "{\"files\":{\"app.py\":\"def solve(p):\\n    return {\\\"value\\\":p[\\\"x\\\"]-488}\\n\",\"test_app.py\":\"# Independent tests.\\n\"}}",
+          "format_passed": true,
+          "files": {
+            "app.py": "def solve(p):\n    return {\"value\":p[\"x\"]-488}\n",
+            "test_app.py": "# Independent tests.\n"
+          },
+          "source_sha256": "ac275e9e236c5590147b593ba748cabab8ed03c4d09c0c63cbbba2a83c0bfc60"
+        },
+        {
+          "id": "multiply-487-4",
+          "prompt_sha256": "a9a2c1de8899c88639aacf8eb3884e298c2c06954f10b5897ebadd7e45d54042",
+          "raw": "{\"files\":{\"app.py\":\"def solve(p):\\n    return {\\\"value\\\":p[\\\"x\\\"]*488}\\n\",\"test_app.py\":\"# Independent tests.\\n\"}}",
+          "format_passed": true,
+          "files": {
+            "app.py": "def solve(p):\n    return {\"value\":p[\"x\"]*488}\n",
+            "test_app.py": "# Independent tests.\n"
+          },
+          "source_sha256": "f30c68f9c97c42cb30d194b99aad78b0d76576692f457cd149a5405a4ff5e72f"
+        },
+        {
+          "id": "floor_divide-487-4",
+          "prompt_sha256": "00dbc42d29cdcf3d6a67a45574d0c0a587e8c07367c2e1afa8f8e49028d7e830",
+          "raw": "{\"files\":{\"app.py\":\"def solve(p):\\n    return {\\\"value\\\":p[\\\"x\\\"]//487}\\n\",\"test_app.py\":\"# Independent tests.\\n\"}}",
+          "format_passed": true,
+          "files": {
+            "app.py": "def solve(p):\n    return {\"value\":p[\"x\"]//487}\n",
+            "test_app.py": "# Independent tests.\n"
+          },
+          "source_sha256": "acf55d96dbb23d26625f41d1702131d7ce0a3da877cb311080cf32768e7a87ba"
+        }
+      ]
+    }
+  ],
+  "generation_mechanism": "s-learned-byte-copy"
+}

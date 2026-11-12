@@ -24,6 +24,7 @@ class DevelopmentEngine:
         with self.store.connect() as db:db.executescript(SCHEMA)
     def capabilities(self):
         return {'recipes':RECIPES,'providers':{'template':True,'native':bool(self.config.get('native_checkpoint')),
+                 'native-copy':bool(self.config.get('native_copy_adapter') and self.config.get('native_checkpoint') and self.config.get('native_backend','torch')=='torch'),
                  'ollama-external':bool(self.config.get('ollama_model'))},
                 'execution_enabled':self.config.get('execution_enabled') is True,
                 'native_backend':self.config.get('native_backend','torch'),

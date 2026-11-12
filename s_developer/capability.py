@@ -50,7 +50,7 @@ class CapabilityEvaluator:
     def __init__(self,config):self.config=config
     def _generate(self,engine,task):
         prompt=PROTOCOL+task['contract']
-        if getattr(engine,'id',None) in ('native','ollama-external'):
+        if getattr(engine,'id',None) in ('native','native-copy','ollama-external'):
             return engine._generate(prompt,'python-cli')
         # The deterministic template baseline is intentionally not specialized
         # to these tasks. Correct-code fixtures are test-only injected providers.

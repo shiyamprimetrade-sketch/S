@@ -131,6 +131,37 @@ class NativeProvider:
     def repair(self,spec,recipe,files,diagnostic):return self._generate(prompt_for(spec,recipe,files,diagnostic),recipe)
 
 
+class NativeCopyProvider(NativeProvider):
+    id='native-copy'
+    def __init__(self,checkpoint,adapter):
+        super().__init__(checkpoint,'torch','greedy-json');self.adapter=Path(adapter)
+    def provenance(self):
+        from s_brain.checkpoint import load_manifest
+        from .copy_models import validate_adapter
+        base=load_manifest(self.checkpoint);copy=validate_adapter(self.adapter,base)
+        return {'provider':self.id,'independently_generated_neural_code':base.extras.get('independently_initialized') is True and copy.get('independently_initialized') is True,
+                'runtime_backend':'torch','decoding':copy['kind']+'-greedy','model_sha256':base.weights_sha256,
+                'copy_kind':copy['kind'],
+                'copy_adapter_sha256':copy['weights_sha256'],'copy_training_steps':copy['step'],
+                'method':'frozen SBrain plus learned source-copy adapter; explicit copy controller, no repair',
+                'training_provenance':copy.get('provenance'),'capability':'experimental; narrow arithmetic evidence only'}
+    def _generate(self,prompt,recipe):
+        try:import torch
+        except (ImportError,OSError) as error:raise RuntimeError('Learned-copy inference requires S[neural]; Android support is unverified') from error
+        from s_brain.checkpoint import load_weights
+        from s_brain.byte_copy import generate_copy
+        from .copy_models import load_adapter
+        with self.lock,torch.random.fork_rng(devices=[]):
+            base,manifest=load_weights(self.checkpoint)
+            if len(prompt.encode())>base.cfg.context:raise ContextLimitError('Copy provider prompt exceeds context; no requirements discarded')
+            adapter,meta=load_adapter(self.adapter,manifest)
+            if meta['kind']=='s-learned-span-copy':
+                from s_brain.span_copy import generate_span
+                value=generate_span(base,adapter,prompt,200)
+            else:value=generate_copy(base,adapter,prompt,200)
+        return decode_proposal(value,recipe)
+
+
 class OllamaProvider:
     id='ollama-external'
     def __init__(self,model):
@@ -157,6 +188,9 @@ def provider(identifier,config):
     if identifier=='requirements-literal':
         from .literal_repair import LiteralRepairProvider
         return LiteralRepairProvider()
+    if identifier=='native-copy' and config.get('native_checkpoint') and config.get('native_copy_adapter'):
+        if config.get('native_backend','torch')!='torch':raise PermissionError('Learned copy inference requires the torch backend')
+        return NativeCopyProvider(config['native_checkpoint'],config['native_copy_adapter'])
     if identifier=='template':return TemplateProvider()
     if identifier=='native' and config.get('native_checkpoint'):return NativeProvider(config['native_checkpoint'],config.get('native_backend','torch'),config.get('native_decoding','sampled'))
     if identifier=='ollama-external' and config.get('ollama_model'):return OllamaProvider(config['ollama_model'])

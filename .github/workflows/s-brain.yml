@@ -5,6 +5,8 @@ on:
     paths:
       - "s_brain/**"
       - "experiments/coding-curriculum-v*/**"
+      - "experiments/learned-*-copy-v*/**"
+      - "scripts/*_copy.py"
       - "scripts/*coding_curriculum.py"
       - "s_developer/**"
       - "continuum/brain_console.py"
@@ -17,6 +19,8 @@ on:
     paths:
       - "s_brain/**"
       - "experiments/coding-curriculum-v*/**"
+      - "experiments/learned-*-copy-v*/**"
+      - "scripts/*_copy.py"
       - "scripts/*coding_curriculum.py"
       - "s_developer/**"
       - "continuum/brain_console.py"
@@ -49,6 +53,10 @@ jobs:
           python scripts/evaluate_coding_curriculum.py --experiment experiments/coding-curriculum-v1 --verify experiments/coding-curriculum-v1/generated.json
           python scripts/evaluate_coding_curriculum.py --experiment experiments/coding-curriculum-v2 --verify experiments/coding-curriculum-v2/generated.json
           python scripts/evaluate_coding_curriculum.py --experiment experiments/coding-curriculum-v3 --verify experiments/coding-curriculum-v3/generated.json
+      - name: Replay learned byte/span copy outputs without repairs
+        run: |
+          python scripts/evaluate_byte_copy.py --experiment experiments/learned-byte-copy-v1 --verify experiments/learned-byte-copy-v1/generated.json
+          python scripts/evaluate_byte_copy.py --experiment experiments/learned-span-copy-v1 --verify experiments/learned-span-copy-v1/generated.json
       - uses: actions/setup-node@v4
         with:
           node-version: "22"

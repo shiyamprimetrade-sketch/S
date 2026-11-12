@@ -3,6 +3,8 @@ on:
   pull_request:
     paths:
       - 's_developer/**'
+      - 'experiments/learned-*-copy-v*/**'
+      - 'scripts/*_copy.py'
       - 'experiments/coding-curriculum-v*/**'
       - 'scripts/*coding_curriculum.py'
       - 'continuum/server.py'
@@ -36,6 +38,10 @@ jobs:
       - name: Require the declared literal-repair acceptance target
         run: |
           python -c "import json; r=json.load(open('build/coding-curriculum-execution-v3.json')); assert r['repair_target_met'] is True; assert r['models'][-1]['tasks_correct']==8; print('PASS: all eight final programs satisfy seven independent cases after at most one declared repair; unassisted results remain separately reported')"
+      - name: Independent learned-copy programs without any repair
+        run: |
+          python scripts/verify_byte_copy.py --experiment experiments/learned-byte-copy-v1 --approve-runtime-download --report build/byte-copy-execution.json
+          python scripts/verify_byte_copy.py --experiment experiments/learned-span-copy-v1 --approve-runtime-download --require-target --report build/span-copy-execution.json
       - name: Preserve actual execution evidence
         if: always()
         uses: actions/upload-artifact@v4
@@ -44,6 +50,8 @@ jobs:
           path: |
             build/controlled-acceptance.json
             build/capability-oracle.json
+            build/byte-copy-execution.json
+            build/span-copy-execution.json
             build/coding-curriculum-execution-v1.json
             build/coding-curriculum-execution-v2.json
             build/coding-curriculum-execution-v3.json

@@ -1,0 +1,7 @@
+{
+  "held_out_span_tests_used_for_tuning": false,
+  "validation_only_prototypes": "Linear endpoint/gate heads; low validation quality. Metadata selection-label correction and isolated nonlinear final run followed before any span held-out generation.",
+  "final_output_directory": "build/learned-span-copy-v1-clean",
+  "prototype_outputs_preserved_locally": true,
+  "model_weights_or_repair_fallback_inserted_at_inference": false
+}
