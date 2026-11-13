@@ -58,6 +58,10 @@ def main(argv=None):
     parser.add_argument('--tokens',type=int,default=16)
     parser.add_argument('--execute-tests',action='store_true',help='Run independent coding cases in prepared containers')
     args = parser.parse_args(argv)
+    if args.command == ['benchmark', 'coding-spec']:
+        from s_brain.coding_benchmark import benchmark_spec
+        print(json.dumps(benchmark_spec(), indent=2))
+        return 0
     if args.command[:2] == ['rapid', 'build']:
         if not args.output:
             parser.error('--output is required for rapid build')
