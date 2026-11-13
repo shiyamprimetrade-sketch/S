@@ -24,6 +24,19 @@ class PracticalBenchmarkTests(unittest.TestCase):
             self.assertIn("\n", case.args[0])
             self.assertNotIn("\\n", case.args[0])
 
+    def test_practical_suite_preparation(self):
+        from s_brain.coding_benchmark import prepare_benchmark
+        result = prepare_benchmark("def unique_ordered(x): return x", suite="practical")
+        self.assertEqual(result["case_count"], 15)
+        self.assertIn("test_shortest_basic", result["files"]["test_app.py"])
+
+    def test_practical_score_count(self):
+        from s_brain.coding_benchmark import score_unittest_output
+        self.assertTrue(score_unittest_output(
+            "Ran 15 tests in 0.01s\\nOK", expected_tests=15)["suite_passed"])
+        self.assertFalse(score_unittest_output(
+            "Ran 9 tests in 0.01s\\nOK", expected_tests=15)["suite_passed"])
+
     def test_tests_import_candidate_not_reference_solution(self):
         source = practical_test_source()
         self.assertIn("import app as solution", source)
