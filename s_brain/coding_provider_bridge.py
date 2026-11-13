@@ -57,8 +57,11 @@ def benchmark_with_provider(
         candidate, images=images, approved=True,
         revise=revise, max_attempts=max_attempts,
     )
+    from .coding_report import summarize_cycle
+    report = summarize_cycle(outcome, provider=provenance)
     return {
         "provider": provenance,
         "benchmark": outcome,
+        "report": report,
         "claim": "Measured on the configured benchmark only; not general coding proficiency",
     }
