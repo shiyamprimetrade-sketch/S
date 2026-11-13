@@ -66,13 +66,13 @@ def generate_test_source() -> str:
     return "\n".join(lines)
 
 
-def prepare_benchmark(candidate: str) -> dict:
+def prepare_benchmark(candidate: str, *, suite: str = "basic") -> dict:
     """Prepare files for the existing permissioned Docker runner."""
-    review = review_files({"solution.py": candidate})
+    if suite not in ("basic", "practical"):\n        raise ValueError("Unknown benchmark suite")\n    if suite == "practical":\n        from .practical_benchmark import practical_test_source, PRACTICAL_CASES\n        test_source = practical_test_source()\n        count = len(PRACTICAL_CASES)\n    else:\n        test_source = generate_test_source()\n        count = len(CASES)\n    review = review_files({"solution.py": candidate})
     return {
         "files": {
             "app.py": candidate,
-            "test_app.py": generate_test_source(),
+            "test_app.py": test_source,
         },
         "review": review,
         "case_count": len(CASES),
@@ -81,9 +81,9 @@ def prepare_benchmark(candidate: str) -> dict:
     }
 
 
-def score_unittest_output(output: str) -> dict:
+def score_unittest_output(output: str, *, expected_tests: int = len(CASES)) -> dict:
     """Parse a Python unittest summary, without treating absence as success."""
-    if not isinstance(output, str) or len(output) > 1_000_000:
+    if type(expected_tests) is not int or not 1 <= expected_tests <= 1000:\n        raise ValueError("Invalid expected test count")\n    if not isinstance(output, str) or len(output) > 1_000_000:
         raise ValueError("Invalid test output")
     match = re.search(r"Ran (\d+) tests? in [\d.]+s", output)
     passed = bool(re.search(r"\bOK\b", output)) and not re.search(
@@ -92,8 +92,8 @@ def score_unittest_output(output: str) -> dict:
     count = int(match.group(1)) if match else 0
     return {
         "reported_tests": count,
-        "suite_passed": passed and count == len(CASES),
-        "expected_tests": len(CASES),
+        "suite_passed": passed and count == expected_tests,
+        "expected_tests": expected_tests,
         "source": "unittest-output",
     }
 
@@ -106,13 +106,13 @@ def run_benchmark(candidate: str, *, images: dict[str, str], approved: bool = Fa
     """
     if not approved:
         raise PermissionError("Explicit benchmark execution approval required")
-    prepared = prepare_benchmark(candidate)
+    prepared = prepare_benchmark(candidate, suite=suite)
     if prepared["status"] != "ready-for-isolated-execution":
         return {"status": "syntax-error", "passed": False,
                 "review": prepared["review"], "executed": False}
     from s_developer.sandbox import DockerRunner
     execution = DockerRunner(images).run(prepared["files"], "python-cli")
-    scoring = score_unittest_output(execution.get("output", ""))
+    scoring = score_unittest_output(execution.get("output", ""), expected_tests=prepared["case_count"])
     return {
         "status": execution["status"],
         "passed": execution["status"] == "toolchain_passed" and scoring["suite_passed"],
