@@ -28,8 +28,11 @@ def benchmark_with_provider(
     images: dict[str, str],
     approved: bool = False,
     max_attempts: int = 3,
+    suite: str = "basic",
 ) -> dict:
     """Generate, test and optionally revise via the real configured provider."""
+    if suite not in ("basic", "practical"):
+        raise ValueError("Unknown benchmark suite")
     if not approved:
         raise PermissionError("Explicit provider benchmark approval required")
     if provider_id not in ("native", "native-copy", "ollama-external"):
@@ -56,6 +59,7 @@ def benchmark_with_provider(
     outcome = improve_candidate(
         candidate, images=images, approved=True,
         revise=revise, max_attempts=max_attempts,
+        **({"suite": suite} if suite != "basic" else {}),
     )
     from .coding_report import summarize_cycle
     report = summarize_cycle(outcome, provider=provenance)
