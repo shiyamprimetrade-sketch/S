@@ -63,19 +63,29 @@ def generate_test_source() -> str:
             "",
         ])
     lines.extend(["if __name__ == '__main__':", "    unittest.main(verbosity=2)", ""])
-    return "\n".join(lines)
+    return "
+".join(lines)
 
 
 def prepare_benchmark(candidate: str, *, suite: str = "basic") -> dict:
     """Prepare files for the existing permissioned Docker runner."""
-    if suite not in ("basic", "practical"):\n        raise ValueError("Unknown benchmark suite")\n    if suite == "practical":\n        from .practical_benchmark import practical_test_source, PRACTICAL_CASES\n        test_source = practical_test_source()\n        count = len(PRACTICAL_CASES)\n    else:\n        test_source = generate_test_source()\n        count = len(CASES)\n    review = review_files({"solution.py": candidate})
+    if suite not in ("basic", "practical"):
+        raise ValueError("Unknown benchmark suite")
+    if suite == "practical":
+        from .practical_benchmark import practical_test_source, PRACTICAL_CASES
+        test_source = practical_test_source()
+        count = len(PRACTICAL_CASES)
+    else:
+        test_source = generate_test_source()
+        count = len(CASES)
+    review = review_files({"solution.py": candidate})
     return {
         "files": {
             "app.py": candidate,
             "test_app.py": test_source,
         },
         "review": review,
-        "case_count": len(CASES),
+        "case_count": count,
         "status": "ready-for-isolated-execution" if review["syntax_passed"] else "syntax-error",
         "executed": False,
     }
@@ -83,7 +93,9 @@ def prepare_benchmark(candidate: str, *, suite: str = "basic") -> dict:
 
 def score_unittest_output(output: str, *, expected_tests: int = len(CASES)) -> dict:
     """Parse a Python unittest summary, without treating absence as success."""
-    if type(expected_tests) is not int or not 1 <= expected_tests <= 1000:\n        raise ValueError("Invalid expected test count")\n    if not isinstance(output, str) or len(output) > 1_000_000:
+    if type(expected_tests) is not int or not 1 <= expected_tests <= 1000:
+        raise ValueError("Invalid expected test count")
+    if not isinstance(output, str) or len(output) > 1_000_000:
         raise ValueError("Invalid test output")
     match = re.search(r"Ran (\d+) tests? in [\d.]+s", output)
     passed = bool(re.search(r"\bOK\b", output)) and not re.search(
@@ -98,7 +110,7 @@ def score_unittest_output(output: str, *, expected_tests: int = len(CASES)) -> d
     }
 
 
-def run_benchmark(candidate: str, *, images: dict[str, str], approved: bool = False) -> dict:
+def run_benchmark(candidate: str, *, images: dict[str, str], approved: bool = False, suite: str = "basic") -> dict:
     """Execute candidate against independent cases using the existing DockerRunner.
 
     The caller must explicitly authorize execution and supply a pinned Python
