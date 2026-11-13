@@ -58,6 +58,22 @@ def main(argv=None):
     parser.add_argument('--tokens',type=int,default=16)
     parser.add_argument('--execute-tests',action='store_true',help='Run independent coding cases in prepared containers')
     args = parser.parse_args(argv)
+    if args.command == ['benchmark', 'coding-spec']:
+        from s_brain.coding_benchmark import benchmark_spec
+        print(json.dumps(benchmark_spec(), indent=2))
+        return 0
+    if args.command[:2] == ['rapid', 'build']:
+        if not args.output:
+            parser.error('--output is required for rapid build')
+        if len(args.command) < 3:
+            parser.error('Supply a request: S rapid build calculator')
+        from s_brain.rapid_builder import generate
+        try:
+            result = generate(' '.join(args.command[2:]), args.output)
+        except (ValueError, FileExistsError, OSError) as error:
+            parser.exit(2, f'Rapid build failed: {error}\\n')
+        print(json.dumps(result, indent=2))
+        return 0
     from .models import load_config,save_config,install_demo,install_native,train_demo
     config=load_config(args.db)
     config['execution_enabled']=args.enable_builds
