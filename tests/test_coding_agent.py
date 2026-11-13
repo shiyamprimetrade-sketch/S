@@ -58,6 +58,23 @@ class CodingAgentTests(unittest.TestCase):
         self.assertEqual(result["final_source"], "def add(a,b): return 0")
         self.assertEqual(result["attempt_count"], 1)
 
+    def test_practical_suite_is_forwarded(self):
+        with patch("s_brain.coding_agent.run_benchmark") as run:
+            run.return_value = {
+                "status": "toolchain_passed", "passed": True,
+                "scoring": {"reported_tests": 15},
+            }
+            result = improve_candidate(
+                "def unique_ordered(items): return list(dict.fromkeys(items))",
+                images={}, approved=True, suite="practical",
+            )
+        self.assertEqual(run.call_args.kwargs["suite"], "practical")
+        self.assertEqual(result["benchmark"], "fifteen-practical-python-cases-v2")
+
+    def test_invalid_suite(self):
+        with self.assertRaises(ValueError):
+            improve_candidate("pass", images={}, approved=True, suite="unknown")
+
     def test_invalid_attempt_budget(self):
         with self.assertRaises(ValueError):
             improve_candidate("pass", images={}, approved=True, max_attempts=0)
