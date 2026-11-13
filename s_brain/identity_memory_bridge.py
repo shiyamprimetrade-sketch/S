@@ -1,6 +1,6 @@
 """Explicit bridge from S-Memory to the opt-in grounded identity module.
 
-Identity records use tags ('identity', 'identity:<key>') and contain only the
+Identity records use tags ('identity', 'identity_<key>') and contain only the
 value. Unstructured notes are never silently treated as identity claims.
 """
 from __future__ import annotations
@@ -34,9 +34,9 @@ def identity_from_memory(
         if "identity" not in record.tags:
             continue
         keys = [
-            tag.removeprefix("identity:")
+            tag.removeprefix("identity_")
             for tag in record.tags
-            if tag.startswith("identity:") and tag.removeprefix("identity:") in IDENTITY_KEYS
+            if tag.startswith("identity_") and tag.removeprefix("identity:") in IDENTITY_KEYS
         ]
         if len(keys) != 1 or record.consent not in ("explicit", "import-authorized"):
             continue
