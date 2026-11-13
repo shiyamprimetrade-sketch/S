@@ -47,6 +47,17 @@ class CodingAgentTests(unittest.TestCase):
         self.assertTrue(result["passed"])
         self.assertEqual(result["attempts"][1]["revision_origin"], "static-syntax-repair")
 
+    def test_final_source_is_last_tested_source(self):
+        with patch("s_brain.coding_agent.run_benchmark") as run:
+            run.return_value = {"status": "failed", "passed": False}
+            result = improve_candidate(
+                "def add(a,b): return 0", images={}, approved=True,
+                revise=lambda old, feedback: "def add(a,b): return a+b",
+                max_attempts=1,
+            )
+        self.assertEqual(result["final_source"], "def add(a,b): return 0")
+        self.assertEqual(result["attempt_count"], 1)
+
     def test_invalid_attempt_budget(self):
         with self.assertRaises(ValueError):
             improve_candidate("pass", images={}, approved=True, max_attempts=0)
