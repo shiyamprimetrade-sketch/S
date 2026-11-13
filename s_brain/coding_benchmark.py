@@ -50,7 +50,7 @@ def generate_test_source() -> str:
     """Construct an independent unittest suite for a candidate solution.py."""
     lines = [
         "import unittest",
-        "import solution",
+        "import app as solution",
         "",
         "class CandidateTests(unittest.TestCase):",
     ]
@@ -71,8 +71,8 @@ def prepare_benchmark(candidate: str) -> dict:
     review = review_files({"solution.py": candidate})
     return {
         "files": {
-            "solution.py": candidate,
-            "test_solution.py": generate_test_source(),
+            "app.py": candidate,
+            "test_app.py": generate_test_source(),
         },
         "review": review,
         "case_count": len(CASES),
@@ -95,4 +95,28 @@ def score_unittest_output(output: str) -> dict:
         "suite_passed": passed and count == len(CASES),
         "expected_tests": len(CASES),
         "source": "unittest-output",
+    }
+
+
+def run_benchmark(candidate: str, *, images: dict[str, str], approved: bool = False) -> dict:
+    """Execute candidate against independent cases using the existing DockerRunner.
+
+    The caller must explicitly authorize execution and supply a pinned Python
+    image through the established S Developer runtime-preparation workflow.
+    """
+    if not approved:
+        raise PermissionError("Explicit benchmark execution approval required")
+    prepared = prepare_benchmark(candidate)
+    if prepared["status"] != "ready-for-isolated-execution":
+        return {"status": "syntax-error", "passed": False,
+                "review": prepared["review"], "executed": False}
+    from s_developer.sandbox import DockerRunner
+    execution = DockerRunner(images).run(prepared["files"], "python-cli")
+    scoring = score_unittest_output(execution.get("output", ""))
+    return {
+        "status": execution["status"],
+        "passed": execution["status"] == "toolchain_passed" and scoring["suite_passed"],
+        "scoring": scoring,
+        "isolation": execution.get("isolation"),
+        "executed": True,
     }
