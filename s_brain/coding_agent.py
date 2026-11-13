@@ -69,6 +69,8 @@ def improve_candidate(
             raise ValueError("Revised candidate exceeds 64 KB")
         if next_source == source:
             break
+        if number == max_attempts:
+            break
         source = next_source
         origin = next_origin
     return {
