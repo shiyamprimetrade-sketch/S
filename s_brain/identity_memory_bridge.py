@@ -36,7 +36,7 @@ def identity_from_memory(
         keys = [
             tag.removeprefix("identity_")
             for tag in record.tags
-            if tag.startswith("identity_") and tag.removeprefix("identity:") in IDENTITY_KEYS
+            if tag.startswith("identity_") and tag.removeprefix("identity_") in IDENTITY_KEYS
         ]
         if len(keys) != 1 or record.consent not in ("explicit", "import-authorized"):
             continue
