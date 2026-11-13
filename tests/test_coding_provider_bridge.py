@@ -1,3 +1,4 @@
+import hashlib
 import unittest
 from unittest.mock import patch
 
@@ -26,12 +27,21 @@ class ProviderBridgeTests(unittest.TestCase):
             engine.provenance.return_value = {"provider": "native"}
             engine.generate.return_value = {"app.py": "def add(a,b): return a+b",
                                             "test_app.py": "pass"}
-            loop.return_value = {"passed": False, "attempts": []}
+            digest = hashlib.sha256(b"candidate").hexdigest()
+            loop.return_value = {
+                "passed": False,
+                "attempts": [{"number": 1, "source_sha256": digest,
+                              "passed": False, "status": "failed"}],
+                "final_source_sha256": digest,
+                "benchmark": "nine-independent-python-cases-v1",
+                "execution": "pinned-docker",
+            }
             outcome = benchmark_with_provider(
                 spec=spec, provider_id="native", config={}, images={}, approved=True
             )
             self.assertEqual(outcome["provider"]["provider"], "native")
             self.assertFalse(outcome["benchmark"]["passed"])
+            self.assertFalse(outcome["report"]["final_passed"])
             self.assertTrue(callable(loop.call_args.kwargs["revise"]))
 
 
