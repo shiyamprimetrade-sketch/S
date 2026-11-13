@@ -63,8 +63,7 @@ def generate_test_source() -> str:
             "",
         ])
     lines.extend(["if __name__ == '__main__':", "    unittest.main(verbosity=2)", ""])
-    return "
-".join(lines)
+    return "\n".join(lines)
 
 
 def prepare_benchmark(candidate: str, *, suite: str = "basic") -> dict:
