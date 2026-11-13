@@ -31,6 +31,7 @@ def improve_candidate(
     approved: bool = False,
     revise: Callable[[str, dict], str] | None = None,
     max_attempts: int = 3,
+    suite: str = "basic",
 ) -> dict:
     if not approved:
         raise PermissionError("Explicit coding execution approval required")
@@ -38,6 +39,8 @@ def improve_candidate(
         raise ValueError("Candidate source exceeds 64 KB")
     if type(max_attempts) is not int or not 1 <= max_attempts <= 5:
         raise ValueError("Attempt budget must be 1..5")
+    if suite not in ("basic", "practical"):
+        raise ValueError("Unknown benchmark suite")
     source = initial_source
     history: list[Attempt] = []
     seen: set[str] = set()
@@ -47,7 +50,8 @@ def improve_candidate(
         if digest in seen:
             break
         seen.add(digest)
-        result = run_benchmark(source, images=images, approved=True)
+        options = {"suite": suite} if suite != "basic" else {}
+        result = run_benchmark(source, images=images, approved=True, **options)
         score = result.get("scoring", {})
         passed = result.get("passed") is True
         history.append(Attempt(number, digest, result["status"], passed,
@@ -79,6 +83,7 @@ def improve_candidate(
         "attempt_count": len(history),
         "final_source": source,
         "final_source_sha256": hashlib.sha256(source.encode("utf-8")).hexdigest(),
-        "benchmark": "nine-independent-python-cases-v1",
+        "benchmark": ("fifteen-practical-python-cases-v2" if suite == "practical"
+                      else "nine-independent-python-cases-v1"),
         "execution": "pinned-docker",
     }
