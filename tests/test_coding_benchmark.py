@@ -35,11 +35,11 @@ class CodingBenchmarkTests(unittest.TestCase):
     def test_execution_calls_isolated_runner(self):
         from unittest.mock import patch
         from s_brain.coding_benchmark import run_benchmark
-        sample = "def add(a,b): return a+b\\ndef reverse_text(s): return s[::-1]\\ndef factorial(n):\\n    import math\\n    return math.factorial(n)\\n"
+        sample = "def add(a,b): return a+b\ndef reverse_text(s): return s[::-1]\ndef factorial(n):\n    import math\n    return math.factorial(n)\n"
         with patch("s_developer.sandbox.DockerRunner.run") as run:
             run.return_value = {
                 "status": "toolchain_passed",
-                "output": "Ran 9 tests in 0.001s\\n\\nOK",
+                "output": "Ran 9 tests in 0.001s\n\nOK",
                 "isolation": "docker-network-none-readonly",
             }
             result = run_benchmark(sample, images={}, approved=True)
