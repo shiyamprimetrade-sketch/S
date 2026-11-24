@@ -26,6 +26,8 @@ def build(root, output):
     entries["unity/baseline.json"]=(root/"unity/baseline.json").read_bytes()
     entries["README.txt"]=b"Project S Unity portable Python preview. Python 3.11+ required. Run python launch.py status or python launch.py calculate 8+9 --approve. Native APK/EXE not included.\n"
     entries["launch.py"]=b"import sys\nfrom pathlib import Path\nroot=Path(__file__).resolve().parent\nsys.path[:0]=[str(root/'alpha'),str(root/'omega')]\nfrom unity.cli import main\nraise SystemExit(main())\n"
+    entries["evolution.py"]=b"import sys\nfrom pathlib import Path\nroot=Path(__file__).resolve().parent\nsys.path[:0]=[str(root/'alpha'),str(root/'omega')]\nfrom unity.evolution import main\nraise SystemExit(main())\n"
+    entries["README.txt"]+=b"Evolution terminal: python evolution.py. Commands: status, build calculator, build inventory, build website NAME HEADING DESCRIPTION SECTION TEXT, quit. Quote multiword arguments.\n"
     manifest={name:hashlib.sha256(data).hexdigest() for name,data in sorted(entries.items())}
     entries["SHA256.json"]=json.dumps(manifest,sort_keys=True,indent=2).encode()
     with zipfile.ZipFile(output,"w",compression=zipfile.ZIP_DEFLATED) as z:

@@ -1,7 +1,7 @@
 name: Unity regression
 on:
   push:
-    branches: [integration/s-unity-003, integration/s-genesis-004]
+    branches: [integration/s-unity-003, integration/s-genesis-004, integration/s-evolution-005]
   pull_request:
     paths: ['unity/**', '.github/workflows/unity-regression.yml']
   workflow_dispatch:
@@ -65,10 +65,12 @@ jobs:
           cd preview-smoke
           python -m unity.verify_preview
           python launch.py status
+          printf "build calculator\ny\nquit\n" | python evolution.py
+          python -c "from pathlib import Path; from unity.project_builder import verify_project; p=list(Path('evolution-projects').iterdir()); assert len(p)==1 and verify_project(p[0])"
           python launch.py calculate "8+9" --approve
           python -m unity.website_pipeline genesis-smoke "Museum" "Explore history" "Open daily" --approve
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
-          name: S-Unity-preview-${{ runner.os }}
+          name: S-Evolution-preview-${{ runner.os }}
           path: S-Unity-preview.zip
           if-no-files-found: error
