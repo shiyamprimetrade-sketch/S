@@ -63,6 +63,7 @@ jobs:
           python -m unity.package_preview
           python -m zipfile -e S-Unity-preview.zip preview-smoke
           cd preview-smoke
+          python -m unity.verify_preview
           python launch.py status
           python launch.py calculate "8+9" --approve
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
