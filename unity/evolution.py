@@ -3,6 +3,7 @@ import json
 import shlex
 from pathlib import Path
 from .genesis import request
+from .project_builder import build_project
 from .evolution_requirements import extract
 from .website_pipeline import build_website
 
@@ -11,7 +12,14 @@ def dispatch(line,workspace,*,approved=False):
     if not parts:
         return {"status":"empty"}
     if parts==["status"]:
-        return {"status":"ready","capabilities":["arithmetic","static website"],"general_programming":False}
+        return {"status":"ready","capabilities":["arithmetic","static website","responsive website","calculator project","inventory project"],"general_programming":False}
+    if parts in (["build","calculator"],["build","inventory"]):
+        return build_project(workspace,parts[1],approved=approved)
+    if parts[:2]==["build","website"]:
+        if len(parts)<7 or (len(parts)-5)%2:
+            raise ValueError("build website NAME HEADING DESCRIPTION SECTION TITLE_TEXT [SECTION TITLE_TEXT ...]")
+        options=dict(name=parts[2],heading=parts[3],description=parts[4],sections=list(zip(parts[5::2],parts[6::2])))
+        return build_project(workspace,"website",options=options,approved=approved)
     if parts[0]=="website" and len(parts)==4:
         return build_website(Path(workspace),*parts[1:],approved=approved)
     spec=extract(line)
