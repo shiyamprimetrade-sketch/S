@@ -1,0 +1,37 @@
+name: Fusion pinned baseline
+on:
+  push:
+    branches: [integration/s-fusion-001]
+  pull_request:
+    paths: ['fusion/**', '.github/workflows/fusion-baseline.yml']
+permissions:
+  contents: read
+jobs:
+  baseline:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/checkout@v4
+        with:
+          repository: shiyamprimetrade-sketch/S-Alpha
+          ref: f4976e3d5ef39d9c75a24a1c5460ce162e77170b
+          path: fusion-alpha
+          persist-credentials: false
+      - uses: actions/checkout@v4
+        with:
+          repository: shiyamprimetrade-sketch/S-Omega
+          ref: 3e33e13eb7257a6b9865fb9d0889c1a214345dbf
+          path: fusion-omega
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m unittest discover -s tests -v
+        working-directory: fusion-alpha
+      - run: python -m unittest discover -s tests -v
+        working-directory: fusion-omega
+      - run: python alpha_acceptance.py ../fusion-alpha
+        working-directory: fusion-omega

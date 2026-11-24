@@ -1,0 +1,2 @@
+# S-FUSION-001
+Pinned trusted-source integration baseline. Run Omega's existing alpha_acceptance.py against the pinned Alpha checkout on POSIX. This is a bounded arithmetic demonstration, not a sandbox or general programmer. No upstream code copied. License clearance, independent semantic verification, pre-execution authorization, SBI/SCC conformance, Windows containment, Android packaging and recovery acceptance remain open. Alpha port 8766 conflicts with S-Brain; no network services started by this baseline. No paid resources authorized. Preserve all upstream checkpoints.

@@ -1,0 +1,10 @@
+{
+  "alpha": {
+    "repository": "shiyamprimetrade-sketch/S-Alpha",
+    "commit": "f4976e3d5ef39d9c75a24a1c5460ce162e77170b"
+  },
+  "omega": {
+    "repository": "shiyamprimetrade-sketch/S-Omega",
+    "commit": "3e33e13eb7257a6b9865fb9d0889c1a214345dbf"
+  }
+}
