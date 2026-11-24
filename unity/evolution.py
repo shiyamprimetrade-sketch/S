@@ -3,6 +3,7 @@ import json
 import shlex
 from pathlib import Path
 from .genesis import request
+from .evolution_requirements import extract
 from .website_pipeline import build_website
 
 def dispatch(line,workspace,*,approved=False):
@@ -13,6 +14,11 @@ def dispatch(line,workspace,*,approved=False):
         return {"status":"ready","capabilities":["arithmetic","static website"],"general_programming":False}
     if parts[0]=="website" and len(parts)==4:
         return build_website(Path(workspace),*parts[1:],approved=approved)
+    spec=extract(line)
+    if spec.get('kind')=='website' and spec['status']=='ready':
+        return build_website(workspace,spec['name'],spec['heading'],spec['description'],approved=approved)
+    if spec['status']=='needs_clarification':
+        return spec
     return request(line,workspace,approved=approved)
 
 def main():
