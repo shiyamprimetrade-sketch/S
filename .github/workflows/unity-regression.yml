@@ -57,3 +57,16 @@ jobs:
       - if: runner.os == 'Linux'
         run: python integration/fusion_v3_acceptance.py ../omega
         working-directory: alpha
+      - name: Build and smoke-test portable preview
+        shell: bash
+        run: |
+          python -m unity.package_preview
+          python -m zipfile -e S-Unity-preview.zip preview-smoke
+          cd preview-smoke
+          python launch.py status
+          python launch.py calculate "8+9" --approve
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: S-Unity-preview-${{ runner.os }}
+          path: S-Unity-preview.zip
+          if-no-files-found: error
