@@ -1,7 +1,7 @@
 name: Unity regression
 on:
   push:
-    branches: [integration/s-unity-003, integration/s-genesis-004, integration/s-evolution-005]
+    branches: [integration/s-unity-003, integration/s-genesis-004, integration/s-evolution-005, integration/s-nexus-006]
   pull_request:
     paths: ['unity/**', '.github/workflows/unity-regression.yml']
   workflow_dispatch:
