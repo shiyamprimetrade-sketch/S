@@ -1,7 +1,7 @@
 name: Unity regression
 on:
   push:
-    branches: [integration/s-unity-003]
+    branches: [integration/s-unity-003, integration/s-genesis-004]
   pull_request:
     paths: ['unity/**', '.github/workflows/unity-regression.yml']
   workflow_dispatch:
@@ -66,6 +66,7 @@ jobs:
           python -m unity.verify_preview
           python launch.py status
           python launch.py calculate "8+9" --approve
+          python -m unity.website_pipeline genesis-smoke "Museum" "Explore history" "Open daily" --approve
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
           name: S-Unity-preview-${{ runner.os }}
