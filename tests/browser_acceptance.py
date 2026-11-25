@@ -3,6 +3,10 @@ from playwright.sync_api import sync_playwright
 
 def main():
     with tempfile.TemporaryDirectory() as root:
+        from project_s.secure import SecureEngine
+        e=SecureEngine(root)
+        failed,_=e.create('Create calculator')
+        e.transition(failed,'AWAITING_AUTHORIZATION','FAILED',{'error':'injected browser fixture'})
         p=subprocess.Popen([sys.executable,'-m','project_s.local_ui','--root',root,'--port','0'],stdout=subprocess.PIPE,text=True)
         try:
             url=json.loads(p.stdout.readline())['url']
@@ -37,6 +41,22 @@ def main():
                 page.get_by_role('button',name='adjust',exact=True).click()
                 page.wait_for_function("JSON.parse(document.querySelector('#actions pre').textContent).products[0][1]===7")
                 print('PASS inventory browser registration and adjustment',flush=True)
+                page.get_by_role('button',name='Create calculator — FAILED',exact=True).click()
+                page.get_by_role('button',name='Propose repair').click()
+                page.get_by_role('button',name='Approve repair').wait_for()
+                proposal=json.loads(page.locator('#out').text_content())
+                forged=dict(proposal,attempt=2)
+                rejected=page.evaluate("""async p=>{try{await api('/repair/execute',{proposal:p,approve:true});return false}catch(e){return true}}""",forged)
+                assert rejected
+                page.get_by_role('button',name='Cancel repair').click()
+                page.get_by_role('button',name='Propose repair').click()
+                page.get_by_role('button',name='Approve repair').click()
+                page.get_by_text('Export generated file').wait_for()
+                page.get_by_placeholder('(2+3)*4').fill('6*7')
+                page.get_by_role('button',name='Calculate',exact=True).click()
+                page.locator('#actions pre').get_by_text('42',exact=True).wait_for()
+                assert e.get(failed)['state']=='FAILED'
+                print('PASS graphical repair authorization and successor operation',flush=True)
                 browser.close()
         finally:
             p.terminate()
