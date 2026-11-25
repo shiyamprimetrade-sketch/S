@@ -25,10 +25,11 @@ class SecureEngine(Orchestrator):
     def history(self):
         with closing(sqlite3.connect(self.db)) as c: ids=[r[0] for r in c.execute('SELECT id FROM tasks ORDER BY rowid DESC')]
         return [self.get(i) for i in ids]
-    def issue(self,task,ttl=120):
+    def issue(self,task,ttl=120,deadline_ms=120000):
+        if type(deadline_ms) is not int or not 1 <= deadline_ms <= 120000: raise ValueError('Invalid execution deadline')
         r=self.get(task)
         if r['state']!='AWAITING_AUTHORIZATION':raise ValueError('Not awaiting approval')
-        p={'actor':'local-owner','capability':r['plan']['capability'],'task':task,'plan':digest(r['plan']),'operation':'generate','workspace':str(self.root/task),'issued':time.time(),'expires':time.time()+ttl,'nonce':secrets.token_hex(16)}
+        p={'deadline_ms':deadline_ms,'actor':'local-owner','capability':r['plan']['capability'],'task':task,'plan':digest(r['plan']),'operation':'generate','workspace':str(self.root/task),'issued':time.time(),'expires':time.time()+ttl,'nonce':secrets.token_hex(16)}
         return {'scope':p,'mac':hmac.new(self.key,digest(p).encode(),'sha256').hexdigest()}
     def execute_token(self,task,token):
         r=self.get(task); p=token['scope']; now=time.time()
@@ -37,7 +38,9 @@ class SecureEngine(Orchestrator):
         d=self.root/task
         trusted_context('local-owner',token,str(d),r['plan']['capability'])
         if d.exists() or d.is_symlink():raise ValueError('Workspace already exists')
-        return super().execute(task,True)
+        remaining=int((p['expires']-time.time())*1000)
+        if remaining<1: raise ValueError('Authorization expired')
+        return super().execute(task,True,deadline_ms=min(p['deadline_ms'],remaining))
     def execute(self,task,approve):
         if approve is False:return super().execute(task,False)
         raise ValueError('Authenticated token required')
