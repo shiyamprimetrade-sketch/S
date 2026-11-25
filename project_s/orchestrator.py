@@ -1,4 +1,4 @@
-import sqlite3,json,uuid,hashlib,datetime
+import sqlite3,json,uuid,hashlib,datetime,time
 from pathlib import Path
 from contextlib import closing
 from .generation import plan,generate
@@ -20,14 +20,18 @@ class Orchestrator:
         with closing(sqlite3.connect(self.db)) as c,c:
             if c.execute('UPDATE tasks SET state=?,evidence=? WHERE id=? AND state=?',(new,json.dumps(evidence),task,old)).rowcount!=1: raise ValueError('Invalid state or replay')
             c.execute('INSERT INTO journal VALUES (?,?,?,?)',(task,old,new,datetime.datetime.now(datetime.timezone.utc).isoformat()))
-    def execute(self,task,approve):
+    def execute(self,task,approve,deadline_ms=120000):
+        if type(deadline_ms) is not int or not 1 <= deadline_ms <= 120000: raise ValueError('Invalid execution deadline')
+        deadline=time.monotonic()+deadline_ms/1000
+        def check_deadline():
+            if time.monotonic()>=deadline: raise TimeoutError('Execution deadline exceeded')
         if type(approve)!=bool: raise ValueError('Explicit decision required')
         with closing(sqlite3.connect(self.db)) as c: row=c.execute('SELECT plan FROM tasks WHERE id=?',(task,)).fetchone()
         if row is None: raise ValueError('Unknown task')
         if not approve: self.transition(task,'AWAITING_AUTHORIZATION','DENIED'); return None
         self.transition(task,'AWAITING_AUTHORIZATION','AUTHORIZED'); p=json.loads(row[0]); self.transition(task,'AUTHORIZED','GENERATING')
         try:
-            f=generate(p,self.root/task); self.transition(task,'GENERATING','VERIFYING'); result=verify(f,p['capability']); result['artifact']=str(f.relative_to(self.root)); result['receipt']=receipt(task,'COMPLETED',artifact_sha256=result['sha256'],evidence_ids=[task+':verification']) if result['passed'] else receipt(task,'FAILED',error_code='VERIFICATION_FAILED'); self.transition(task,'VERIFYING','COMPLETED' if result['passed'] else 'FAILED',result); return result
+            check_deadline(); f=generate(p,self.root/task); check_deadline(); self.transition(task,'GENERATING','VERIFYING'); result=verify(f,p['capability']); check_deadline(); result['artifact']=str(f.relative_to(self.root)); result['receipt']=receipt(task,'COMPLETED',artifact_sha256=result['sha256'],evidence_ids=[task+':verification']) if result['passed'] else receipt(task,'FAILED',error_code='VERIFICATION_FAILED'); self.transition(task,'VERIFYING','COMPLETED' if result['passed'] else 'FAILED',result); return result
         except Exception as e:
             with closing(sqlite3.connect(self.db)) as c: state=c.execute('SELECT state FROM tasks WHERE id=?',(task,)).fetchone()[0]
             self.transition(task,state,'FAILED',{'error':str(e)}); raise
