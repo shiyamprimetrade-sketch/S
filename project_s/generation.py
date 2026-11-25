@@ -6,10 +6,19 @@ def plan(requirement):
     if not isinstance(requirement,str) or not 0<len(requirement.strip())<=512: raise ValueError('Invalid requirement')
     registry=json.loads(Path(__file__).with_name('CAPABILITY-REGISTRY.json').read_text(encoding='utf-8'))
     matches=[k for k in (entry['id'] for entry in registry['capabilities']) if re.search(r'\b'+k+r'\b',requirement,re.I)]
-    if len(matches)!=1: raise ValueError('Clarify: calculator, website or inventory')
+    if len(matches)>1: raise ValueError('Clarify: calculator, website or inventory')
     if re.search(r'\b(delete|upload|network|shell|password|payment)\b',requirement,re.I): raise ValueError('Unsupported scope')
+    from .intelligence import interpret
+    advice=interpret(requirement)
+    if not matches:
+        if advice['capability'] not in [entry['id'] for entry in registry['capabilities']] or advice['score']<0.8:
+            raise ValueError('Clarify: calculator, website or inventory')
+        matches=[advice['capability']]
+        selection='learned suggestion; explicit approval required'
+    else:
+        selection='explicit capability keyword'
     name=re.search(r'\b(?:named|called|for)\s+(.+)',requirement,re.I)
-    return {'schema_version':1,'capability':matches[0],'requirement':requirement,'name':name.group(1).strip() if name else 'My Business','mechanism':'deterministic bounded generator'}
+    return {'schema_version':1,'capability':matches[0],'requirement':requirement,'name':name.group(1).strip() if name else 'My Business','mechanism':'deterministic bounded generator','intent':advice,'selection':selection}
 
 def generate(p,destination):
     d=Path(destination); d.mkdir(exist_ok=False)
