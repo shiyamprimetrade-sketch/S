@@ -16,3 +16,20 @@ class ContractTests(unittest.TestCase):
         with self.assertRaises(ValueError): receipt(op,"FAILED")
         with self.assertRaises(ValueError): receipt(op,"COMPLETED",artifact_sha256="bad",evidence_ids=["test"])
         self.assertEqual(receipt(op,"COMPLETED",artifact_sha256="a"*64,evidence_ids=["test"])["status"],"COMPLETED")
+
+    def test_trusted_context_execution(self):
+        import tempfile
+        from project_s.secure import SecureEngine
+        from project_s.contracts import trusted_context
+        with tempfile.TemporaryDirectory() as root:
+            engine=SecureEngine(root)
+            task,plan=engine.create("Create a calculator")
+            token=engine.issue(task)
+            scope=token["scope"]
+            self.assertEqual(scope["actor"],"local-owner")
+            self.assertEqual(scope["capability"],"calculator")
+            for actor,workspace,capability in (("other",scope["workspace"],"calculator"),("local-owner","wrong","calculator"),("local-owner",scope["workspace"],"website")):
+                with self.assertRaises(ValueError):
+                    trusted_context(actor,token,workspace,capability)
+            self.assertFalse((engine.root/task).exists())
+            self.assertTrue(engine.execute_token(task,token)["passed"])
