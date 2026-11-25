@@ -43,7 +43,8 @@ def main():
                 page.get_by_role('button',name='adjust',exact=True).click()
                 page.wait_for_function("JSON.parse(document.querySelector('#actions pre').textContent).products[0][1]===7")
                 print('PASS inventory browser registration and adjustment',flush=True)
-                page.get_by_role('button',name='Create calculator — FAILED',exact=True).click()
+                page.locator(f'#history button[data-task-id="{failed}"]').click()
+                assert json.loads(page.locator('#out').text_content())['state']=='FAILED'
                 page.get_by_role('button',name='Propose repair').click()
                 page.get_by_role('button',name='Approve repair').wait_for()
                 proposal=json.loads(page.locator('#out').text_content())
