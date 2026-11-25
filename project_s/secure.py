@@ -29,12 +29,16 @@ class SecureEngine(Orchestrator):
         if type(deadline_ms) is not int or not 1 <= deadline_ms <= 120000: raise ValueError('Invalid execution deadline')
         r=self.get(task)
         if r['state']!='AWAITING_AUTHORIZATION':raise ValueError('Not awaiting approval')
-        p={'deadline_ms':deadline_ms,'actor':'local-owner','capability':r['plan']['capability'],'task':task,'plan':digest(r['plan']),'operation':'generate','workspace':str(self.root/task),'issued':time.time(),'expires':time.time()+ttl,'nonce':secrets.token_hex(16)}
+        request=self.original_request(task)
+        if deadline_ms>request['deadline_ms']: raise ValueError('Deadline exceeds request budget')
+        p={'request_digest':digest(request),'deadline_ms':deadline_ms,'actor':'local-owner','capability':r['plan']['capability'],'task':task,'plan':digest(r['plan']),'operation':'generate','workspace':str(self.root/task),'issued':time.time(),'expires':time.time()+ttl,'nonce':secrets.token_hex(16)}
         return {'scope':p,'mac':hmac.new(self.key,digest(p).encode(),'sha256').hexdigest()}
     def execute_token(self,task,token):
         r=self.get(task); p=token['scope']; now=time.time()
         if not hmac.compare_digest(token['mac'],hmac.new(self.key,digest(p).encode(),'sha256').hexdigest()):raise ValueError('Invalid authentication')
         if not (p['issued']<=now<p['expires'] and p['task']==task and p['plan']==digest(r['plan']) and p['operation']=='generate' and p['workspace']==str(self.root/task)):raise ValueError('Invalid scope or expiry')
+        request=self.original_request(task)
+        if p.get('request_digest')!=digest(request) or p['deadline_ms']>request['deadline_ms']: raise ValueError('Request binding mismatch')
         d=self.root/task
         trusted_context('local-owner',token,str(d),r['plan']['capability'])
         if d.exists() or d.is_symlink():raise ValueError('Workspace already exists')
