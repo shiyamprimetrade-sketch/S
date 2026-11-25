@@ -211,5 +211,29 @@
       "status": "SOURCE IMPORTED",
       "evidence": "remote blob verified; central regression pending"
     }
-  ]
+  ],
+  "integration_evidence": {
+    "checkpoint": "6cc5baf2b6959a5964a53d591f50542e9efed07d",
+    "consumer": {
+      "status": "TESTED at earlier checkpoints; latest regression pending",
+      "verified_commit": "b8a3b259e0a6e74434ff151170f548395b4ac7f2",
+      "workflow": 45543445382
+    },
+    "learned_intent": {
+      "status": "INTEGRATED; acceptance pending",
+      "source": "continuum/teacherlab.py",
+      "source_blob": "1ff0d0d364401d1adfa7882f27627d1d50ae65fa",
+      "adapter": "project_s/intelligence.py",
+      "adapter_commit": "37bc9e8b7a5387c6d7641d8cda3662c2cbf1675b",
+      "classification": "existing public algorithm; newly authored synthetic consumer curriculum",
+      "dependencies": "Python standard library; existing TeacherLab",
+      "license": "no new license assigned; external rights not independently established",
+      "limits": "15 examples; uncalibrated scores; deterministic generation; no neural provider promotion"
+    },
+    "graphical_repair": {
+      "status": "INTEGRATED; browser acceptance pending",
+      "failed_workflow": 45543747043,
+      "correction_commit": "235131422c75ab22cee8d36f85a52387b32fd00c"
+    }
+  }
 }
