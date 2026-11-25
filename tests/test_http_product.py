@@ -6,11 +6,10 @@ class HTTPProduct(unittest.TestCase):
             for cycle in range(4):
                 p=subprocess.Popen([sys.executable,'-m','project_s.local_ui','--root',root,'--port','0'],stdout=subprocess.PIPE,stderr=subprocess.PIPE,text=True)
                 try:
-                    import selectors
-                    with selectors.DefaultSelector() as sel:
-                        sel.register(p.stdout,selectors.EVENT_READ)
-                        self.assertTrue(sel.select(15),'startup timeout')
-                        base=json.loads(p.stdout.readline())['url']
+                    import queue, threading
+                    ready=queue.Queue()
+                    threading.Thread(target=lambda:ready.put(p.stdout.readline()),daemon=True).start()
+                    base=json.loads(ready.get(timeout=15))['url']
                     def get(path):return urllib.request.urlopen(base+path,timeout=10).read()
                     self.assertEqual(json.loads(get('/health'))['status'],'ready')
                     token=re.search(rb"const token='([a-f0-9]+)'",get('/')).group(1).decode()
@@ -33,6 +32,10 @@ class HTTPProduct(unittest.TestCase):
                         self.assertEqual(api('/inventory',{'id':v['id'],'action':'adjust','name':'Apple','stock':3})['products'],[['Apple',7]])
                     if cycle==1:self.assertIn(b'Cedar Studio',get('/preview/'+v['id']))
                 finally:
-                    p.send_signal(signal.SIGINT);p.communicate(timeout=10)
-                    self.assertEqual(p.returncode,0)
+                    if os.name=='nt':
+                        p.terminate()
+                        p.communicate(timeout=10)
+                    else:
+                        p.send_signal(signal.SIGINT);p.communicate(timeout=10)
+                        self.assertEqual(p.returncode,0)
 if __name__=='__main__':unittest.main()
