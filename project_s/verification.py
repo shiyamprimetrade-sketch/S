@@ -8,6 +8,20 @@ def verify(path,capability):
     if capability in ('calculator','inventory'):
         trusted=Path(__file__).with_name(capability+'.py').read_bytes()
         if path.read_bytes()!=trusted:raise ValueError('Untrusted generated Python; execution refused')
+    if capability in ('calculator','inventory') and hasattr(sys,'getandroidapilevel'):
+        # Embedded Android Python cannot launch a separate interpreter.
+        # Execute only the already byte-matched bundled implementation.
+        if capability=='calculator':
+            from .calculator import calculate
+            for expr in ['(2+3)*4','0.1+0.2','9/4','-3+2']:
+                evidence.append(ArithmeticVerifier().verify({'expression':expr,'result':calculate(expr),'precision':2})['verified'])
+        else:
+            from .inventory import Inventory
+            with tempfile.TemporaryDirectory() as tmp:
+                db=Path(tmp)/'test.db'
+                i=Inventory(db); i.register('Apple',4); i.adjust('Apple',3)
+                evidence.append(Inventory(db).search('app')==[('Apple',7)])
+        return {'passed':all(evidence),'checks':evidence,'sha256':hashlib.sha256(path.read_bytes()).hexdigest(),'method':'Android bundled implementation functional checks; no subprocess isolation'}
     if capability=='calculator':
         code='import calculator as c; import json; print(json.dumps([c.calculate(x) for x in ["(2+3)*4","0.1+0.2","9/4","-3+2"]]))'
         with tempfile.TemporaryDirectory() as tmp:
