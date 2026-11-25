@@ -1,0 +1,32 @@
+{
+  "manual": "00",
+  "status": "PARTIAL",
+  "candidate": "3ee963ae319ad7b7e4eb042ac7e904809f67cfdc",
+  "workflow_run": 45558567977,
+  "python_versions": [
+    "3.11",
+    "3.12"
+  ],
+  "per_version": {
+    "consumer": 24,
+    "http": 1,
+    "schema": 2
+  },
+  "executions": 54,
+  "passed": 54,
+  "failed": 0,
+  "previous_regression": {
+    "candidate": "90039608e0f56ab71f38b834bb95dd0ba2f4cb63",
+    "run": 45558442753,
+    "failures": 4,
+    "errors": 2,
+    "cause": "Repair successor lacked persisted SBI request",
+    "resolution": "Atomic successor request registration"
+  },
+  "pending": [
+    "Full regression workflows",
+    "Protected baseline fingerprints",
+    "Exhaustive requirement traceability",
+    "Final acceptance"
+  ]
+}
