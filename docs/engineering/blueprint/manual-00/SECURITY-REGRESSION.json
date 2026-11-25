@@ -1,0 +1,43 @@
+{
+  "candidate": "19913fb7263642c6a2dae76b2491308769fd6698",
+  "run": 45560183037,
+  "tests": [
+    {
+      "job": 139021751816,
+      "platform": "Ubuntu 3.11",
+      "passed": 147,
+      "failed": 0,
+      "skipped": 1,
+      "junction": "SKIPPED"
+    },
+    {
+      "job": 139021752283,
+      "platform": "Ubuntu 3.12",
+      "passed": 147,
+      "failed": 0,
+      "skipped": 1,
+      "junction": "SKIPPED"
+    },
+    {
+      "job": 139021752226,
+      "platform": "Windows 3.12",
+      "passed": 147,
+      "failed": 0,
+      "skipped": 1,
+      "junction": "PASS"
+    },
+    {
+      "job": 139021752482,
+      "platform": "Windows 3.11",
+      "passed": 147,
+      "failed": 0,
+      "skipped": 1,
+      "junction": "PASS"
+    }
+  ],
+  "limitations": [
+    "Windows privileged symbolic-link test remains skipped",
+    "Junction test does not prove race-free containment",
+    "Independent security signoff outstanding"
+  ]
+}
