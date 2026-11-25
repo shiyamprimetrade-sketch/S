@@ -56,3 +56,24 @@ class ContractTests(unittest.TestCase):
                     engine.execute_token(task,token)
             self.assertEqual(engine.get(task)["state"],"FAILED")
             self.assertFalse((engine.root/task).exists())
+
+    def test_persisted_request_binding(self):
+        import tempfile, sqlite3, json
+        from project_s.secure import SecureEngine
+        with tempfile.TemporaryDirectory() as root:
+            engine=SecureEngine(root)
+            task,_=engine.create("Create a calculator")
+            token=engine.issue(task)
+            request=engine.original_request(task)
+            self.assertEqual(request["operation_id"],task)
+            request["payload"]["requirement"]="Create a different calculator"
+            with sqlite3.connect(engine.db) as db:
+                db.execute("UPDATE requests SET request=? WHERE id=?",(json.dumps(request),task))
+            with self.assertRaises(ValueError):
+                engine.execute_token(task,token)
+            self.assertFalse((engine.root/task).exists())
+
+    def test_error_code_type(self):
+        from project_s.contracts import receipt
+        with self.assertRaises(ValueError):
+            receipt("a"*32,"CREATED",error_code=42)
