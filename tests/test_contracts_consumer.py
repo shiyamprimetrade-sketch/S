@@ -67,7 +67,8 @@ class ContractTests(unittest.TestCase):
             request=engine.original_request(task)
             self.assertEqual(request["operation_id"],task)
             request["payload"]["requirement"]="Create a different calculator"
-            with sqlite3.connect(engine.db) as db:
+            from contextlib import closing
+            with closing(sqlite3.connect(engine.db)) as db, db:
                 db.execute("UPDATE requests SET request=? WHERE id=?",(json.dumps(request),task))
             with self.assertRaises(ValueError):
                 engine.execute_token(task,token)
