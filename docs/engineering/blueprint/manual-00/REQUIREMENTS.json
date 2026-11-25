@@ -43,15 +43,33 @@
       "id": "M00-02-02",
       "section": 2,
       "requirement": "SQLite persistence",
-      "status": "AUDIT_PENDING",
-      "evidence": []
+      "status": "SOURCE_LOCATED_REVIEW_PENDING",
+      "evidence": [
+        {
+          "path": "project_s/orchestrator.py",
+          "blob_sha": "135313c1309c6b1f40d220a57c52849b14ed026f"
+        },
+        {
+          "path": "project_s/inventory.py",
+          "blob_sha": "dcf480ec95e9dcbcead9a6930ea40639a974b5f3"
+        }
+      ]
     },
     {
       "id": "M00-02-03",
       "section": 2,
       "requirement": "JSON Schema contracts",
-      "status": "AUDIT_PENDING",
-      "evidence": []
+      "status": "SOURCE_LOCATED_REVIEW_PENDING",
+      "evidence": [
+        {
+          "path": "schemas/sbi-request-v1.json",
+          "blob_sha": "222b1c334d5090726c0b85cef99e4b4f5409b399"
+        },
+        {
+          "path": "schemas/scc-receipt-v1.json",
+          "blob_sha": "f243082960b461bb70908a105e6059db00133bb6"
+        }
+      ]
     },
     {
       "id": "M00-02-04",
@@ -92,43 +110,77 @@
       "id": "M00-03-03",
       "section": 3,
       "requirement": "Typed plan",
-      "status": "AUDIT_PENDING",
-      "evidence": []
+      "status": "SOURCE_LOCATED_REVIEW_PENDING",
+      "evidence": [
+        {
+          "path": "project_s/generation.py",
+          "blob_sha": "398f3d9e1e67a1ec458f7f450f7c450e7f014635"
+        }
+      ]
     },
     {
       "id": "M00-03-04",
       "section": 3,
       "requirement": "Authorization",
-      "status": "AUDIT_PENDING",
-      "evidence": []
+      "status": "SOURCE_LOCATED_REVIEW_PENDING",
+      "evidence": [
+        {
+          "path": "project_s/secure.py",
+          "blob_sha": "b72463d57a1af12ccf2d7512e02fc7c2f57d9606"
+        }
+      ]
     },
     {
       "id": "M00-03-05",
       "section": 3,
       "requirement": "Journal",
-      "status": "AUDIT_PENDING",
-      "evidence": []
+      "status": "SOURCE_LOCATED_REVIEW_PENDING",
+      "evidence": [
+        {
+          "path": "project_s/orchestrator.py",
+          "blob_sha": "135313c1309c6b1f40d220a57c52849b14ed026f"
+        }
+      ]
     },
     {
       "id": "M00-03-06",
       "section": 3,
       "requirement": "Bounded executor",
-      "status": "AUDIT_PENDING",
-      "evidence": []
+      "status": "SOURCE_LOCATED_REVIEW_PENDING",
+      "evidence": [
+        {
+          "path": "project_s/orchestrator.py",
+          "blob_sha": "135313c1309c6b1f40d220a57c52849b14ed026f"
+        },
+        {
+          "path": "project_s/secure.py",
+          "blob_sha": "b72463d57a1af12ccf2d7512e02fc7c2f57d9606"
+        }
+      ]
     },
     {
       "id": "M00-03-07",
       "section": 3,
       "requirement": "Independent verifier",
-      "status": "AUDIT_PENDING",
-      "evidence": []
+      "status": "SOURCE_LOCATED_REVIEW_PENDING",
+      "evidence": [
+        {
+          "path": "project_s/verification.py",
+          "blob_sha": "2c7e53dcaf3c9a30708e9dfc108c5eb0141458ac"
+        }
+      ]
     },
     {
       "id": "M00-03-08",
       "section": 3,
       "requirement": "Artifact export",
-      "status": "AUDIT_PENDING",
-      "evidence": []
+      "status": "SOURCE_LOCATED_REVIEW_PENDING",
+      "evidence": [
+        {
+          "path": "project_s/local_ui.py",
+          "blob_sha": "3c960ffbffcbadf7badcace21c4ccb20d51c334d"
+        }
+      ]
     },
     {
       "id": "M00-03-09",
@@ -190,15 +242,33 @@
       "id": "M00-04-08",
       "section": 4,
       "requirement": "Define SBI request",
-      "status": "AUDIT_PENDING",
-      "evidence": []
+      "status": "SOURCE_LOCATED_REVIEW_PENDING",
+      "evidence": [
+        {
+          "path": "project_s/contracts.py",
+          "blob_sha": "0b43ff4d7fa4ba25a5cfd63e5b9616f1bdcf8450"
+        },
+        {
+          "path": "schemas/sbi-request-v1.json",
+          "blob_sha": "222b1c334d5090726c0b85cef99e4b4f5409b399"
+        }
+      ]
     },
     {
       "id": "M00-04-09",
       "section": 4,
       "requirement": "Define SCC state contract",
-      "status": "AUDIT_PENDING",
-      "evidence": []
+      "status": "SOURCE_LOCATED_REVIEW_PENDING",
+      "evidence": [
+        {
+          "path": "project_s/contracts.py",
+          "blob_sha": "0b43ff4d7fa4ba25a5cfd63e5b9616f1bdcf8450"
+        },
+        {
+          "path": "schemas/scc-receipt-v1.json",
+          "blob_sha": "f243082960b461bb70908a105e6059db00133bb6"
+        }
+      ]
     },
     {
       "id": "M00-04-10",
@@ -211,22 +281,45 @@
       "id": "M00-04-11",
       "section": 4,
       "requirement": "Integrate calculator",
-      "status": "AUDIT_PENDING",
-      "evidence": []
+      "status": "SOURCE_LOCATED_REVIEW_PENDING",
+      "evidence": [
+        {
+          "path": "project_s/calculator.py",
+          "blob_sha": "f9e6579d79d4f2937029eb288aaa818f393a3772"
+        },
+        {
+          "path": "project_s/generation.py",
+          "blob_sha": "398f3d9e1e67a1ec458f7f450f7c450e7f014635"
+        }
+      ]
     },
     {
       "id": "M00-04-12",
       "section": 4,
       "requirement": "Integrate website",
-      "status": "AUDIT_PENDING",
-      "evidence": []
+      "status": "SOURCE_LOCATED_REVIEW_PENDING",
+      "evidence": [
+        {
+          "path": "project_s/generation.py",
+          "blob_sha": "398f3d9e1e67a1ec458f7f450f7c450e7f014635"
+        }
+      ]
     },
     {
       "id": "M00-04-13",
       "section": 4,
       "requirement": "Integrate inventory",
-      "status": "AUDIT_PENDING",
-      "evidence": []
+      "status": "SOURCE_LOCATED_REVIEW_PENDING",
+      "evidence": [
+        {
+          "path": "project_s/inventory.py",
+          "blob_sha": "dcf480ec95e9dcbcead9a6930ea40639a974b5f3"
+        },
+        {
+          "path": "project_s/generation.py",
+          "blob_sha": "398f3d9e1e67a1ec458f7f450f7c450e7f014635"
+        }
+      ]
     },
     {
       "id": "M00-04-14",
@@ -414,8 +507,13 @@
       "id": "M00-08-02",
       "section": 8,
       "requirement": "Expose validate where meaningful",
-      "status": "AUDIT_PENDING",
-      "evidence": []
+      "status": "SOURCE_LOCATED_REVIEW_PENDING",
+      "evidence": [
+        {
+          "path": "project_s/contracts.py",
+          "blob_sha": "0b43ff4d7fa4ba25a5cfd63e5b9616f1bdcf8450"
+        }
+      ]
     },
     {
       "id": "M00-08-03",
@@ -435,22 +533,49 @@
       "id": "M00-08-05",
       "section": 8,
       "requirement": "Typed status and error code",
-      "status": "AUDIT_PENDING",
-      "evidence": []
+      "status": "SOURCE_LOCATED_REVIEW_PENDING",
+      "evidence": [
+        {
+          "path": "project_s/contracts.py",
+          "blob_sha": "0b43ff4d7fa4ba25a5cfd63e5b9616f1bdcf8450"
+        },
+        {
+          "path": "schemas/scc-receipt-v1.json",
+          "blob_sha": "f243082960b461bb70908a105e6059db00133bb6"
+        }
+      ]
     },
     {
       "id": "M00-08-06",
       "section": 8,
       "requirement": "Evidence references",
-      "status": "AUDIT_PENDING",
-      "evidence": []
+      "status": "SOURCE_LOCATED_REVIEW_PENDING",
+      "evidence": [
+        {
+          "path": "project_s/contracts.py",
+          "blob_sha": "0b43ff4d7fa4ba25a5cfd63e5b9616f1bdcf8450"
+        },
+        {
+          "path": "schemas/scc-receipt-v1.json",
+          "blob_sha": "f243082960b461bb70908a105e6059db00133bb6"
+        }
+      ]
     },
     {
       "id": "M00-08-07",
       "section": 8,
       "requirement": "Artifact hashes",
-      "status": "AUDIT_PENDING",
-      "evidence": []
+      "status": "SOURCE_LOCATED_REVIEW_PENDING",
+      "evidence": [
+        {
+          "path": "project_s/contracts.py",
+          "blob_sha": "0b43ff4d7fa4ba25a5cfd63e5b9616f1bdcf8450"
+        },
+        {
+          "path": "schemas/scc-receipt-v1.json",
+          "blob_sha": "f243082960b461bb70908a105e6059db00133bb6"
+        }
+      ]
     },
     {
       "id": "M00-08-08",
@@ -463,22 +588,49 @@
       "id": "M00-08-09",
       "section": 8,
       "requirement": "SBI schema_version operation_id capability deadline_ms payload",
-      "status": "AUDIT_PENDING",
-      "evidence": []
+      "status": "SOURCE_LOCATED_REVIEW_PENDING",
+      "evidence": [
+        {
+          "path": "project_s/contracts.py",
+          "blob_sha": "0b43ff4d7fa4ba25a5cfd63e5b9616f1bdcf8450"
+        },
+        {
+          "path": "schemas/sbi-request-v1.json",
+          "blob_sha": "222b1c334d5090726c0b85cef99e4b4f5409b399"
+        }
+      ]
     },
     {
       "id": "M00-08-10",
       "section": 8,
       "requirement": "Trusted actor authorization workspace",
-      "status": "AUDIT_PENDING",
-      "evidence": []
+      "status": "SOURCE_LOCATED_REVIEW_PENDING",
+      "evidence": [
+        {
+          "path": "project_s/contracts.py",
+          "blob_sha": "0b43ff4d7fa4ba25a5cfd63e5b9616f1bdcf8450"
+        },
+        {
+          "path": "project_s/secure.py",
+          "blob_sha": "b72463d57a1af12ccf2d7512e02fc7c2f57d9606"
+        }
+      ]
     },
     {
       "id": "M00-08-11",
       "section": 8,
       "requirement": "SCC operation_id status error_code artifact_sha256 evidence_ids",
-      "status": "AUDIT_PENDING",
-      "evidence": []
+      "status": "SOURCE_LOCATED_REVIEW_PENDING",
+      "evidence": [
+        {
+          "path": "project_s/contracts.py",
+          "blob_sha": "0b43ff4d7fa4ba25a5cfd63e5b9616f1bdcf8450"
+        },
+        {
+          "path": "schemas/scc-receipt-v1.json",
+          "blob_sha": "f243082960b461bb70908a105e6059db00133bb6"
+        }
+      ]
     },
     {
       "id": "M00-09-01",
@@ -627,5 +779,6 @@
       "status": "AUDIT_PENDING",
       "evidence": []
     }
-  ]
+  ],
+  "evidence_candidate": "fff865c6caae59b0f5fe51772dea1fcb9d6a6eba"
 }
