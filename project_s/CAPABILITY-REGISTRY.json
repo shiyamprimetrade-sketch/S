@@ -54,5 +54,37 @@
     "selection_threshold": 0.8,
     "calibrated": false,
     "authorization_required": true
-  }
+  },
+  "experimental_providers": [
+    {
+      "id": "native-copy",
+      "status": "PRESERVED RESEARCH",
+      "documentation": "docs/S-LEARNED-COPY.md",
+      "historical_execution": {
+        "workflow": 43219172983,
+        "byte": {
+          "passed": 5,
+          "total": 8
+        },
+        "span": {
+          "passed": 6,
+          "total": 8
+        },
+        "repairs": 0
+      },
+      "dependencies": [
+        "PyTorch",
+        "checksum-bound installed base and adapter",
+        "restricted execution for candidate verification"
+      ],
+      "production_enabled": false,
+      "limitations": [
+        "Known-template arithmetic only",
+        "512-byte context",
+        "Android inference unverified"
+      ],
+      "base_sha256": "be18814895673f2a80075e0d2baedbda9277f927291ac614b7d3b2ebaa344711",
+      "span_sha256": "88d846a7d4e5d0cc4377e69302697d7f8dbd6f724f9a0c028a4bfe531cd0e2d7"
+    }
+  ]
 }
