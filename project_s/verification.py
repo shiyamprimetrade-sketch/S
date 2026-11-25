@@ -5,6 +5,9 @@ from html.parser import HTMLParser
 
 def verify(path,capability):
     path=Path(path).resolve(); evidence=[]
+    if capability in ('calculator','inventory'):
+        trusted=Path(__file__).with_name(capability+'.py').read_bytes()
+        if path.read_bytes()!=trusted:raise ValueError('Untrusted generated Python; execution refused')
     if capability=='calculator':
         code='import calculator as c; import json; print(json.dumps([c.calculate(x) for x in ["(2+3)*4","0.1+0.2","9/4","-3+2"]]))'
         out=subprocess.check_output([sys.executable,'-c',code],cwd=path.parent,timeout=10,text=True)
