@@ -3,13 +3,16 @@ from pathlib import Path
 from contextlib import closing
 from .generation import plan,generate
 from .verification import verify
+from .contracts import request_for, receipt
 class Orchestrator:
     def __init__(self,root):
         self.root=Path(root).resolve(); self.root.mkdir(parents=True,exist_ok=True); self.db=self.root/'tasks.db'
         with closing(sqlite3.connect(self.db)) as c,c:
             c.execute('CREATE TABLE IF NOT EXISTS tasks(id TEXT PRIMARY KEY, state TEXT, plan TEXT, evidence TEXT)'); c.execute('CREATE TABLE IF NOT EXISTS journal(id TEXT, previous TEXT, state TEXT, timestamp TEXT)')
     def create(self,requirement):
-        p=plan(requirement); task=uuid.uuid4().hex
+        p=plan(requirement)
+        request=request_for(requirement,p['capability'])
+        task=request['operation_id']
         with closing(sqlite3.connect(self.db)) as c,c:
             c.execute('INSERT INTO tasks VALUES (?,?,?,?)',(task,'AWAITING_AUTHORIZATION',json.dumps(p),None)); c.execute('INSERT INTO journal VALUES (?,?,?,?)',(task,'CREATED','AWAITING_AUTHORIZATION',datetime.datetime.now(datetime.timezone.utc).isoformat()))
         return task,p
@@ -24,7 +27,7 @@ class Orchestrator:
         if not approve: self.transition(task,'AWAITING_AUTHORIZATION','DENIED'); return None
         self.transition(task,'AWAITING_AUTHORIZATION','AUTHORIZED'); p=json.loads(row[0]); self.transition(task,'AUTHORIZED','GENERATING')
         try:
-            f=generate(p,self.root/task); self.transition(task,'GENERATING','VERIFYING'); result=verify(f,p['capability']); result['artifact']=str(f.relative_to(self.root)); self.transition(task,'VERIFYING','COMPLETED' if result['passed'] else 'FAILED',result); return result
+            f=generate(p,self.root/task); self.transition(task,'GENERATING','VERIFYING'); result=verify(f,p['capability']); result['artifact']=str(f.relative_to(self.root)); result['receipt']=receipt(task,'COMPLETED',artifact_sha256=result['sha256'],evidence_ids=[task+':verification']) if result['passed'] else receipt(task,'FAILED',error_code='VERIFICATION_FAILED'); self.transition(task,'VERIFYING','COMPLETED' if result['passed'] else 'FAILED',result); return result
         except Exception as e:
             with closing(sqlite3.connect(self.db)) as c: state=c.execute('SELECT state FROM tasks WHERE id=?',(task,)).fetchone()[0]
             self.transition(task,state,'FAILED',{'error':str(e)}); raise
