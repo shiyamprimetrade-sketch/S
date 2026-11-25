@@ -12,9 +12,9 @@
       "limitations": "Bounded arithmetic; no general programming",
       "interface": "project_s/local_ui.py",
       "evidence": {
-        "commit": "0a85864cbc607eae86af83b3aeb830e6fddb0a4a",
-        "workflow": 45543834303,
-        "scope": "individual browser demonstration passed; overall workflow failed"
+        "commit": "68afb5428bdbefb8909bcd4283fd927329d953ba",
+        "workflow": 45544240854,
+        "scope": "browser demonstration and consumer workflow passed"
       }
     },
     {
@@ -27,9 +27,9 @@
       "limitations": "Responsive static template; placeholder contact and services",
       "interface": "project_s/local_ui.py",
       "evidence": {
-        "commit": "0a85864cbc607eae86af83b3aeb830e6fddb0a4a",
-        "workflow": 45543834303,
-        "scope": "individual browser demonstration passed; overall workflow failed"
+        "commit": "68afb5428bdbefb8909bcd4283fd927329d953ba",
+        "workflow": 45544240854,
+        "scope": "browser demonstration and consumer workflow passed"
       }
     },
     {
@@ -39,12 +39,12 @@
       "dependencies": [
         "Python standard library"
       ],
-      "limitations": "Local SQLite register, adjust and search; graphical CSV export not implemented",
+      "limitations": "Local SQLite register, adjust, search and CSV download; formula-like names escaped in CSV",
       "interface": "project_s/local_ui.py",
       "evidence": {
-        "commit": "0a85864cbc607eae86af83b3aeb830e6fddb0a4a",
-        "workflow": 45543834303,
-        "scope": "individual browser demonstration passed; overall workflow failed"
+        "commit": "68afb5428bdbefb8909bcd4283fd927329d953ba",
+        "workflow": 45544240854,
+        "scope": "browser demonstration and consumer workflow passed"
       }
     }
   ],
