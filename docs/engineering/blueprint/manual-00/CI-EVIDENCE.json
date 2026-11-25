@@ -1,0 +1,103 @@
+{
+  "candidate": "fff865c6caae59b0f5fe51772dea1fcb9d6a6eba",
+  "jobs": [
+    {
+      "id": 139017910346,
+      "lines": [
+        "test_persisted_request_binding (test_contracts_consumer.ContractTests.test_persisted_request_binding) ... ok",
+        "Ran 24 tests in 0.721s",
+        "Ran 2 tests in 0.008s"
+      ]
+    },
+    {
+      "id": 139017910703,
+      "lines": [
+        "test_persisted_request_binding (test_contracts_consumer.ContractTests.test_persisted_request_binding) ... ok",
+        "Ran 24 tests in 0.956s",
+        "Ran 2 tests in 0.015s"
+      ]
+    },
+    {
+      "id": 139017911497,
+      "lines": [
+        "test_persisted_request_binding (test_contracts_consumer.ContractTests.test_persisted_request_binding) ... ok\r",
+        "Ran 147 tests in 38.388s\r",
+        "OK (skipped=1)\r"
+      ]
+    },
+    {
+      "id": 139017911674,
+      "lines": [
+        "test_persisted_request_binding (test_contracts_consumer.ContractTests.test_persisted_request_binding) ... ok",
+        "Ran 147 tests in 7.967s"
+      ]
+    },
+    {
+      "id": 139017911728,
+      "lines": [
+        "test_persisted_request_binding (test_contracts_consumer.ContractTests.test_persisted_request_binding) ... ok",
+        "Ran 147 tests in 8.605s"
+      ]
+    },
+    {
+      "id": 139017911807,
+      "lines": [
+        "test_persisted_request_binding (test_contracts_consumer.ContractTests.test_persisted_request_binding) ... ok\r",
+        "Ran 147 tests in 36.852s\r",
+        "OK (skipped=1)\r"
+      ]
+    },
+    {
+      "id": 139017911575,
+      "lines": [
+        "test_persisted_request_binding (test_contracts_consumer.ContractTests.test_persisted_request_binding) ... ok",
+        "Ran 147 tests in 7.109s",
+        "# tests 16",
+        "# fail 0",
+        "# skipped 0",
+        "# tests 9",
+        "# fail 0",
+        "# skipped 0",
+        "##[group]Run python scripts/smoke_developer_install.py",
+        "\u001b[36;1mpython scripts/smoke_developer_install.py\u001b[0m"
+      ]
+    },
+    {
+      "id": 139017911959,
+      "lines": [
+        "test_persisted_request_binding (test_contracts_consumer.ContractTests.test_persisted_request_binding) ... ok\r",
+        "Ran 147 tests in 49.882s\r",
+        "OK (skipped=1)\r",
+        "# tests 16\r",
+        "# fail 0\r",
+        "# skipped 0\r",
+        "# tests 9\r",
+        "# fail 0\r",
+        "# skipped 0\r",
+        "##[group]Run python scripts/smoke_developer_install.py\r",
+        "\u001b[36;1mpython scripts/smoke_developer_install.py\u001b[0m\r"
+      ]
+    },
+    {
+      "id": 139017910892,
+      "lines": [
+        "test_persisted_request_binding (test_contracts_consumer.ContractTests.test_persisted_request_binding) ... ok",
+        "Ran 24 tests in 0.842s"
+      ]
+    },
+    {
+      "id": 139017910934,
+      "lines": []
+    },
+    {
+      "id": 139017911029,
+      "lines": [
+        "BUILD SUCCESSFUL in 30s"
+      ]
+    },
+    {
+      "id": 139017911059,
+      "lines": []
+    }
+  ]
+}
