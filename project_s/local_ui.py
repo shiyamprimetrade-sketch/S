@@ -1,3 +1,4 @@
+from .repair import Repair
 from http.server import BaseHTTPRequestHandler,ThreadingHTTPServer
 from urllib.parse import urlparse
 from pathlib import Path
@@ -13,7 +14,7 @@ def serve(root,port=8768):
         _serve(root,port)
 
 def _serve(root,port):
-    engine=SecureEngine(root); engine.recover_interrupted(); session=secrets.token_hex(32)
+    engine=SecureEngine(root); engine.recover_interrupted(); Repair(engine).reconcile(); session=secrets.token_hex(32)
     class Handler(BaseHTTPRequestHandler):
         def send(self,status,body,kind='application/json',extra=None):
             self.send_response(status);self.send_header('Content-Type',kind);self.send_header('Content-Length',str(len(body)));self.send_header('Cache-Control','no-store');self.send_header('X-Content-Type-Options','nosniff')
