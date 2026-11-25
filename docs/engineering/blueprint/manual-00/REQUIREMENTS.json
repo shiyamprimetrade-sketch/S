@@ -1,0 +1,631 @@
+{
+  "source": "00_Master_integration_and_release.pdf",
+  "revision": "1.0",
+  "date": "2026-11-25",
+  "status": "AUDIT_PENDING",
+  "requirements": [
+    {
+      "id": "M00-01-01",
+      "section": 1,
+      "requirement": "Deliver unified local-first product",
+      "status": "AUDIT_PENDING",
+      "evidence": []
+    },
+    {
+      "id": "M00-01-02",
+      "section": 1,
+      "requirement": "Use existing S repository",
+      "status": "AUDIT_PENDING",
+      "evidence": []
+    },
+    {
+      "id": "M00-01-03",
+      "section": 1,
+      "requirement": "Recheck integration head before editing",
+      "status": "AUDIT_PENDING",
+      "evidence": []
+    },
+    {
+      "id": "M00-01-04",
+      "section": 1,
+      "requirement": "Preserve recovered source",
+      "status": "AUDIT_PENDING",
+      "evidence": []
+    },
+    {
+      "id": "M00-02-01",
+      "section": 2,
+      "requirement": "Python 3.11 and 3.12 core",
+      "status": "AUDIT_PENDING",
+      "evidence": []
+    },
+    {
+      "id": "M00-02-02",
+      "section": 2,
+      "requirement": "SQLite persistence",
+      "status": "AUDIT_PENDING",
+      "evidence": []
+    },
+    {
+      "id": "M00-02-03",
+      "section": 2,
+      "requirement": "JSON Schema contracts",
+      "status": "AUDIT_PENDING",
+      "evidence": []
+    },
+    {
+      "id": "M00-02-04",
+      "section": 2,
+      "requirement": "Kotlin Android with Gradle and JDK17",
+      "status": "AUDIT_PENDING",
+      "evidence": []
+    },
+    {
+      "id": "M00-02-05",
+      "section": 2,
+      "requirement": "HTML CSS JS artifacts",
+      "status": "AUDIT_PENDING",
+      "evidence": []
+    },
+    {
+      "id": "M00-02-06",
+      "section": 2,
+      "requirement": "GitHub Actions",
+      "status": "AUDIT_PENDING",
+      "evidence": []
+    },
+    {
+      "id": "M00-03-01",
+      "section": 3,
+      "requirement": "Modular monolith",
+      "status": "AUDIT_PENDING",
+      "evidence": []
+    },
+    {
+      "id": "M00-03-02",
+      "section": 3,
+      "requirement": "UI requirement parser",
+      "status": "AUDIT_PENDING",
+      "evidence": []
+    },
+    {
+      "id": "M00-03-03",
+      "section": 3,
+      "requirement": "Typed plan",
+      "status": "AUDIT_PENDING",
+      "evidence": []
+    },
+    {
+      "id": "M00-03-04",
+      "section": 3,
+      "requirement": "Authorization",
+      "status": "AUDIT_PENDING",
+      "evidence": []
+    },
+    {
+      "id": "M00-03-05",
+      "section": 3,
+      "requirement": "Journal",
+      "status": "AUDIT_PENDING",
+      "evidence": []
+    },
+    {
+      "id": "M00-03-06",
+      "section": 3,
+      "requirement": "Bounded executor",
+      "status": "AUDIT_PENDING",
+      "evidence": []
+    },
+    {
+      "id": "M00-03-07",
+      "section": 3,
+      "requirement": "Independent verifier",
+      "status": "AUDIT_PENDING",
+      "evidence": []
+    },
+    {
+      "id": "M00-03-08",
+      "section": 3,
+      "requirement": "Artifact export",
+      "status": "AUDIT_PENDING",
+      "evidence": []
+    },
+    {
+      "id": "M00-03-09",
+      "section": 3,
+      "requirement": "Training outside release runtime",
+      "status": "AUDIT_PENDING",
+      "evidence": []
+    },
+    {
+      "id": "M00-04-01",
+      "section": 4,
+      "requirement": "Audit PR27",
+      "status": "AUDIT_PENDING",
+      "evidence": []
+    },
+    {
+      "id": "M00-04-02",
+      "section": 4,
+      "requirement": "Audit current branches",
+      "status": "AUDIT_PENDING",
+      "evidence": []
+    },
+    {
+      "id": "M00-04-03",
+      "section": 4,
+      "requirement": "Inventory existing implementations",
+      "status": "AUDIT_PENDING",
+      "evidence": []
+    },
+    {
+      "id": "M00-04-04",
+      "section": 4,
+      "requirement": "Inventory licenses",
+      "status": "AUDIT_PENDING",
+      "evidence": []
+    },
+    {
+      "id": "M00-04-05",
+      "section": 4,
+      "requirement": "Map capabilities to authoritative source",
+      "status": "AUDIT_PENDING",
+      "evidence": []
+    },
+    {
+      "id": "M00-04-06",
+      "section": 4,
+      "requirement": "Record source blob hashes",
+      "status": "AUDIT_PENDING",
+      "evidence": []
+    },
+    {
+      "id": "M00-04-07",
+      "section": 4,
+      "requirement": "Isolated feature branch from verified integration head",
+      "status": "AUDIT_PENDING",
+      "evidence": []
+    },
+    {
+      "id": "M00-04-08",
+      "section": 4,
+      "requirement": "Define SBI request",
+      "status": "AUDIT_PENDING",
+      "evidence": []
+    },
+    {
+      "id": "M00-04-09",
+      "section": 4,
+      "requirement": "Define SCC state contract",
+      "status": "AUDIT_PENDING",
+      "evidence": []
+    },
+    {
+      "id": "M00-04-10",
+      "section": 4,
+      "requirement": "Reuse adapters instead of duplicate code",
+      "status": "AUDIT_PENDING",
+      "evidence": []
+    },
+    {
+      "id": "M00-04-11",
+      "section": 4,
+      "requirement": "Integrate calculator",
+      "status": "AUDIT_PENDING",
+      "evidence": []
+    },
+    {
+      "id": "M00-04-12",
+      "section": 4,
+      "requirement": "Integrate website",
+      "status": "AUDIT_PENDING",
+      "evidence": []
+    },
+    {
+      "id": "M00-04-13",
+      "section": 4,
+      "requirement": "Integrate inventory",
+      "status": "AUDIT_PENDING",
+      "evidence": []
+    },
+    {
+      "id": "M00-04-14",
+      "section": 4,
+      "requirement": "Run full CI",
+      "status": "AUDIT_PENDING",
+      "evidence": []
+    },
+    {
+      "id": "M00-04-15",
+      "section": 4,
+      "requirement": "Build signed or debug-labeled APK",
+      "status": "AUDIT_PENDING",
+      "evidence": []
+    },
+    {
+      "id": "M00-04-16",
+      "section": 4,
+      "requirement": "Verify physical device",
+      "status": "AUDIT_PENDING",
+      "evidence": []
+    },
+    {
+      "id": "M00-04-17",
+      "section": 4,
+      "requirement": "Archive release manifest",
+      "status": "AUDIT_PENDING",
+      "evidence": []
+    },
+    {
+      "id": "M00-05-01",
+      "section": 5,
+      "requirement": "Run existing regression suite unchanged",
+      "status": "AUDIT_PENDING",
+      "evidence": []
+    },
+    {
+      "id": "M00-05-02",
+      "section": 5,
+      "requirement": "Exercise calculator demo",
+      "status": "AUDIT_PENDING",
+      "evidence": []
+    },
+    {
+      "id": "M00-05-03",
+      "section": 5,
+      "requirement": "Exercise website demo",
+      "status": "AUDIT_PENDING",
+      "evidence": []
+    },
+    {
+      "id": "M00-05-04",
+      "section": 5,
+      "requirement": "Exercise inventory demo",
+      "status": "AUDIT_PENDING",
+      "evidence": []
+    },
+    {
+      "id": "M00-05-05",
+      "section": 5,
+      "requirement": "Exercise unfamiliar supported requirement",
+      "status": "AUDIT_PENDING",
+      "evidence": []
+    },
+    {
+      "id": "M00-05-06",
+      "section": 5,
+      "requirement": "Inject defect",
+      "status": "AUDIT_PENDING",
+      "evidence": []
+    },
+    {
+      "id": "M00-05-07",
+      "section": 5,
+      "requirement": "Test denied action",
+      "status": "AUDIT_PENDING",
+      "evidence": []
+    },
+    {
+      "id": "M00-05-08",
+      "section": 5,
+      "requirement": "Test crash recovery",
+      "status": "AUDIT_PENDING",
+      "evidence": []
+    },
+    {
+      "id": "M00-05-09",
+      "section": 5,
+      "requirement": "Test offline launch",
+      "status": "AUDIT_PENDING",
+      "evidence": []
+    },
+    {
+      "id": "M00-05-10",
+      "section": 5,
+      "requirement": "Independent QA signoff",
+      "status": "AUDIT_PENDING",
+      "evidence": []
+    },
+    {
+      "id": "M00-05-11",
+      "section": 5,
+      "requirement": "Independent security signoff",
+      "status": "AUDIT_PENDING",
+      "evidence": []
+    },
+    {
+      "id": "M00-06-01",
+      "section": 6,
+      "requirement": "Block production release until gates pass",
+      "status": "AUDIT_PENDING",
+      "evidence": []
+    },
+    {
+      "id": "M00-06-02",
+      "section": 6,
+      "requirement": "Protect private inventions",
+      "status": "AUDIT_PENDING",
+      "evidence": []
+    },
+    {
+      "id": "M00-06-03",
+      "section": 6,
+      "requirement": "Protect holdout data",
+      "status": "AUDIT_PENDING",
+      "evidence": []
+    },
+    {
+      "id": "M00-06-04",
+      "section": 6,
+      "requirement": "Treat integration branch as staging",
+      "status": "AUDIT_PENDING",
+      "evidence": []
+    },
+    {
+      "id": "M00-07-01",
+      "section": 7,
+      "requirement": "Engineering team executes commands",
+      "status": "AUDIT_PENDING",
+      "evidence": []
+    },
+    {
+      "id": "M00-07-02",
+      "section": 7,
+      "requirement": "Inspect files dependencies workflows",
+      "status": "AUDIT_PENDING",
+      "evidence": []
+    },
+    {
+      "id": "M00-07-03",
+      "section": 7,
+      "requirement": "Preserve existing branches and uncommitted changes",
+      "status": "AUDIT_PENDING",
+      "evidence": []
+    },
+    {
+      "id": "M00-07-04",
+      "section": 7,
+      "requirement": "Record actual test commands",
+      "status": "AUDIT_PENDING",
+      "evidence": []
+    },
+    {
+      "id": "M00-07-05",
+      "section": 7,
+      "requirement": "Review and pin dependencies",
+      "status": "AUDIT_PENDING",
+      "evidence": []
+    },
+    {
+      "id": "M00-07-06",
+      "section": 7,
+      "requirement": "Preserve protected baselines",
+      "status": "AUDIT_PENDING",
+      "evidence": []
+    },
+    {
+      "id": "M00-08-01",
+      "section": 8,
+      "requirement": "Expose describe where meaningful",
+      "status": "AUDIT_PENDING",
+      "evidence": []
+    },
+    {
+      "id": "M00-08-02",
+      "section": 8,
+      "requirement": "Expose validate where meaningful",
+      "status": "AUDIT_PENDING",
+      "evidence": []
+    },
+    {
+      "id": "M00-08-03",
+      "section": 8,
+      "requirement": "Expose invoke where meaningful",
+      "status": "AUDIT_PENDING",
+      "evidence": []
+    },
+    {
+      "id": "M00-08-04",
+      "section": 8,
+      "requirement": "Expose reconcile where meaningful",
+      "status": "AUDIT_PENDING",
+      "evidence": []
+    },
+    {
+      "id": "M00-08-05",
+      "section": 8,
+      "requirement": "Typed status and error code",
+      "status": "AUDIT_PENDING",
+      "evidence": []
+    },
+    {
+      "id": "M00-08-06",
+      "section": 8,
+      "requirement": "Evidence references",
+      "status": "AUDIT_PENDING",
+      "evidence": []
+    },
+    {
+      "id": "M00-08-07",
+      "section": 8,
+      "requirement": "Artifact hashes",
+      "status": "AUDIT_PENDING",
+      "evidence": []
+    },
+    {
+      "id": "M00-08-08",
+      "section": 8,
+      "requirement": "No unverified success",
+      "status": "AUDIT_PENDING",
+      "evidence": []
+    },
+    {
+      "id": "M00-08-09",
+      "section": 8,
+      "requirement": "SBI schema_version operation_id capability deadline_ms payload",
+      "status": "AUDIT_PENDING",
+      "evidence": []
+    },
+    {
+      "id": "M00-08-10",
+      "section": 8,
+      "requirement": "Trusted actor authorization workspace",
+      "status": "AUDIT_PENDING",
+      "evidence": []
+    },
+    {
+      "id": "M00-08-11",
+      "section": 8,
+      "requirement": "SCC operation_id status error_code artifact_sha256 evidence_ids",
+      "status": "AUDIT_PENDING",
+      "evidence": []
+    },
+    {
+      "id": "M00-09-01",
+      "section": 9,
+      "requirement": "Commit implementation and tests on isolated branch",
+      "status": "AUDIT_PENDING",
+      "evidence": []
+    },
+    {
+      "id": "M00-09-02",
+      "section": 9,
+      "requirement": "Record base and head SHA",
+      "status": "AUDIT_PENDING",
+      "evidence": []
+    },
+    {
+      "id": "M00-09-03",
+      "section": 9,
+      "requirement": "Record changed paths",
+      "status": "AUDIT_PENDING",
+      "evidence": []
+    },
+    {
+      "id": "M00-09-04",
+      "section": 9,
+      "requirement": "Record dependency versions",
+      "status": "AUDIT_PENDING",
+      "evidence": []
+    },
+    {
+      "id": "M00-09-05",
+      "section": 9,
+      "requirement": "Record test pass fail skip counts",
+      "status": "AUDIT_PENDING",
+      "evidence": []
+    },
+    {
+      "id": "M00-09-06",
+      "section": 9,
+      "requirement": "Record artifact hashes",
+      "status": "AUDIT_PENDING",
+      "evidence": []
+    },
+    {
+      "id": "M00-09-07",
+      "section": 9,
+      "requirement": "Record CI links",
+      "status": "AUDIT_PENDING",
+      "evidence": []
+    },
+    {
+      "id": "M00-09-08",
+      "section": 9,
+      "requirement": "Record device evidence",
+      "status": "AUDIT_PENDING",
+      "evidence": []
+    },
+    {
+      "id": "M00-09-09",
+      "section": 9,
+      "requirement": "Record limitations",
+      "status": "AUDIT_PENDING",
+      "evidence": []
+    },
+    {
+      "id": "M00-09-10",
+      "section": 9,
+      "requirement": "Record rollback instructions",
+      "status": "AUDIT_PENDING",
+      "evidence": []
+    },
+    {
+      "id": "M00-09-11",
+      "section": 9,
+      "requirement": "Draft PR against integration branch",
+      "status": "AUDIT_PENDING",
+      "evidence": []
+    },
+    {
+      "id": "M00-09-12",
+      "section": 9,
+      "requirement": "Independent CTO review",
+      "status": "AUDIT_PENDING",
+      "evidence": []
+    },
+    {
+      "id": "M00-09-13",
+      "section": 9,
+      "requirement": "QA and security release veto",
+      "status": "AUDIT_PENDING",
+      "evidence": []
+    },
+    {
+      "id": "M00-09-14",
+      "section": 9,
+      "requirement": "No merge on failure",
+      "status": "AUDIT_PENDING",
+      "evidence": []
+    },
+    {
+      "id": "M00-09-15",
+      "section": 9,
+      "requirement": "Retain prior release and checkpoint pointers",
+      "status": "AUDIT_PENDING",
+      "evidence": []
+    },
+    {
+      "id": "M00-09-16",
+      "section": 9,
+      "requirement": "Revert rather than reset shared history",
+      "status": "AUDIT_PENDING",
+      "evidence": []
+    },
+    {
+      "id": "M00-09-17",
+      "section": 9,
+      "requirement": "Test migration backup",
+      "status": "AUDIT_PENDING",
+      "evidence": []
+    },
+    {
+      "id": "M00-09-18",
+      "section": 9,
+      "requirement": "Test migration restore",
+      "status": "AUDIT_PENDING",
+      "evidence": []
+    },
+    {
+      "id": "M00-10-01",
+      "section": 10,
+      "requirement": "Complete detailed source audit",
+      "status": "AUDIT_PENDING",
+      "evidence": []
+    },
+    {
+      "id": "M00-10-02",
+      "section": 10,
+      "requirement": "Verify dependency locks",
+      "status": "AUDIT_PENDING",
+      "evidence": []
+    },
+    {
+      "id": "M00-10-03",
+      "section": 10,
+      "requirement": "Complete physical device validation",
+      "status": "AUDIT_PENDING",
+      "evidence": []
+    }
+  ]
+}
