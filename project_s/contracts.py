@@ -42,3 +42,14 @@ def receipt(operation_id,status,error_code=None,artifact_sha256=None,evidence_id
     if status in ("FAILED","DENIED","BLOCKED") and (type(error_code) is not str or not error_code):
         raise ValueError("Missing error code")
     return {"operation_id":operation_id,"status":status,"error_code":error_code,"artifact_sha256":artifact_sha256,"evidence_ids":list(evidence_ids)}
+
+
+def trusted_context(actor, authorization, workspace, capability):
+    """Check server-supplied context against an already authenticated scope."""
+    if actor != "local-owner" or type(workspace) is not str:
+        raise ValueError("Invalid trusted context")
+    _fields(authorization, ("scope","mac"))
+    scope = authorization["scope"]
+    if type(scope) is not dict or scope.get("actor") != actor or scope.get("workspace") != workspace or scope.get("capability") != capability:
+        raise ValueError("Trusted context mismatch")
+    return {"actor":actor,"authorization":authorization,"workspace":workspace}
