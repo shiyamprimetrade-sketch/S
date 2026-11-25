@@ -22,7 +22,7 @@ def validate(request):
         raise ValueError("Invalid deadline")
     _fields(request["payload"], ("requirement",))
     requirement = request["payload"]["requirement"]
-    if type(requirement) is not str or not 1 <= len(requirement.strip()) <= 512:
+    if type(requirement) is not str or not 1 <= len(requirement) <= 512 or not requirement.strip():
         raise ValueError("Invalid requirement")
     return request
 def describe():
