@@ -77,5 +77,29 @@
       "name": "Android application",
       "status": "central production integration not verified"
     }
+  ],
+  "imports": [
+    {
+      "source_commit": "3cb4d336572392f323f52bcb5d4e0cf8c77186c4",
+      "source_path": "project_s/calculator.py",
+      "destination": "project_s/calculator.py",
+      "git_blob": "f9e6579d79d4f2937029eb288aaa818f393a3772",
+      "classification": "approved bounded consumer implementation",
+      "redistribution": "founder public-development authorization; external license not established",
+      "dependencies": "Python standard library",
+      "status": "SOURCE IMPORTED",
+      "evidence": "remote blob equals recovered blob; local recovered consumer suite 4/4 passed; central integration pending"
+    },
+    {
+      "source_commit": "3cb4d336572392f323f52bcb5d4e0cf8c77186c4",
+      "source_path": "project_s/inventory.py",
+      "destination": "project_s/inventory.py",
+      "git_blob": "dcf480ec95e9dcbcead9a6930ea40639a974b5f3",
+      "classification": "approved bounded consumer implementation",
+      "redistribution": "founder public-development authorization; external license not established",
+      "dependencies": "Python standard library",
+      "status": "SOURCE IMPORTED",
+      "evidence": "remote blob equals recovered blob; local recovered consumer suite 4/4 passed; central integration pending"
+    }
   ]
 }
