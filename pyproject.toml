@@ -14,13 +14,15 @@ neural = ["torch>=2.5,<3", "safetensors>=0.4,<1", "numpy>=1.26,<3"]
 
 [project.scripts]
 S = "s_developer.cli:main"
+project-s = "project_s.launcher:main"
 
 [tool.setuptools]
-packages = ["continuum", "s_developer", "s_brain", "s_web_assets"]
+packages = ["continuum", "s_developer", "s_brain", "s_web_assets", "project_s", "engine"]
 
 [tool.setuptools.package-dir]
 s_web_assets = "web"
 
 [tool.setuptools.package-data]
+project_s = ["CAPABILITY-REGISTRY.json"]
 s_web_assets = ["*.html", "*.js", "*.css"]
 s_developer = ["resources/native-demo/*.safetensors", "resources/native-demo/*.json"]

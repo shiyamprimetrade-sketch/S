@@ -1,0 +1,24 @@
+plugins {
+ id 'com.android.application' version '8.7.3'
+ id 'com.chaquo.python' version '16.1.0'
+}
+android {
+ namespace 'org.projects.consumer'
+ compileSdk 35
+ defaultConfig {
+  applicationId 'org.projects.consumer'
+  minSdk 26
+  targetSdk 35
+  versionCode 2
+  versionName '0.1.1'
+  ndk { abiFilters 'arm64-v8a' }
+ }
+}
+chaquopy {
+ defaultConfig {
+  version = '3.11'
+  pyc { src = false }
+  extractPackages 'project_s'
+ }
+ sourceSets { main { srcDir 'src/main/python' } }
+}

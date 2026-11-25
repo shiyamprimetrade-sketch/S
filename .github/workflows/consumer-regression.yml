@@ -1,0 +1,88 @@
+name: Consumer regression
+on:
+  push:
+    branches: [integration/project-s-unified]
+  pull_request:
+    paths:
+      - 'project_s/**'
+      - 'engine/arithmetic_verifier.py'
+      - 'tests/test_*consumer.py'
+      - 'tests/test_consumer_generation.py'
+      - 'tests/test_http_product.py'
+      - '.github/workflows/consumer-regression.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  consumer:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m unittest discover -s tests -p 'test*consumer*.py' -v
+      - run: python -m unittest discover -s tests -p 'test_http_product.py' -v
+      - run: python -m pip install playwright==1.51.0
+      - run: python -m playwright install --with-deps chromium
+      - run: python tests/browser_acceptance.py
+  installed:
+    strategy:
+      matrix:
+        os: [ubuntu-24.04, windows-latest]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install build
+      - run: python -m build --wheel
+      - run: python scripts/verify_consumer_install.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: project-s-wheel-${{ matrix.os }}
+          path: dist/*.whl
+          if-no-files-found: error
+  android:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.9'
+      - uses: android-actions/setup-android@v3
+        with:
+          packages: 'platform-tools'
+      - run: sdkmanager "platforms;android-35" "build-tools;35.0.0"
+      - name: Stage actual consumer engine
+        run: |
+          dest=android-consumer/app/src/main/python
+          cp -r project_s "$dest/"
+          mkdir -p "$dest/engine" "$dest/continuum"
+          touch "$dest/engine/__init__.py" "$dest/continuum/__init__.py"
+          cp engine/arithmetic_verifier.py "$dest/engine/"
+          cp continuum/teacherlab.py "$dest/continuum/"
+      - run: gradle -p android-consumer assembleDebug
+      - run: sha256sum android-consumer/app/build/outputs/apk/debug/app-debug.apk
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Project-S-Android-arm64-debug
+          path: android-consumer/app/build/outputs/apk/debug/app-debug.apk
+          if-no-files-found: error

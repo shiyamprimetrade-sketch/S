@@ -1,0 +1,90 @@
+{
+  "schema_version": 1,
+  "mechanism": "deterministic bounded generator",
+  "capabilities": [
+    {
+      "id": "calculator",
+      "implementation": "project_s/calculator.py",
+      "verification": "project_s/verification.py",
+      "dependencies": [
+        "Python standard library"
+      ],
+      "limitations": "Bounded arithmetic; no general programming",
+      "interface": "project_s/local_ui.py",
+      "evidence": {
+        "commit": "68afb5428bdbefb8909bcd4283fd927329d953ba",
+        "workflow": 45544240854,
+        "scope": "browser demonstration and consumer workflow passed"
+      }
+    },
+    {
+      "id": "website",
+      "implementation": "project_s/generation.py",
+      "verification": "project_s/verification.py",
+      "dependencies": [
+        "Python standard library"
+      ],
+      "limitations": "Responsive static template; placeholder contact and services",
+      "interface": "project_s/local_ui.py",
+      "evidence": {
+        "commit": "68afb5428bdbefb8909bcd4283fd927329d953ba",
+        "workflow": 45544240854,
+        "scope": "browser demonstration and consumer workflow passed"
+      }
+    },
+    {
+      "id": "inventory",
+      "implementation": "project_s/inventory.py",
+      "verification": "project_s/verification.py",
+      "dependencies": [
+        "Python standard library"
+      ],
+      "limitations": "Local SQLite register, adjust, search and CSV download; formula-like names escaped in CSV",
+      "interface": "project_s/local_ui.py",
+      "evidence": {
+        "commit": "68afb5428bdbefb8909bcd4283fd927329d953ba",
+        "workflow": 45544240854,
+        "scope": "browser demonstration and consumer workflow passed"
+      }
+    }
+  ],
+  "intent": {
+    "implementation": "project_s/intelligence.py",
+    "mechanism": "TeacherLab multinomial naive Bayes",
+    "selection_threshold": 0.8,
+    "calibrated": false,
+    "authorization_required": true
+  },
+  "experimental_providers": [
+    {
+      "id": "native-copy",
+      "status": "PRESERVED RESEARCH",
+      "documentation": "docs/S-LEARNED-COPY.md",
+      "historical_execution": {
+        "workflow": 43219172983,
+        "byte": {
+          "passed": 5,
+          "total": 8
+        },
+        "span": {
+          "passed": 6,
+          "total": 8
+        },
+        "repairs": 0
+      },
+      "dependencies": [
+        "PyTorch",
+        "checksum-bound installed base and adapter",
+        "restricted execution for candidate verification"
+      ],
+      "production_enabled": false,
+      "limitations": [
+        "Known-template arithmetic only",
+        "512-byte context",
+        "Android inference unverified"
+      ],
+      "base_sha256": "be18814895673f2a80075e0d2baedbda9277f927291ac614b7d3b2ebaa344711",
+      "span_sha256": "88d846a7d4e5d0cc4377e69302697d7f8dbd6f724f9a0c028a4bfe531cd0e2d7"
+    }
+  ]
+}

@@ -1,0 +1,239 @@
+{
+  "schema_version": 1,
+  "central_repository": "shiyamprimetrade-sketch/S",
+  "base_commit": "517f5757cb1c99a0c16e29db33c3c82593ac6502",
+  "components": [
+    {
+      "name": "Mission 007",
+      "status": "private recovery; import withheld pending clearance"
+    },
+    {
+      "name": "S-Alpha",
+      "repository": "shiyamprimetrade-sketch/S-Alpha",
+      "status": "upstream; integration not verified"
+    },
+    {
+      "name": "S-Omega",
+      "repository": "shiyamprimetrade-sketch/S-Omega",
+      "status": "upstream; integration not verified"
+    },
+    {
+      "name": "S-Brain",
+      "status": "central production integration not verified"
+    },
+    {
+      "name": "S-Eye",
+      "status": "central production integration not verified"
+    },
+    {
+      "name": "S-Hand",
+      "status": "central production integration not verified"
+    },
+    {
+      "name": "S_Ml",
+      "status": "central production integration not verified"
+    },
+    {
+      "name": "S-Memory",
+      "status": "central production integration not verified"
+    },
+    {
+      "name": "SGL",
+      "status": "central production integration not verified"
+    },
+    {
+      "name": "S-SCI",
+      "status": "central production integration not verified"
+    },
+    {
+      "name": "S-Create",
+      "status": "central production integration not verified"
+    },
+    {
+      "name": "S-Learn",
+      "status": "central production integration not verified"
+    },
+    {
+      "name": "S-Universal",
+      "status": "central production integration not verified"
+    },
+    {
+      "name": "S-Proof",
+      "status": "central production integration not verified"
+    },
+    {
+      "name": "S-Guardian",
+      "status": "central production integration not verified"
+    },
+    {
+      "name": "S-Continuum",
+      "status": "central production integration not verified"
+    },
+    {
+      "name": "Consumer application",
+      "status": "central production integration not verified"
+    },
+    {
+      "name": "Android application",
+      "status": "central production integration not verified"
+    }
+  ],
+  "imports": [
+    {
+      "source_commit": "3cb4d336572392f323f52bcb5d4e0cf8c77186c4",
+      "source_path": "project_s/calculator.py",
+      "destination": "project_s/calculator.py",
+      "git_blob": "f9e6579d79d4f2937029eb288aaa818f393a3772",
+      "classification": "approved bounded consumer implementation",
+      "redistribution": "founder public-development authorization; external license not established",
+      "dependencies": "Python standard library",
+      "status": "SOURCE IMPORTED",
+      "evidence": "remote blob equals recovered blob; local recovered consumer suite 4/4 passed; central integration pending"
+    },
+    {
+      "source_commit": "3cb4d336572392f323f52bcb5d4e0cf8c77186c4",
+      "source_path": "project_s/inventory.py",
+      "destination": "project_s/inventory.py",
+      "git_blob": "dcf480ec95e9dcbcead9a6930ea40639a974b5f3",
+      "classification": "approved bounded consumer implementation",
+      "redistribution": "founder public-development authorization; external license not established",
+      "dependencies": "Python standard library",
+      "status": "SOURCE IMPORTED",
+      "evidence": "remote blob equals recovered blob; local recovered consumer suite 4/4 passed; central integration pending"
+    },
+    {
+      "source_commit": "3cb4d336572392f323f52bcb5d4e0cf8c77186c4",
+      "source_path": "project_s/__init__.py",
+      "destination": "project_s/__init__.py",
+      "git_blob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "classification": "approved recovered consumer implementation or test",
+      "redistribution": "founder public development authorization; ownership and external redistribution license not independently established",
+      "dependencies": "Python standard library and imported consumer modules",
+      "status": "SOURCE IMPORTED",
+      "evidence": "remote blob verified; central regression pending"
+    },
+    {
+      "source_commit": "3cb4d336572392f323f52bcb5d4e0cf8c77186c4",
+      "source_path": "project_s/generation.py",
+      "destination": "project_s/generation.py",
+      "git_blob": "99a72213ec08e36ec80a795869680621e1188443",
+      "classification": "approved recovered consumer implementation or test",
+      "redistribution": "founder public development authorization; ownership and external redistribution license not independently established",
+      "dependencies": "Python standard library and imported consumer modules",
+      "status": "SOURCE IMPORTED",
+      "evidence": "remote blob verified; central regression pending"
+    },
+    {
+      "source_commit": "3cb4d336572392f323f52bcb5d4e0cf8c77186c4",
+      "source_path": "project_s/orchestrator.py",
+      "destination": "project_s/orchestrator.py",
+      "git_blob": "2bdd2ab069f4b800a02faf9a9955aa27f84f193f",
+      "classification": "approved recovered consumer implementation or test",
+      "redistribution": "founder public development authorization; ownership and external redistribution license not independently established",
+      "dependencies": "Python standard library and imported consumer modules",
+      "status": "SOURCE IMPORTED",
+      "evidence": "remote blob verified; central regression pending"
+    },
+    {
+      "source_commit": "3cb4d336572392f323f52bcb5d4e0cf8c77186c4",
+      "source_path": "project_s/secure.py",
+      "destination": "project_s/secure.py",
+      "git_blob": "df5aba7f2815ffe8d4e118409394987efe4e8adb",
+      "classification": "approved recovered consumer implementation or test",
+      "redistribution": "founder public development authorization; ownership and external redistribution license not independently established",
+      "dependencies": "Python standard library and imported consumer modules",
+      "status": "SOURCE IMPORTED",
+      "evidence": "remote blob verified; central regression pending"
+    },
+    {
+      "source_commit": "3cb4d336572392f323f52bcb5d4e0cf8c77186c4",
+      "source_path": "project_s/verification.py",
+      "destination": "project_s/verification.py",
+      "git_blob": "26e1e8ed73211ad6cbb02252477eb06517b198aa",
+      "classification": "approved recovered consumer implementation or test",
+      "redistribution": "founder public development authorization; ownership and external redistribution license not independently established",
+      "dependencies": "Python standard library and imported consumer modules",
+      "status": "SOURCE IMPORTED",
+      "evidence": "remote blob verified; central regression pending"
+    },
+    {
+      "source_commit": "3cb4d336572392f323f52bcb5d4e0cf8c77186c4",
+      "source_path": "project_s/local_ui.py",
+      "destination": "project_s/local_ui.py",
+      "git_blob": "a647c62c6114d044afa28e15754ad46821c43372",
+      "classification": "approved recovered consumer implementation or test",
+      "redistribution": "founder public development authorization; ownership and external redistribution license not independently established",
+      "dependencies": "Python standard library and imported consumer modules",
+      "status": "SOURCE IMPORTED",
+      "evidence": "remote blob verified; central regression pending"
+    },
+    {
+      "source_commit": "3cb4d336572392f323f52bcb5d4e0cf8c77186c4",
+      "source_path": "engine/arithmetic_verifier.py",
+      "destination": "engine/arithmetic_verifier.py",
+      "git_blob": "6a732e2e1fe32e44ff83734421d67da13290f9f7",
+      "classification": "approved recovered consumer implementation or test",
+      "redistribution": "founder public development authorization; ownership and external redistribution license not independently established",
+      "dependencies": "Python standard library and imported consumer modules",
+      "status": "SOURCE IMPORTED",
+      "evidence": "remote blob verified; central regression pending"
+    },
+    {
+      "source_commit": "3cb4d336572392f323f52bcb5d4e0cf8c77186c4",
+      "source_path": "tests/test_consumer_generation.py",
+      "destination": "tests/test_consumer_generation.py",
+      "git_blob": "e3c4006094b2b4c0af942f5c95b9b39493119a01",
+      "classification": "approved recovered consumer implementation or test",
+      "redistribution": "founder public development authorization; ownership and external redistribution license not independently established",
+      "dependencies": "Python standard library and imported consumer modules",
+      "status": "SOURCE IMPORTED",
+      "evidence": "remote blob verified; central regression pending"
+    },
+    {
+      "source_commit": "3cb4d336572392f323f52bcb5d4e0cf8c77186c4",
+      "source_path": "tests/test_secure_consumer.py",
+      "destination": "tests/test_secure_consumer.py",
+      "git_blob": "56d45e660eb69c6d5f8d6a1804b13ec4d810df6f",
+      "classification": "approved recovered consumer implementation or test",
+      "redistribution": "founder public development authorization; ownership and external redistribution license not independently established",
+      "dependencies": "Python standard library and imported consumer modules",
+      "status": "SOURCE IMPORTED",
+      "evidence": "remote blob verified; central regression pending"
+    },
+    {
+      "source_commit": "3cb4d336572392f323f52bcb5d4e0cf8c77186c4",
+      "source_path": "tests/test_http_product.py",
+      "destination": "tests/test_http_product.py",
+      "git_blob": "792ff8798adff02f6eae17b6769b86882b0dd75d",
+      "classification": "approved recovered consumer implementation or test",
+      "redistribution": "founder public development authorization; ownership and external redistribution license not independently established",
+      "dependencies": "Python standard library and imported consumer modules",
+      "status": "SOURCE IMPORTED",
+      "evidence": "remote blob verified; central regression pending"
+    }
+  ],
+  "integration_evidence": {
+    "checkpoint": "6cc5baf2b6959a5964a53d591f50542e9efed07d",
+    "consumer": {
+      "status": "TESTED at earlier checkpoints; latest regression pending",
+      "verified_commit": "b8a3b259e0a6e74434ff151170f548395b4ac7f2",
+      "workflow": 45543445382
+    },
+    "learned_intent": {
+      "status": "INTEGRATED; acceptance pending",
+      "source": "continuum/teacherlab.py",
+      "source_blob": "1ff0d0d364401d1adfa7882f27627d1d50ae65fa",
+      "adapter": "project_s/intelligence.py",
+      "adapter_commit": "37bc9e8b7a5387c6d7641d8cda3662c2cbf1675b",
+      "classification": "existing public algorithm; newly authored synthetic consumer curriculum",
+      "dependencies": "Python standard library; existing TeacherLab",
+      "license": "no new license assigned; external rights not independently established",
+      "limits": "15 examples; uncalibrated scores; deterministic generation; no neural provider promotion"
+    },
+    "graphical_repair": {
+      "status": "INTEGRATED; browser acceptance pending",
+      "failed_workflow": 45543747043,
+      "correction_commit": "235131422c75ab22cee8d36f85a52387b32fd00c"
+    }
+  }
+}
