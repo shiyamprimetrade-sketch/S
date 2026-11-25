@@ -9,7 +9,13 @@
       "dependencies": [
         "Python standard library"
       ],
-      "limitations": "CLI generated artifact; graphical interface pending"
+      "limitations": "Bounded arithmetic; no general programming",
+      "interface": "project_s/local_ui.py",
+      "evidence": {
+        "commit": "0a85864cbc607eae86af83b3aeb830e6fddb0a4a",
+        "workflow": 45543834303,
+        "scope": "individual browser demonstration passed; overall workflow failed"
+      }
     },
     {
       "id": "website",
@@ -18,7 +24,13 @@
       "dependencies": [
         "Python standard library"
       ],
-      "limitations": "Static structure verification; placeholder contact details"
+      "limitations": "Responsive static template; placeholder contact and services",
+      "interface": "project_s/local_ui.py",
+      "evidence": {
+        "commit": "0a85864cbc607eae86af83b3aeb830e6fddb0a4a",
+        "workflow": 45543834303,
+        "scope": "individual browser demonstration passed; overall workflow failed"
+      }
     },
     {
       "id": "inventory",
@@ -27,7 +39,20 @@
       "dependencies": [
         "Python standard library"
       ],
-      "limitations": "CLI generated artifact; graphical interface pending"
+      "limitations": "Local SQLite register, adjust and search; graphical CSV export not implemented",
+      "interface": "project_s/local_ui.py",
+      "evidence": {
+        "commit": "0a85864cbc607eae86af83b3aeb830e6fddb0a4a",
+        "workflow": 45543834303,
+        "scope": "individual browser demonstration passed; overall workflow failed"
+      }
     }
-  ]
+  ],
+  "intent": {
+    "implementation": "project_s/intelligence.py",
+    "mechanism": "TeacherLab multinomial naive Bayes",
+    "selection_threshold": 0.8,
+    "calibrated": false,
+    "authorization_required": true
+  }
 }
