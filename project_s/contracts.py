@@ -31,12 +31,14 @@ def request_for(requirement, capability):
     return validate({"schema_version":1,"operation_id":uuid.uuid4().hex,"capability":capability,"deadline_ms":120000,"payload":{"requirement":requirement}})
 def receipt(operation_id,status,error_code=None,artifact_sha256=None,evidence_ids=()):
     _id(operation_id)
-    if status not in STATES:
+    if type(status) is not str or status not in STATES:
         raise ValueError("Invalid state")
     if type(evidence_ids) not in (tuple,list) or any(type(x) is not str or not x for x in evidence_ids):
         raise ValueError("Invalid evidence references")
     if artifact_sha256 is not None and (type(artifact_sha256) is not str or not re.fullmatch(r"[0-9a-f]{64}",artifact_sha256)):
         raise ValueError("Invalid fingerprint")
+    if error_code is not None and type(error_code) is not str:
+        raise ValueError("Invalid error code")
     if status=="COMPLETED" and (not artifact_sha256 or not evidence_ids or error_code is not None):
         raise ValueError("Completion requires verification evidence")
     if status in ("FAILED","DENIED","BLOCKED") and (type(error_code) is not str or not error_code):
