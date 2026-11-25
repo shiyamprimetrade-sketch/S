@@ -36,8 +36,17 @@
       "id": "M00-02-01",
       "section": 2,
       "requirement": "Python 3.11 and 3.12 core",
-      "status": "AUDIT_PENDING",
-      "evidence": []
+      "status": "SOURCE_LOCATED_REVIEW_PENDING",
+      "evidence": [
+        {
+          "path": ".github/workflows/blueprint-00.yml",
+          "blob_sha": "fe2700814451f23c403e2648c10415db45919542"
+        },
+        {
+          "path": ".github/workflows/tests.yml",
+          "blob_sha": "9e55d9e6a721b6b61635681f2220a298de838fbc"
+        }
+      ]
     },
     {
       "id": "M00-02-02",
@@ -75,8 +84,13 @@
       "id": "M00-02-04",
       "section": 2,
       "requirement": "Kotlin Android with Gradle and JDK17",
-      "status": "AUDIT_PENDING",
-      "evidence": []
+      "status": "SOURCE_LOCATED_REVIEW_PENDING",
+      "evidence": [
+        {
+          "path": "android-consumer/app/build.gradle",
+          "blob_sha": "caca8794be2b0553bb0a7baf3324f1c552d5563a"
+        }
+      ]
     },
     {
       "id": "M00-02-05",
@@ -89,8 +103,21 @@
       "id": "M00-02-06",
       "section": 2,
       "requirement": "GitHub Actions",
-      "status": "AUDIT_PENDING",
-      "evidence": []
+      "status": "SOURCE_LOCATED_REVIEW_PENDING",
+      "evidence": [
+        {
+          "path": ".github/workflows/blueprint-00.yml",
+          "blob_sha": "fe2700814451f23c403e2648c10415db45919542"
+        },
+        {
+          "path": ".github/workflows/tests.yml",
+          "blob_sha": "9e55d9e6a721b6b61635681f2220a298de838fbc"
+        },
+        {
+          "path": ".github/workflows/s-developer.yml",
+          "blob_sha": "a8226c2ac144e0c8a79aed1acb9a153b842000b7"
+        }
+      ]
     },
     {
       "id": "M00-03-01",
@@ -325,15 +352,33 @@
       "id": "M00-04-14",
       "section": 4,
       "requirement": "Run full CI",
-      "status": "AUDIT_PENDING",
-      "evidence": []
+      "status": "SOURCE_LOCATED_REVIEW_PENDING",
+      "evidence": [
+        {
+          "path": ".github/workflows/blueprint-00.yml",
+          "blob_sha": "fe2700814451f23c403e2648c10415db45919542"
+        },
+        {
+          "path": ".github/workflows/tests.yml",
+          "blob_sha": "9e55d9e6a721b6b61635681f2220a298de838fbc"
+        },
+        {
+          "path": ".github/workflows/s-developer.yml",
+          "blob_sha": "a8226c2ac144e0c8a79aed1acb9a153b842000b7"
+        }
+      ]
     },
     {
       "id": "M00-04-15",
       "section": 4,
       "requirement": "Build signed or debug-labeled APK",
-      "status": "AUDIT_PENDING",
-      "evidence": []
+      "status": "SOURCE_LOCATED_REVIEW_PENDING",
+      "evidence": [
+        {
+          "path": "android-consumer/app/build.gradle",
+          "blob_sha": "caca8794be2b0553bb0a7baf3324f1c552d5563a"
+        }
+      ]
     },
     {
       "id": "M00-04-16",
@@ -353,29 +398,65 @@
       "id": "M00-05-01",
       "section": 5,
       "requirement": "Run existing regression suite unchanged",
-      "status": "AUDIT_PENDING",
-      "evidence": []
+      "status": "SOURCE_LOCATED_REVIEW_PENDING",
+      "evidence": [
+        {
+          "path": ".github/workflows/tests.yml",
+          "blob_sha": "9e55d9e6a721b6b61635681f2220a298de838fbc"
+        },
+        {
+          "path": ".github/workflows/s-developer.yml",
+          "blob_sha": "a8226c2ac144e0c8a79aed1acb9a153b842000b7"
+        }
+      ]
     },
     {
       "id": "M00-05-02",
       "section": 5,
       "requirement": "Exercise calculator demo",
-      "status": "AUDIT_PENDING",
-      "evidence": []
+      "status": "SOURCE_LOCATED_REVIEW_PENDING",
+      "evidence": [
+        {
+          "path": "tests/test_consumer_generation.py",
+          "blob_sha": "e3c4006094b2b4c0af942f5c95b9b39493119a01"
+        },
+        {
+          "path": "tests/test_http_product.py",
+          "blob_sha": "2cbdec9018c45d87dbe85958a507e662eadee06c"
+        }
+      ]
     },
     {
       "id": "M00-05-03",
       "section": 5,
       "requirement": "Exercise website demo",
-      "status": "AUDIT_PENDING",
-      "evidence": []
+      "status": "SOURCE_LOCATED_REVIEW_PENDING",
+      "evidence": [
+        {
+          "path": "tests/test_consumer_generation.py",
+          "blob_sha": "e3c4006094b2b4c0af942f5c95b9b39493119a01"
+        },
+        {
+          "path": "tests/test_http_product.py",
+          "blob_sha": "2cbdec9018c45d87dbe85958a507e662eadee06c"
+        }
+      ]
     },
     {
       "id": "M00-05-04",
       "section": 5,
       "requirement": "Exercise inventory demo",
-      "status": "AUDIT_PENDING",
-      "evidence": []
+      "status": "SOURCE_LOCATED_REVIEW_PENDING",
+      "evidence": [
+        {
+          "path": "tests/test_consumer_generation.py",
+          "blob_sha": "e3c4006094b2b4c0af942f5c95b9b39493119a01"
+        },
+        {
+          "path": "tests/test_http_product.py",
+          "blob_sha": "2cbdec9018c45d87dbe85958a507e662eadee06c"
+        }
+      ]
     },
     {
       "id": "M00-05-05",
@@ -388,15 +469,33 @@
       "id": "M00-05-06",
       "section": 5,
       "requirement": "Inject defect",
-      "status": "AUDIT_PENDING",
-      "evidence": []
+      "status": "SOURCE_LOCATED_REVIEW_PENDING",
+      "evidence": [
+        {
+          "path": "project_s/repair.py",
+          "blob_sha": "d3b93e7d61c322fd7b2026d0dcc604b61a540b52"
+        },
+        {
+          "path": "tests/test_secure_consumer.py",
+          "blob_sha": "56d45e660eb69c6d5f8d6a1804b13ec4d810df6f"
+        }
+      ]
     },
     {
       "id": "M00-05-07",
       "section": 5,
       "requirement": "Test denied action",
-      "status": "AUDIT_PENDING",
-      "evidence": []
+      "status": "SOURCE_LOCATED_REVIEW_PENDING",
+      "evidence": [
+        {
+          "path": "tests/test_secure_consumer.py",
+          "blob_sha": "56d45e660eb69c6d5f8d6a1804b13ec4d810df6f"
+        },
+        {
+          "path": "tests/test_contracts_consumer.py",
+          "blob_sha": "ee0ca5cf20f0da19253d932f7b1f7e0e532ccf42"
+        }
+      ]
     },
     {
       "id": "M00-05-08",
@@ -479,15 +578,45 @@
       "id": "M00-07-04",
       "section": 7,
       "requirement": "Record actual test commands",
-      "status": "AUDIT_PENDING",
-      "evidence": []
+      "status": "SOURCE_LOCATED_REVIEW_PENDING",
+      "evidence": [
+        {
+          "path": ".github/workflows/blueprint-00.yml",
+          "blob_sha": "fe2700814451f23c403e2648c10415db45919542"
+        },
+        {
+          "path": ".github/workflows/tests.yml",
+          "blob_sha": "9e55d9e6a721b6b61635681f2220a298de838fbc"
+        },
+        {
+          "path": ".github/workflows/s-developer.yml",
+          "blob_sha": "a8226c2ac144e0c8a79aed1acb9a153b842000b7"
+        }
+      ]
     },
     {
       "id": "M00-07-05",
       "section": 7,
       "requirement": "Review and pin dependencies",
-      "status": "AUDIT_PENDING",
-      "evidence": []
+      "status": "SOURCE_LOCATED_REVIEW_PENDING",
+      "evidence": [
+        {
+          "path": ".github/workflows/blueprint-00.yml",
+          "blob_sha": "fe2700814451f23c403e2648c10415db45919542"
+        },
+        {
+          "path": ".github/workflows/tests.yml",
+          "blob_sha": "9e55d9e6a721b6b61635681f2220a298de838fbc"
+        },
+        {
+          "path": ".github/workflows/s-developer.yml",
+          "blob_sha": "a8226c2ac144e0c8a79aed1acb9a153b842000b7"
+        },
+        {
+          "path": "android-consumer/app/build.gradle",
+          "blob_sha": "caca8794be2b0553bb0a7baf3324f1c552d5563a"
+        }
+      ]
     },
     {
       "id": "M00-07-06",
@@ -657,8 +786,21 @@
       "id": "M00-09-04",
       "section": 9,
       "requirement": "Record dependency versions",
-      "status": "AUDIT_PENDING",
-      "evidence": []
+      "status": "SOURCE_LOCATED_REVIEW_PENDING",
+      "evidence": [
+        {
+          "path": ".github/workflows/blueprint-00.yml",
+          "blob_sha": "fe2700814451f23c403e2648c10415db45919542"
+        },
+        {
+          "path": "android-consumer/app/build.gradle",
+          "blob_sha": "caca8794be2b0553bb0a7baf3324f1c552d5563a"
+        },
+        {
+          "path": "pyproject.toml",
+          "blob_sha": "71b49cda7c2e5a56627e29b6933b5e3e78e4bac0"
+        }
+      ]
     },
     {
       "id": "M00-09-05",
@@ -769,8 +911,21 @@
       "id": "M00-10-02",
       "section": 10,
       "requirement": "Verify dependency locks",
-      "status": "AUDIT_PENDING",
-      "evidence": []
+      "status": "SOURCE_LOCATED_REVIEW_PENDING",
+      "evidence": [
+        {
+          "path": ".github/workflows/blueprint-00.yml",
+          "blob_sha": "fe2700814451f23c403e2648c10415db45919542"
+        },
+        {
+          "path": "android-consumer/app/build.gradle",
+          "blob_sha": "caca8794be2b0553bb0a7baf3324f1c552d5563a"
+        },
+        {
+          "path": "pyproject.toml",
+          "blob_sha": "71b49cda7c2e5a56627e29b6933b5e3e78e4bac0"
+        }
+      ]
     },
     {
       "id": "M00-10-03",
