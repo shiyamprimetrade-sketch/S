@@ -38,3 +38,21 @@ class ContractTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             request_for(" "*512+"calculator","calculator")
         self.assertEqual(len(request_for("x"*512,"calculator")["payload"]["requirement"]),512)
+
+    def test_signed_deadline_and_timeout(self):
+        import tempfile
+        from unittest.mock import patch
+        from project_s.secure import SecureEngine
+        with tempfile.TemporaryDirectory() as root:
+            engine=SecureEngine(root)
+            task,_=engine.create("Create a calculator")
+            token=engine.issue(task,deadline_ms=10)
+            forged={"scope":dict(token["scope"],deadline_ms=120000),"mac":token["mac"]}
+            with self.assertRaises(ValueError):
+                engine.execute_token(task,forged)
+            self.assertFalse((engine.root/task).exists())
+            with patch("project_s.orchestrator.time.monotonic",side_effect=[0,1]):
+                with self.assertRaises(TimeoutError):
+                    engine.execute_token(task,token)
+            self.assertEqual(engine.get(task)["state"],"FAILED")
+            self.assertFalse((engine.root/task).exists())
