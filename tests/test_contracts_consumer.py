@@ -33,3 +33,8 @@ class ContractTests(unittest.TestCase):
                     trusted_context(actor,token,workspace,capability)
             self.assertFalse((engine.root/task).exists())
             self.assertTrue(engine.execute_token(task,token)["passed"])
+
+    def test_raw_length_limit(self):
+        with self.assertRaises(ValueError):
+            request_for(" "*512+"calculator","calculator")
+        self.assertEqual(len(request_for("x"*512,"calculator")["payload"]["requirement"]),512)
