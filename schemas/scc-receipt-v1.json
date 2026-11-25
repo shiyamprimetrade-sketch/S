@@ -1,0 +1,102 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "SCC receipt v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "operation_id",
+    "status",
+    "error_code",
+    "artifact_sha256",
+    "evidence_ids"
+  ],
+  "properties": {
+    "operation_id": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{32}$"
+    },
+    "status": {
+      "enum": [
+        "CREATED",
+        "UNDERSTANDING",
+        "PLANNING",
+        "AWAITING_AUTHORIZATION",
+        "AUTHORIZED",
+        "GENERATING",
+        "EXECUTING",
+        "VERIFYING",
+        "REPAIRING",
+        "COMPLETED",
+        "DENIED",
+        "FAILED",
+        "BLOCKED",
+        "RECOVERING"
+      ]
+    },
+    "error_code": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "artifact_sha256": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "evidence_ids": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "COMPLETED"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "error_code": {
+            "type": "null"
+          },
+          "artifact_sha256": {
+            "type": "string"
+          },
+          "evidence_ids": {
+            "minItems": 1
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "enum": [
+              "FAILED",
+              "DENIED",
+              "BLOCKED"
+            ]
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "error_code": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    }
+  ]
+}

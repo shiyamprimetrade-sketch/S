@@ -3,6 +3,7 @@ import hashlib,hmac,time
 from contextlib import closing
 import sqlite3,json,uuid,datetime
 from .secure import digest
+from .contracts import validate
 
 class Repair:
     def __init__(self,engine):
@@ -30,17 +31,20 @@ class Repair:
         if p['expires']<=time.time() or p!=dict(p,operation='regenerate successor'):raise ValueError('Invalid repair scope')
         r=e.get(p['task'])
         if r['state']!='FAILED' or digest(r['plan'])!=p['plan']:raise ValueError('Changed repair target')
+        parent_request=e.original_request(p['task'])
         with closing(sqlite3.connect(e.db)) as c,c:
             c.execute('BEGIN IMMEDIATE')
             count=c.execute('SELECT COUNT(*) FROM repairs WHERE parent=?',(p['task'],)).fetchone()[0]
             if count>=3 or p['attempt']!=count+1:raise ValueError('Repair limit or replay')
             if c.execute('SELECT 1 FROM repairs WHERE child=?',(p['task'],)).fetchone():raise ValueError('Repair successor cannot start a new chain')
             child=uuid.uuid4().hex
+            child_request=validate(dict(parent_request,operation_id=child))
+            c.execute('INSERT INTO requests VALUES (?,?)',(child,json.dumps(child_request)))
             c.execute('INSERT INTO tasks VALUES (?,?,?,?)',(child,'AWAITING_AUTHORIZATION',json.dumps(r['plan']),None))
             c.execute('INSERT INTO journal VALUES (?,?,?,?)',(child,'CREATED','AWAITING_AUTHORIZATION',datetime.datetime.now(datetime.timezone.utc).isoformat()))
             c.execute('INSERT INTO repairs VALUES (?,?,?,?)',(p['task'],p['attempt'],child,'RESERVED'))
         try:
-            result=e.execute_token(child,e.issue(child))
+            result=e.execute_token(child,e.issue(child,deadline_ms=child_request['deadline_ms']))
             status='VERIFIED' if result['passed'] else 'FAILED'
             return {'child':child,'status':status,'evidence':result}
         except Exception:

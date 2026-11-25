@@ -4,6 +4,7 @@ from contextlib import closing
 from .orchestrator import Orchestrator
 from .generation import generate
 from .verification import verify
+from .contracts import trusted_context
 
 def digest(p): return hashlib.sha256(json.dumps(p,sort_keys=True,separators=(',',':')).encode()).hexdigest()
 class SecureEngine(Orchestrator):
@@ -24,18 +25,26 @@ class SecureEngine(Orchestrator):
     def history(self):
         with closing(sqlite3.connect(self.db)) as c: ids=[r[0] for r in c.execute('SELECT id FROM tasks ORDER BY rowid DESC')]
         return [self.get(i) for i in ids]
-    def issue(self,task,ttl=120):
+    def issue(self,task,ttl=120,deadline_ms=120000):
+        if type(deadline_ms) is not int or not 1 <= deadline_ms <= 120000: raise ValueError('Invalid execution deadline')
         r=self.get(task)
         if r['state']!='AWAITING_AUTHORIZATION':raise ValueError('Not awaiting approval')
-        p={'task':task,'plan':digest(r['plan']),'operation':'generate','workspace':str(self.root/task),'issued':time.time(),'expires':time.time()+ttl,'nonce':secrets.token_hex(16)}
+        request=self.original_request(task)
+        if deadline_ms>request['deadline_ms']: raise ValueError('Deadline exceeds request budget')
+        p={'request_digest':digest(request),'deadline_ms':deadline_ms,'actor':'local-owner','capability':r['plan']['capability'],'task':task,'plan':digest(r['plan']),'operation':'generate','workspace':str(self.root/task),'issued':time.time(),'expires':time.time()+ttl,'nonce':secrets.token_hex(16)}
         return {'scope':p,'mac':hmac.new(self.key,digest(p).encode(),'sha256').hexdigest()}
     def execute_token(self,task,token):
         r=self.get(task); p=token['scope']; now=time.time()
         if not hmac.compare_digest(token['mac'],hmac.new(self.key,digest(p).encode(),'sha256').hexdigest()):raise ValueError('Invalid authentication')
         if not (p['issued']<=now<p['expires'] and p['task']==task and p['plan']==digest(r['plan']) and p['operation']=='generate' and p['workspace']==str(self.root/task)):raise ValueError('Invalid scope or expiry')
+        request=self.original_request(task)
+        if p.get('request_digest')!=digest(request) or p['deadline_ms']>request['deadline_ms']: raise ValueError('Request binding mismatch')
         d=self.root/task
+        trusted_context('local-owner',token,str(d),r['plan']['capability'])
         if d.exists() or d.is_symlink():raise ValueError('Workspace already exists')
-        return super().execute(task,True)
+        remaining=int((p['expires']-time.time())*1000)
+        if remaining<1: raise ValueError('Authorization expired')
+        return super().execute(task,True,deadline_ms=min(p['deadline_ms'],remaining))
     def execute(self,task,approve):
         if approve is False:return super().execute(task,False)
         raise ValueError('Authenticated token required')
