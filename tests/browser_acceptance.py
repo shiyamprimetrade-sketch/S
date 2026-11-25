@@ -43,6 +43,17 @@ def main():
                 page.get_by_role('button',name='adjust',exact=True).click()
                 page.wait_for_function("JSON.parse(document.querySelector('#actions pre').textContent).products[0][1]===7")
                 print('PASS inventory browser registration and adjustment',flush=True)
+                page.get_by_placeholder('Product name').fill('=1+1')
+                page.locator('#actions input[type=number]').fill('2')
+                page.get_by_role('button',name='register',exact=True).click()
+                page.wait_for_function("document.querySelector('#actions pre').textContent.includes('=1+1')")
+                with page.expect_download() as download:
+                    page.get_by_role('button',name='Export inventory CSV').click()
+                import csv
+                with open(download.value.path(),encoding='utf-8',newline='') as f:
+                    rows=list(csv.reader(f))
+                assert rows==[['name','stock'],["'=1+1",'2'],['Apple','7']],rows
+                print('PASS inventory CSV download and formula neutralization',flush=True)
                 page.locator(f'#history button[data-task-id="{failed}"]').click()
                 assert json.loads(page.locator('#out').text_content())['state']=='FAILED'
                 page.get_by_role('button',name='Propose repair').click()
