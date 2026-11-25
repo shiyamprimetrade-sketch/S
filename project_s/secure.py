@@ -39,6 +39,26 @@ class SecureEngine(Orchestrator):
     def execute(self,task,approve):
         if approve is False:return super().execute(task,False)
         raise ValueError('Authenticated token required')
+    def recover_interrupted(self):
+        """Reconcile interrupted tasks at exclusive server startup; never repeat side effects."""
+        outcomes=[]
+        for r in self.history():
+            if r['state'] not in ('AUTHORIZED','GENERATING','VERIFYING','RECOVERING'):continue
+            task=r['id']; old=r['state']
+            if old!='RECOVERING':self.transition(task,old,'RECOVERING')
+            d=self.root/task
+            try:
+                if d.is_symlink():raise ValueError('Unsafe recovery workspace')
+                name='index.html' if r['plan']['capability']=='website' else r['plan']['capability']+'.py'
+                f=d/name
+                if not f.is_file() or f.is_symlink():raise ValueError('Incomplete artifact; fresh authorization required')
+                if f.resolve().parent!=d:raise ValueError('Unsafe recovery artifact')
+                # Do not execute uncommitted files: their provenance cannot be established.
+                raise ValueError('Interrupted artifact not committed; fresh authorization required')
+            except Exception as e:
+                self.transition(task,'RECOVERING','FAILED',{'error':str(e),'recovery':'fail_closed','workspace_preserved':True})
+                outcomes.append(task)
+        return outcomes
     def artifact(self,task):
         r=self.get(task)
         if r['state']!='COMPLETED':raise ValueError('Not completed')
