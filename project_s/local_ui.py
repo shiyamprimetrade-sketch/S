@@ -2,7 +2,7 @@ from .repair import Repair
 from http.server import BaseHTTPRequestHandler,ThreadingHTTPServer
 from urllib.parse import urlparse
 from pathlib import Path
-import json, secrets, argparse, html
+import json, secrets, argparse, html, threading, time
 from .secure import SecureEngine
 from .calculator import calculate
 from .inventory import Inventory
@@ -15,6 +15,7 @@ def serve(root,port=8768):
 
 def _serve(root,port):
     engine=SecureEngine(root); engine.recover_interrupted(); Repair(engine).reconcile(); session=secrets.token_hex(32)
+    proposals={}; proposal_lock=threading.Lock()
     class Handler(BaseHTTPRequestHandler):
         def send(self,status,body,kind='application/json',extra=None):
             self.send_response(status);self.send_header('Content-Type',kind);self.send_header('Content-Length',str(len(body)));self.send_header('Cache-Control','no-store');self.send_header('X-Content-Type-Options','nosniff')
@@ -38,10 +39,23 @@ def _serve(root,port):
                 if not 0<n<=8192:raise ValueError('Invalid body size')
                 d=json.loads(self.rfile.read(n))
                 if self.path=='/repair/propose':
-                    return self.js(Repair(engine).propose(d['id']))
+                    p=Repair(engine).propose(d['id'])
+                    ident=secrets.token_hex(32)
+                    with proposal_lock:
+                        for k in list(proposals):
+                            if proposals[k]['expires']<=time.time():del proposals[k]
+                        if len(proposals)>=256:raise ValueError('Too many pending proposals')
+                        proposals[ident]=p
+                    return self.js(dict(p,proposal_id=ident))
                 if self.path=='/repair/execute':
                     repair=Repair(engine)
-                    result=repair.execute(repair.authorize(d['proposal'],d['approve']))
+                    if d['approve'] is not True:raise ValueError('Explicit repair approval required')
+                    supplied=dict(d['proposal']); ident=supplied.pop('proposal_id')
+                    with proposal_lock:
+                        p=proposals.get(ident)
+                        if p is None or p!=supplied or p['expires']<=time.time():raise ValueError('Invalid or expired repair proposal')
+                        del proposals[ident]
+                    result=repair.execute(repair.authorize(p,True))
                     return self.js(engine.get(result['child']))
                 if self.path=='/inventory':
                     task=d['id']; r=engine.get(task)
