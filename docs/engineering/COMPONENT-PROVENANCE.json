@@ -100,6 +100,116 @@
       "dependencies": "Python standard library",
       "status": "SOURCE IMPORTED",
       "evidence": "remote blob equals recovered blob; local recovered consumer suite 4/4 passed; central integration pending"
+    },
+    {
+      "source_commit": "3cb4d336572392f323f52bcb5d4e0cf8c77186c4",
+      "source_path": "project_s/__init__.py",
+      "destination": "project_s/__init__.py",
+      "git_blob": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "classification": "approved recovered consumer implementation or test",
+      "redistribution": "founder public development authorization; ownership and external redistribution license not independently established",
+      "dependencies": "Python standard library and imported consumer modules",
+      "status": "SOURCE IMPORTED",
+      "evidence": "remote blob verified; central regression pending"
+    },
+    {
+      "source_commit": "3cb4d336572392f323f52bcb5d4e0cf8c77186c4",
+      "source_path": "project_s/generation.py",
+      "destination": "project_s/generation.py",
+      "git_blob": "99a72213ec08e36ec80a795869680621e1188443",
+      "classification": "approved recovered consumer implementation or test",
+      "redistribution": "founder public development authorization; ownership and external redistribution license not independently established",
+      "dependencies": "Python standard library and imported consumer modules",
+      "status": "SOURCE IMPORTED",
+      "evidence": "remote blob verified; central regression pending"
+    },
+    {
+      "source_commit": "3cb4d336572392f323f52bcb5d4e0cf8c77186c4",
+      "source_path": "project_s/orchestrator.py",
+      "destination": "project_s/orchestrator.py",
+      "git_blob": "2bdd2ab069f4b800a02faf9a9955aa27f84f193f",
+      "classification": "approved recovered consumer implementation or test",
+      "redistribution": "founder public development authorization; ownership and external redistribution license not independently established",
+      "dependencies": "Python standard library and imported consumer modules",
+      "status": "SOURCE IMPORTED",
+      "evidence": "remote blob verified; central regression pending"
+    },
+    {
+      "source_commit": "3cb4d336572392f323f52bcb5d4e0cf8c77186c4",
+      "source_path": "project_s/secure.py",
+      "destination": "project_s/secure.py",
+      "git_blob": "df5aba7f2815ffe8d4e118409394987efe4e8adb",
+      "classification": "approved recovered consumer implementation or test",
+      "redistribution": "founder public development authorization; ownership and external redistribution license not independently established",
+      "dependencies": "Python standard library and imported consumer modules",
+      "status": "SOURCE IMPORTED",
+      "evidence": "remote blob verified; central regression pending"
+    },
+    {
+      "source_commit": "3cb4d336572392f323f52bcb5d4e0cf8c77186c4",
+      "source_path": "project_s/verification.py",
+      "destination": "project_s/verification.py",
+      "git_blob": "26e1e8ed73211ad6cbb02252477eb06517b198aa",
+      "classification": "approved recovered consumer implementation or test",
+      "redistribution": "founder public development authorization; ownership and external redistribution license not independently established",
+      "dependencies": "Python standard library and imported consumer modules",
+      "status": "SOURCE IMPORTED",
+      "evidence": "remote blob verified; central regression pending"
+    },
+    {
+      "source_commit": "3cb4d336572392f323f52bcb5d4e0cf8c77186c4",
+      "source_path": "project_s/local_ui.py",
+      "destination": "project_s/local_ui.py",
+      "git_blob": "a647c62c6114d044afa28e15754ad46821c43372",
+      "classification": "approved recovered consumer implementation or test",
+      "redistribution": "founder public development authorization; ownership and external redistribution license not independently established",
+      "dependencies": "Python standard library and imported consumer modules",
+      "status": "SOURCE IMPORTED",
+      "evidence": "remote blob verified; central regression pending"
+    },
+    {
+      "source_commit": "3cb4d336572392f323f52bcb5d4e0cf8c77186c4",
+      "source_path": "engine/arithmetic_verifier.py",
+      "destination": "engine/arithmetic_verifier.py",
+      "git_blob": "6a732e2e1fe32e44ff83734421d67da13290f9f7",
+      "classification": "approved recovered consumer implementation or test",
+      "redistribution": "founder public development authorization; ownership and external redistribution license not independently established",
+      "dependencies": "Python standard library and imported consumer modules",
+      "status": "SOURCE IMPORTED",
+      "evidence": "remote blob verified; central regression pending"
+    },
+    {
+      "source_commit": "3cb4d336572392f323f52bcb5d4e0cf8c77186c4",
+      "source_path": "tests/test_consumer_generation.py",
+      "destination": "tests/test_consumer_generation.py",
+      "git_blob": "e3c4006094b2b4c0af942f5c95b9b39493119a01",
+      "classification": "approved recovered consumer implementation or test",
+      "redistribution": "founder public development authorization; ownership and external redistribution license not independently established",
+      "dependencies": "Python standard library and imported consumer modules",
+      "status": "SOURCE IMPORTED",
+      "evidence": "remote blob verified; central regression pending"
+    },
+    {
+      "source_commit": "3cb4d336572392f323f52bcb5d4e0cf8c77186c4",
+      "source_path": "tests/test_secure_consumer.py",
+      "destination": "tests/test_secure_consumer.py",
+      "git_blob": "56d45e660eb69c6d5f8d6a1804b13ec4d810df6f",
+      "classification": "approved recovered consumer implementation or test",
+      "redistribution": "founder public development authorization; ownership and external redistribution license not independently established",
+      "dependencies": "Python standard library and imported consumer modules",
+      "status": "SOURCE IMPORTED",
+      "evidence": "remote blob verified; central regression pending"
+    },
+    {
+      "source_commit": "3cb4d336572392f323f52bcb5d4e0cf8c77186c4",
+      "source_path": "tests/test_http_product.py",
+      "destination": "tests/test_http_product.py",
+      "git_blob": "792ff8798adff02f6eae17b6769b86882b0dd75d",
+      "classification": "approved recovered consumer implementation or test",
+      "redistribution": "founder public development authorization; ownership and external redistribution license not independently established",
+      "dependencies": "Python standard library and imported consumer modules",
+      "status": "SOURCE IMPORTED",
+      "evidence": "remote blob verified; central regression pending"
     }
   ]
 }
