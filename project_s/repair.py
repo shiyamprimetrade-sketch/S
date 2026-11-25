@@ -1,7 +1,7 @@
 """Repair by verified successor generation; never overwrite original artifacts."""
 import hashlib,hmac,time
 from contextlib import closing
-import sqlite3,json
+import sqlite3,json,uuid,datetime
 from .secure import digest
 
 class Repair:
@@ -9,10 +9,15 @@ class Repair:
         self.engine=engine
         with closing(sqlite3.connect(engine.db)) as c,c:
             c.execute('CREATE TABLE IF NOT EXISTS repairs(parent TEXT, attempt INTEGER, child TEXT, status TEXT, PRIMARY KEY(parent,attempt))')
+    def reconcile(self):
+        """Call only under exclusive workspace lock at startup."""
+        with closing(sqlite3.connect(self.engine.db)) as c,c:
+            return c.execute("UPDATE repairs SET status='INTERRUPTED' WHERE status='RESERVED'").rowcount
     def propose(self,task):
         r=self.engine.get(task)
         if r['state']!='FAILED':raise ValueError('Only failed tasks eligible')
         with closing(sqlite3.connect(self.engine.db)) as c:
+            if c.execute('SELECT 1 FROM repairs WHERE child=?',(task,)).fetchone():raise ValueError('Repair successor cannot start a new chain')
             count=c.execute('SELECT COUNT(*) FROM repairs WHERE parent=?',(task,)).fetchone()[0]
         if count>=3:raise ValueError('Repair limit reached')
         return {'task':task,'plan':digest(r['plan']),'attempt':count+1,'operation':'regenerate successor','diagnosis':r['evidence'],'expires':time.time()+120}
@@ -29,10 +34,12 @@ class Repair:
             c.execute('BEGIN IMMEDIATE')
             count=c.execute('SELECT COUNT(*) FROM repairs WHERE parent=?',(p['task'],)).fetchone()[0]
             if count>=3 or p['attempt']!=count+1:raise ValueError('Repair limit or replay')
-            c.execute('INSERT INTO repairs VALUES (?,?,?,?)',(p['task'],p['attempt'],None,'RESERVED'))
-        child=None
+            if c.execute('SELECT 1 FROM repairs WHERE child=?',(p['task'],)).fetchone():raise ValueError('Repair successor cannot start a new chain')
+            child=uuid.uuid4().hex
+            c.execute('INSERT INTO tasks VALUES (?,?,?,?)',(child,'AWAITING_AUTHORIZATION',json.dumps(r['plan']),None))
+            c.execute('INSERT INTO journal VALUES (?,?,?,?)',(child,'CREATED','AWAITING_AUTHORIZATION',datetime.datetime.now(datetime.timezone.utc).isoformat()))
+            c.execute('INSERT INTO repairs VALUES (?,?,?,?)',(p['task'],p['attempt'],child,'RESERVED'))
         try:
-            child,_=e.create(r['plan']['requirement'])
             result=e.execute_token(child,e.issue(child))
             status='VERIFIED' if result['passed'] else 'FAILED'
             return {'child':child,'status':status,'evidence':result}
