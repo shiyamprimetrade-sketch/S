@@ -7,12 +7,22 @@ import json
 import os
 from pathlib import Path
 import shlex
+import stat
 import sys
 import tempfile
 import uuid
 
 MARKER = '# Managed by S Termux installer v1'
 SOURCE = Path(__file__).resolve().parents[1]
+
+
+def redirected(path):
+    try:
+        info = path.lstat()
+    except FileNotFoundError:
+        return False
+    return stat.S_ISLNK(info.st_mode) or bool(
+        getattr(info, 'st_file_attributes', 0) & getattr(stat, 'FILE_ATTRIBUTE_REPARSE_POINT', 0x400))
 
 
 def install(home, prefix, source, python):
@@ -25,11 +35,11 @@ def install(home, prefix, source, python):
     bin_dir=home/'.local'/'bin'
     data_dir=home/'.local'/'share'/'S'
     for directory in (home/'.local',bin_dir,home/'.local'/'share',data_dir):
-        if directory.is_symlink():
+        if redirected(directory):
             raise ValueError('Refusing symlinked installation directories')
         directory.mkdir(exist_ok=True)
     launcher=bin_dir/'S'
-    if launcher.is_symlink():
+    if redirected(launcher):
         raise ValueError('Refusing a symlinked S launcher')
     previous=None
     if launcher.exists():
