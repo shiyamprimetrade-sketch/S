@@ -2,6 +2,8 @@ name: Blueprint 00 compatibility
 on:
   push:
     branches: [feature/blueprint-00-master-integration]
+  pull_request:
+    branches: [integration/project-s-unified]
   workflow_dispatch:
 permissions:
   contents: read
