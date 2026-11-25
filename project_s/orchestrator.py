@@ -9,13 +9,20 @@ class Orchestrator:
         self.root=Path(root).resolve(); self.root.mkdir(parents=True,exist_ok=True); self.db=self.root/'tasks.db'
         with closing(sqlite3.connect(self.db)) as c,c:
             c.execute('CREATE TABLE IF NOT EXISTS tasks(id TEXT PRIMARY KEY, state TEXT, plan TEXT, evidence TEXT)'); c.execute('CREATE TABLE IF NOT EXISTS journal(id TEXT, previous TEXT, state TEXT, timestamp TEXT)')
+            c.execute('CREATE TABLE IF NOT EXISTS requests(id TEXT PRIMARY KEY, request TEXT NOT NULL)')
     def create(self,requirement):
         p=plan(requirement)
         request=request_for(requirement,p['capability'])
         task=request['operation_id']
         with closing(sqlite3.connect(self.db)) as c,c:
+            c.execute('INSERT INTO requests VALUES (?,?)',(task,json.dumps(request)))
             c.execute('INSERT INTO tasks VALUES (?,?,?,?)',(task,'AWAITING_AUTHORIZATION',json.dumps(p),None)); c.execute('INSERT INTO journal VALUES (?,?,?,?)',(task,'CREATED','AWAITING_AUTHORIZATION',datetime.datetime.now(datetime.timezone.utc).isoformat()))
         return task,p
+    def original_request(self,task):
+        with closing(sqlite3.connect(self.db)) as c: row=c.execute('SELECT request FROM requests WHERE id=?',(task,)).fetchone()
+        if row is None: raise ValueError('Missing original request; create a new task')
+        from .contracts import validate
+        return validate(json.loads(row[0]))
     def transition(self,task,old,new,evidence=None):
         with closing(sqlite3.connect(self.db)) as c,c:
             if c.execute('UPDATE tasks SET state=?,evidence=? WHERE id=? AND state=?',(new,json.dumps(evidence),task,old)).rowcount!=1: raise ValueError('Invalid state or replay')
@@ -34,4 +41,4 @@ class Orchestrator:
             check_deadline(); f=generate(p,self.root/task); check_deadline(); self.transition(task,'GENERATING','VERIFYING'); result=verify(f,p['capability']); check_deadline(); result['artifact']=str(f.relative_to(self.root)); result['receipt']=receipt(task,'COMPLETED',artifact_sha256=result['sha256'],evidence_ids=[task+':verification']) if result['passed'] else receipt(task,'FAILED',error_code='VERIFICATION_FAILED'); self.transition(task,'VERIFYING','COMPLETED' if result['passed'] else 'FAILED',result); return result
         except Exception as e:
             with closing(sqlite3.connect(self.db)) as c: state=c.execute('SELECT state FROM tasks WHERE id=?',(task,)).fetchone()[0]
-            self.transition(task,state,'FAILED',{'error':str(e)}); raise
+            self.transition(task,state,'FAILED',{'error':str(e),'receipt':receipt(task,'FAILED',error_code='DEADLINE_EXCEEDED' if isinstance(e,TimeoutError) else 'EXECUTION_FAILED')}); raise
