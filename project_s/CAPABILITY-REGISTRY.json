@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "mechanism": "deterministic bounded generator",
+  "capabilities": [
+    {
+      "id": "calculator",
+      "implementation": "project_s/calculator.py",
+      "verification": "project_s/verification.py",
+      "dependencies": [
+        "Python standard library"
+      ],
+      "limitations": "CLI generated artifact; graphical interface pending"
+    },
+    {
+      "id": "website",
+      "implementation": "project_s/generation.py",
+      "verification": "project_s/verification.py",
+      "dependencies": [
+        "Python standard library"
+      ],
+      "limitations": "Static structure verification; placeholder contact details"
+    },
+    {
+      "id": "inventory",
+      "implementation": "project_s/inventory.py",
+      "verification": "project_s/verification.py",
+      "dependencies": [
+        "Python standard library"
+      ],
+      "limitations": "CLI generated artifact; graphical interface pending"
+    }
+  ]
+}
