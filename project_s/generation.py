@@ -1,10 +1,11 @@
 from pathlib import Path
 from html import escape
-import re, shutil
+import re, shutil, json
 
 def plan(requirement):
     if not isinstance(requirement,str) or not 0<len(requirement.strip())<=512: raise ValueError('Invalid requirement')
-    matches=[k for k in ('calculator','website','inventory') if re.search(r'\b'+k+r'\b',requirement,re.I)]
+    registry=json.loads(Path(__file__).with_name('CAPABILITY-REGISTRY.json').read_text(encoding='utf-8'))
+    matches=[k for k in (entry['id'] for entry in registry['capabilities']) if re.search(r'\b'+k+r'\b',requirement,re.I)]
     if len(matches)!=1: raise ValueError('Clarify: calculator, website or inventory')
     if re.search(r'\b(delete|upload|network|shell|password|payment)\b',requirement,re.I): raise ValueError('Unsupported scope')
     name=re.search(r'\b(?:named|called|for)\s+(.+)',requirement,re.I)
